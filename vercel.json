@@ -10,8 +10,8 @@
             "dest" : "/api/index.php"
         },
         {
-            "src" : "/assets/img/(.*)",
-            "dest" : "/assets/img/$1" 
+            "src" : "/assets/img/(.*).png",
+            "dest" : "/public/assets/img/$1" 
         },
         {
             "src" : "/(.*)",
