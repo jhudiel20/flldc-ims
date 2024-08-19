@@ -8,6 +8,18 @@
         {
             "src" : "/api/index.php",
             "dest" : "/api/index.php"
+        },
+        {
+            "src" : "/style.css",
+            "dest" : "/puclic/style.css"
+        },
+        {
+            "src" : "/assets/img/(.*).css",
+            "dest" : "/puclic/assets/img/$1" 
+        },
+        {
+            "src" : "/(.*)",
+            "dest" : "/api/index.php"
         }
     ]
     
