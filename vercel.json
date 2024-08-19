@@ -11,7 +11,7 @@
         },
         {
             "src" : "/assets/img/(.*)",
-            "dest" : "/puclic/assets/img/$1" 
+            "dest" : "/assets/img/$1" 
         },
         {
             "src" : "/(.*)",
