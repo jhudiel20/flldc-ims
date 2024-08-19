@@ -10,11 +10,7 @@
             "dest" : "/api/index.php"
         },
         {
-            "src" : "/style.css",
-            "dest" : "/puclic/style.css"
-        },
-        {
-            "src" : "/assets/img/(.*).css",
+            "src" : "/assets/img/(.*).png",
             "dest" : "/puclic/assets/img/$1" 
         },
         {
