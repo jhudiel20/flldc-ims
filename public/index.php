@@ -204,7 +204,7 @@ include 'config/config.php';
             url: "/action/userlogin.php",
             method: "POST",
             data: formdata,
-            dataType: "json"
+            dataType: "json",
             success: function(response) {
                 console.log(response);
                 if (response.success) {
