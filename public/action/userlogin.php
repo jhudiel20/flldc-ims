@@ -1,6 +1,6 @@
 <?php
-include '../DBConnection.php'; 
-include '../config/config.php'; // Include your database connection script
+session_start();
+include 'DBConnection.php'; // Include your database connection script
 
 header('Content-Type: application/json');
 
@@ -26,6 +26,12 @@ try {
         echo json_encode(['success' => false, 'message' => 'Invalid username or password.']);
     }
 } catch (PDOException $e) {
+    // Output detailed error message
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    error_log('Database error: ' . $e->getMessage()); // Log error to the server log
+} catch (Exception $e) {
+    // Handle other types of exceptions
+    echo json_encode(['success' => false, 'message' => 'Unexpected error: ' . $e->getMessage()]);
+    error_log('Unexpected error: ' . $e->getMessage()); // Log error to the server log
 }
 ?>
