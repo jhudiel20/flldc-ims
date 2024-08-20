@@ -205,9 +205,10 @@ include 'config/config.php';
             method: "POST",
             data: formdata,
             dataType: "json",
-            contentType: false,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             cache: false,
             processData: false,
+            converters: {"text json": jQuery.parseJSON },
             success: function(response) {
                 console.log(response);
                 if (response.success) {
