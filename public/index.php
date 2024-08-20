@@ -248,14 +248,6 @@ include 'config/config.php';
                         text: response.message
                     });
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'An unexpected error occurred: ' + textStatus
-                });
-                console.error('AJAX Error:', textStatus, errorThrown); // Log AJAX errors
             }
         });
     });
