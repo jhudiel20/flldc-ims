@@ -1,6 +1,6 @@
 <?php
-require '../DBConnection.php';
-include '../config/config.php';
+require 'DBConnection.php';
+include 'config/config.php';
 
 session_start();
 
