@@ -1,210 +1,126 @@
 <?php
-// require '../DBConnection.php';
-// include '../config/config.php';
+require '../DBConnection.php';
+include '../config/config.php';
 
+session_start();
 
-var_dump($_REQUEST);
+header('Content-Type: application/json');
 
-// $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-// $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+$password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-// if (strpos($password, "'") !== false || strpos($username, "'") !== false){
-//     $response['icon'] = "warning";
-//     $response['success'] = false;
-//     $response['title'] = "Error!";
-//     $response['message'] = 'Password cannot contain single quotes or double quotes!';
-//     echo json_encode($response);
-//     exit();
-// }
-// if (strpos($password, '"') !== false || strpos($username, '"') !== false){
-//     $response['icon'] = "warning";
-//     $response['success'] = false;
-//     $response['title'] = "Error!";
-//     $response['message'] = 'Password cannot contain single quotes or double quotes!';
-//     echo json_encode($response);
-//     exit();
-// }
+if (strpos($password, "'") !== false || strpos($username, "'") !== false || 
+    strpos($password, '"') !== false || strpos($username, '"') !== false) {
+    echo json_encode([
+        'icon' => 'warning',
+        'success' => false,
+        'title' => 'Error!',
+        'message' => 'Password and username cannot contain single or double quotes!'
+    ]);
+    exit();
+}
 
-// $password = set_password($password);
+if ($username == '' || $password == '') {
+    echo json_encode([
+        'icon' => 'warning',
+        'success' => false,
+        'title' => 'Something Went Wrong!',
+        'message' => 'Please fill all fields!'
+    ]);
+    exit();
+}
 
-// if($username == '' || $password == ''){
-//     $response['icon'] = "warning";
-//     $response['success'] = false;
-//     $response['title'] = "Something Went Wrong!";
-//     $response['message'] = "Please fill all fields!";
-//     echo json_encode($response);
-//     exit();
-// }
-// // var_dump($password);
-// $check1 = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND BINARY PASSWORD = '$password' AND APPROVED_STATUS = 0 ");
+$password = set_password($password);
 
-// if(mysqli_num_rows($check1) > 0){
-//     $response['icon'] = "error";
-//     $response['success'] = false;
-//     $response['title'] = "Error!";
-//     $response['message'] = "Your registration is on process!";
-//     echo json_encode($response);
-//     exit();
-// }
-// $check2 = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND BINARY PASSWORD = '$password' AND APPROVED_STATUS = 0 AND ACCESS = ''  ");
+// Prepared statement for PostgreSQL
+$query = "SELECT * FROM user_account WHERE username = $1 AND password = $2";
+$result = pg_query_params($conn, $query, [$username, $password]);
 
-// if(mysqli_num_rows($check2) > 0){
-//     $response['icon'] = "error";
-//     $response['success'] = false;
-//     $response['title'] = "Error!";
-//     $response['message'] = "Your registration is on process!";
-//     echo json_encode($response);
-//     exit();
-// }
+if ($row = pg_fetch_assoc($result)) {
+    if ($row['approved_status'] == 1) {
+        echo json_encode([
+            'icon' => 'error',
+            'success' => false,
+            'title' => 'Error!',
+            'message' => 'The administrator has rejected your registration!'
+        ]);
+        exit();
+    }
 
-// $check3 = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND BINARY PASSWORD = '$password' AND APPROVED_STATUS = 2 AND LOCKED = 3 AND ACCESS != 'ADMIN'");
+    $_SESSION = array_merge($_SESSION, [
+        'status' => true,
+        'ID' => $row['id'],
+        'ACCESS' => $row['access'],
+        'USERNAME' => $row['username'],
+        'PASSWORD' => $row['password'],
+        'DATE_CREATED' => $row['date_created'],
+        'FNAME' => $row['fname'],
+        'MNAME' => $row['mname'],
+        'LNAME' => $row['lname'],
+        'EXT_NAME' => $row['ext_name'],
+        'EMAIL' => $row['email'],
+        'IMAGE' => $row['image'],
+        'LOCKED' => $row['locked'],
+        'ADMIN_STATUS' => $row['admin_status']
+    ]);
 
-// if(mysqli_num_rows($check3) > 0){
-//     $check4 = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND BINARY PASSWORD = '$password' AND APPROVED_STATUS = 2 AND LOCKED = 3 ");
+    if ($row['access'] == '' || $row['locked'] == 3) {
+        echo json_encode([
+            'icon' => 'warning',
+            'success' => false,
+            'title' => 'Error!',
+            'message' => 'Your Account is Locked or registration is in process. Please contact the administrator.'
+        ]);
+        exit();
+    }
 
-//     if(mysqli_num_rows($check4) > 0){
-//         $response['icon'] = "error";
-//         $response['success'] = false;
-//         $response['title'] = "Error!";
-//         $response['message'] = "Your Account is Locked. Please Contact the Administrator.";
-//         echo json_encode($response);
-//         exit();
-//     }
-// }
+    pg_query_params($conn, "INSERT INTO logs (user_id, action_made) VALUES ($1, $2)", [$_SESSION['ID'], 'Logged in the system.']);
+    pg_query_params($conn, "UPDATE user_account SET status = '1', locked = '0' WHERE id = $1", [$_SESSION['ID']]);
 
-// $query = "SELECT * FROM user_account WHERE BINARY USERNAME = ? AND BINARY PASSWORD = ? ";
-// $stmt = mysqli_prepare($conn, $query);
-// mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    echo json_encode([
+        'success' => true,
+        'title' => 'Welcome!',
+        'message' => 'Login successful!'
+    ]);
+} else {
+    $admin_access = pg_query_params($conn, "SELECT * FROM user_account WHERE username = $1 AND access = 'ADMIN'", [$username]);
+    if (pg_num_rows($admin_access) > 0) {
+        echo json_encode([
+            'icon' => 'warning',
+            'success' => false,
+            'title' => 'Wrong Password!'
+        ]);
+    } else {
+        $exist = pg_query_params($conn, "SELECT * FROM user_account WHERE username = $1", [$username]);
+        if (pg_num_rows($exist) > 0) {
+            $row = pg_fetch_assoc($exist);
+            $id = $row['id'];
+            $locked = $row['locked'] + 1;
 
-// // Execute the query
-// mysqli_stmt_execute($stmt);
-
-// // Fetch the result
-// $result = mysqli_stmt_get_result($stmt);
-
-
-
-// if ($row = mysqli_fetch_assoc($result)) {
-//     // Login success
-
-
-//     if($row['APPROVED_STATUS'] == 1){
-//         $response['icon'] = "error";
-//         $response['success'] = false;
-//         $response['title'] = "Error!";
-//         $response['message'] = "The administrator has rejected your registration!!!";
-//         echo json_encode($response);
-//         exit();
-//     }
-    
-//     // You can access the user's data from the fetched variables
-//     $_SESSION['status'] = true;
-//     $_SESSION['ID'] = $row['ID'];
-//     $_SESSION['ACCESS'] = $row['ACCESS'];
-//     $_SESSION['USERNAME'] = $row['USERNAME'];
-//     $_SESSION['PASSWORD'] = $row['PASSWORD'];
-//     $_SESSION['DATE_CREATED'] = $row['DATE_CREATED'];
-//     $_SESSION['FNAME'] = $row['FNAME'];
-//     $_SESSION['MNAME'] = $row['MNAME'];
-//     $_SESSION['LNAME'] = $row['LNAME'];
-//     $_SESSION['EXT_NAME'] = $row['EXT_NAME'];
-//     $_SESSION['EMAIL'] = $row['EMAIL'];
-//     $_SESSION['IMAGE'] = $row['IMAGE'];
-//     $_SESSION['LOCKED'] = $row['LOCKED'];
-//     $_SESSION['ADMIN_STATUS'] = $row['ADMIN_STATUS'];
-
-//     if($_SESSION['ACCESS'] == ''){
-//         $response['icon'] = "info";
-//         $response['success'] = false;
-//         $response['title'] = "Error!";
-//         $response['message'] = "Your registration is on process!";
-//         echo json_encode($response);
-//         exit();
-//     }
-//     if($_SESSION['ACCESS'] == 'ENCODER' || $_SESSION['ACCESS'] == 'REQUESTOR'){
-//         if($_SESSION['LOCKED'] == 3){
-//             $response['icon'] = "warning";
-//             $response['success'] = false;
-//             $response['title'] = "Error!";
-//             $response['message'] = "Your Account is Locked Please Contact the admin.";
-//             echo json_encode($response);
-//             exit();
-//         }
-    
-//     }
- 
-    
-//     $user_id = $_SESSION['ID'] ;
-//     $action = "Logged in the system.";
-    
-//     $logs = mysqli_query($conn, "INSERT INTO `logs` (`user_id`,`action_made`) VALUES('$user_id','$action')");
-
-
-//     $response['success'] = true;
-//     $response['title'] = 'Welcome!';
-//     $response['message'] = 'Login successful!';
-
-//     echo json_encode($response);
-//     $status = mysqli_query($conn, "UPDATE user_account SET STATUS = '1', LOCKED = '0' WHERE ID = '" . $_SESSION['ID'] . "' ");
-
-// } else {
-//     $admin_access = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '" . $username . "' AND ACCESS = 'ADMIN'");
-//     if( mysqli_num_rows($admin_access) > 0 ){
-//         $response['icon'] = "warning";
-//         $response['success'] = false;
-//         $response['title'] = "Wrong Password!";
-//         echo json_encode($response);
-//     }else{
-//             $exist = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '" . $username . "' ");
-//             $row = mysqli_fetch_assoc($exist);
-//             if (mysqli_num_rows($exist) > 0) {
-//                 $id = $row['ID'];
-//                 $locked = mysqli_query($conn, "SELECT * FROM user_account WHERE BINARY USERNAME = '" . $username . "' AND BINARY PASSWORD = '" . $password . "'");
-//                 $lock = mysqli_fetch_assoc($locked);
-//                 if (mysqli_num_rows($locked) > 0) {
-//                     if ($lock['LOCKED'] >= 3) {
-//                         $response['icon'] = "warning";
-//                         $response['success'] = false;
-//                         $response['title'] = "Account Locked!";
-//                         $response['message'] = "Your Account is Locked Please Contact the admin.";
-//                         echo json_encode($response);
-//                         // exit;
-//                     }
-//                     if ($lock['LOCKED'] < 3) {
-//                         mysqli_query($conn, "UPDATE user_account set  WHERE ID = '" . $lock['ID'] . "'");
-//                         // success();
-//                     }
-//                 } else {
-//                     $id = $row['ID'];
-//                     $locked = $row['LOCKED'] + 1;
-//                     $user_is_locked = mysqli_query($conn, "SELECT * FROM user_account WHERE ID = '" . $id . "' ");
-//                     $user = mysqli_fetch_assoc($user_is_locked);
-//                     if ($user['LOCKED'] >= 3) {
-//                         $response['icon'] = "warning";
-//                         $response['success'] = false;
-//                         $response['title'] = "Account Locked!";
-//                         $response['message'] = "Your Account is Locked Please Contact the admin.";
-//                         echo json_encode($response);
-//                         // exit;
-//                     }
-//                     if ($user['LOCKED'] < 3) {
-//                         $user_locked = mysqli_query($conn, "UPDATE user_account SET LOCKED ='" . $locked . "' WHERE ID = '" . $id . "'");
-//                         $response['icon'] = "warning";
-//                         $response['success'] = false;
-//                         $response['title'] = "Wrong Password!";
-//                         $response['message'] = "Attemp " . $locked;
-//                         echo json_encode($response);
-//                         // exit;
-//                     }
-//                 }
-//             } else {
-//                   // Login failed
-//                     $response['icon'] = "error";
-//                     $response['title'] = "Wrong Password!";
-//                     $response['success'] = false;
-//                     $response['message'] = 'Invalid username or password.';
-//                     echo json_encode($response);
-//             }
-//         }
-
-// }
+            if ($row['locked'] >= 3) {
+                echo json_encode([
+                    'icon' => 'warning',
+                    'success' => false,
+                    'title' => 'Account Locked!',
+                    'message' => 'Your Account is Locked. Please contact the admin.'
+                ]);
+            } else {
+                pg_query_params($conn, "UPDATE user_account SET locked = $1 WHERE id = $2", [$locked, $id]);
+                echo json_encode([
+                    'icon' => 'warning',
+                    'success' => false,
+                    'title' => 'Wrong Password!',
+                    'message' => 'Attempt ' . $locked
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'icon' => 'error',
+                'title' => 'Wrong Password!',
+                'success' => false,
+                'message' => 'Invalid username or password.'
+            ]);
+        }
+    }
+}
+?>
