@@ -185,7 +185,6 @@ include 'config/config.php';
 $(document).ready(function() {
     $('#login_btn').on('click', function() {
         var formdata = new FormData(user_login_form);
-        console.log(formdata);
         $.ajax({
             url: "/action/userlogin.php",
             method: "POST",
