@@ -55,81 +55,8 @@ include 'config/config.php';
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="<?php BASE_URL; ?>assets/js/config.js"></script>
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
-    <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-    <script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-    // <!-- sweetalert@ colored toast js -->
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-    </script>
-    <style>
-    /* sweetalert2 colored toast */
-    .colored-toast.swal2-icon-success {
-        background-color: #27c251 !important;
-        color: white;
-    }
-
-    .colored-toast.swal2-icon-error {
-        background-color: #f27474 !important;
-        color: white;
-    }
-
-    .swal2-error {
-        background-color: white;
-    }
-
-    .colored-toast.swal2-icon-warning {
-        background-color: #f8bb86 !important;
-        color: white;
-    }
-
-    .colored-toast.swal2-icon-info {
-        background-color: #3fc3ee !important;
-        color: white;
-    }
-
-    .colored-toast.swal2-icon-question {
-        background-color: #87adbd !important;
-        color: white;
-    }
-
-    .colored-toast .swal2-title {
-        color: white;
-    }
-
-    .colored-toast .swal2-close {
-        color: white;
-    }
-
-    .colored-toast .swal2-html-container {
-        color: white;
-    }
-
-    .colored-toast {
-        color: white;
-    }
-
-    .bg-modify {
-        background: linear-gradient(to right, #0000A7, #E40000);
-    }
-    </style>
 </head>
 
 <body>
@@ -202,7 +129,7 @@ include 'config/config.php';
                                 </div> -->
                                 <button type="button" id="login" name="login" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
-
+                            <button id="triggerToast">Show Toast</button>
                             <p class="text-center">
                                 <span>Not Registered?</span>
                                 <a href="auth-register-cover.html">
@@ -261,7 +188,7 @@ include 'config/config.php';
         <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/popular.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Main JS -->
         <script src="<?php BASE_URL; ?>assets/js/main.js"></script>
 
@@ -272,88 +199,23 @@ include 'config/config.php';
 </body>
 
 <script>
-    document.addEventListener("keydown", function(event) {
-    if (event.keyCode === 13) {
-        document.getElementById("login").click();
-    }
-});
-$(document).ready(function() {
-    $('#login').on('click', function() {
-        var formdata = new FormData(user_login);
-        $.ajax({
-        url: "<?php echo BASE_URL; ?>/userlogin.php",
-        method: "POST",
-        data: formdata,
-        dataType: "json",
-        contentType: false,
-        cache: false,
-        processData: false,
-
-        success: function(response) {
-            console.log(response);
-            if (response.success) {
-                Toast.fire({
-                    icon: 'success',
-                    title: response.title,
-                    text: response.message,
-                }).then(function() {
-                    window.location.href = '<?php echo BASE_URL; ?>/pages/dashboard-lnd.php';
-                });
-            } else {
-                Toast.fire({
-                    icon: response.icon,
-                    title: response.title,
-                    text: response.message,
-                });
-            }
-        }
-});
-
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
     });
-    // $('#password').keypress(function(event) {
-    //     if (event.which === 13) {
-    //         event.preventDefault(); // Prevent default form submission
-    //         $('#user_login').submit(); // Submit the form
-    //     }
-    // });
-    $('#register').on('click', function() {
-        var formdata = new FormData(register_form);
 
-
-        $.ajax({
-            url: <?php BASE_URL; ?> "action/userRegister.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    Toast.fire({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        window.location.href = 'index.php';
-                    });
-                } else {
-                    $('#register_modal').modal('hide');
-                    Toast.fire({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        })
+    document.getElementById('triggerToast').addEventListener('click', function() {
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully"
+      });
     });
-})
 </script>
 </html>
