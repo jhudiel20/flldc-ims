@@ -13,10 +13,9 @@
             "src": "/assets/(.*)",
             "dest": "/public/assets/$1"
         },
-        {   "src": "/(.*)", 
-            "dest": "/public/$1" 
+        {   "src": "/action/userlogin.php", 
+            "dest": "/public/action/$1" 
         },
-        { "src": "/action/userlogin", "dest": "/public/action/userlogin.php" },
         {
             "src": "/assets/action/(.*)",
             "dest": "/public/assets/action/$1"
