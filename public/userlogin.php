@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 session_start();
 
 // Output the content of the $_REQUEST array to validate incoming data
-var_dump($_REQUEST);
+print_r($_REQUEST);
 exit();
 
 // The rest of your code...
