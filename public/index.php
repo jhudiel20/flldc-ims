@@ -228,9 +228,10 @@ include 'config/config.php';
                 })
             }
         },
-            error: function(xhr, status, error) {
-                console.error("AJAX Error:", status, error); // Handle and log AJAX errors
-            }
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.log("Response Text:", xhr.responseText);
+        }
         });
     });
 
