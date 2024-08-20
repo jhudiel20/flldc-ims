@@ -281,7 +281,7 @@ $(document).ready(function() {
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
         $.ajax({
-            url: <?php BASE_URL; ?>"/public/action/userlogin.php",
+            url: <?php BASE_URL; ?>"/action/userlogin.php",
             method: "POST",
             data: formdata,
             dataType: "json",
