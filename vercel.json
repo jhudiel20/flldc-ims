@@ -10,6 +10,10 @@
             "dest" : "/api/index.php"
         },
         {
+            "src": "/action/(.*)",
+            "dest": "/public/action/$1"
+        },
+        {
             "src": "/assets/(.*)",
             "dest": "/public/assets/$1"
         },
