@@ -24,9 +24,15 @@ try {
     if ($user && password_verify($password, $user['password'])) {
         // Set session variable or perform other actions as needed
         $_SESSION['user_id'] = $user['id'];
-        echo json_encode(['success' => true, 'message' => 'Login successful.']);
+        $response['success'] = true;
+        $response['title'] = 'success';
+        $response['message'] = 'Login successful.';
+        echo json_encode($response);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid username or password.']);
+        $response['success'] = false;
+        $response['title'] = 'error';
+        $response['message'] = 'Invalid username or password.';
+        echo json_encode($response);
     }
 } catch (PDOException $e) {
     // Output detailed error message

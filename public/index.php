@@ -236,7 +236,7 @@ include 'config/config.php';
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Login Successful',
+                        title: response.title,
                         text: response.message
                     }).then(function() {
                         window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
@@ -244,7 +244,7 @@ include 'config/config.php';
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Login Failed',
+                        title: response.title,
                         text: response.message
                     });
                 }
