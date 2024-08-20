@@ -101,7 +101,7 @@ include 'config/config.php';
                             <!-- <h4 class="mb-2">Welcome to Sneat! 👋</h4> -->
                             <p class="mb-4">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
 
-                            <form id="user_login" class="mb-3" method="post">
+                            <form id="user_login_form" class="mb-3" method="post">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username" name="username"
@@ -127,7 +127,7 @@ include 'config/config.php';
                                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                                   </div>
                                 </div> -->
-                                <button type="button" id="login" name="login" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -217,38 +217,42 @@ include 'config/config.php';
         }
     });
 
-    $(document).ready(function() {
-        $('#login').on('click', function() {
-            var formdata = new FormData(user_login);
-            $.ajax({
-                url: <?php BASE_URL; ?> "userlogin.php",
-                method: "POST",
-                data: formdata,
-                dataType: "json",
-                contentType: false,
-                cache: false,
-                processData: false,
+// Add event listener to the button with ID 'loginButton'
+    document.getElementById('login_btn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button behavior
 
-                success: function(response) {
-                    console.log(response);
-                    if (response.success) {
-                        Toast.fire({
-                                icon: 'success',
-                                title: response.title,
-                                text: response.message,
-                            })
-                            .then(function() {
-                                window.location.href = 'pages/dashboard-lnd.php';
-                            });
-                    } else {
-                        Toast.fire({
-                            icon: response.icon,
-                            title: response.title,
-                            text: response.message,
-                        })
-                    }
-                }
-            })
+        // Get the form element
+        const form = document.getElementById('user_login_form');
+        const formData = new FormData(form);
+
+        fetch('userlogin.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: data.message
+                }).then(() => {
+                    window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: data.message
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An unexpected error occurred.'
+            });
         });
     });
 </script>
