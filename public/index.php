@@ -225,7 +225,7 @@ include 'config/config.php';
         const form = document.getElementById('user_login_form');
         const formData = new FormData(form);
 
-        fetch('userlogin.php', {
+        fetch('/action/userlogin.php', {
             method: 'POST',
             body: formData
         })
@@ -237,7 +237,7 @@ include 'config/config.php';
                     title: 'Login Successful',
                     text: data.message
                 }).then(() => {
-                    window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
+                    window.location.href = '/pages/dashboard.php'; // Redirect to the dashboard or desired page
                 });
             } else {
                 Swal.fire({

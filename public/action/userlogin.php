@@ -1,5 +1,6 @@
 <?php
-include 'DBConnection.php'; // Include your database connection script
+include '../DBConnection.php'; 
+include '../config/config.php'; // Include your database connection script
 
 header('Content-Type: application/json');
 
