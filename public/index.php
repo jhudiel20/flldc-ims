@@ -280,34 +280,35 @@ include 'config/config.php';
 $(document).ready(function() {
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
-            $.ajax({
-                url: "<?php echo BASE_URL; ?>userlogin.php",
-                method: "POST",
-                data: formdata,
-                dataType: "json",
-                contentType: false,
-                cache: false,
-                processData: false,
+        $.ajax({
+        url: "<?php echo BASE_URL; ?>/userlogin.php",
+        method: "POST",
+        data: formdata,
+        dataType: "json",
+        contentType: false,
+        cache: false,
+        processData: false,
 
-                success: function(response) {
-                    console.log(response);
-                    if (response.success) {
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                        }).then(function() {
-                            window.location.href = '<?php echo BASE_URL; ?>/pages/dashboard-lnd.php';
-                        });
-                    } else {
-                        Toast.fire({
-                            icon: response.icon,
-                            title: response.title,
-                            text: response.message,
-                        });
-                    }
-                }
-            });
+        success: function(response) {
+            console.log(response);
+            if (response.success) {
+                Toast.fire({
+                    icon: 'success',
+                    title: response.title,
+                    text: response.message,
+                }).then(function() {
+                    window.location.href = '<?php echo BASE_URL; ?>/pages/dashboard-lnd.php';
+                });
+            } else {
+                Toast.fire({
+                    icon: response.icon,
+                    title: response.title,
+                    text: response.message,
+                });
+            }
+        }
+});
+
     });
     // $('#password').keypress(function(event) {
     //     if (event.which === 13) {
