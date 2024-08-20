@@ -199,13 +199,12 @@ include 'config/config.php';
     });
 
     $('#login_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('user_login_form'));
+        var formdata = new FormData(user_login_form);
         $.ajax({
             url: "/action/userlogin.php",
             method: "POST",
             data: formdata,
             dataType: "json",
-            // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             cache: false,
             processData: false,
             success: function(response) {
