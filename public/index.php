@@ -114,7 +114,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="submit" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -178,47 +178,67 @@ include 'config/config.php';
         <!-- Page JS -->
         <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
 
 <script>
-$(document).ready(function() {
-    $('#login_btn').on('click', function() {
-        var formdata = new FormData(user_login_form);
-        $.ajax({
-            url: "/action/userlogin.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    window.location.href = 'pages/dashboard-lnd.php';
-                                });
-
-                            } else {
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                            }
-            }
-        })
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
     });
-})
+
+        document.getElementById('user_login_form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = document.getElementById('user_login_form');
+            const formData = new FormData(form);
+
+            fetch('/action/userlogin.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: data.message
+                    }).then(() => {
+                        window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: data.message
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred: ' + error.message
+                });
+            });
+        });
 </script>
 </html>
