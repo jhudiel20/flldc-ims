@@ -1,4 +1,8 @@
-<?php include 'config/config.php'; ?>
+<?php 
+require 'DBConnection.php';
+include 'config/config.php'; 
+
+?>
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default"
