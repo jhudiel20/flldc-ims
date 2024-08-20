@@ -270,4 +270,99 @@ include 'config/config.php';
 
         <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 </body>
+
+<script>
+    document.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+        document.getElementById("login").click();
+    }
+});
+$(document).ready(function() {
+    $('#login').on('click', function() {
+        var formdata = new FormData(user_login);
+
+        // alert(username + password);
+        // if (username == '' || password == '') {
+        //     swal({
+        //         icon: 'warning',
+        //         title: 'Something Went Wrong!',
+        //         text: 'Please fill all fields.'
+        //     })
+        // }
+        $.ajax({
+            url: <?php BASE_URL; ?> "action/userlogin.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    Toast.fire({
+                            icon: 'success',
+                            title: response.title,
+                            text: response.message,
+                        })
+                        .then(function() {
+                            window.location.href = 'pages/dashboard-lnd.php';
+                        });
+                } else {
+                    Toast.fire({
+                        icon: response.icon,
+                        title: response.title,
+                        text: response.message,
+                    })
+                }
+            }
+        })
+    });
+    // $('#password').keypress(function(event) {
+    //     if (event.which === 13) {
+    //         event.preventDefault(); // Prevent default form submission
+    //         $('#user_login').submit(); // Submit the form
+    //     }
+    // });
+    $('#register').on('click', function() {
+        var formdata = new FormData(register_form);
+
+
+        $.ajax({
+            url: <?php BASE_URL; ?> "action/userRegister.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        window.location.href = 'index.php';
+                    });
+                } else {
+                    $('#register_modal').modal('hide');
+                    Toast.fire({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        })
+    });
+})
+</script>
 </html>
