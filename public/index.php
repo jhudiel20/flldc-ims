@@ -280,17 +280,8 @@ include 'config/config.php';
 $(document).ready(function() {
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
-
-        // alert(username + password);
-        // if (username == '' || password == '') {
-        //     swal({
-        //         icon: 'warning',
-        //         title: 'Something Went Wrong!',
-        //         text: 'Please fill all fields.'
-        //     })
-        // }
         $.ajax({
-            url: "/public/action/userlogin.php",
+            url: <?php BASE_URL; ?>"/action/userlogin.php",
             method: "POST",
             data: formdata,
             dataType: "json",
