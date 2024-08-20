@@ -200,7 +200,7 @@ include 'config/config.php';
                                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                                   </div>
                                 </div> -->
-                                <button type="button" id="login" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="button" id="login" name="login" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -283,7 +283,7 @@ $(document).ready(function() {
         console.log(formdata);
         $.ajax({
             url: <?php BASE_URL; ?>"/action/userlogin.php",
-            method: "POST",
+            method: "GET",
             data: formdata,
             dataType: "json",
             contentType: false,
