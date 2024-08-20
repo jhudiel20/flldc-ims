@@ -127,7 +127,7 @@ include 'config/config.php';
                                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                                   </div>
                                 </div> -->
-                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="submit" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -217,46 +217,47 @@ include 'config/config.php';
         }
     });
 
-    $('#login_btn').on('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    document.getElementById('user_login_form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-        var formdata = new FormData($('#user_login_form')[0]);
+            const form = document.getElementById('user_login_form');
+            const formData = new FormData(form);
 
-        $.ajax({
-            url: '/action/userlogin.php', // Use PHP to insert BASE_URL
-            method: 'POST',
-            data: formdata,
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response); // Log the response for debugging
-                if (response.success) {
+            fetch('/action/userlogin.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: response.title,
-                        text: response.message
-                    }).then(function() {
+                        title: 'Login Successful',
+                        text: data.message
+                    }).then(() => {
                         window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
                     });
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: response.title,
-                        text: response.message
+                        title: 'Login Failed',
+                        text: data.message
                     });
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'An unexpected error occurred: ' + textStatus
+                    text: 'An unexpected error occurred: ' + error.message
                 });
-            }
+            });
         });
-    });
 </script>
 </html>

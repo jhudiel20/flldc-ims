@@ -1,46 +1,54 @@
 <?php
 session_start();
-include 'DBConnection.php'; // Include your database connection script
+include 'DBConnection.php';
 
+// Set content type to JSON
 header('Content-Type: application/json');
 
-$username = $_POST['username'] ?? '';
-$password = $_POST['password'] ?? '';
+// Initialize response array
+$response = array();
 
-if (empty($username) || empty($password)) {
+// Check if username and password are provided
+if (empty($_POST['username']) || empty($_POST['password'])) {
     $response['success'] = false;
-    $response['title'] = 'error';
     $response['message'] = 'Please fill in both fields.';
     echo json_encode($response);
     exit;
 }
 
+// Get posted data
+$username = $_POST['username'];
+$password = $_POST['password'];
+
 try {
-    $stmt = $conn->prepare('SELECT * FROM users WHERE username = :username');
+    // Prepare SQL query to fetch user details
+    $stmt = $conn->prepare('SELECT id, username, password FROM users WHERE username = :username');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
+
+    // Fetch user data
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        // Set session variable or perform other actions as needed
+        // Successful login
         $_SESSION['user_id'] = $user['id'];
         $response['success'] = true;
-        $response['title'] = 'success';
         $response['message'] = 'Login successful.';
-        echo json_encode($response);
     } else {
+        // Invalid credentials
         $response['success'] = false;
-        $response['title'] = 'error';
         $response['message'] = 'Invalid username or password.';
-        echo json_encode($response);
     }
 } catch (PDOException $e) {
-    // Output detailed error message
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-    error_log('Database error: ' . $e->getMessage()); // Log error to the server log
+    // Database error
+    $response['success'] = false;
+    $response['message'] = 'Database error: ' . $e->getMessage();
 } catch (Exception $e) {
-    // Handle other types of exceptions
-    echo json_encode(['success' => false, 'message' => 'Unexpected error: ' . $e->getMessage()]);
-    error_log('Unexpected error: ' . $e->getMessage()); // Log error to the server log
+    // General error
+    $response['success'] = false;
+    $response['message'] = 'Unexpected error: ' . $e->getMessage();
 }
+
+// Return JSON response
+echo json_encode($response);
 ?>
