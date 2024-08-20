@@ -248,6 +248,7 @@ include 'config/config.php';
             }
         })
         .catch(error => {
+            console.error('Fetch error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
