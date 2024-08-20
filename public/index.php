@@ -199,34 +199,40 @@ include 'config/config.php';
     });
 
     $('#login_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('user_login_form'));
-        $.ajax({
-            url: "/action/userlogin.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    Toast.fire({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                        })
-                        .then(function() {
-                            window.location.href = 'pages/dashboard-lnd.php';
-                        });
-                } else {
-                    Toast.fire({
-                        icon: response.icon,
+    console.log("Login button clicked"); // Debug log
+    var formdata = new FormData(document.getElementById('user_login_form'));
+    console.log("FormData prepared:", formdata); // Debug log
+    $.ajax({
+        url: "/action/userlogin.php",
+        method: "POST",
+        data: formdata,
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            console.log("AJAX Success:", response); // Debug log
+            if (response.success) {
+                Toast.fire({
+                        icon: 'success',
                         title: response.title,
                         text: response.message,
                     })
-                }
+                    .then(function() {
+                        window.location.href = 'pages/dashboard-lnd.php';
+                    });
+            } else {
+                Toast.fire({
+                    icon: response.icon,
+                    title: response.title,
+                    text: response.message,
+                })
             }
-        })
+        },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error); // Handle and log AJAX errors
+            }
+        });
     });
+
 </script>
 </html>
