@@ -220,7 +220,7 @@ include 'config/config.php';
     $('#login_btn').on('click', function(event) {
         event.preventDefault(); // Prevent the default form submission
 
-        var formdata = new FormData($('#user_login_form')[0]);
+        var formdata = new FormData(user_login_form);
 
         $.ajax({
             url: '/action/userlogin.php', // Use PHP to insert BASE_URL
