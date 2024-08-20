@@ -296,15 +296,8 @@ function page_url(){
 function base_url(){   
 // first get http protocol if http or https
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
-    #$base_url .= "192.168.0.100/final_lms_prod/"; #change to localhost or domain
-  // $base_url .= "192.168.8.34:8888/LDIMS/"; #change to localhost or domain // office
-  $base_url .= "10.2.6.96:8888/LDIMS/"; #change to localhost or domain // bahay
-  // $base_url .= "192.168.8.132:8080/LDIMS/"; #change to localhost or domain // server office
-
-    return $base_url; 
-
-
-    
+    $base_url .= "flldc-ims.vercel.app/"; 
+    return $base_url;  
 }
 
 function encrypted_string($unencrypt){ 
