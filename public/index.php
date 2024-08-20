@@ -173,6 +173,60 @@ include 'config/config.php';
         <?php
         // include DOMAIN_PATH . "/action/global/include_bottom.php";
       ?>
+</body>
+
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    $(document).ready(function() {
+        $('#login').on('click', function() {
+            var formdata = new FormData(user_login);
+            $.ajax({
+                url: <?php BASE_URL; ?> "userlogin.php",
+                method: "POST",
+                data: formdata,
+                dataType: "json",
+                contentType: false,
+                cache: false,
+                processData: false,
+
+                success: function(response) {
+                    console.log(response);
+                    if (response.success) {
+                        Toast.fire({
+                                icon: 'success',
+                                title: response.title,
+                                text: response.message,
+                            })
+                            .then(function() {
+                                window.location.href = 'pages/dashboard-lnd.php';
+                            });
+                    } else {
+                        Toast.fire({
+                            icon: response.icon,
+                            title: response.title,
+                            text: response.message,
+                        })
+                    }
+                }
+            })
+        });
+    });
+</script>
         <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/libs/popper/popper.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/js/bootstrap.js"></script>
@@ -196,58 +250,5 @@ include 'config/config.php';
         <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
 
         <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-</body>
 
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-
-$(document).ready(function() {
-    $('#login').on('click', function() {
-        var formdata = new FormData(user_login);
-        $.ajax({
-            url: <?php BASE_URL; ?> "userlogin.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    Toast.fire({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                        })
-                        .then(function() {
-                            window.location.href = 'pages/dashboard-lnd.php';
-                        });
-                } else {
-                    Toast.fire({
-                        icon: response.icon,
-                        title: response.title,
-                        text: response.message,
-                    })
-                }
-            }
-        })
-    });
-});
-</script>
 </html>
