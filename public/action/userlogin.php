@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'DBConnection.php';
+include '../DBConnection.php';
 
 // Set content type to JSON
 header('Content-Type: application/json');
