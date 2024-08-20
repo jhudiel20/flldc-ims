@@ -220,7 +220,7 @@ include 'config/config.php';
     $('#login_btn').on('click', function(event) {
         event.preventDefault(); // Prevent the default form submission
 
-        var formdata = new FormData(user_login_form);
+        var formdata = new FormData($('#user_login_form')[0]);
 
         $.ajax({
             url: '/action/userlogin.php', // Use PHP to insert BASE_URL
@@ -248,6 +248,13 @@ include 'config/config.php';
                         text: response.message
                     });
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred: ' + textStatus
+                });
             }
         });
     });
