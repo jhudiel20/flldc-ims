@@ -11,8 +11,7 @@ include 'config/config.php';
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="description" content="Learning & Development IMS">
     <meta http-equiv="refresh" content="1800;<?php BASE_URL; ?>Actions.php?a=logout" />
     <title><?php echo PAGE_TITLE; ?></title>
@@ -33,8 +32,7 @@ include 'config/config.php';
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/rtl/core.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/rtl/theme-default.css"
-        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/css/demo.css" />
 
     <!-- Vendors CSS -->
@@ -63,11 +61,6 @@ include 'config/config.php';
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-
-            <?php
-        // include DOMAIN_PATH . "/action/global/sidebar.php";
-        // include DOMAIN_PATH . "/action/global/header.php"; 
-        ?>
 
             <div class="authentication-wrapper authentication-cover">
                 <div class="authentication-inner row m-0">
@@ -121,13 +114,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <!-- <div class="mb-3">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                                  </div>
-                                </div> -->
-                                <button type="submit" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -160,8 +147,6 @@ include 'config/config.php';
                 </div>
             </div>
 
-
-
             <!-- Overlay -->
             <div class="layout-overlay layout-menu-toggle"></div>
 
@@ -170,9 +155,6 @@ include 'config/config.php';
         </div>
         <!-- / Layout wrapper -->
 
-        <?php
-        // include DOMAIN_PATH . "/action/global/include_bottom.php";
-      ?>
 </body>
 
         <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
@@ -183,7 +165,6 @@ include 'config/config.php';
         <script src="<?php BASE_URL; ?>assets/vendor/libs/i18n/i18n.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.js"></script>
         <script src="<?php BASE_URL; ?>assets/vendor/js/menu.js"></script>
-
         <!-- endbuild -->
 
         <!-- Vendors JS -->
@@ -201,63 +182,40 @@ include 'config/config.php';
 
 
 <script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
+$(document).ready(function() {
+    $('#login_btn').on('click', function() {
+        var formdata = new FormData(user_login_form);
+        console.log(formdata);
+        $.ajax({
+            url: "/action/userlogin.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
 
-    document.getElementById('user_login_form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            const form = document.getElementById('user_login_form');
-            const formData = new FormData(form);
-
-            fetch('/action/userlogin.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse JSON response
-            })
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Login Successful',
-                        text: data.message
-                    }).then(() => {
-                        window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
-                    });
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    Toast.fire({
+                            icon: 'success',
+                            title: response.title,
+                            text: response.message,
+                        })
+                        .then(function() {
+                            window.location.href = 'pages/dashboard-lnd.php';
+                        });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: data.message
-                    });
+                    Toast.fire({
+                        icon: response.icon,
+                        title: response.title,
+                        text: response.message,
+                    })
                 }
-            })
-            .catch(error => {
-                console.error('Fetch Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'An unexpected error occurred: ' + error.message
-                });
-            });
-        });
+            }
+        })
+    });
+})
 </script>
 </html>
