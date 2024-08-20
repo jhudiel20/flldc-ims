@@ -1,8 +1,9 @@
 <?php
 
 
-$url =  base_url();
-define("BASE_URL",$url);
+// $url =  base_url();
+// define("BASE_URL",$url);
+define('BASE_URL', $_ENV['BASE_URL'] ?? 'https://flldc-ims.vercel.app/');
 define("DOMAIN_PATH", dirname(__DIR__));
 define('FILE_VERSION', '1.1.3');
 define('PAGE_TITLE', 'FAST LDIMS');
