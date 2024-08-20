@@ -290,7 +290,7 @@ $(document).ready(function() {
         //     })
         // }
         $.ajax({
-            url: "../action/userlogin.php",
+            url: "/public/action/userlogin.php",
             method: "POST",
             data: formdata,
             dataType: "json",
