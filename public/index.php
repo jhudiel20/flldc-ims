@@ -114,7 +114,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -205,7 +205,7 @@ include 'config/config.php';
             method: "POST",
             data: formdata,
             dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             cache: false,
             processData: false,
             success: function(response) {
