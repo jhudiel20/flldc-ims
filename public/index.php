@@ -178,7 +178,7 @@ include 'config/config.php';
         <!-- Page JS -->
         <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
 
-        <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
 <script>
