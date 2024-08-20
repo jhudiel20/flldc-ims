@@ -42,6 +42,6 @@ $db = new DBConnection();
 $conn = $db->conn;
 
 // Check if the connection is alive
-echo $db->checkConnection();
+// echo $db->checkConnection();
 
 // If you have a second connection to another database, replicate the same structure.

@@ -129,7 +129,7 @@ include 'config/config.php';
                                 </div> -->
                                 <button type="button" id="login" name="login" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
-                            <button id="triggerToast">Show Toast</button>
+
                             <p class="text-center">
                                 <span>Not Registered?</span>
                                 <a href="auth-register-cover.html">
@@ -200,22 +200,54 @@ include 'config/config.php';
 
 <script>
     const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
+        toast: true,
+        position: "top-end",
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
     });
 
-    document.getElementById('triggerToast').addEventListener('click', function() {
-      Toast.fire({
-        icon: "success",
-        title: "Signed in successfully"
-      });
+$(document).ready(function() {
+    $('#login').on('click', function() {
+        var formdata = new FormData(user_login);
+        $.ajax({
+            url: <?php BASE_URL; ?> "userlogin.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    Toast.fire({
+                            icon: 'success',
+                            title: response.title,
+                            text: response.message,
+                        })
+                        .then(function() {
+                            window.location.href = 'pages/dashboard-lnd.php';
+                        });
+                } else {
+                    Toast.fire({
+                        icon: response.icon,
+                        title: response.title,
+                        text: response.message,
+                    })
+                }
+            }
+        })
     });
+});
 </script>
 </html>
