@@ -199,7 +199,7 @@ include 'config/config.php';
     });
 
     $('#login_btn').on('click', function() {
-        var formdata = new FormData(user_login_form);
+        var formdata = new FormData(document.getElementById('user_login_form'));
         $.ajax({
             url: "/action/userlogin.php",
             method: "POST",
