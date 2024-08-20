@@ -8,7 +8,10 @@ $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 
 if (empty($username) || empty($password)) {
-    echo json_encode(['success' => false, 'message' => 'Please fill in both fields.']);
+    $response['success'] = false;
+    $response['title'] = 'error';
+    $response['message'] = 'Please fill in both fields.';
+    echo json_encode($response);
     exit;
 }
 
