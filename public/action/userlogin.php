@@ -1,7 +1,8 @@
 <?php
 include 'DBConnection.php';
 
-$response = array();
+$username = $_POST['username'];
+$password = $_POST['password'];
 
 if (empty($_POST['username']) || empty($_POST['password'])) {
     $response['success'] = false;
@@ -9,10 +10,6 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
     echo json_encode($response);
     exit;
 }
-
-$username = $_POST['username'];
-$password = $_POST['password'];
-
 
     $stmt = $conn->prepare('SELECT id, username, password FROM users WHERE username = :username');
     $stmt->bindParam(':username', $username);
