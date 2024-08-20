@@ -204,7 +204,7 @@ include 'config/config.php';
             const form = document.getElementById('user_login_form');
             const formData = new FormData(form);
 
-            fetch('/action/userlogin.php', {
+            fetch('/public/action/userlogin.php', {
                 method: 'POST',
                 body: formData
             })
