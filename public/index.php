@@ -217,43 +217,46 @@ include 'config/config.php';
         }
     });
 
-// Add event listener to the button with ID 'loginButton'
-    document.getElementById('login_btn').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default button behavior
+    $('#login_btn').on('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-        // Get the form element
-        const form = document.getElementById('user_login_form');
-        const formData = new FormData(form);
+        var formdata = new FormData($('#user_login_form')[0]);
 
-        fetch('/action/userlogin.php', {
+        $.ajax({
+            url: '/action/userlogin.php', // Use PHP to insert BASE_URL
             method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successful',
-                    text: data.message
-                }).then(() => {
-                    window.location.href = '/pages/dashboard.php'; // Redirect to the dashboard or desired page
-                });
-            } else {
+            data: formdata,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response); // Log the response for debugging
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: response.message
+                    }).then(function() {
+                        window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: response.message
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Login Failed',
-                    text: data.message
+                    title: 'Error',
+                    text: 'An unexpected error occurred: ' + textStatus
                 });
+                console.error('AJAX Error:', textStatus, errorThrown); // Log AJAX errors
             }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An unexpected error occurred.'
-            });
         });
     });
 </script>
