@@ -114,7 +114,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="submit" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="button" id="login_btn" name="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
                             </form>
 
                             <p class="text-center">
@@ -198,57 +198,34 @@ include 'config/config.php';
         }
     });
 
-    document.getElementById('user_login_form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    $('#login_btn').on('click', function() {
+        var formdata = new FormData(user_login);
+        $.ajax({
+            url: <?php BASE_URL; ?> "action/userlogin.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
 
-    const form = document.getElementById('user_login_form');
-    const formData = new FormData(form);
-
-    // Convert FormData to JSON
-    const jsonObject = {};
-    formData.forEach((value, key) => {
-        jsonObject[key] = value;
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    Toast.fire({
+                            icon: 'success',
+                            title: response.title,
+                            text: response.message,
+                        })
+                        .then(function() {
+                            window.location.href = 'pages/dashboard-lnd.php';
+                        });
+                } else {
+                    Toast.fire({
+                        icon: response.icon,
+                        title: response.title,
+                        text: response.message,
+                    })
+                }
+            }
+        })
     });
-
-    fetch('/action/userlogin.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Set the content type to JSON
-        },
-        body: JSON.stringify(jsonObject) // Convert JSON object to string
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse JSON response
-    })
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Login Successful',
-                text: data.message
-            }).then(() => {
-                window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Login Failed',
-                text: data.message
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Fetch Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An unexpected error occurred: ' + error.message
-        });
-    });
-});
-
 </script>
 </html>
