@@ -278,7 +278,7 @@ include 'config/config.php';
     }
 });
 $(document).ready(function() {
-    var baseUrl = "<?php echo BASE_URL; ?>";
+    var baseUrl = "<?php BASE_URL; ?>";
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
         $.ajax({
