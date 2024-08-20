@@ -198,47 +198,57 @@ include 'config/config.php';
         }
     });
 
-        document.getElementById('user_login_form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+    document.getElementById('user_login_form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-            const form = document.getElementById('user_login_form');
-            const formData = new FormData(form);
+    const form = document.getElementById('user_login_form');
+    const formData = new FormData(form);
 
-            fetch('/public/action/userlogin.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse JSON response
-            })
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Login Successful',
-                        text: data.message
-                    }).then(() => {
-                        window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: data.message
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Fetch Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'An unexpected error occurred: ' + error.message
-                });
+    // Convert FormData to JSON
+    const jsonObject = {};
+    formData.forEach((value, key) => {
+        jsonObject[key] = value;
+    });
+
+    fetch('/action/userlogin.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set the content type to JSON
+        },
+        body: JSON.stringify(jsonObject) // Convert JSON object to string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse JSON response
+    })
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful',
+                text: data.message
+            }).then(() => {
+                window.location.href = 'dashboard.php'; // Redirect to the dashboard or desired page
             });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: data.message
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An unexpected error occurred: ' + error.message
         });
+    });
+});
+
 </script>
 </html>
