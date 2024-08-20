@@ -280,6 +280,7 @@ include 'config/config.php';
 $(document).ready(function() {
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
+        console.log(formdata);
         $.ajax({
             url: <?php BASE_URL; ?>"/action/userlogin.php",
             method: "POST",
