@@ -206,6 +206,7 @@ include 'config/config.php';
             data: formdata,
             dataType: "json",
             contentType: false,
+            processData: false,
             success: function(response) {
                 console.log(response);
                 if (response.success) {
