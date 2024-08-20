@@ -197,21 +197,25 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 if (response.success) {
-                    Toast.fire({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                        })
-                        .then(function() {
-                            window.location.href = 'pages/dashboard-lnd.php';
-                        });
-                } else {
-                    Toast.fire({
-                        icon: response.icon,
-                        title: response.title,
-                        text: response.message,
-                    })
-                }
+                                swal({
+                                    icon: 'success',
+                                    title: response.title,
+                                    text: response.message,
+                                    buttons: false,
+                                    timer: 2000,
+                                }).then(function() {
+                                    window.location.href = 'pages/dashboard-lnd.php';
+                                });
+
+                            } else {
+                                swal({
+                                    icon: 'warning',
+                                    title: response.title,
+                                    text: response.message,
+                                    buttons: false,
+                                    timer: 2000,
+                                })
+                            }
             }
         })
     });
