@@ -1,12 +1,6 @@
 <?php
 include 'DBConnection.php';
 
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-header('Content-Type: application/json');
-
 $response = array();
 
 if (empty($_POST['username']) || empty($_POST['password'])) {
@@ -19,7 +13,7 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-try {
+
     $stmt = $conn->prepare('SELECT id, username, password FROM users WHERE username = :username');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
@@ -30,17 +24,14 @@ try {
         $_SESSION['user_id'] = $user['id'];
         $response['success'] = true;
         $response['message'] = 'Login successful.';
+        echo json_encode($response);
+        exit;
     } else {
         $response['success'] = false;
         $response['message'] = 'Invalid username or password.';
+        echo json_encode($response);
+        exit;
     }
-} catch (PDOException $e) {
-    $response['success'] = false;
-    $response['message'] = 'Database error: ' . $e->getMessage();
-} catch (Exception $e) {
-    $response['success'] = false;
-    $response['message'] = 'Unexpected error: ' . $e->getMessage();
-}
 
-echo json_encode($response);
+
 ?>
