@@ -278,11 +278,10 @@ include 'config/config.php';
     }
 });
 $(document).ready(function() {
-    var baseUrl = "<?php BASE_URL; ?>";
     $('#login').on('click', function() {
         var formdata = new FormData(user_login);
         $.ajax({
-            url: baseUrl + "action/userlogin.php",
+            url: <?php BASE_URL; ?>"/action/userlogin.php",
             method: "POST",
             data: formdata,
             dataType: "json",
