@@ -205,7 +205,7 @@ include 'config/config.php';
             method: "POST",
             data: formdata,
             dataType: "json",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            contentType: false,
             cache: false,
             processData: false,
             success: function(response) {
