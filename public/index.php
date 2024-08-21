@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <!-- <h4 class="mb-2">Welcome to Sneat! 👋</h4> -->
                             <p class="mb-4">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
 
-                            <form id="user_login_form" class="mb-3" method="post">
+                            <form id="user_login_form" class="mb-3" method="post" action="index.php">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username" name="username"
@@ -139,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <button type="submit" class="btn btn-primary d-grid w-100">Sign in</button>
+                                <!-- <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button> -->
                             </form>
 
                             <p class="text-center">
