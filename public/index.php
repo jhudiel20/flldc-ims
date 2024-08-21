@@ -2,30 +2,6 @@
 require 'DBConnection.php';
 include 'config/config.php'; 
 
-$message = '';
-$messageType = '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-
-
-    $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Successful login
-        $message = 'Login successful!';
-        $messageType = 'success';
-    } else {
-        // Failed login
-        $message = 'Login failed. Please check your credentials.';
-        $messageType = 'error';
-    }
-}
 ?>
 <!DOCTYPE html>
 
@@ -182,36 +158,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
 </body>
 
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/popper/popper.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/js/bootstrap.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/hammer/hammer.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/i18n/i18n.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/js/menu.js"></script>
-        <!-- endbuild -->
+<script src="<?php echo BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/popper/popper.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/js/bootstrap.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
 
-        <!-- Vendors JS -->
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/popular.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
-        <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <!-- Main JS -->
-        <script src="<?php BASE_URL; ?>assets/js/main.js"></script>
+    <!-- Vendors JS -->
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/popular.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Main JS -->
+    <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
 
-        <!-- Page JS -->
-        <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
+    <!-- Page JS -->
+    <script src="<?php echo BASE_URL; ?>assets/js/pages-auth.js"></script>
 
-        <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-        <?php if ($message): ?>
-        <script>
-            Swal.fire({
-                icon: '<?php echo $messageType; ?>',
-                title: '<?php echo $message; ?>',
-                showConfirmButton: false,
-                timer: 1500
+    <script>
+        $(document).ready(function() {
+            $('#user_login_form').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                $.ajax({
+                    url: 'userlogin.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            icon: response.status,
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        if (response.status === 'success') {
+                            // Redirect to another page or perform other actions on success
+                            window.location.href = 'dashboard.php'; // Example redirect
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'An error occurred',
+                            text: 'Please try again later.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
             });
-        </script>
-        <?php endif; ?>
+        });
+    </script>
 </html>
