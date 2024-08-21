@@ -252,7 +252,7 @@ include 'config/config.php';
                 e.preventDefault(); // Prevent the default form submission
 
                 $.ajax({
-                    url: 'https://flldc-ims.vercel.app/userlogin.php', // Ensure this path is correct
+                    url: 'https://flldc-ims.vercel.app/action/userlogin.php', // Ensure this path is correct
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'json',
