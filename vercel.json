@@ -1,40 +1,41 @@
 {
     "functions": {
-        "api/userlogin.php": {
-            "runtime": "vercel-php@0.7.1"
-        },
-        "api/index.php": {
-            "runtime": "vercel-php@0.7.1"
-        }
+      "api/userlogin.php": {
+        "runtime": "vercel-php@0.7.1"
+      },
+      "api/index.php": {
+        "runtime": "vercel-php@0.7.1"
+      }
     },
     "routes": [
-        {
-            "src": "/userlogin.php",
-            "dest": "/api/userlogin.php"
-        },
-        {
-            "src": "/api/index.php",
-            "dest": "/api/index.php"
-        },
-        {
-            "src": "/assets/(.*)",
-            "dest": "/public/assets/$1"
-        },
-        {
-            "src": "/assets/action/(.*).php",
-            "dest": "/public/assets/action/$1"
-        },
-        {
-            "src": "/js/(.*)",
-            "dest": "/public/js/$1"
-        },
-        {
-            "src": "/assets/img/(.*).png",
-            "dest": "/public/assets/img/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
-        }
+      {
+        "src": "/userlogin.php",
+        "dest": "/api/userlogin.php"
+      },
+      {
+        "src": "/api/index.php",
+        "dest": "/api/index.php"
+      },
+      {
+        "src": "/assets/(.*)",
+        "dest": "/public/assets/$1"
+      },
+      {
+        "src": "/assets/action/(.*).php",
+        "dest": "/public/assets/action/$1"
+      },
+      {
+        "src": "/js/(.*)",
+        "dest": "/public/js/$1"
+      },
+      {
+        "src": "/assets/img/(.*).png",
+        "dest": "/public/assets/img/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/api/index.php"
+      }
     ]
-}
+  }
+  
