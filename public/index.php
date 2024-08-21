@@ -2,6 +2,31 @@
 require 'DBConnection.php';
 include 'config/config.php'; 
 
+$message = '';
+$messageType = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $db = new DBConnection();
+    $conn = $db->getConnection();
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user['password'])) {
+        // Successful login
+        $message = 'Login successful!';
+        $messageType = 'success';
+    } else {
+        // Failed login
+        $message = 'Login failed. Please check your credentials.';
+        $messageType = 'error';
+    }
+}
 ?>
 <!DOCTYPE html>
 
@@ -154,7 +179,16 @@ include 'config/config.php';
             <div class="drag-target"></div>
         </div>
         <!-- / Layout wrapper -->
-
+        <?php if ($message): ?>
+        <script>
+            Swal.fire({
+                icon: '<?php echo $messageType; ?>',
+                title: '<?php echo $message; ?>',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+        <?php endif; ?>
 </body>
 
         <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
@@ -179,61 +213,4 @@ include 'config/config.php';
         <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
 
         <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-
-
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-
-    $('#login_btn').on('click', function() {
-    console.log("Login button clicked"); // Debug log
-    var formdata = new FormData(document.getElementById('user_login_form'));
-    console.log("FormData prepared:", formdata); // Debug log
-    $.ajax({
-        url: "/action/userlogin.php",
-        method: "POST",
-        data: formdata,
-        dataType: "json",
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            console.log("AJAX Success:", response); // Debug log
-            if (response.success) {
-                Toast.fire({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                    })
-                    .then(function() {
-                        window.location.href = 'pages/dashboard-lnd.php';
-                    });
-            } else {
-                Toast.fire({
-                    icon: response.icon,
-                    title: response.title,
-                    text: response.message,
-                })
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error);
-            console.log("Response Text:", xhr.responseText);
-        }
-        });
-    });
-
-</script>
 </html>
