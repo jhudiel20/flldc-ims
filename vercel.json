@@ -6,8 +6,12 @@
     },
     "routes": [
       {
-        "src": "/api/index.php",
-        "dest": "/api/index.php"
+        "src": "/api/action/(.*).php",
+        "dest": "/api/action/$1.php"
+      },
+      {
+        "src": "/userlogin.php",
+        "dest": "/api/action/userlogin.php"
       },
       {
         "src": "/assets/(.*)",
