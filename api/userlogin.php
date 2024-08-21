@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Check if user is in the database
         $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
-        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -89,9 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Log the user action
-            $user_id = $_SESSION['ID'];
-            $action = "Logged in the system.";
-            $logs = $conn->query("INSERT INTO logs (user_id, action_made) VALUES ($1, $2)", array($user_id, $action));
+            $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
+            $stmt->bindParam(':user_id', $_SESSION['ID'], PDO::PARAM_INT);
+            $stmt->bindParam(':action_made', $action = "Logged in the system.", PDO::PARAM_STR);
+            $stmt->execute();
 
             $response['success'] = true;
             $response['title'] = 'Welcome!';
@@ -99,24 +100,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
 
             // Update user status
-            $status = $conn->query("UPDATE user_account SET status = '1', locked = '0' WHERE id = $1", array($_SESSION['ID']));
+            $stmt = $conn->prepare("UPDATE user_account SET status = '1', locked = '0' WHERE id = :id");
+            $stmt->bindParam(':id', $_SESSION['ID'], PDO::PARAM_INT);
+            $stmt->execute();
         } else {
             // Additional checks for incorrect credentials
-            $admin_access = $conn->query("SELECT * FROM user_account WHERE username = $1 AND access = 'ADMIN'", array($username));
-            if ($admin_access->rowCount() > 0) {
+            $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND access = 'ADMIN'");
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
+            $admin_access = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($admin_access) > 0) {
                 $response['icon'] = "warning";
                 $response['success'] = false;
                 $response['title'] = "Wrong Password!";
                 echo json_encode($response);
             } else {
-                $exist = $conn->query("SELECT * FROM user_account WHERE username = $1", array($username));
-                if ($exist->rowCount() > 0) {
-                    $row = $exist->fetch(PDO::FETCH_ASSOC);
-                    $id = $row['id'];
-                    $locked = $conn->query("SELECT * FROM user_account WHERE username = $1 AND password = $2", array($username, $password));
-                    $lock = $locked->fetch(PDO::FETCH_ASSOC);
-                    if ($locked->rowCount() > 0) {
-                        if ($lock['locked'] >= 3) {
+                $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
+                $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                $stmt->execute();
+                $exist = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($exist) {
+                    $id = $exist['id'];
+                    $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND password = :password");
+                    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                    $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $locked = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    if ($locked) {
+                        if ($locked['locked'] >= 3) {
                             $response['icon'] = "warning";
                             $response['success'] = false;
                             $response['title'] = "Account Locked!";
@@ -124,21 +138,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo json_encode($response);
                             exit();
                         }
-                        if ($lock['locked'] < 3) {
-                            $conn->query("UPDATE user_account SET locked = $1 WHERE id = $2", array($lock['locked'] + 1, $id));
+                        if ($locked['locked'] < 3) {
+                            $stmt = $conn->prepare("UPDATE user_account SET locked = locked + 1 WHERE id = :id");
+                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                            $stmt->execute();
                             $response['icon'] = "warning";
                             $response['success'] = false;
                             $response['title'] = "Wrong Password!";
-                            $response['message'] = "Attempt " . ($lock['locked'] + 1);
+                            $response['message'] = "Attempt " . ($locked['locked'] + 1);
                             echo json_encode($response);
                             exit();
                         }
                     } else {
-                        $conn->query("UPDATE user_account SET locked = locked + 1 WHERE id = $1", array($id));
+                        $stmt = $conn->prepare("UPDATE user_account SET locked = locked + 1 WHERE id = :id");
+                        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                        $stmt->execute();
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Wrong Password!";
-                        $response['message'] = "Attempt " . ($lock['locked'] + 1);
+                        $response['message'] = "Attempt " . ($locked['locked'] + 1);
                         echo json_encode($response);
                         exit();
                     }
