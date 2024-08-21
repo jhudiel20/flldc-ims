@@ -7,7 +7,7 @@
     "routes": [
       {
         "src": "/userlogin.php",
-        "dest": "/api/userlogin.php"
+        "dest": "/api/action/userlogin.php"
       },
       {
         "src": "/api/(.*)",
