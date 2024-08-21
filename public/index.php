@@ -185,7 +185,7 @@ include 'config/config.php';
                 e.preventDefault(); // Prevent the default form submission
 
                 $.ajax({
-                    url: 'userlogin.php',
+                    url: 'userlogin.php', // Ensure this path is correct
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'json',
@@ -198,11 +198,11 @@ include 'config/config.php';
                         });
 
                         if (response.status === 'success') {
-                            // Redirect to another page or perform other actions on success
                             window.location.href = 'dashboard.php'; // Example redirect
                         }
                     },
                     error: function(xhr, status, error) {
+                        console.log('AJAX Error:', status, error); // Log the error to the console
                         Swal.fire({
                             icon: 'error',
                             title: 'An error occurred',
@@ -215,4 +215,5 @@ include 'config/config.php';
             });
         });
     </script>
+
 </html>
