@@ -32,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    $password = set_password($password);
+
     try {
         // Check if user is in the database
         $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
