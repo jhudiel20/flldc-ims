@@ -55,6 +55,58 @@ include 'config/config.php';
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <style>
+        /* sweetalert2 colored toast */
+            .colored-toast.swal2-icon-success {
+                background-color: #27c251 !important;
+                color: white;
+            }
+
+            .colored-toast.swal2-icon-error {
+                background-color: #f27474 !important;
+                color: white;
+            }
+
+            .swal2-error {
+                background-color: white;
+            }
+
+            .colored-toast.swal2-icon-warning {
+                background-color: #f8bb86 !important;
+                color: white;
+            }
+
+            .colored-toast.swal2-icon-info {
+                background-color: #3fc3ee !important;
+                color: white;
+            }
+
+            .colored-toast.swal2-icon-question {
+                background-color: #87adbd !important;
+                color: white;
+            }
+
+            .colored-toast .swal2-title {
+                color: white;
+            }
+
+            .colored-toast .swal2-close {
+                color: white;
+            }
+
+            .colored-toast .swal2-html-container {
+                color: white;
+            }
+
+            .colored-toast {
+                color: white;
+            }
+
+            .bg-modify {
+                background: linear-gradient(to right, #0000A7, #E40000);
+            }
+        /* end */
+    </style>
 </head>
 
 <body>
@@ -205,16 +257,6 @@ include 'config/config.php';
                     data: $(this).serialize(),
                     dataType: 'json',
                     success: function(response) {
-                        // Swal.fire({
-                        //     icon: response.status,
-                        //     title: response.message,
-                        //     showConfirmButton: false,
-                        //     timer: 1500
-                        // });
-
-                        // if (response.status === 'success') {
-                        //     window.location.href = 'dashboard.php'; // Example redirect
-                        // }
                         if (response.success) {
                             Toast.fire({
                                     icon: 'success',
