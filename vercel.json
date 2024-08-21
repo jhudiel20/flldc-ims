@@ -10,6 +10,10 @@
         "dest": "/action/userlogin.php"
       },
       {
+        "src": "/(.*)",
+        "dest": "/action/userlogin.php"
+      },
+      {
         "src": "/api/index.php",
         "dest": "/api/index.php"
       },
