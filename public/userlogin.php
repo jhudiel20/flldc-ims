@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Ensure JSON output
+    header('Content-Type: application/json');
     echo json_encode($response);
     exit();
 }
