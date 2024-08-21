@@ -7,11 +7,7 @@
     "routes": [
       {
         "src": "/userlogin.php",
-        "dest": "/action/userlogin.php"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/action/userlogin.php"
+        "dest": "/api/action/userlogin.php"
       },
       {
         "src": "/api/index.php",
@@ -22,12 +18,12 @@
         "dest": "/public/assets/$1"
       },
       {
-        "src": "/css/(.*)",
-        "dest": "/public/css/$1"
-      },
-      {
         "src": "/js/(.*)",
         "dest": "/public/js/$1"
+      },
+      {
+        "src": "/css/(.*)",
+        "dest": "/public/css/$1"
       },
       {
         "src": "/pages/(.*)",
@@ -35,7 +31,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/api/index.php"
+        "dest": "/public/index.php"
       }
     ]
   }
