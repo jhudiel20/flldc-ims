@@ -6,7 +6,7 @@
     },
     "routes": [
       {
-        "src": "/api/action/(.*).php",
+        "src": "/api/action/(.*)",
         "dest": "/api/action/$1.php"
       },
       {
