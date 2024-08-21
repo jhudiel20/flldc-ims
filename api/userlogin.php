@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (count($admin_access) > 0) {
                 $response['icon'] = "warning";
                 $response['success'] = false;
-                $response['title'] = "Wrong Password!";
+                $response['title'] = "Wrong Password!".$password.' + '.$username;
                 echo json_encode($response);
             } else {
                 $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
