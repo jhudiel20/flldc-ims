@@ -6,12 +6,12 @@
     },
     "routes": [
       {
-        "src": "/action/userlogin.php",
-        "dest": "/public/action/userlogin.php"
+        "src": "/userlogin.php",
+        "dest": "/api/userlogin.php"
       },
       {
-        "src": "/public/(.*)",
-        "dest": "/public/$1"
+        "src": "/api/(.*)",
+        "dest": "/api/$1"
       },
       {
         "src": "/assets/(.*)",
@@ -27,7 +27,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/api/index.php"
+        "dest": "/public/$1"
       }
     ]
   }

@@ -1,5 +1,5 @@
 <?php 
-include 'DBConnection.php';
+require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
 
 ?>
