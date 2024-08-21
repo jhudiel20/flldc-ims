@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            if ($user['APPROVED_STATUS'] == 1) {
+            if ($user['approved_status'] == 1) {
                 $response['icon'] = "error";
                 $response['success'] = false;
                 $response['title'] = "Error!";
@@ -55,19 +55,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             session_start();
             $_SESSION['status'] = true;
-            $_SESSION['ID'] = $user['ID'];
-            $_SESSION['ACCESS'] = $user['ACCESS'];
-            $_SESSION['USERNAME'] = $user['USERNAME'];
-            $_SESSION['PASSWORD'] = $user['PASSWORD'];
-            $_SESSION['DATE_CREATED'] = $user['DATE_CREATED'];
-            $_SESSION['FNAME'] = $user['FNAME'];
-            $_SESSION['MNAME'] = $user['MNAME'];
-            $_SESSION['LNAME'] = $user['LNAME'];
-            $_SESSION['EXT_NAME'] = $user['EXT_NAME'];
-            $_SESSION['EMAIL'] = $user['EMAIL'];
-            $_SESSION['IMAGE'] = $user['IMAGE'];
-            $_SESSION['LOCKED'] = $user['LOCKED'];
-            $_SESSION['ADMIN_STATUS'] = $user['ADMIN_STATUS'];
+            $_SESSION['ID'] = $user['id'];
+            $_SESSION['ACCESS'] = $user['access'];
+            $_SESSION['USERNAME'] = $user['username'];
+            $_SESSION['PASSWORD'] = $user['password'];
+            $_SESSION['DATE_CREATED'] = $user['date_created'];
+            $_SESSION['FNAME'] = $user['fname'];
+            $_SESSION['MNAME'] = $user['mname'];
+            $_SESSION['LNAME'] = $user['lname'];
+            $_SESSION['EXT_NAME'] = $user['ext_name'];
+            $_SESSION['EMAIL'] = $user['email'];
+            $_SESSION['IMAGE'] = $user['image'];
+            $_SESSION['LOCKED'] = $user['locked'];
+            $_SESSION['ADMIN_STATUS'] = $user['admin_status'];
 
             if ($_SESSION['ACCESS'] == '') {
                 $response['icon'] = "info";
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Log the user action
             $user_id = $_SESSION['ID'];
             $action = "Logged in the system.";
-            $logs = $conn->query("INSERT INTO logs (user_id, action_made) VALUES ('$user_id', '$action')");
+            $logs = $conn->query("INSERT INTO logs (user_id, action_made) VALUES ($1, $2)", array($user_id, $action));
 
             $response['success'] = true;
             $response['title'] = 'Welcome!';
@@ -99,24 +99,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
 
             // Update user status
-            $status = $conn->query("UPDATE user_account SET STATUS = '1', LOCKED = '0' WHERE ID = '" . $_SESSION['ID'] . "'");
+            $status = $conn->query("UPDATE user_account SET status = '1', locked = '0' WHERE id = $1", array($_SESSION['ID']));
         } else {
             // Additional checks for incorrect credentials
-            $admin_access = $conn->query("SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND ACCESS = 'ADMIN'");
+            $admin_access = $conn->query("SELECT * FROM user_account WHERE username = $1 AND access = 'ADMIN'", array($username));
             if ($admin_access->rowCount() > 0) {
                 $response['icon'] = "warning";
                 $response['success'] = false;
                 $response['title'] = "Wrong Password!";
                 echo json_encode($response);
             } else {
-                $exist = $conn->query("SELECT * FROM user_account WHERE BINARY USERNAME = '$username'");
+                $exist = $conn->query("SELECT * FROM user_account WHERE username = $1", array($username));
                 if ($exist->rowCount() > 0) {
                     $row = $exist->fetch(PDO::FETCH_ASSOC);
-                    $id = $row['ID'];
-                    $locked = $conn->query("SELECT * FROM user_account WHERE BINARY USERNAME = '$username' AND BINARY PASSWORD = '$password'");
+                    $id = $row['id'];
+                    $locked = $conn->query("SELECT * FROM user_account WHERE username = $1 AND password = $2", array($username, $password));
                     $lock = $locked->fetch(PDO::FETCH_ASSOC);
                     if ($locked->rowCount() > 0) {
-                        if ($lock['LOCKED'] >= 3) {
+                        if ($lock['locked'] >= 3) {
                             $response['icon'] = "warning";
                             $response['success'] = false;
                             $response['title'] = "Account Locked!";
@@ -124,21 +124,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo json_encode($response);
                             exit();
                         }
-                        if ($lock['LOCKED'] < 3) {
-                            $conn->query("UPDATE user_account SET LOCKED = '" . ($lock['LOCKED'] + 1) . "' WHERE ID = '" . $id . "'");
+                        if ($lock['locked'] < 3) {
+                            $conn->query("UPDATE user_account SET locked = $1 WHERE id = $2", array($lock['locked'] + 1, $id));
                             $response['icon'] = "warning";
                             $response['success'] = false;
                             $response['title'] = "Wrong Password!";
-                            $response['message'] = "Attempt " . ($lock['LOCKED'] + 1);
+                            $response['message'] = "Attempt " . ($lock['locked'] + 1);
                             echo json_encode($response);
                             exit();
                         }
                     } else {
-                        $conn->query("UPDATE user_account SET LOCKED = LOCKED + 1 WHERE ID = '$id'");
+                        $conn->query("UPDATE user_account SET locked = locked + 1 WHERE id = $1", array($id));
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Wrong Password!";
-                        $response['message'] = "Attempt " . ($lock['LOCKED'] + 1);
+                        $response['message'] = "Attempt " . ($lock['locked'] + 1);
                         echo json_encode($response);
                         exit();
                     }
