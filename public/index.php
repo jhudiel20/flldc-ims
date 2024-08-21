@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
