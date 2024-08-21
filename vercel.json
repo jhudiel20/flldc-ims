@@ -6,10 +6,6 @@
     },
     "routes": [
       {
-        "src": "/userlogin.php",
-        "dest": "/api/action/userlogin.php"
-      },
-      {
         "src": "/api/index.php",
         "dest": "/api/index.php"
       },
