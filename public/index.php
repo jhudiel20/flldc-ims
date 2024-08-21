@@ -180,6 +180,21 @@ include 'config/config.php';
     <script src="<?php echo BASE_URL; ?>assets/js/pages-auth.js"></script>
 
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
         $(document).ready(function() {
             $('#user_login_form').on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
@@ -190,15 +205,31 @@ include 'config/config.php';
                     data: $(this).serialize(),
                     dataType: 'json',
                     success: function(response) {
-                        Swal.fire({
-                            icon: response.status,
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        // Swal.fire({
+                        //     icon: response.status,
+                        //     title: response.message,
+                        //     showConfirmButton: false,
+                        //     timer: 1500
+                        // });
 
-                        if (response.status === 'success') {
-                            window.location.href = 'dashboard.php'; // Example redirect
+                        // if (response.status === 'success') {
+                        //     window.location.href = 'dashboard.php'; // Example redirect
+                        // }
+                        if (response.success) {
+                            Toast.fire({
+                                    icon: 'success',
+                                    title: response.title,
+                                    text: response.message,
+                                })
+                                .then(function() {
+                                    window.location.href = 'pages/dashboard-lnd.php';
+                                });
+                        } else {
+                            Toast.fire({
+                                icon: response.icon,
+                                title: response.title,
+                                text: response.message,
+                            })
                         }
                     },
                     error: function(xhr, status, error) {

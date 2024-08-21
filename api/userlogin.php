@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/DBConnection.php';
 require_once __DIR__ . '../../public/config/config.php';
 
-$response = array('status' => 'error', 'message' => '');
+// $response = array('status' => 'error', 'message' => '');
 
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
