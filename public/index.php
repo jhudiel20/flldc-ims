@@ -264,7 +264,7 @@ include 'config/config.php';
                                     text: response.message,
                                 })
                                 .then(function() {
-                                    window.location.href = 'pages/dashboard-lnd.php';
+                                    window.location.href = '/pages/dashboard-lnd.php';
                                 });
                         } else {
                             Toast.fire({

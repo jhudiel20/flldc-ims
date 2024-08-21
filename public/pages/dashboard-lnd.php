@@ -1,12 +1,3 @@
-<?php
-require '../DBConnection.php';
-include '../config/config.php';
-
-if (!isset($_SESSION['ACCESS'])) {
-    header("Location:index.php");
-}
-
-?>
 <!doctype html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
