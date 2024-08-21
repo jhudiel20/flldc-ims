@@ -10,8 +10,8 @@
         "dest": "/api/userlogin.php"
       },
       {
-        "src": "/api/index.php",
-        "dest": "/api/index.php"
+        "src": "/api/(.*)",
+        "dest": "/api/$1"
       },
       {
         "src": "/assets/(.*)",
