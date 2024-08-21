@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include database connection and config
-require 'DBConnection.php';
+require '../DBConnection.php';
 include '../config/config.php';
 
 $response = array('status' => 'error', 'message' => '');
