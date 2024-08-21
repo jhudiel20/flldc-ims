@@ -32,8 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $password = set_password($password);
-
     try {
         // Check if user is in the database
         $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
@@ -43,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user) {
             // Verify password
-            if (password_verify($password, $user['password'])) {
+            if (set_password($password) === $user['password']) {
                 // Password matches
                 if ($user['approved_status'] == 1) {
                     $response['icon'] = "error";
