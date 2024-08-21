@@ -6,7 +6,7 @@
   },
   "routes": [
     {
-      "src": "/action/userlogin.php",
+      "src": "/userlogin.php",
       "dest": "/api/action/userlogin.php"
     },
     {
