@@ -179,16 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="drag-target"></div>
         </div>
         <!-- / Layout wrapper -->
-        <?php if ($message): ?>
-        <script>
-            Swal.fire({
-                icon: '<?php echo $messageType; ?>',
-                title: '<?php echo $message; ?>',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
-        <?php endif; ?>
+        
 </body>
 
         <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
@@ -213,4 +204,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
 
         <script src="<?php BASE_URL; ?>js/jquery-3.6.0.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+        <?php if ($message): ?>
+        <script>
+            Swal.fire({
+                icon: '<?php echo $messageType; ?>',
+                title: '<?php echo $message; ?>',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+        <?php endif; ?>
 </html>
