@@ -87,9 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 // Log the user action
+                $action = "Logged in the system.";
                 $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
                 $stmt->bindParam(':user_id', $_SESSION['ID'], PDO::PARAM_INT);
-                $stmt->bindParam(':action_made', $action = "Logged in the system.", PDO::PARAM_STR);
+                $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();
 
                 $response['success'] = true;
