@@ -52,8 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }
 
-                // Set session variables
-                session_start();
                 $_SESSION['status'] = true;
                 $_SESSION['ID'] = $user['id'];
                 $_SESSION['ACCESS'] = $user['access'];
