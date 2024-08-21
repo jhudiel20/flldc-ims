@@ -1,9 +1,6 @@
 {
     "functions": {
-      "api/userlogin.php": {
-        "runtime": "vercel-php@0.7.1"
-      },
-      "api/index.php": {
+      "api/*.php": {
         "runtime": "vercel-php@0.7.1"
       }
     },
@@ -27,10 +24,6 @@
       {
         "src": "/css/(.*)",
         "dest": "/public/css/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/api/index.php"
       }
     ]
   }
