@@ -7,15 +7,11 @@
     "routes": [
       {
         "src": "/userlogin.php",
-        "dest": "/api/action/userlogin.php"
+        "dest": "/api/userlogin.php"
       },
       {
         "src": "/api/(.*)",
         "dest": "/api/$1"
-      },
-      {
-        "src": "/config/(.*)",
-        "dest": "/public/config/$1"
       },
       {
         "src": "/assets/(.*)",
