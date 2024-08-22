@@ -393,7 +393,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 <?php 
                     include __DIR__ . "/../modals/user_edit_password_modal.php";
                     include __DIR__ . "/../modals/user_edit_modal.php";
-                    include __DIR__ . "/../footer.php";
+                    include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
 
