@@ -20,6 +20,10 @@
         "dest": "/api/pages/acc-settings.php"
       },
       {
+        "src": "/user_edit_info.php",
+        "dest": "/api/action/user_edit_info.php"
+      },
+      {
         "src": "/userlogin.php",
         "dest": "/api/action/userlogin.php"
       },
