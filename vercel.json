@@ -24,6 +24,18 @@
         "dest": "/api/pages/dashboard-lnd.php"
       },
       {
+        "src": "/dashboard-eval.php",
+        "dest": "/api/pages/dashboard-eval.php"
+      },
+      {
+        "src": "/dashboard-lms.php",
+        "dest": "/api/pages/dashboard-lms.php"
+      },
+      {
+        "src": "/dashboard-mrs.php",
+        "dest": "/api/pages/dashboard-mrs.php"
+      },
+      {
         "src": "/assets/(.*)",
         "dest": "/public/assets/$1"
       },
