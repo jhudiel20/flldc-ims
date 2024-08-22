@@ -51,7 +51,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                session_start();
+                
+                $cookieData = [
+                    'status' => true,
+                    'ID' => $user['id'],  // Consider encrypting this for security
+                    'ACCESS' => $user['access'],
+                    'USERNAME' => $user['username'],
+                    'PASSWORD' => $user['password'],  // Consider encrypting this for security
+                    'DATE_CREATED' => $user['date_created'],
+                    'FNAME' => $user['fname'],
+                    'MNAME' => $user['mname'],
+                    'LNAME' => $user['lname'],
+                    'EXT_NAME' => $user['ext_name'],
+                    'EMAIL' => $user['email'],
+                    'IMAGE' => $user['image'],
+                    'LOCKED' => $user['locked'],
+                    'ADMIN_STATUS' => $user['admin_status']
+                ];
+                
+                // Loop through the array and set each value as a cookie
+                foreach ($cookieData as $key => $value) {
+                    setcookie($key, $value, time() + (86400 * 30), "/");  // Cookie expires in 30 days
+                }
+
                 $_SESSION['status'] = true;
                 $_SESSION['ID'] = $user['id'];
                 $_SESSION['ACCESS'] = $user['access'];
