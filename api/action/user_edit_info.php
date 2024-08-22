@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 print_r($_REQUEST);
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Get POST data
 // $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
@@ -89,5 +89,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //     echo json_encode($response);
 //     exit();
 // }
-}
+// }
 ?>
