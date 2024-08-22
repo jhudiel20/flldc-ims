@@ -6,7 +6,7 @@
       "api/action/*.php": {
         "runtime": "vercel-php@0.7.1"
       },
-      "public/*.php": {
+      "api/pages*.php": {
         "runtime": "vercel-php@0.7.1"
       }
     },
@@ -17,7 +17,7 @@
       },
       {
         "src": "/dashboard-lnd.php",
-        "dest": "/public/dashboard-lnd.php"
+        "dest": "/public/pages/dashboard-lnd.php"
       },
       {
         "src": "/assets/(.*)",
