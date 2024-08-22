@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-if (!isset($_SESSION['ACCESS'])) {
-    header("Location:index.php");
-}
+// if (!isset($_SESSION['ACCESS'])) {
+//     header("Location:index.php");
+// }
+echo $_SESSION['ACCESS'];
 ?>
 
 <!doctype html>
