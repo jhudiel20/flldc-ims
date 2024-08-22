@@ -7,6 +7,14 @@ if (!isset($_COOKIE['ACCESS'])) {
     header("Location:index.php");
 }
 
+$user_id = $_COOKIE['ID'];
+
+$stmt = $conn->prepare("SELECT * FROM user_account WHERE ID = :user_id");
+$stmt->bindParam(':ID', $user_id, PDO::PARAM_STR);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 ?>
 <!doctype html>
 
@@ -101,7 +109,7 @@ if (!isset($_COOKIE['ACCESS'])) {
                                                                     type="text"
                                                                     id="firstName"
                                                                     name="firstName"
-                                                                    value="<?php echo $_COOKIE['FNAME'] . ' ' . $_COOKIE['MNAME'] . ' ' . $_COOKIE['LNAME'] . ' ' . $_COOKIE['EXT_NAME'];?>"
+                                                                    value="<?php echo $user['FNAME'] . ' ' . $user['MNAME'] . ' ' . $user['LNAME'] . ' ' . $user['EXT_NAME'];?>"
                                                                     autofocus
                                                                     disabled />
                                                             </div>
