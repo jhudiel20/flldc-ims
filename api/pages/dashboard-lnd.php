@@ -10,8 +10,8 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 
 <head>
     <?php
-    include DOMAIN_PATH . "/../action/global/metadata.php";
-    include DOMAIN_PATH . "/../action/global/include_top.php";
+    include __DIR__  . "/../action/global/metadata.php";
+    include __DIR__  . "/../action/global/include_top.php";
     ?>
 </head>
 
