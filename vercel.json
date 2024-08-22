@@ -20,6 +20,10 @@
         "dest": "/api/action/userlogin.php"
       },
       {
+        "src": "/Actions.php",
+        "dest": "/api/action/Actions.php"
+      },
+      {
         "src": "/dashboard-lnd.php",
         "dest": "/api/pages/dashboard-lnd.php"
       },
