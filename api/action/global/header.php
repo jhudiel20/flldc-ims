@@ -454,7 +454,7 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <span
-                                            class="fw-semibold d-block"><?php echo $_COOKIE['FNAME'].' '.$_COOKIE['MNAME'].' '.$_COOKIE['LNAME'].' '.$_COOKIE['EXT_NAME']; ?></span>
+                                            class="fw-semibold d-block"><?php echo $_COOKIE['FNAME'].' '.$_COOKIE['MNAME'].' '.$_COOKIE['LNAME']; ?></span>
                                         <small class="text-muted"><?php echo $_COOKIE['ACCESS']; ?></small>
                                     </div>
                                 </div>
