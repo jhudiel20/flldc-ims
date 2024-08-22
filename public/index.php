@@ -2,11 +2,11 @@
 require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
 
-if(isset($_COOKIE['status'])){
-    if($_COOKIE['status'] == true){
-    header("Location: /dashboard-lnd.php");
-    }
-  }
+// if(isset($_COOKIE['status'])){
+//     if($_COOKIE['status'] == true){
+//     header("Location: /dashboard-lnd.php");
+//     }
+//   }
 
 ?>
 <!DOCTYPE html>
