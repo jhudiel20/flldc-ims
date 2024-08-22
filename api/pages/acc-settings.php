@@ -1,6 +1,6 @@
 <?php 
 
-require '../DBConnection.php';
+require '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 if (!isset($_COOKIE['ACCESS'])) {

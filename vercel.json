@@ -13,7 +13,7 @@
     "routes": [
         {
             "src": "/acc-settings.php",
-            "dest": "/api/pages/acc-settings.php"
+            "dest": "/pages/acc-settings.php"
           },
       {
         "src": "/userlogin.php",
