@@ -43,5 +43,5 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
                 setcookie($cookieName, '', time() - 3600, '/');
             }
 
-        header("Location: /login.php");
+        header("Location: /index.php");
 exit();
