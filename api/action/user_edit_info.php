@@ -7,6 +7,7 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Get POST data
 $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $firstname = isset($_POST['Firstname']) ? trim($_POST['Firstname']) : '';
@@ -14,6 +15,7 @@ $middlename = isset($_POST['Middlename']) ? trim($_POST['Middlename']) : '';
 $lastname = isset($_POST['Lastname']) ? trim($_POST['Lastname']) : '';
 $extn = isset($_POST['extn']) ? trim($_POST['extn']) : '';
 $email = isset($_POST['Email']) ? trim($_POST['Email']) : '';
+$contact = isset($_POST['Contact']) ? trim($_POST['Contact']) : '';
 
 // Validation
 if ($firstname == '' || $lastname == '' || $email == '') {
@@ -48,7 +50,8 @@ try {
             MNAME = :middlename,
             LNAME = :lastname,
             EXT_NAME = :extn,
-            EMAIL = :email
+            EMAIL = :email,
+            CONTACT = :contact
         WHERE ID = :user_id
     ");
     $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
@@ -56,6 +59,7 @@ try {
     $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
     $stmt->bindParam(':extn', $extn, PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':contact', $contact, PDO::PARAM_STR);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->execute();
 
@@ -83,5 +87,6 @@ try {
     $response['message'] = 'Database error: ' . $e->getMessage();
     echo json_encode($response);
     exit();
+}
 }
 ?>

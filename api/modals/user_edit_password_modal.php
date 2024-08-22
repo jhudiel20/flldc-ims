@@ -11,7 +11,7 @@
                     <div class="form-message alert alert-danger" role="alert"></div>
                     <div class="col-md-12">
                         <label class="form-label">Username<span class="require">*</span></label>
-                        <input type="text" class="form-control" id="username" name="username" value="<?php if($_SESSION['ACCESS'] != 'ADMIN'){echo $row['USERNAME'];} ?>" onKeyPress="if(event.charCode === 39 || event.charCode === 34) return false;">
+                        <input type="text" class="form-control" id="username" name="username" value="<?php if($_COOKIE['ACCESS'] != 'ADMIN'){echo $user['USERNAME'];} ?>" onKeyPress="if(event.charCode === 39 || event.charCode === 34) return false;">
                     </div>
                     <div class="col-md-12 form-password-toggle">
                         <label class="form-label">New Password<span class="require">*</span></label>
