@@ -1,0 +1,74 @@
+
+<!-- ######################################################## EMPLOYEE ADD MODAL ########################################################################################################## -->
+
+<div class="modal fade" id="add_user_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" method="post" id="add_user_form">
+
+                        <div class="tab-pane fade show active" id="USER" role="tabpanel" >
+                            <div class="row">
+
+                                <div class="form-message alert alert-danger" role="alert"></div>
+                                <div class="col-md-3">
+                                    <label class="form-label">First Name<span class="require asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="fname" id="fname" >
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label py-2">Middle Name</label>
+                                    <input type="text" class="form-control" name="mname" id="mname" >
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Last Name<span class="require asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="lname" id="lname">
+                                </div>
+                            
+                                <div class="col-md-3">
+                                    <label class="form-label py-2">Suffix</label>
+                                    <input type="text" class="form-control" name="suffix" id="suffix" >
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Email<span class="require asterisk">*</span></label>
+                                    <input type="email" class="form-control" name="email" id="email" >
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Access<span class="require asterisk">*</span></label>
+                                    <select name="access" id="access" class="form-select">
+                                        <option value="" disabled hidden selected>Access</option>
+                                        <?php foreach (ACCESS as $value) { ?>
+                                            <option value="<?= $value; ?>"><?= $value; ?></option>
+                                        <?php } ?>
+                                    </select>                                
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Username<span class="require asterisk">*</span></label>
+                                    <input type="text" class="form-control" name="username" id="username" >
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Password<span class="require asterisk">*</span></label>
+                                    <input type="password" class="form-control" name="password" id="password" >
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                <button type="button" name="submit" class="btn btn-outline-primary" id="add_user">Submit</button>
+                <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+            </div>
+                </form><!-- End Multi Columns Form -->
+        </div>
+    </div>
+</div>
+
+<!-- ######################################################## USER ADD MODAL ########################################################################################################## -->

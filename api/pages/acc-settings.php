@@ -115,7 +115,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="mb-3 col-md-6">
                                                                 <label for="lastName" class="form-label">Access Level</label>
-                                                                <input class="form-control" type="text" value="<?php echo $_COOKIE['ACCESS']; ?>" disabled/>
+                                                                <input class="form-control" type="text" value="<?php echo $user['access']; ?>" disabled/>
                                                             </div>
                                                             <div class="mb-3 col-md-6">
                                                                 <label for="email" class="form-label">E-mail</label>
@@ -124,7 +124,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                     type="text"
                                                                     id="email"
                                                                     name="email"
-                                                                    value="<?php echo $_COOKIE['EMAIL']; ?>"
+                                                                    value="<?php echo $user['email']; ?>"
                                                                     disabled />
                                                             </div>
                                                             <!-- <div class="mb-3 col-md-6">
@@ -145,7 +145,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                     id="phoneNumber"
                                                                     name="phoneNumber"
                                                                     class="form-control"
-                                                                    value="<?php echo $_COOKIE['CONTACT']; ?>"
+                                                                    value="<?php echo $user['contact']; ?>"
                                                                     disabled />
                                                                 </div>
                                                             </div>
