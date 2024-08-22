@@ -56,7 +56,7 @@ if (!isset($_COOKIE['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include __DIR__. "/footer.php";
+                    include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
 
