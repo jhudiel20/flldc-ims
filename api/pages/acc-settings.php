@@ -109,7 +109,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                     type="text"
                                                                     id="firstName"
                                                                     name="firstName"
-                                                                    value="<?php echo $user['FNAME'] . ' ' . $user['MNAME'] . ' ' . $user['LNAME'] . ' ' . $user['EXT_NAME'];?>"
+                                                                    value="<?php echo $user['fname'] . ' ' . $user['mname'] . ' ' . $user['lname'] . ' ' . $user['ext_name'];?>"
                                                                     autofocus
                                                                     disabled />
                                                             </div>

@@ -34,8 +34,7 @@ if (!isset($_COOKIE['ACCESS'])) {
 
                 <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/c5f4c458-bd0a-4c1c-b2de-0d2298bfe6ee/page/TlJ0C" 
                     frameborder="0" style="border:0" 
-                    allowfullscreen 
-                    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                    allowfullscreen >
                 </iframe>
 
 
