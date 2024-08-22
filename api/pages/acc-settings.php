@@ -432,10 +432,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         method: "POST",
                         data: $(this).serialize(),
                         dataType: "json",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-
                         success: function(response) {
                             console.log(response);
                             if (response.success) {
