@@ -17,7 +17,7 @@
             <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
                     <div class="logo d-flex align-items-cenert w-auto mb-2 pt-2 py-1 ms-2">
-                        <span><?php include DATE_PATH;?></span>
+                        <span><?php include __DIR__. "/date.php";?></span>
                     </div>
                 </div>
             </div>
