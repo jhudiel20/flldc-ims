@@ -1,7 +1,12 @@
+<?php
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
+
+?>
+
 <!doctype html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
-    data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>../assets/" data-template="vertical-menu-template">
+    data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
 
 <head>
     <?php
