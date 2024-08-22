@@ -15,8 +15,8 @@ if (!isset($_COOKIE['ACCESS'])) {
 
 <head>
     <?php
-    include DOMAIN_PATH . "/action/global/metadata.php";
-    include DOMAIN_PATH . "/action/global/include_top.php";
+    include __DIR__ . "/../action/global/metadata.php";
+    include __DIR__ . "/../action/global/include_top.php";
     ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -28,8 +28,8 @@ if (!isset($_COOKIE['ACCESS'])) {
         <div class="layout-container">
 
             <?php
-        include DOMAIN_PATH . "/action/global/sidebar.php";
-        include DOMAIN_PATH . "/action/global/header.php"; 
+        include __DIR__ . "/../action/global/sidebar.php";
+        include __DIR__ . "/../action/global/header.php"; 
         ?>
 
             <!-- Content wrapper -->
@@ -383,9 +383,9 @@ if (!isset($_COOKIE['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include DOMAIN_PATH . "/modals/user_edit_password_modal.php";
-                    include DOMAIN_PATH . "/modals/user_edit_modal.php";
-                    include FOOTER_PATH;
+                    include __DIR__ . "/../modals/user_edit_password_modal.php";
+                    include __DIR__ . "/../modals/user_edit_modal.php";
+                    include __DIR__ . "/../footer.php";
                 ?>
                 <!-- / Footer -->
 
@@ -409,7 +409,7 @@ if (!isset($_COOKIE['ACCESS'])) {
 
 
     <?php
-        include DOMAIN_PATH . "/action/global/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
       ?>
 </body>
 
