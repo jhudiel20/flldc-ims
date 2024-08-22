@@ -46,20 +46,9 @@
     <!-- <script src="<?php BASE_URL; ?>assets/js/sec.js?v=<?php echo FILE_VERSION; ?>"></script> -->
 
     <!-- TABULATOR -->
-    <link id="themeStylesheet"
-        href="<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>"
-        rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 
-    <!-- <link href="<?php BASE_URL; ?>tabulator/src/scss/tabulator.scss?v=<?php echo FILE_VERSION; ?>" rel="stylesheet"> -->
-
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/tabulator.js?v=<?php echo FILE_VERSION; ?>"></script>
-
-    <!-- XLSX Script Includes -->
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/xlsx.full.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-    <!-- PDF Script Includes -->
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.umd.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.plugin.autotable.min.js?v=<?php echo FILE_VERSION; ?>">
-    </script>
 
     <!-- dropify -->
     <link href="<?php BASE_URL; ?>../assets/css/dropify.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet">
@@ -68,36 +57,6 @@
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <!-- sweetalert@ colored toast js -->
-    <script>
-        const currentYear = new Date().getFullYear();
-        const currentDate = new Date().toLocaleDateString();
-        const formattedDateWithHyphens = currentDate.replace(/\//g, "-");
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get the theme from session storage
-            var theme = sessionStorage.getItem('theme');
-
-            // Get the link element for the theme stylesheet
-            var themeStylesheet = document.getElementById('themeStylesheet');
-
-            // Define the paths for the two stylesheets
-            var lightThemePath =
-                '<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>';
-            var darkThemePath =
-                '<?php BASE_URL; ?>../tabulator/dist/css/tabulator_midnight.min.css?v=<?php echo FILE_VERSION; ?>';
-
-            // Set the default theme path (bootstrap5) if theme is not set in session storage
-            var currentThemePath = lightThemePath;
-
-            // Check if theme is set to 'dark' in session storage
-            if (theme === 'dark') {
-                currentThemePath = darkThemePath;
-            }
-
-            // Update the href attribute of the link element to the current theme path
-            themeStylesheet.setAttribute('href', currentThemePath);
-        });
-    </script>
 
 
     <script>
