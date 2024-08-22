@@ -425,14 +425,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         $(document).ready(function() {
 
             (function() {
-                $('#user_edit_info').on('click', function() {
-                    var formdata = new FormData(user_edit_form);
-                    
-
+                $('#user_edit_modal').on('submit', function(e) {
+                    e.preventDefault();            
                     $.ajax({
                         url: "../action/user_edit_info.php",
                         method: "POST",
-                        data: formdata,
+                        data: $(this).serialize(),
                         dataType: "json",
                         contentType: false,
                         cache: false,

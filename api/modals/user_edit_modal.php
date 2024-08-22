@@ -11,33 +11,33 @@
                     <div class="form-message alert alert-danger" role="alert"></div>
                     <div class="col-md-3">
                         <label class="form-label">First Name<span class="require">*</span></label>
-                        <input type="text" class="form-control" name="Firstname" value="<?php echo $row['FNAME']; ?>">
+                        <input type="text" class="form-control" name="Firstname" value="<?php echo $user['fname']; ?>">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Middle Name<span class="require"></span></label>
-                        <input type="text" name="Middlename" value="<?php echo $row['MNAME']; ?>" class="form-control">
+                        <input type="text" name="Middlename" value="<?php echo $user['mname']; ?>" class="form-control">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Last Name<span class="require">*</span></label>
-                        <input type="text" name="Lastname" value="<?php echo $row['LNAME']; ?>" class="form-control">
+                        <input type="text" name="Lastname" value="<?php echo $user['lname']; ?>" class="form-control">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Suffix<span class="require"></span></label>
-                        <input type="text" name="extn" value="<?php echo $row['EXT_NAME']; ?>" class="form-control">
+                        <input type="text" name="extn" value="<?php echo $user['ext_name']; ?>" class="form-control">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email Address<span class="require">*</span></label>
-                        <input type="Email" name="Email" value="<?php echo $row['EMAIL']; ?>" class="form-control">
+                        <input type="Email" name="Email" value="<?php echo $user['email']; ?>" class="form-control">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contact No.<span class="require">*</span></label>
-                        <input type="text" name="Contact" value="<?php echo $row['CONTACT']; ?>" class="form-control">
+                        <input type="text" name="Contact" value="<?php echo $user['contact']; ?>" class="form-control">
                     </div>
                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" name="submit" class="btn btn-outline-primary" id="user_edit_info">Submit</button>
+                <button type="submit" name="submit" class="btn btn-outline-primary" id="user_edit_info">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
