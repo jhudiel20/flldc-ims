@@ -10,7 +10,7 @@ if (!isset($_COOKIE['ACCESS'])) {
 $user_id = $_COOKIE['ID'];
 
 $stmt = $conn->prepare("SELECT * FROM user_account WHERE ID = :user_id");
-$stmt->bindParam(':ID', $user_id, PDO::PARAM_STR);
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
