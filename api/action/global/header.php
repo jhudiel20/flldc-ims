@@ -1,5 +1,4 @@
-<?php $sql_logout = mysqli_query($conn_acc, "SELECT FNAME,MNAME,LNAME,EXT_NAME,ACCESS FROM user_account Where ID ='$user_id'"); 
-      $row_sql_logout = mysqli_fetch_array($sql_logout);  ?>
+
 <!-- / Menu -->
 <!-- Layout container -->
 <div class="layout-page">
@@ -25,7 +24,7 @@
             <!-- /Search -->
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <?php if($_SESSION['ACCESS'] == 'ADMIN'){?>
+                <?php if($_COOKIE['ACCESS'] == 'ADMIN'){?>
                 <!-- Language -->
                 <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -435,16 +434,10 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <?php
-                                    $user_id = $_SESSION['ID'];
-                                    $sql_image = mysqli_query($conn_acc, "SELECT IMAGE FROM user_account Where ID ='$user_id'");
-                                    While ($image = mysqli_fetch_array($sql_image)){
-                                    ?>
-                            <img type="image/jpg" src="../user_image/<?php if(empty($image['IMAGE'])){ 
-                                    $image['IMAGE'] = 'user.png'; echo $image['IMAGE']; 
+                            <img type="image/jpg" src="../user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
+                                    $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; 
                                     }else{ 
-                                    echo $image['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
-                            <?php }?>
+                                    echo $_COOKIE['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -453,22 +446,16 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                            <?php
-                                                $user_id = $_SESSION['ID'];
-                                                $sql_image = mysqli_query($conn_acc, "SELECT IMAGE FROM user_account Where ID ='$user_id'");
-                                                While ($image = mysqli_fetch_array($sql_image)){
-                                                ?>
-                                            <img type="image/jpg" src="../user_image/<?php if(empty($image['IMAGE'])){ 
-                                                $image['IMAGE'] = 'user.png'; echo $image['IMAGE']; 
+                                            <img type="image/jpg" src="../user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
+                                                $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; 
                                                 }else{ 
-                                                echo $image['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
-                                            <?php }?>
+                                                echo $_COOKIE['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
                                         <span
-                                            class="fw-semibold d-block"><?php echo $row_sql_logout['FNAME'].' '.$row_sql_logout['MNAME'].' '.$row_sql_logout['LNAME'].' '.$row_sql_logout['EXT_NAME']; ?></span>
-                                        <small class="text-muted"><?php echo $row_sql_logout['ACCESS']; ?></small>
+                                            class="fw-semibold d-block"><?php echo $_COOKIE['FNAME'].' '.$_COOKIE['MNAME'].' '.$_COOKIE['LNAME'].' '.$_COOKIE['EXT_NAME']; ?></span>
+                                        <small class="text-muted"><?php echo $_COOKIE['ACCESS']; ?></small>
                                     </div>
                                 </div>
                             </a>
