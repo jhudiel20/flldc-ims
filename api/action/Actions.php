@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 // Include the database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 
-        $updateStatus = $conn_acc->prepare("UPDATE user_account SET STATUS = :status WHERE ID = :id");
+        $updateStatus = $conn->prepare("UPDATE user_account SET STATUS = :status WHERE ID = :id");
         $updateStatus->execute([
         ':status' => 0,
         ':id' => $_COOKIE['ID']
@@ -16,7 +16,7 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
         $user_id = $_COOKIE['ID'];
         $action_made = "Logged out.";
 
-        $logAction = $conn_acc->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
+        $logAction = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
         $logAction->execute([
         ':user_id' => $user_id,
         ':action_made' => $action_made

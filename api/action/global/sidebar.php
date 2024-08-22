@@ -53,12 +53,12 @@ $user_id = $_COOKIE['ID'];
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'dashboard-mrs.php')? 'active' : 'collapsed' ?>">
                     <a href="dashboard-mrs.php" class="menu-link">
-                        <div class="text-truncate" data-i18n="Meeting Room System">MRS</div>
+                        <div class="text-truncate" data-i18n="Meeting Room System">Meeting Room System</div>
                     </a>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'dashboard-lms.php')? 'active' : 'collapsed' ?>">
                     <a href="dashboard-lms.php" class="menu-link">
-                        <div class="text-truncate" data-i18n="FAST LMS">LMS</div>
+                        <div class="text-truncate" data-i18n="FAST LMS">FAST LMS</div>
                     </a>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'dashboard-eval.php')? 'active' : 'collapsed' ?>">
