@@ -17,7 +17,7 @@
       },
       {
         "src": "/dashboard-lnd.php",
-        "dest": "/api/action/userlogin.php"
+        "dest": "/api/pages/dashboard-lnd.php"
       },
       {
         "src": "/assets/(.*)",
