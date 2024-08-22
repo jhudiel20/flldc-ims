@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // Define constants for database connection
 if(!defined('host')) define('host', "ep-wild-tree-a4wwmube.us-east-1.aws.neon.tech");
 if(!defined('username')) define('username', "default");
