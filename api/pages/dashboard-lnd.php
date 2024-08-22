@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-
+if (!isset($_SESSION['ACCESS'])) {
+    header("Location:index.php");
+}
 ?>
 
 <!doctype html>
@@ -21,8 +23,8 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
         <div class="layout-container">
 
             <?php
-        include DOMAIN_PATH . "/action/global/sidebar.php";
-        include DOMAIN_PATH . "/action/global/header.php"; 
+        include __DIR__ . "/../action/global/sidebar.php";
+        include __DIR__ . "/../action/global/header.php"; 
         ?>
 
             <!-- Content wrapper -->
@@ -79,7 +81,7 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 
 
     <?php
-        include DOMAIN_PATH . "/action/global/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
