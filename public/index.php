@@ -152,7 +152,7 @@ include 'config/config.php';
                             <!-- <h4 class="mb-2">Welcome to Sneat! 👋</h4> -->
                             <p class="mb-4">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
 
-                            <form id="user_login_form" class="mb-3" method="post" action="index.php">
+                            <form id="user_login_form" class="mb-3" method="post">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username" name="username"
