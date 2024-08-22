@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-
+                session_start();
                 $_SESSION['status'] = true;
                 $_SESSION['ID'] = $user['id'];
                 $_SESSION['ACCESS'] = $user['access'];
