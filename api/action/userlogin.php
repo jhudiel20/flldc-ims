@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $response['success'] = true;
                 $response['title'] = 'Welcome!';
-                $response['message'] = 'Login successful!'.$_SESSION['ACCESS'];
+                $response['message'] = 'Login successful!';
                 echo json_encode($response);
 
                 // Update user status
