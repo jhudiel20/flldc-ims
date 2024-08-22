@@ -11,6 +11,10 @@
       }
     },
     "routes": [
+        {
+            "src": "/acc-settings.php",
+            "dest": "/api/pages/acc-settings.php"
+          },
       {
         "src": "/userlogin.php",
         "dest": "/api/action/userlogin.php"
