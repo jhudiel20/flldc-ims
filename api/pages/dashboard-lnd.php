@@ -39,6 +39,7 @@ if (!isset($_COOKIE['ACCESS'])) {
                                     <div class="card-body h-100">
                                         <iframe
                                             src="https://metabase.fast.com.ph/public/dashboard/fe7bb127-7e28-4eaa-90b2-66de912b0268"
+                                            
                                             frameborder="0"
                                             width="100%"
                                             height="100%"
