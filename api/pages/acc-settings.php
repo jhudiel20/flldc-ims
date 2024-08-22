@@ -425,7 +425,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         $(document).ready(function() {
 
             (function() {
-                $('#user_edit_modal').on('submit', function(e) {
+                $('#user_edit_form').on('submit', function(e) {
                     e.preventDefault();            
                     $.ajax({
                         url: "/user_edit_info.php",
