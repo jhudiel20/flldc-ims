@@ -434,10 +434,11 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <img type="image/jpg" src="../../user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
+                            <img type="image/jpg" src="/user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
                                     $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; 
                                     }else{ 
                                     echo $_COOKIE['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
+                                    
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
