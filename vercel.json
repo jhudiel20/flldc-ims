@@ -2,16 +2,22 @@
     "functions": {
       "api/*.php": {
         "runtime": "vercel-php@0.7.1"
+      },
+      "api/action/*.php": {
+        "runtime": "vercel-php@0.7.1"
+      },
+      "api/pages/*.php": {
+        "runtime": "vercel-php@0.7.1"
       }
     },
     "routes": [
       {
         "src": "/userlogin.php",
-        "dest": "/public/action/userlogin.php"
+        "dest": "/api/action/userlogin.php"
       },
       {
         "src": "/dashboard-lnd.php",
-        "dest": "/public/pages/dashboard-lnd.php"
+        "dest": "/api/action/userlogin.php"
       },
       {
         "src": "/assets/(.*)",
