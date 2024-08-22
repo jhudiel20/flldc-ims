@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 // if (!isset($_SESSION['ACCESS'])) {
 //     header("Location:index.php");
 // }
+session_start();
 echo $_SESSION['ACCESS'];
 print_r($_SESSION);
 ?>
