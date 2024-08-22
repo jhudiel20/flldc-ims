@@ -32,21 +32,10 @@ if (!isset($_COOKIE['ACCESS'])) {
 
                 <div class="container flex-grow-1 container-p-y">
 
-                    <!-- <div class="row h-100"> -->
-                    <!-- <div class="card w-100 h-100"> -->
-                    <!-- <div class="d-flex align-items-end row h-100"> -->
-                    <!-- <div class="col-12 h-100"> -->
-                    <!-- <div class="card-body h-100"> -->
                     <iframe width="100%" height="100%"
                         src="https://lookerstudio.google.com/embed/reporting/fac9c54f-6723-42c7-ae03-91d3ea07254a/page/TlJ0C"
-                        frameborder="0" style="border:0" allowfullscreen
-                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-                    <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- </div> -->
-
+                        frameborder="0" style="border:0" allowfullscreen>
+                    </iframe>
 
                 </div>
                 <!-- / Content -->
