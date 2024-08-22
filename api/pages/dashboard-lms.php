@@ -79,6 +79,8 @@ if (!isset($_COOKIE['ACCESS'])) {
     <?php
         include __DIR__ . "/../action/global/include_bottom.php";
       ?>
+    <!-- Page JS -->
+    <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
 
 </html>
