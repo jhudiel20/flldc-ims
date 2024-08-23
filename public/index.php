@@ -267,7 +267,7 @@ include 'config/config.php';
                     data: $(this).serialize(),
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#signin_btn').addClass('d-none').prop('disabled', false);
+                        $('#signin_btn').hide();
                         $('#request_icon').removeClass('d-none').prop('disabled', true);
                         },
                     success: function(response) {
