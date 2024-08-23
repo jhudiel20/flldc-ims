@@ -24,7 +24,7 @@
             <!-- /Search -->
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <?php if($_COOKIE['ACCESS'] == 'ADMIN'){?>
+                <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
                 <!-- Language -->
                 <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -434,10 +434,10 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <img type="image/jpg" src="/user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
-                                    $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; 
+                            <img type="image/jpg" src="/user_image/<?php if(empty($decrypted_array['IMAGE'])){ 
+                                    $decrypted_array['IMAGE'] = 'user.png'; echo $decrypted_array['IMAGE']; 
                                     }else{ 
-                                    echo $_COOKIE['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
+                                    echo $decrypted_array['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
                                     
                         </div>
                     </a>
@@ -447,16 +447,16 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                            <img type="image/jpg" src="../user_image/<?php if(empty($_COOKIE['IMAGE'])){ 
-                                                $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; 
+                                            <img type="image/jpg" src="../user_image/<?php if(empty($decrypted_array['IMAGE'])){ 
+                                                $decrypted_array['IMAGE'] = 'user.png'; echo $decrypted_array['IMAGE']; 
                                                 }else{ 
-                                                echo $_COOKIE['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
+                                                echo $decrypted_array['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
                                         <span
-                                            class="fw-semibold d-block"><?php echo $_COOKIE['FNAME'].' '.$_COOKIE['MNAME'].' '.$_COOKIE['LNAME']; ?></span>
-                                        <small class="text-muted"><?php echo $_COOKIE['ACCESS']; ?></small>
+                                            class="fw-semibold d-block"><?php echo $decrypted_array['FNAME'].' '.$decrypted_array['MNAME'].' '.$decrypted_array['LNAME']; ?></span>
+                                        <small class="text-muted"><?php echo $decrypted_array['ACCESS']; ?></small>
                                     </div>
                                 </div>
                             </a>

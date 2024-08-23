@@ -1,7 +1,7 @@
 
         <span style="font-size:14px;font-weight:bold;">
             <?php
-            if (!isset($_COOKIE['ACCESS'])) {
+            if (!isset($decrypted_array['ACCESS'])) {
               header("Location:index.php");
             }
                 date_default_timezone_set('Asia/Manila');

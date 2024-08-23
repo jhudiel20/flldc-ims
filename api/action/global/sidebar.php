@@ -1,7 +1,7 @@
 <?php 
 $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1); 
 
-$user_id = $_COOKIE['ID'];
+$user_id = $decrypted_array['ID'];
 
 //         $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE APPROVAL = 'PENDING'");
 //         $stmt->bindParam(':APPROVAL', 'PENDING', PDO::PARAM_STR);
@@ -108,7 +108,7 @@ $user_id = $_COOKIE['ID'];
                         <div> Item List</div>
                     </a>
                 </li>
-                <?php if($_COOKIE['ACCESS'] != 'CASHIER'){?>
+                <?php if($decrypted_array['ACCESS'] != 'CASHIER'){?>
                 <li class="menu-item <?php echo ($geturl == 'archive_list.php')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>archive_list.php" class="menu-link">
                         <i class='menu-icon fa-solid fa-box'></i>
@@ -140,7 +140,7 @@ $user_id = $_COOKIE['ID'];
             </ul>
         </li>
 
-        <?php if($_COOKIE['ACCESS'] != 'REQUESTOR'){?>
+        <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
         <li class="menu-item <?php echo ($geturl == 'inventory_list.php' ||$geturl == 'monthly_inventory_list.php') ? 'active open' : 'collapsed' ?>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon fa-solid fa-cubes-stacked'></i>
@@ -171,7 +171,7 @@ $user_id = $_COOKIE['ID'];
             </a>
         </li> -->
 
-        <?php if($_COOKIE['ACCESS'] == 'ADMIN'){?>
+        <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         <!-- Admin -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text" data-i18n="Admin">Admin</span>
