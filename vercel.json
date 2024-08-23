@@ -8,9 +8,6 @@
       },
       "api/pages/*.php": {
         "runtime": "vercel-php@0.7.1"
-      },
-      "api/ajax/*.php": {
-        "runtime": "vercel-php@0.7.1"
       }
     },
     "routes": [
