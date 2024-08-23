@@ -81,12 +81,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                 width="100"
                                                                 id="uploadedAvatar" />
                                                             <div class="button-wrapper">
-                                                                <form class="" method="post" id="upload_photo" enctype="multipart/form-data" style="display: inline-block;">
+                                                                <form class="" method="post" id="upload_photo_form" enctype="multipart/form-data" style="display: inline-block;">
                                                                     <label for="upload" class="" tabindex="0">
                                                                         <input type="file" name="image" id="image" class="form-control mb-1">
-                                                                        <input type="hidden" name="user_submit_name" id="user_submit_name" value="<?php echo $_COOKIE['FNAME'] . ' ' . $_COOKIE['LNAME']; ?>">
-                                                                        <input type="hidden" name="ID" id="ID" value="<?php echo $user_id ?>">  
-                                                                        <button type="button" id="submit_photo" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
+                                                                        <input type="text" name="user_submit_name" id="user_submit_name" value="<?php echo $_COOKIE['fname'] . ' ' . $_COOKIE['lname']; ?>">
+                                                                        <input type="text" name="ID" id="ID" value="<?php echo $user_id ?>">  
+                                                                        <button type="submit" id="submit_photo" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
                                                                 </form>
                                                                 <form style="display: inline-block;" class="mt-1">          
                                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#delete-profile-photo" class="btn btn-label-danger"><i class="fas fa-fw fa-trash"></i> Delete</button>
@@ -547,13 +547,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
 
-            $('#submit_photo').on('click', function() {
-                    var formdata = new FormData(upload_photo);
-
+            $('#upload_photo_form').on('submit', function(e) {
+                e.preventDefault();   
                     $.ajax({
                         url:"/upload_user_photo.php",
                         method: "POST",
-                        data: formdata,
+                        data: $(this).serialize(),
                         dataType: "json",
                         contentType: false,
                         cache: false,
