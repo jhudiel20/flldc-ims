@@ -24,6 +24,10 @@
         "dest": "/api/action/user_edit_info.php"
       },
       {
+        "src": "/upload_user_photo.php",
+        "dest": "/api/action/upload_user_photo.php"
+      },
+      {
         "src": "/userlogin.php",
         "dest": "/api/action/userlogin.php"
       },
