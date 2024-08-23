@@ -82,6 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'samesite' => 'Strict'              // Restrict cookie to same-site requests
                 ]);
 
+                $decrypted_array = null;
+
                 if (isset($_COOKIE['secure_data'])) {
                     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
                 }
