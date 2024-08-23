@@ -289,6 +289,29 @@ function response(){
   );
 }
 
+
+$cipher_method = 'AES-256-CBC';
+$encryption_key = 'qwertyuiopasdfghjklzxcvbnm1234567890johnjhudieljoycediannemnbvcxzlkjhgfdsapoiuytrewq0987654321diannejoycejohnjhudiel1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0pp0lo9ki8mju7nhy6bgt5vfr4cde3xsw2zaq1'; // Use a strong key
+$iv_length = openssl_cipher_iv_length($cipher_method);
+$iv = openssl_random_pseudo_bytes($iv_length);
+
+// Function to encrypt the value
+function encrypt_cookie($value, $key, $iv, $cipher_method) {
+    $encrypted_value = openssl_encrypt($value, $cipher_method, $key, 0, $iv);
+    // Combine the IV and encrypted value to store together
+    return base64_encode($iv . $encrypted_value);
+}
+
+// Function to decrypt the value
+function decrypt_cookie($encrypted_value, $key, $cipher_method) {
+    $encrypted_value = base64_decode($encrypted_value);
+    $iv_length = openssl_cipher_iv_length($cipher_method);
+    $iv = substr($encrypted_value, 0, $iv_length);
+    $encrypted_value = substr($encrypted_value, $iv_length);
+    return openssl_decrypt($encrypted_value, $cipher_method, $key, 0, $iv);
+}
+
+
 function page_url(){
 	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	return $actual_link;

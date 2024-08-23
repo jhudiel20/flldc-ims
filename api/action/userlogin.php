@@ -68,28 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'LOCKED' => $user['locked'],
                     'ADMIN_STATUS' => $user['admin_status']
                 ];
+
+                // Encrypt the array before setting the cookie
+                $encrypted_value = encrypt_cookie($cookieData, $encryption_key, $cipher_method);
                 
-                // Loop through the array and set each value as a cookie
-                foreach ($cookieData as $key => $value) {
-                    setcookie($key, $value, time() + (86400 * 30), "/");  // Cookie expires in 30 days
+                // Set the encrypted value as a single cookie
+                setcookie('secure_data', $encrypted_value, time() + (86400 * 30), "/", "", true, true);  // Secure and HttpOnly flags
+
+                if (isset($_COOKIE['secure_data'])) {
+                    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
                 }
 
-                $_SESSION['status'] = true;
-                $_SESSION['ID'] = $user['id'];
-                $_SESSION['ACCESS'] = $user['access'];
-                $_SESSION['USERNAME'] = $user['username'];
-                $_SESSION['PASSWORD'] = $user['password'];
-                $_SESSION['DATE_CREATED'] = $user['date_created'];
-                $_SESSION['FNAME'] = $user['fname'];
-                $_SESSION['MNAME'] = $user['mname'];
-                $_SESSION['LNAME'] = $user['lname'];
-                $_SESSION['EXT_NAME'] = $user['ext_name'];
-                $_SESSION['EMAIL'] = $user['email'];
-                $_SESSION['IMAGE'] = $user['image'];
-                $_SESSION['LOCKED'] = $user['locked'];
-                $_SESSION['ADMIN_STATUS'] = $user['admin_status'];
-
-                if ($_SESSION['ACCESS'] == '') {
+                if ($decrypted_array['ACCESS'] == '') {
                     $response['icon'] = "info";
                     $response['success'] = false;
                     $response['title'] = "Error!";
@@ -97,8 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                if ($_SESSION['ACCESS'] == 'ENCODER' || $_SESSION['ACCESS'] == 'REQUESTOR') {
-                    if ($_SESSION['LOCKED'] == 3) {
+                if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'REQUESTOR') {
+                    if ($decrypted_array['LOCKED'] == 3) {
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Error!";
@@ -111,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Log the user action
                 $action = "Logged in the system.";
                 $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
-                $stmt->bindParam(':user_id', $_SESSION['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $decrypted_array['ID'], PDO::PARAM_INT);
                 $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();
 
@@ -122,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Update user status
                 $stmt = $conn->prepare("UPDATE user_account SET status = '1', locked = '0' WHERE id = :id");
-                $stmt->bindParam(':id', $_SESSION['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':id', $decrypted_array['ID'], PDO::PARAM_INT);
                 $stmt->execute();
             } else {
                 // Password does not match

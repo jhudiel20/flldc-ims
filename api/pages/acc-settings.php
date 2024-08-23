@@ -3,11 +3,14 @@
 require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-if (!isset($_COOKIE['ACCESS'])) {
+if (isset($_COOKIE['secure_data'])) {
+    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
+}
+if (!isset($decrypted_array['ACCESS'])) {
     header("Location:index.php");
 }
 
-$user_id = $_COOKIE['ID'];
+$user_id = $decrypted_array['ID'];
 
 $stmt = $conn->prepare("SELECT * FROM user_account WHERE ID = :user_id");
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
@@ -669,8 +672,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 <form method="post" id="delete_photo" class="nav-link ">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button name="" type="button" id="photo_delete" class="btn btn-label-danger">Delete</button>
-                    <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $_COOKIE['FNAME'] . ' ' . $_COOKIE['LNAME']; ?>">
-                    <input type="hidden" name="photo_to_delete" value="<?php echo $_COOKIE['IMAGE']; ?>">
+                    <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
+                    <input type="hidden" name="photo_to_delete" value="<?php echo $user['image']; ?>">
                     <input  type="hidden" name="ID" id="ID" value="<?php echo $user_id?>">
                 </form>
             </div>
