@@ -313,6 +313,10 @@ function decrypt_cookie($encrypted_data, $key, $cipher_method) {
     return unserialize($decrypted_data);
 }
 
+if (isset($_COOKIE['secure_data'])) {
+  $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
+}
+
 
 function page_url(){
 	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -468,3 +472,5 @@ function generate_PCV_ID($length = 10) {
   $generate_PCV_ID = 'PCV-'.$year.'-'.$randomString;
   return $generate_PCV_ID;
 }
+
+

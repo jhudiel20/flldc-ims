@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-
-if (!isset($_COOKIE['ACCESS'])) {
+if (isset($_COOKIE['secure_data'])) {
+    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
+}
+if (!isset($decrypted_array['ACCESS'])) {
     header("Location:index.php");
-}else if ($_COOKIE['ACCESS'] != 'ADMIN') {
+}else if ($decrypted_array['ACCESS'] != 'ADMIN') {
     header("Location:404.php");
 }
 ?>
@@ -45,7 +47,7 @@ if (!isset($_COOKIE['ACCESS'])) {
 
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
-                                                    <?php if ($_COOKIE['ADMIN_STATUS'] == "PRIMARY") { ?>
+                                                    <?php if ($decrypted_array['ADMIN_STATUS'] == "PRIMARY") { ?>
                                                     <button type="button" id="add" class="btn btn-label-primary"
                                                         data-bs-toggle="modal" data-bs-target="#add_user_modal">
                                                         <i class="fa-solid fa-plus"></i><span> ADD USER
@@ -64,7 +66,7 @@ if (!isset($_COOKIE['ACCESS'])) {
                                                     data-bs-toggle="dropdown" aria-expanded="false">More
                                                     Actions</button>
                                                 <ul class="dropdown-menu">
-                                                    <?php if ($_COOKIE['ADMIN_STATUS'] == "PRIMARY") { ?>
+                                                    <?php if ($decrypted_array['ADMIN_STATUS'] == "PRIMARY") { ?>
                                                     <li><a class="dropdown-item" href="javascript:void(0);"
                                                             id="add-dropdown" data-bs-toggle="modal"
                                                             data-bs-target="#add_user_modal"><i
@@ -378,7 +380,7 @@ var table = new Tabulator("#user-table", {
                 }
             }
         },
-        <?php if($_COOKIE['ADMIN_STATUS'] == 'PRIMARY'){?> {
+        <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?> {
             title: "Action",
             formatter: function(cell, formatterParams, onRendered) {
                 var ID = cell.getRow().getData().ID;
