@@ -56,8 +56,8 @@
         "dest": "/api/pages/logs.php"
       },
       {
-        "src": "/logs_data.php",
-        "dest": "/api/pages/logs_data.php"
+        "src": "/api/(.*)",
+        "dest": "/api/$1"
       },
       {
         "src": "/user_list.php",
