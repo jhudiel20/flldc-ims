@@ -8,6 +8,9 @@
       },
       "api/pages/*.php": {
         "runtime": "vercel-php@0.7.1"
+      },
+      "api/ajax_data/*.php": {
+        "runtime": "vercel-php@0.7.1"
       }
     },
     "routes": [
@@ -57,7 +60,7 @@
       },
       {
         "src": "/ajax_data/logs_data.php",
-        "dest": "/public/ajax_data/logs_data.php"
+        "dest": "/api/ajax_data/logs_data.php"
       },
       {
         "src": "/user_list.php",
