@@ -172,11 +172,11 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
                                 <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                     Loading...
                                 </button>
-                                <button type="submit" class="btn btn-primary d-grid w-100" id="signin_btn">Sign in</button>
                                 <!-- <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button> -->
                             </form>
 
@@ -267,12 +267,12 @@ include 'config/config.php';
                     data: $(this).serialize(),
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#signin_btn').hide();
+                        $('#signin_btn').addClass('d-none').prop('disabled', false);
                         $('#request_icon').removeClass('d-none').prop('disabled', true);
                         },
                     success: function(response) {
                         $('#request_icon').addClass('d-none').prop('disabled', false);
-                        $('#signin_btn').show();
+                        $('#signin_btn').removeClass('d-none').prop('disabled', true);
                         if (response.success) {
                             Toast.fire({
                                     icon: 'success',
