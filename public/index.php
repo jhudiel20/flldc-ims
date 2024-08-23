@@ -272,7 +272,7 @@ include 'config/config.php';
                         },
                     success: function(response) {
                         $('#request_icon').addClass('d-none').prop('disabled', false);
-                        $('#signin_btn').removeClass('d-none').prop('disabled', true);
+                        $('#signin_btn').show();
                         if (response.success) {
                             Toast.fire({
                                     icon: 'success',
