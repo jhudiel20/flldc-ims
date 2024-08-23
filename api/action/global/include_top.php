@@ -55,7 +55,7 @@
     <script src="<?php BASE_URL; ?>../tabulator/dist/js/xlsx.full.min.js?v=<?php echo FILE_VERSION; ?>"></script>
     <!-- PDF Script Includes -->
     <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.umd.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.plugin.autotable.min.js?v=<?php echo FILE_VERSION; ?>">
+    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.plugin.autotable.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
 
 
