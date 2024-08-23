@@ -74,7 +74,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                                                                     
                                                             <img
-                                                                src="../user_image/<?php if(empty($_COOKIE['IMAGE'])){ $_COOKIE['IMAGE'] = 'user.png'; echo $_COOKIE['IMAGE']; }else{ echo $_COOKIE['IMAGE'];}?>"
+                                                                src="../user_image/<?php if(empty($user['image'])){ $user['image'] = 'user.png'; echo $user['image']; }else{ echo $user['image'];}?>"
                                                                 alt="user-avatar"
                                                                 class="d-block rounded"
                                                                 height="100"
@@ -84,7 +84,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                 <form class="" method="post" id="upload_photo_form" enctype="multipart/form-data" style="display: inline-block;">
                                                                     <label for="upload" class="" tabindex="0">
                                                                         <input type="file" name="image" id="image" class="form-control mb-1">
-                                                                        <input type="text" name="user_submit_name" id="user_submit_name" value="<?php echo $_COOKIE['fname'] . ' ' . $_COOKIE['lname']; ?>">
+                                                                        <input type="text" name="user_submit_name" id="user_submit_name" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
                                                                         <input type="text" name="ID" id="ID" value="<?php echo $user_id ?>">  
                                                                         <button type="submit" id="submit_photo" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
                                                                 </form>
