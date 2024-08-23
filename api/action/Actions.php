@@ -9,11 +9,11 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
         $updateStatus = $conn->prepare("UPDATE user_account SET STATUS = :status WHERE ID = :id");
         $updateStatus->execute([
         ':status' => 0,
-        ':id' => $_COOKIE['ID']
+        ':id' => $decrypted_array['ID']
         ]);
 
         // Log the user action (Logged out)
-        $user_id = $_COOKIE['ID'];
+        $user_id = $decrypted_array['ID'];
         $action_made = "Logged out.";
 
         $logAction = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");

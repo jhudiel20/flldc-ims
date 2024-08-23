@@ -60,6 +60,10 @@
         "dest": "/api/ajax_data/logs_data.php"
       },
       {
+        "src": "/user_list.php",
+        "dest": "/api/pages/user_list.php"
+      },
+      {
         "src": "/assets/(.*)",
         "dest": "/public/assets/$1"
       },
