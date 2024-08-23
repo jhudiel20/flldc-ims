@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['ID'];
     $img = $_FILES['image']['name'];
     $img_temp_loc = $_FILES['image']['tmp_name'];
-    $img_store = "/user_image/" . $img;
+    $img_store = require_once __DIR__ . "/../../public/user_image/" . $img;
 
     if (move_uploaded_file($img_temp_loc, $img_store)) {
         $sql = $conn->prepare("UPDATE user_account SET image = :img WHERE ID = :id");
