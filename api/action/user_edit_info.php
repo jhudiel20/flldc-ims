@@ -64,14 +64,14 @@ try {
     $stmt->execute();
 
     // Fetch updated user information
-    $stmt = $conn->prepare("SELECT FNAME, MNAME, LNAME, EXT_NAME FROM user_account WHERE ID = :user_id");
+    $stmt = $conn->prepare("SELECT fname, mname, lname, ext_name FROM user_account WHERE ID = :user_id");
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Log the action
-    $action = "Updated User information of user: " . $row['FNAME'] . ' ' . $row['MNAME'] . ' ' . $row['LNAME'] . ' ' . $row['EXT_NAME'];
-    $user_id = $_SESSION['ID'];
+    $action = "Updated User information of user: " . $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname'] . ' ' . $row['ext_name'];
+    $user_id = $_COOKIE['ID'];
     $stmt = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->bindParam(':action', $action, PDO::PARAM_STR);

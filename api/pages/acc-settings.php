@@ -432,7 +432,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         method: "POST",
                         data: $(this).serialize(),
                         dataType: "json",
+                        beforeSend: function() {
+                            $('#user_edit_info').hide();
+                            $('#request_icon').removeClass('d-none').prop('disabled', true);
+                        },
                         success: function(response) {
+                            $('#request_icon').addClass('d-none').prop('disabled', false);
+                            $('#user_edit_info').show();
                             console.log(response);
                             if (response.success) {
                                 $('#staticBackdrop').modal('hide');
