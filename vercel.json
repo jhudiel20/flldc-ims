@@ -56,6 +56,10 @@
         "dest": "/api/pages/logs.php"
       },
       {
+        "src": "/logs_data.php",
+        "dest": "/api/ajax_data/logs_data.php"
+      },
+      {
         "src": "/assets/(.*)",
         "dest": "/public/assets/$1"
       },
