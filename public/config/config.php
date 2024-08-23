@@ -292,26 +292,25 @@ function response(){
 
 $cipher_method = 'AES-256-CBC';
 $encryption_key = 'qwertyuiopasdfghjklzxcvbnm1234567890johnjhudieljoycediannemnbvcxzlkjhgfdsapoiuytrewq0987654321diannejoycejohnjhudiel1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0pp0lo9ki8mju7nhy6bgt5vfr4cde3xsw2zaq1'; // Use a strong key
-$iv_length = openssl_cipher_iv_length($cipher_method);
-$iv = openssl_random_pseudo_bytes($iv_length);
 
 // Function to encrypt the value
 function encrypt_cookie($array, $key, $cipher_method) {
-  $iv = openssl_random_pseudo_bytes($iv_length);
-  $serialized_data = serialize($array);
-  $encrypted_data = openssl_encrypt($serialized_data, $cipher_method, $key, 0, $iv);
-  // Combine the IV and encrypted data to store together
-  return base64_encode($iv . $encrypted_data);
+    $iv_length = openssl_cipher_iv_length($cipher_method);
+    $iv = openssl_random_pseudo_bytes($iv_length);
+    $serialized_data = serialize($array);
+    $encrypted_data = openssl_encrypt($serialized_data, $cipher_method, $key, 0, $iv);
+    // Combine the IV and encrypted data to store together
+    return base64_encode($iv . $encrypted_data);
 }
 
 // Function to decrypt the value
 function decrypt_cookie($encrypted_data, $key, $cipher_method) {
-  $encrypted_data = base64_decode($encrypted_data);
-  $iv_length = openssl_cipher_iv_length($cipher_method);
-  $iv = substr($encrypted_data, 0, $iv_length);
-  $encrypted_data = substr($encrypted_data, $iv_length);
-  $decrypted_data = openssl_decrypt($encrypted_data, $cipher_method, $key, 0, $iv);
-  return unserialize($decrypted_data);
+    $encrypted_data = base64_decode($encrypted_data);
+    $iv_length = openssl_cipher_iv_length($cipher_method);
+    $iv = substr($encrypted_data, 0, $iv_length);
+    $encrypted_data = substr($encrypted_data, $iv_length);
+    $decrypted_data = openssl_decrypt($encrypted_data, $cipher_method, $key, 0, $iv);
+    return unserialize($decrypted_data);
 }
 
 
