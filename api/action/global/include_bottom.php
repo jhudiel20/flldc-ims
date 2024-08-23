@@ -24,6 +24,8 @@
     <!-- Main JS -->
     <script src="<?php BASE_URL; ?>../assets/js/main.js"></script>
 
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+
 
 
 
