@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: token $token",
-            "User-Agent: YourAppName",
+            "User-Agent: flldc-ims.vercel.app",
             "Content-Type: application/json"
         ));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
