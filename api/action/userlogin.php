@@ -73,7 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $encrypted_value = encrypt_cookie($cookieData, $encryption_key, $cipher_method);
                 
                 // Set the encrypted value as a single cookie
-                setcookie('secure_data', $encrypted_value, time() + (86400 * 30), "/", "", true, true);  // Secure and HttpOnly flags
+                setcookie('secure_data', $encrypted_value, [
+                    'expires' => time() + (86400 * 30), // Cookie expires in 30 days
+                    'path' => '/',                       // Available within the entire domain
+                    'domain' => '',                     // Use the default domain
+                    'secure' => true,                   // Only sent over HTTPS
+                    'httponly' => true,                 // Accessible only through HTTP, not JavaScript
+                    'samesite' => 'Strict'              // Restrict cookie to same-site requests
+                ]);
 
                 if (isset($_COOKIE['secure_data'])) {
                     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
