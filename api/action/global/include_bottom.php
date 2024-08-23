@@ -24,11 +24,6 @@
     <!-- Main JS -->
     <script src="<?php BASE_URL; ?>../assets/js/main.js"></script>
 
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
-
-
-
-
     <!-- Sweet Alert -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert.min.js?v=<?php echo FILE_VERSION; ?>"></script>
     <!-- dropify -->

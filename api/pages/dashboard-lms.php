@@ -1,8 +1,5 @@
 <?php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-if (isset($_COOKIE['secure_data'])) {
-    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
-}
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location:index.php");
 }
