@@ -6,6 +6,12 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
+// GitHub credentials and repository details
+$token = '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';
+$owner = 'jhudiel20'; // or organization name if applicable
+$repo = 'flldc-user-image';
+$branch = 'main'; // Default branch or the branch you want to upload to
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $fileMimes = array(
@@ -16,59 +22,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 
     if ($_FILES['image']['name'] == '') {
-        $response['title'] = 'Warning!';
         $response['message'] = 'Please select a photo';
+        $response['title'] = 'Warning!';
         echo json_encode($response);
         exit();
     }
 
     if (!empty($_FILES['image']['name']) && in_array($_FILES['image']['type'], $fileMimes)) {
-        $img_directory = __DIR__ . '/../../public/user_image/';
-        if (!is_dir($img_directory)) {
-            mkdir($img_directory, 0755, true);
-        }
-
         $id = $_POST['ID'];
         $img = $_FILES['image']['name'];
         $img_temp_loc = $_FILES['image']['tmp_name'];
-        $img_store = $img_directory . $img;
 
-        // Check if the path exists
-        if (!is_dir($img_directory)) {
-            $response['title'] = 'Error!';
-            $response['message'] = 'Upload directory does not exist!';
-            echo json_encode($response);
-            exit();
-        }
+        // Read the file content
+        $fileContent = file_get_contents($img_temp_loc);
 
-        if (move_uploaded_file($img_temp_loc, $img_store)) {
-            $sql = $conn->prepare("UPDATE user_account SET image = :img WHERE ID = :id");
-            $sql->bindParam(':img', $img, PDO::PARAM_STR);
-            $sql->bindParam(':id', $id, PDO::PARAM_STR);
-            $sql->execute();
+        // Base64 encode the file content
+        $encodedContent = base64_encode($fileContent);
 
+        // GitHub API URL to create or update a file
+        $url = "https://api.github.com/repos/$owner/$repo/contents/user_image/$img";
+
+        // Create the cURL request
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: token $token",
+            "User-Agent: YourAppName",
+            "Content-Type: application/json"
+        ));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+            'message' => 'Upload image',
+            'content' => $encodedContent,
+            'branch' => $branch
+        )));
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode == 201) {
+            // Success
             $response['success'] = true;
             $response['title'] = 'Success';
             $response['message'] = 'User Picture Updated';
-            echo json_encode($response);
-
-            $user_id = $_COOKIE['ID'];
-            $action = "Updated picture in User : " . $_COOKIE['FNAME'] . ' ' . $_COOKIE['MNAME'] . ' ' . $_COOKIE['LNAME'];
-            $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
-            $stmt->bindParam(':user_id', $_COOKIE['ID'], PDO::PARAM_INT);
-            $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
-            $stmt->execute();
-            exit();
         } else {
-            $response['title'] = 'Error!';
+            // Failure
             $response['message'] = 'Failed to upload image!';
-            echo json_encode($response);
-            exit();
+            $response['title'] = 'Error!';
         }
+
+        echo json_encode($response);
+        exit();
     } else {
-        $response['title'] = 'Warning!';
-        $response['message'] = 'Please insert a valid format! (jpg, png, jpeg, gif)';
+        $response['message'] = 'PLEASE INSERT VALID FORMAT! (jpg, png, jpeg, gif)';
+        $response['title'] = 'Error!';
         echo json_encode($response);
         exit();
     }
 }
+?>
