@@ -120,7 +120,7 @@ var table = new Tabulator("#example-table", {
     paginationSize: 20,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: <?php BASE_URL; ?>"/ajax_data/logs_data.php",
+    ajaxURL: "/ajax_data/logs_data.php",
     placeholder: "No Data Found",
     columns: [
         {
