@@ -551,7 +551,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     var formdata = new FormData(upload_photo);
 
                     $.ajax({
-                        url:"../action/upload_user_photo.php",
+                        url:"/upload_user_photo.php",
                         method: "POST",
                         data: formdata,
                         dataType: "json",
@@ -626,19 +626,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
             })
 
         }); 
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const sectionTitle = document.getElementById('section-title');
-        //     const accountButton = document.querySelector('[data-bs-target="#profile-info"]');
-        //     const securityButton = document.querySelector('[data-bs-target="#security-info"]');
 
-        //     accountButton.addEventListener('click', function () {
-        //         sectionTitle.innerHTML = '<span class="text-muted fw-light">Account Settings /</span> Account';
-        //     });
-
-        //     securityButton.addEventListener('click', function () {
-        //         sectionTitle.innerHTML = '<span class="text-muted fw-light">Account Settings /</span> Security';
-        //     });
-        // });
         document.addEventListener("DOMContentLoaded", function() {
             // Get the active tab for the first set of tabs from localStorage or set a default value
             let activeTab = localStorage.getItem("activeTab") || "#profile-info";
