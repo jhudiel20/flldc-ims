@@ -24,13 +24,13 @@ if ($firstname == '' || $lastname == '' || $email == '') {
     exit();
 }
 
-if (!preg_match('/^[a-zA-Z]+$/', $firstname) || !preg_match('/^[a-zA-Z]+$/', $lastname)) {
+if (!preg_match(is_letter, $firstname) || !preg_match(is_letter, $lastname)) {
     $response['message'] = 'Invalid Name!';
     echo json_encode($response);
     exit();
 }
 
-if ($middlename != '' && !preg_match('/^[a-zA-Z]+$/', $middlename)) {
+if ($middlename != '' && !preg_match(is_letter, $middlename)) {
     $response['message'] = 'Invalid Name!';
     echo json_encode($response);
     exit();
