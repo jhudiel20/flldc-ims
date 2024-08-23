@@ -76,6 +76,10 @@
         "dest": "/public/js/$1"
       },
       {
+        "src": "/ajax_data/(.*)",
+        "dest": "/public/ajax_data/$1"
+      },
+      {
         "src": "/tabulator/(.*)",
         "dest": "/public/tabulator/$1"
       },
