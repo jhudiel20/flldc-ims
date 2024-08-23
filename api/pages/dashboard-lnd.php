@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-
+$decrypted_array = null;
 if (isset($_COOKIE['secure_data'])) {
     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
 }
