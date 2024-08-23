@@ -57,7 +57,7 @@
       },
       {
         "src": "/logs_data.php",
-        "dest": "/api/ajax_data/logs_data.php"
+        "dest": "/public/ajax_data/logs_data.php"
       },
       {
         "src": "/user_list.php",
@@ -74,10 +74,6 @@
       {
         "src": "/js/(.*)",
         "dest": "/public/js/$1"
-      },
-      {
-        "src": "/ajax_data/(.*)",
-        "dest": "/public/ajax_data/$1"
       },
       {
         "src": "/tabulator/(.*)",
