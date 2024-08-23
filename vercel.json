@@ -52,6 +52,10 @@
         "dest": "/api/pages/dashboard-mrs.php"
       },
       {
+        "src": "/logs.php",
+        "dest": "/api/pages/logs.php"
+      },
+      {
         "src": "/assets/(.*)",
         "dest": "/public/assets/$1"
       },
