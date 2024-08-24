@@ -1,5 +1,9 @@
 <?php
-// Sample user data
+// Enable error reporting for debugging purposes (remove in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Sample user data array
 $data = [
     [
         "ID" => 1,
@@ -34,6 +38,8 @@ $data = [
     // Add more user data as needed
 ];
 
-// Convert the data to JSON format
+// Set the Content-Type header to application/json
+header('Content-Type: application/json');
+
+// Return the data as JSON
 echo json_encode($data);
-?>
