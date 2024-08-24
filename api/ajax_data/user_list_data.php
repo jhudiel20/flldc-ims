@@ -1,63 +1,69 @@
 <?php
-// Enable error reporting for debugging purposes (remove in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php';
 
-// Sample user data array
-$data = [
-    [
-        "ID" => 1,
-        "FNAME" => "John",
-        "MNAME" => "A.",
-        "LNAME" => "Doe",
-        "EXT_NAME" => "",
-        "STATUS" => "Active",
-        "EMAIL" => "john.doe@example.com",
-        "CONTACT" => "1234567890",
-        "ACCESS" => "Admin",
-        "IMAGE" => "john_doe.jpg",
-        "LOCKED" => 0,
-        "APPROVED_STATUS" => 2,
-        "ADMIN_STATUS" => "PRIMARY"
-    ],
-    [
-        "ID" => 2,
-        "FNAME" => "Jane",
-        "MNAME" => "B.",
-        "LNAME" => "Smith",
-        "EXT_NAME" => "",
-        "STATUS" => "Inactive",
-        "EMAIL" => "jane.smith@example.com",
-        "CONTACT" => "0987654321",
-        "ACCESS" => "User",
-        "IMAGE" => "",
-        "LOCKED" => 0,
-        "APPROVED_STATUS" => 0,
-        "ADMIN_STATUS" => "SECONDARY"
-    ],
-    // Add more user data as needed
-];
+header("Content-type: application/json; charset=utf-8");
 
-// For demonstration, hardcoding total records and page count
-$totalRecords = 2; // Total number of records in the database
-$perPage = 20; // Number of records per page
-$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get current page from request
+$query_limit = isset($_GET['size']) && $_GET['size'] == 'true' ? PHP_INT_MAX : 20;
+$table_name = "logs";
+$sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
+$page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
+$start = $page * $query_limit;
 
-// Calculate total pages
-$lastPage = ceil($totalRecords / $perPage);
+$sort_field = 'date_created';
+$sort_dir = 'DESC';
 
-// Validate that $data is an array
-if (!is_array($data)) {
-    $data = []; // Ensure $data is an empty array if validation fails
+if (!empty($sorters)) {
+    $valid_sorts = ['id', 'contact', 'fname', 'mname','lname','ext_name','image','status','access','date_created','email','locked','approved_status','admin_status'];
+    $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
+    $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
 
-// Set the Content-Type header to application/json
-header('Content-Type: application/json');
+$filters = isset($_GET['filter']) ? $_GET['filter'] : [];
+$filter_clauses = [];
+$filter_params = [];
 
-// Return the data as JSON with pagination information
-echo json_encode([
-    'last_page' => $lastPage,
-    'data' => $data,
-	'total_record' => $totalRecords
-]);
+foreach ($filters as $filter) {
+    if (isset($filter['field']) && isset($filter['value'])) {
+        $field = $filter['field'];
+        $value = '%' . $filter['value'] . '%';
+        $filter_clauses[] = "$field ILIKE :$field";
+        $filter_params[$field] = $value;
+    }
+}
+
+$filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
+
+$count_query = "SELECT COUNT(DISTINCT id) as count
+                FROM user_account
+                $filter_sql";
+
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->execute($filter_params);
+$total_query = (int) $count_stmt->fetchColumn();
+
+$pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
+
+$data_query = "SELECT * FROM user_account $filter_sql
+                ORDER BY $sort_field $sort_dir
+                LIMIT :limit OFFSET :offset";
+
+$data_stmt = $conn->prepare($data_query);
+$data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
+$data_stmt->bindValue(':offset', $start, PDO::PARAM_INT);
+
+foreach ($filter_params as $key => $value) {
+    $data_stmt->bindValue(":$key", $value);
+}
+
+$data_stmt->execute();
+$rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$response = [
+    "last_page" => $pages,
+    "total_record" => $total_query,
+    "data" => $rows
+];
+
+echo json_encode($response);
 ?>

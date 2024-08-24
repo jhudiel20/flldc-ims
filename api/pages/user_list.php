@@ -425,20 +425,11 @@ var table = new Tabulator("#user-table", {
         <?php } ?>
     ],
     ajaxResponse: function(url, params, response) {
-        if (response && typeof response === 'object' && Array.isArray(response.data)) {
             return {
                 last_page: response.last_page,
                 total: response.total_record,
                 data: response.data // This should be an array
             };
-        } else {
-            console.error("Invalid data format received:", response);
-            return {
-                last_page: 0,
-                total: 0,
-                data: [] // Return an empty array if the format is invalid
-            };
-        }
     },
 
 });
@@ -469,7 +460,7 @@ function handlePdfDownload() {
                 fontSize: 7
             },
             addPageContent: function(data) {
-                data.doc.addImage('../assets/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
+                data.doc.addImage('/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
                 data.doc.setFont("times");
                 data.doc.setFontSize(11); // Set the font size for the second line
                 data.doc.text("Learning and Development", 360, 20);

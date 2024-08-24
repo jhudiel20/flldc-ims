@@ -19,6 +19,10 @@
         "dest": "/public/user_image/$1"
       },
       {
+        "src": "/img/(.*)",
+        "dest": "/public/assests/img/$1"
+      },
+      {
         "src": "/acc-settings.php",
         "dest": "/api/pages/acc-settings.php"
       },

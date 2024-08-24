@@ -3,14 +3,16 @@ $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") 
 
 $user_id = $decrypted_array['ID'];
 
-//         $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE APPROVAL = 'PENDING'");
-//         $stmt->bindParam(':APPROVAL', 'PENDING', PDO::PARAM_STR);
-//         $stmt->execute();
-//         $count_pending = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE APPROVAL = :PENDING");
+        $stmt->bindParam(':PENDING', 'PENDING', PDO::PARAM_STR);
+        $stmt->execute();
+        $count_pending = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-// $pr_approved  = mysqli_query($conn, "SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE STATUS = 'PENDING' AND APPROVAL = 'APPROVED' ");
-// $pr_status = mysqli_fetch_assoc($pr_approved);
+        $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE STATUS = :PENDING AND APPROVAL = :APPROVED ");
+        $stmt->bindParam(':PENDING', 'PENDING', PDO::PARAM_STR);
+        $stmt->bindParam(':APPROVED', 'APPROVED', PDO::PARAM_STR);
+        $stmt->execute();
+        $pr_status = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!-- Menu -->
 
@@ -163,6 +165,39 @@ $user_id = $decrypted_array['ID'];
             </ul>
         </li>
         <?php } ?>
+
+
+        <li class="menu-item <?php echo ($geturl == 'rca-list.php')? 'active' : 'collapsed' ?>">
+            <a href="rca-list.php" class="menu-link">
+                <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
+                <div> RCA/PCV List</div>
+                <!-- <?php if($count_pending['TOTAL'] == 0){}else{?>
+                <span
+                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['TOTAL']?></span>
+                <?php }?> -->
+            </a>
+        </li>
+        <li class="menu-item <?php echo ($geturl == 'request-list.php')? 'active' : 'collapsed' ?>">
+            <a href="request-list.php" class="menu-link">
+                <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
+                <div> Request List</div>
+                <?php if($count_pending['TOTAL'] == 0){}else{?>
+                <span
+                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['TOTAL']?></span>
+                <?php }?>
+            </a>
+        </li>
+        <li class="menu-item <?php echo ($geturl == 'purchase-list.php')? 'active' : 'collapsed' ?>">
+            <a href="purchase-list.php" class="menu-link">
+                <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
+                <div> Purchase List</div>
+                <?php if($pr_status['TOTAL'] == 0){}else{?>
+                <span class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $pr_status['TOTAL']?></span>
+                <?php }?>
+            </a>
+        </li>
+
+
 
         <!-- <li class="menu-item <?php echo ($geturl == 'item-list.php')? 'active' : 'collapsed' ?>">
             <a href="<?php BASE_URL; ?>item-list.php" class="menu-link">
