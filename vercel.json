@@ -63,12 +63,16 @@
         "dest": "/api/ajax_data/logs_data.php"
       },
       {
-        "src": "/api/pages/(.*)",
-        "dest": "/api/pages/$1"
-      },
-      {
         "src": "/user_list.php",
         "dest": "/api/pages/user_list.php"
+      },
+      {
+        "src": "/user_list_data.php",
+        "dest": "/api/ajax_data/user_list_data.php"  
+      },
+      {
+        "src": "/api/pages/(.*)",
+        "dest": "/api/pages/$1"
       },
       {
         "src": "/assets/(.*)",
