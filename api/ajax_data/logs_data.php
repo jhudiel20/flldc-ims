@@ -1,131 +1,73 @@
 <?php
 require_once __DIR__ . '/../DBConnection.php';
-require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-
-error_reporting(0);
-ini_set('display_errors', 0);
-
+require_once __DIR__ . '/../../public/config/config.php';
 
 header("Content-type: application/json; charset=utf-8");
 
-$query_limit = 20;
+$query_limit = isset($_GET['size']) && $_GET['size'] == 'true' ? PHP_INT_MAX : 20;
 $table_name = "logs";
-$field_query = '*';    
-$pages = 0;
-$start = 0;
-$size = 0;
+$sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
+$page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
+$start = $page * $query_limit;
 
-$sorters = array();
-$orderby = "DATE_CREATED DESC";
-$sql_where = "";
-$sql_conds = "";
-$sql_where_array = array();
-$to_encode = array();
-$output = "";
-$total_query = 0;
-$flag_all = false;
+$sort_field = 'DATE_CREATED';
+$sort_dir = 'DESC';
 
-$dbfield = array('logs.ID', 'logs.USER_ID', 'logs.ACTION_MADE', 'FNAME', 'MNAME', 'LNAME', 'EXT_NAME');
-$db_orig = array('ID', 'USER_ID', 'ACTION_MADE', 'DATE_CREATED');
+if (!empty($sorters)) {
+    $valid_sorts = ['ID', 'USER_ID', 'ACTION_MADE', 'DATE_CREATED'];
+    $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
+    $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
+}
 
-if (isset($_GET['filter'])) {
-    $filters = array();
-    $sort_filters = array();
-    $filters = $_GET['filter'];
-    foreach ($filters as $filter) {
-        if (isset($filter['field'])) {
-            $id = $filter['field'];
-            $sort_filters[$id] = $filter['value'];
-        }
-    }
-    foreach ($db_orig as $id) {
-        if (isset($sort_filters[$id])) {
-            $value = $sort_filters[$id];
-            array_push($sql_where_array, $id . ' ILIKE :' . $id); // PostgreSQL uses ILIKE for case-insensitive search
-        }
+$filters = isset($_GET['filter']) ? $_GET['filter'] : [];
+$filter_params = [];
+$filter_clauses = [];
+
+foreach ($filters as $filter) {
+    if (isset($filter['field']) && isset($filter['value'])) {
+        $field = $filter['field'];
+        $value = $filter['value'];
+        $filter_clauses[] = "$field ILIKE :$field";
+        $filter_params[$field] = "%$value%";
     }
 }
 
-if (!empty($sql_where_array)) {
-    $temp_arr = implode(' AND ', $sql_where_array);
-    $sql_where = (empty($temp_arr)) ? '' : $temp_arr;
+$filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
+
+$count_query = "SELECT COUNT(DISTINCT logs.ID) as count
+                FROM logs
+                JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
+                $filter_sql";
+
+$count_stmt = pg_prepare($conn, "count_query", $count_query);
+$count_result = pg_execute($conn, "count_query", $filter_params);
+$count_data = pg_fetch_assoc($count_result);
+$total_query = (int)$count_data['count'];
+
+$pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
+
+$data_query = "SELECT logs.ID, logs.USER_ID, logs.ACTION_MADE, 
+                       TO_CHAR(logs.DATE_CREATED, 'YYYY-MM-DD HH12:MI:SS AM') as DATE_CREATED, 
+                       user_account.FNAME, user_account.MNAME, user_account.LNAME
+                FROM logs
+                JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
+                $filter_sql
+                ORDER BY $sort_field $sort_dir
+                LIMIT $query_limit OFFSET $start";
+
+$data_stmt = pg_prepare($conn, "data_query", $data_query);
+$data_result = pg_execute($conn, "data_query", $filter_params);
+
+$rows = [];
+while ($row = pg_fetch_assoc($data_result)) {
+    $rows[] = $row;
 }
 
-if (isset($_GET['sort'])) {
-    $sorters = $_GET['sort'];
-    $tag = array('asc', 'desc');
-    if (in_array($sorters[0]['field'], $db_orig) AND in_array($sorters[0]['dir'], $tag)) {
-        $orderby = $sorters[0]['field'] . ' ' . $sorters[0]['dir'];
-    }
-}
+$response = [
+    "last_page" => $pages,
+    "total_record" => $total_query,
+    "data" => $rows
+];
 
-if (isset($_GET['size'])) {
-    if ($_GET['size'] == 'true') {
-        $flag_all = true;
-    } else {
-        $query_limit = ($_GET['size'] > $query_limit) ? $_GET['size'] : $query_limit;
-    }
-}
-
-$total_query = 0;
-$field_query = 'COUNT(DISTINCT logs.ID) as count'; // Adjust based on your needs
-$sql_conds = empty($sql_where) ? '' : 'WHERE ' . $sql_where;
-$default_query = "SELECT " . $field_query . ",
-TO_CHAR(logs.DATE_CREATED, 'YYYY-MM-DD HH12:MI:SS AM') as DATE_CREATED 
-FROM logs 
-JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID 
-" . $sql_conds . " 
-ORDER BY " . $orderby;
-
-if ($query = pg_query($conn, $default_query)) {
-    if ($num = pg_num_rows($query)) {
-        while ($data = pg_fetch_assoc($query)) {
-            $total_query = $data['count'];
-        }
-    }
-}
-
-
-$pages = ($total_query === 0) ? 1 : ceil($total_query / ($query_limit));
-if (isset($_GET['page'])) {
-    $page_no = $_GET['page'] - 1;
-    $start = $page_no * $query_limit;
-}
-
-$start_no = ($start >= $total_query) ? $total_query : $start;
-
-$field_query = implode(',', $dbfield);
-$sql_conds = (empty($sql_where)) ? '' : 'WHERE ' . $sql_where;
-$default_query = "SELECT " . $field_query . ",
-TO_CHAR(logs.DATE_CREATED, 'YYYY-MM-DD HH12:MI:SS AM') as DATE_CREATED 
-FROM logs 
-JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID 
-" . $sql_conds . " 
-ORDER BY " . $orderby;
-
-$limit = " LIMIT " . $query_limit . " OFFSET " . $start_no;
-if ($flag_all) {
-    $limit = '';
-    $pages = 1;
-}
-$sql_limit = $default_query . ' ' . $limit;
-
-// echo $sql_limit;
-if ($query = pg_query($conn, $sql_limit)) {
-    if ($num = pg_num_rows($query)) {
-        while ($data = pg_fetch_assoc($query)) {
-            $class_text = "";
-            // $data['shared'] = ($data['share_to']=='[]') ? 'No': 'Yes';
-            $to_encode[] = $data;
-        }
-    }
-}
-
-if (empty($to_encode)) {
-    $output = json_encode(["last_page" => 1, "data" => "", "total_record" => 0]);
-} else {
-    $output = json_encode(["last_page" => $pages, "data" => $to_encode, "total_record" => $total_query]);
-}
-
-echo $output; // output
+echo json_encode($response);
 ?>
