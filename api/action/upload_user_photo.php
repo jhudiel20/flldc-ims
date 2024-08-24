@@ -7,78 +7,68 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 // GitHub credentials and repository details
-$token = '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';
+// $token = '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';
 $owner = 'jhudiel20'; // or organization name if applicable
 $repo = 'flldc-user-image';
-$branch = 'main'; // Default branch or the branch you want to upload to
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Define constants for GitHub repository and token
+define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
+define('GITHUB_TOKEN', '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');
 
-    $fileMimes = array(
-        'image/gif',
-        'image/jpeg',
-        'image/jpg',
-        'image/png'
-    );
+// Get the uploaded file
+if (isset($_FILES['photo'])) {
+    $file = $_FILES['photo'];
+    $filePath = $file['tmp_name'];
+    $fileName = $file['name'];
 
-    if ($_FILES['image']['name'] == '') {
-        $response['message'] = 'Please select a photo';
-        $response['title'] = 'Warning!';
-        echo json_encode($response);
-        exit();
-    }
+    // Read the file content
+    $fileContent = file_get_contents($filePath);
 
-    if (!empty($_FILES['image']['name']) && in_array($_FILES['image']['type'], $fileMimes)) {
-        $id = $_POST['ID'];
-        $img = $_FILES['image']['name'];
-        $img_temp_loc = $_FILES['image']['tmp_name'];
+    // Encode the content to base64
+    $base64Content = base64_encode($fileContent);
 
-        // Read the file content
-        $fileContent = file_get_contents($img_temp_loc);
+    // Prepare the API request
+    $apiUrl = 'https://api.github.com/repos/' . GITHUB_REPO . '/contents/images/' . $fileName;
+    $data = json_encode([
+        'message' => 'Upload ' . $fileName,
+        'content' => $base64Content,
+    ]);
 
-        // Base64 encode the file content
-        $encodedContent = base64_encode($fileContent);
+    $ch = curl_init($apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: token ' . GITHUB_TOKEN,
+        'User-Agent: PHP Script',
+        'Content-Type: application/json',
+    ]);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-        // GitHub API URL to create or update a file
-        $url = "https://api.github.com/repos/$owner/$repo/contents/user_image/$img";
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-        // Create the cURL request
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Authorization: token $token",
-            "User-Agent: flldc-ims.vercel.app",
-            "Content-Type: application/json"
-        ));
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
-            'message' => 'Upload image',
-            'content' => $encodedContent,
-            'branch' => $branch
-        )));
+    $response = json_decode($response, true);
 
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode == 201) {
-            // Success
-            $response['success'] = true;
-            $response['title'] = 'Success';
-            $response['message'] = 'User Picture Updated';
-        } else {
-            // Failure
-            $response['message'] = 'Failed to upload image!';
-            $response['title'] = 'Error!';
-        }
-
-        echo json_encode($response);
-        exit();
+    if (isset($response['content'])) {
+        // Return a success response
+        echo json_encode([
+            'success' => true,
+            'title' => 'Success',
+            'message' => 'File uploaded successfully.',
+        ]);
     } else {
-        $response['message'] = 'PLEASE INSERT VALID FORMAT! (jpg, png, jpeg, gif)';
-        $response['title'] = 'Error!';
-        echo json_encode($response);
-        exit();
+        // Return an error response
+        echo json_encode([
+            'success' => false,
+            'title' => 'Error',
+            'message' => 'File upload failed.',
+        ]);
     }
+} else {
+    // Handle the case where no file is uploaded
+    echo json_encode([
+        'success' => false,
+        'title' => 'Error',
+        'message' => 'No file uploaded.',
+    ]);
 }
-?>

@@ -30,7 +30,7 @@
                                 <label class="form-label">Date Needed<span class="require asterisk">*</span></label>
                                 <input type="date" class="form-control" name="date_needed" id="date_needed">
                             </div>
-                            <?php if($_SESSION['ACCESS'] == 'ADMIN'){?>
+                            <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
                             <div class="col-md-12">
                                 <label class="form-label">Request by email :<span
                                         class="require asterisk">*</span></label>
@@ -60,7 +60,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="button" name="submit" class="btn btn-label-primary" id="add_request">Submit</button>
+                <button type="button" name="add_request" class="btn btn-label-primary" id="add_request">Submit</button>
                 <button class="btn btn-label-primary d-none" type="button" id="request_icon" disabled>
                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                     Loading...

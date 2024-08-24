@@ -87,6 +87,10 @@
         "dest": "/api/ajax_data/request_list_data.php"
       },
       {
+        "src": "/add_request.php",
+        "dest": "/api/action/add_request.php"
+      },
+      {
         "src": "/request-details.php",
         "dest": "/api/pages/request-details.php"
       },
@@ -133,6 +137,10 @@
       {
         "src": "/tabulator/(.*)",
         "dest": "/public/tabulator/$1"
+      },
+      {
+        "src": "/mail/(.*)",
+        "dest": "/public/mail/$1"
       },
       {
         "src": "/(.*)",

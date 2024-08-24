@@ -550,12 +550,15 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
 
-            $('#upload_photo_form').on('submit', function(e) {
-                e.preventDefault();   
+                $('#upload_photo_form').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var formData = new FormData(this);
+
                     $.ajax({
-                        url:"/upload_user_photo.php",
+                        url: "/upload_user_photo.php",
                         method: "POST",
-                        data: $(this).serialize(),
+                        data: formData,
                         dataType: "json",
                         contentType: false,
                         cache: false,
@@ -584,7 +587,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             }
                         }
                     });
-            })
+                });
+
             $('#photo_delete').on('click', function() {
                 var formdata = new FormData(delete_photo);
 
