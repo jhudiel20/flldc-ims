@@ -71,12 +71,24 @@
         "dest": "/api/pages/request-list.php"
       },
       {
-        "src": "/request_list_data",
+        "src": "/request_list_data.php",
         "dest": "/api/ajax_data/request_list_data.php"
       },
       {
         "src": "/request-details.php",
         "dest": "/api/pages/request-details.php"
+      },
+      {
+        "src": "/purchase-list.php",
+        "dest": "/api/pages/purchase-list.php"
+      },
+      {
+        "src": "/purchase_list_data.php",
+        "dest": "/api/ajax_data/purchase_list_data.php"
+      },
+      {
+        "src": "/purchase-details.php",
+        "dest": "/api/pages/purchase-details.php"
       },
       {
         "src": "/logs.php",

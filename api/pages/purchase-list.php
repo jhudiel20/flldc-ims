@@ -42,10 +42,6 @@ if (!isset($decrypted_array['ACCESS'])) {
                                         <div class="card-body">
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
-                                                    <button type="button" id="add" class="btn btn-label-primary"
-                                                        data-bs-toggle="modal" data-bs-target="#add_request_modal">
-                                                        <i class="fa-solid fa-plus"></i><span> ADD NEW REQUEST
-                                                    </button>
                                                     <button class="btn btn-label-primary" id="download-xlsx"><i
                                                             class="fa-solid fa-download"></i> XLSX</button>
                                                     <button class="btn btn-label-primary" id="download-pdf"><i
@@ -59,13 +55,6 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     data-bs-toggle="dropdown" aria-expanded="false">More
                                                     Actions</button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"
-                                                            id="add-dropdown" data-bs-toggle="modal"
-                                                            data-bs-target="#add_request_modal "><i
-                                                                class="fa-solid fa-plus"></i> ADD NEW REQUEST</a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider">
-                                                    </li>
                                                     <li><button class="dropdown-item" id="download-xlsx-1"><i
                                                                 class="fa-solid fa-download"></i> XLSX</button></li>
                                                     <li><button class="dropdown-item" id="download-pdf-1"><i
@@ -74,10 +63,10 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             </div>
 
                                             <!-- Add Modal -->
-                                            <?php include __DIR__ . "/../modals/request_list_modal.php"; ?>
+                                            <?php include __DIR__ . "/../modals/purchase_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
-                                            <div class="tabulator-table" id="request-list-table"
+                                            <div class="tabulator-table" id="purchase-list-table"
                                                 style="font-size:14px;">
                                             </div>
 
@@ -95,7 +84,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include __DIR__. "/../action/global/footer.php";
+                    include __DIR__ . "/../action/global/footer.php";;
                 ?>
                 <!-- / Footer -->
 
@@ -125,37 +114,22 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 <script>
-var approval_status = function(cell, formatterParams, onRendered) {
-    var data_approval = cell.getData().approval; // Get the approved status from the cell
-    var ID = cell.getRow().getData().id; // Get the ID of the user
-    var item_name = cell.getRow().getData().item_name; // Get the ID of the user
-    var EMAIL = cell.getRow().getData().email;
-    var REQUEST_ID = cell.getRow().getData().request_id;
-    // console.log(ID);
-
-    <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
-    if (data_approval == "PENDING") {
-        return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
-            REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
-            " ' data-email=' " + EMAIL + " ' >PENDING</button>";
-    } else {
-        return data_approval;
-    }
-    <?php }else{ ?>
-    return data_approval;
-    <?php } ?>
-};
-
 var detail_btn = function(cell, formatterParams, onRendered) {
-    var request_id = cell.getData().xid;
+    var purchase_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='request-details.php?ID=" + request_id +
+    <?php 
+        // $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
+        // $_SESSION['PAGE_CLICK'] = "";
+        // $_SESSION['PAGE_CLICK'] = $geturl;
+    ?>
+    return "<a class='btn btn-outline-primary' href='purchase-details.php?ID=" + purchase_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
+
 // Initialize the Tabulator table with fetched data
 //function initializeTable(data) {
-var table = new Tabulator("#request-list-table", {
+var table = new Tabulator("#purchase-list-table", {
     layout: "fitDataStretch",
     movableColumns: true,
     placeholder: "No Data Found",
@@ -165,9 +139,9 @@ var table = new Tabulator("#request-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/request_list_data.php",
-    columns: [
-        {
+    ajaxURL: "/purchase_list_data.php",
+    ajaxLoaderLoading: 'Fetching data from Database..',
+    columns: [{
             title: "Details",
             field: "",
             formatter: detail_btn,
@@ -177,61 +151,71 @@ var table = new Tabulator("#request-list-table", {
             download: false
         },
         {
-            title: "Date Created",
-            field: "request_date_created",
+            title: "Item ID",
+            field: "PR_ID",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Purchase Item",
+            field: "ITEM_NAME",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Quantity",
+            field: "QUANTITY",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false,
+            visible: false,
+            download: true
+        },
+        {
+            title: "Status",
+            field: "STATUS",
+            hozAlign: "center",
+            sorter: "date",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
+            width: 150,
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Approval Date Created",
+            field: "APPROVAL_DATE_CREATED",
             headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
-            title: "Request ID",
-            field: "request_id",
+            title: "Remarks",
+            field: "REMARKS",
             headerFilter: "input",
             hozAlign: "center",
-            // width: 300,
-            headerFilterLiveFilter: false
-        },
-        {
-            title: "Purchase Item",
-            field: "item_name",
-            headerFilter: "input",
-            hozAlign: "center",
-            // width: 300,
-            headerFilterLiveFilter: false
-        },
-        {
-            title: "Request Status",
-            field: "approval",
-            formatter: approval_status,
-            hozAlign: "center",
-            headerFilter: "list",
-            headerFilterParams: {
-                valuesLookup: true,
-                clearable: true
-            },
-            // width: 300,
-            headerFilterLiveFilter: false
+            width: 300,
+            headerFilterLiveFilter: false,
+            visible: false,
+            download: true
         },
         {
             title: "Requestor Email ",
-            field: "email",
+            field: "EMAIL",
+            headerFilter: "input",
             hozAlign: "center",
-            headerFilter: "list",
-            headerFilterParams: {
-                valuesLookup: true,
-                clearable: true
-            },
-            // width: 300,
-            headerFilterLiveFilter: false
-        },
+            headerFilterLiveFilter: false,
+            visible: false,
+            download: true
+        }
 
     ],
     ajaxResponse: function(url, params, response) {
-        return {
-                last_page: response.last_page,
-                total: response.total_record,
-                data: response.data // This should be an array
-            }; //response.data; //return the tableData property of a response json object
+        return response; //response.data; //return the tableData property of a response json object
     },
 });
 
@@ -243,16 +227,15 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("download-xlsx").addEventListener("click", handleXslDownload);
     document.getElementById("download-xlsx-1").addEventListener("click", handleXslDownload);
 });
-
 //trigger download of data.xlsx file
 function handleXslDownload() {
-    table.download("xlsx", "Request List as of Year " + currentYear + ".xlsx", {
-        sheetName: "Request List"
+    table.download("xlsx", "Purchase List as of Year " + currentYear + ".xlsx", {
+        sheetName: "Purchase List"
     });
 };
 //trigger download of PDF file
 function handlePdfDownload() {
-    table.download("pdf", "Request List as of " + formattedDateWithHyphens + ".pdf", {
+    table.download("pdf", "Purchase List as of " + formattedDateWithHyphens + ".pdf", {
         orientation: "landscape", //set page orientation to portrait
         autoTable: {
             theme: 'grid', //'plain' or 'striped'
@@ -261,12 +244,12 @@ function handlePdfDownload() {
                 fontSize: 7
             },
             addPageContent: function(data) {
-                data.doc.addImage('/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
+                data.doc.addImage('../assets/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
                 data.doc.setFont("times");
                 data.doc.setFontSize(11); // Set the font size for the second line
                 data.doc.text("Learning and Development", 360, 20);
                 data.doc.setFontSize(14);
-                data.doc.text("Request List as of " + currentDate, 340, 35);
+                data.doc.text("Purchase List as of " + currentDate, 340, 35);
                 data.doc.setDrawColor(0, 0, 0);
                 // Set the width of the divider to 1 point (adjust as needed)
                 data.doc.setLineWidth(3);
@@ -294,9 +277,10 @@ function handlePdfDownload() {
 
 
 $(document).ready(function() {
+    (function() {
 
-        $('#add_request').on('click', function() {
-            var formdata = new FormData(add_request_form);
+        $('#add_pr').on('click', function() {
+            var formdata = new FormData(add_pr_form);
 
             if ($('#item_name').val() == "") {
                 $("#item_name").css({
@@ -316,54 +300,29 @@ $(document).ready(function() {
                     "border-color": ''
                 });
             }
-            if ($('#purpose').val() == "") {
-                $("#purpose").css({
+            if ($('#status').val() == "") {
+                $("#status").css({
                     "border-color": 'red'
                 });
             } else {
-                $("#purpose").css({
+                $("#status").css({
                     "border-color": ''
                 });
             }
-            if ($('#date_needed').val() == "") {
-                $("#date_needed").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#date_needed").css({
-                    "border-color": ''
-                });
-            }
-            if ($('#item_photo').val() == "") {
-                $("#item_photo").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#item_photo").css({
-                    "border-color": ''
-                });
-            }
-
             $.ajax({
-                url: "../action/add_request.php",
+                url: <?php BASE_URL; ?> "action/add_pr_detail.php",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
                 contentType: false,
                 cache: false,
                 processData: false,
-                beforeSend: function() {
-                    $('#add_request').hide();
-                    $('#request_icon').removeClass('d-none').prop('disabled', true);
-                },
 
                 success: function(response) {
-                    $('#request_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_request').show();
                     console.log(response);
                     if (response.success) {
-                        $('#add_request_modal').modal('hide');
-                        $('#add_request_form')[0].reset();
+                        $('#add_pr_modal').modal('hide');
+                        $('#add_pr_form')[0].reset();
                         swal({
                             icon: 'success',
                             title: response.title,
@@ -387,68 +346,10 @@ $(document).ready(function() {
             });
         })
 
-    $('#submit_approval').on('click', function() {
-        var formdata = new FormData(request_approval_form);
+    })();
 
-        $.ajax({
-            url: "../action/update_request_status.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                $('#submit_approval').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
-            },
+    $('.dropify').dropify();
 
-            success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_approval').show();
-                console.log(response);
-                if (response.success) {
-                    $('#approval_modal').modal('hide');
-                    $('#request_approval_form')[0].reset();
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: 2000,
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                    })
-                    $(".form-message").html(response.message);
-                    $(".form-message").css("display", "block");
-                }
-            }
-        });
-    });
-
-    $(document).on("click", ".approval-status", function() {
-        var ID = $(this).data("id");
-        var APPROVAL = $(this).data("approved");
-        var ITEM_NAME = $(this).data("item");
-        var EMAIL = $(this).data("email");
-        var REQUEST_ID = $(this).data("request_id");
-
-        $('#ID').val(ID);
-        $('#APPROVAL').val(APPROVAL);
-        $('#ITEM_NAME').val(ITEM_NAME);
-        $('#EMAIL').val(EMAIL);
-        $('#REQUEST_ID').val(REQUEST_ID);
-
-        // Show the edit modal
-        $('#approval_modal').modal('show');
-    });
 });
 </script>
 
