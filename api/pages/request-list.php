@@ -383,9 +383,6 @@ $(document).ready(function() {
             });
         })
 
-
-    $('.dropify').dropify();
-
     $('#submit_approval').on('click', function() {
         var formdata = new FormData(request_approval_form);
 

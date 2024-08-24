@@ -68,6 +68,10 @@
         "dest": "/api/ajax_data/request_list_data.php"
       },
       {
+        "src": "/request-details.php",
+        "dest": "/api/pages/request-details.php"
+      },
+      {
         "src": "/logs.php",
         "dest": "/api/pages/logs.php"
       },

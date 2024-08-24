@@ -1,4 +1,6 @@
 <?php 
+require_once __DIR__ . '/../global/DBConnection.php'; // Adjusted path for DBConnection.php
+
 $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1); 
 
 $user_id = $decrypted_array['ID'];
