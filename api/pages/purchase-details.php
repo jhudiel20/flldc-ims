@@ -324,7 +324,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <ul class="timeline">
                                                                         <?php
                                                                         $request_id = $row['request_id'];
-                                                                        $sql_history = $conn->prepare("SELECT * FROM po_history WHERE REQUEST_ID = :request_id ORDER BY DATE_CREATED DESC");
+                                                                        $sql_history = $conn->prepare("SELECT * FROM po_history WHERE request_id = :request_id ORDER BY date_created DESC");
                                                                         $sql_history->bindParam(':request_id', $request_id, PDO::PARAM_STR);
                                                                         $sql_history->execute();
                                                                         

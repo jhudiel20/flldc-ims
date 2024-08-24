@@ -13,11 +13,11 @@ $start = $page * $query_limit;
 $sort_field = 'request_date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','email'];
+$query_fields = ['id', 'pr_id', 'item_name', 'quantity','email','status','remarks','attachments'];
 
 if (!empty($sorters)) {
 
-    $valid_sorts = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','request_date_created','email'];
+    $valid_sorts = ['id', 'pr_id', 'item_name', 'quantity','email','status','remarks','attachments','approval_date_created'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }

@@ -28,7 +28,7 @@
       },
       {
         "src": "/img/(.*)",
-        "dest": "/public/assests/img/$1"
+        "dest": "/public/assets/img/$1"
       },
       {
         "src": "/acc-settings.php",

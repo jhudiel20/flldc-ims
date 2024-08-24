@@ -129,7 +129,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 id="photo_item_name"
                                                                 value="<?php echo $row['item_name'] ?>">
                                                             <input type="hidden" name="photo_pr_id" id="photo_pr_id"
-                                                                value="<?php echo $row['PR_ID'] ?>">
+                                                                value="<?php echo $row['pr_id'] ?>">
 
                                                         </div>
                                                         <div class="text-center">
@@ -245,7 +245,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <label class="form-label">Quantity<span
                                                                 class="require asterisk">*</span></label>
                                                         <input type="text" class="form-control" name="QUANTITY"
-                                                            id="QUANTITY" value="<?php echo $row['qunatity']; ?>" disabled>
+                                                            id="QUANTITY" value="<?php echo $row['quantity']; ?>" disabled>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">Status</label>
@@ -253,7 +253,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR') ? 'disabled' : ''; ?>>
                                                             <?php foreach (PR_STATUS as $value) { ?>
                                                             <option value="<?= $value; ?>"
-                                                                <?php echo ($value == $row['STATUS']) ? 'selected' : ''; ?>>
+                                                                <?php echo ($value == $row['status']) ? 'selected' : ''; ?>>
                                                                 <?= $value; ?>
                                                             </option>
                                                             <?php } ?>
@@ -305,7 +305,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <ul class="timeline">
                                                                         <?php
                                                                         $request_id = $row['request_id'];
-                                                                        $sql_history = $conn->prepare("SELECT * FROM po_history WHERE REQUEST_ID = :request_id ORDER BY DATE_CREATED DESC");
+                                                                        $sql_history = $conn->prepare("SELECT * FROM po_history WHERE request_id = :request_id ORDER BY date_created DESC");
                                                                         $sql_history->bindParam(':request_id', $request_id, PDO::PARAM_STR);
                                                                         $sql_history->execute();
                                                                         
