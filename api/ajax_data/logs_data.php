@@ -36,6 +36,7 @@ $filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clau
 
 $count_query = "SELECT COUNT(DISTINCT logs.id) as count
                 FROM logs
+                JOIN user_account ON logs.user_id = user_account.id
                 $filter_sql";
 
 $count_stmt = $conn->prepare($count_query);
@@ -44,9 +45,11 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
-$data_query = "SELECT id, user_id, action_made,date_created, fname, mname, lname
+$data_query = "SELECT logs.id, logs.user_id, logs.action_made, 
+                       TO_CHAR(logs.date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created, 
+                       user_account.fname, user_account.mname, user_account.lname
                 FROM logs
-                $filter_sql
+                JOIN user_account ON logs.user_id = user_account.ID $filter_sql
                 ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
