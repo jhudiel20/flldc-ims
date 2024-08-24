@@ -69,6 +69,10 @@
 
 
     <script>
+        const currentYear = new Date().getFullYear();
+        const currentDate = new Date().toLocaleDateString();
+        const formattedDateWithHyphens = currentDate.replace(/\//g, "-");
+
         const Toast = Swal.mixin({
             toast: true,
             position: "bottom-end",

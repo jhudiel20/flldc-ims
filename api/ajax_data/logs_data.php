@@ -20,15 +20,15 @@ if (!empty($sorters)) {
 }
 
 $filters = isset($_GET['filter']) ? $_GET['filter'] : [];
-$filter_params = [];
 $filter_clauses = [];
+$filter_params = [];
 
 foreach ($filters as $filter) {
     if (isset($filter['field']) && isset($filter['value'])) {
         $field = $filter['field'];
-        $value = $filter['value'];
+        $value = '%' . $filter['value'] . '%';
         $filter_clauses[] = "$field ILIKE :$field";
-        $filter_params[$field] = "%$value%";
+        $filter_params[$field] = $value;
     }
 }
 
@@ -39,10 +39,9 @@ $count_query = "SELECT COUNT(DISTINCT logs.ID) as count
                 JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
                 $filter_sql";
 
-$count_stmt = pg_prepare($conn, "count_query", $count_query);
-$count_result = pg_execute($conn, "count_query", $filter_params);
-$count_data = pg_fetch_assoc($count_result);
-$total_query = (int)$count_data['count'];
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->execute($filter_params);
+$total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
@@ -53,15 +52,18 @@ $data_query = "SELECT logs.ID, logs.USER_ID, logs.ACTION_MADE,
                 JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
                 $filter_sql
                 ORDER BY $sort_field $sort_dir
-                LIMIT $query_limit OFFSET $start";
+                LIMIT :limit OFFSET :offset";
 
-$data_stmt = pg_prepare($conn, "data_query", $data_query);
-$data_result = pg_execute($conn, "data_query", $filter_params);
+$data_stmt = $conn->prepare($data_query);
+$data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
+$data_stmt->bindValue(':offset', $start, PDO::PARAM_INT);
 
-$rows = [];
-while ($row = pg_fetch_assoc($data_result)) {
-    $rows[] = $row;
+foreach ($filter_params as $key => $value) {
+    $data_stmt->bindValue(":$key", $value);
 }
+
+$data_stmt->execute();
+$rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $response = [
     "last_page" => $pages,
