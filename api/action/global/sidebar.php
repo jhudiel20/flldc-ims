@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ . '/../global/DBConnection.php'; // Adjusted path for DBConnection.php
+require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 
 $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1); 
 
