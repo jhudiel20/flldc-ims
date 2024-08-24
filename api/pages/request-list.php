@@ -1,8 +1,8 @@
 <?php
-require '../DBConnection.php';
-include '../config/config.php';
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-if (!isset($_SESSION['ACCESS'])) {
+if (!isset($decrypted_array['ACCESS'])) {
     header("Location:index.php");
 }
 
@@ -10,12 +10,12 @@ if (!isset($_SESSION['ACCESS'])) {
 <!doctype html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
-    data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>../assets/" data-template="vertical-menu-template">
+    data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
 
 <head>
     <?php
-    include DOMAIN_PATH . "/action/global/metadata.php";
-    include DOMAIN_PATH . "/action/global/include_top.php";
+    include __DIR__ . "/../action/global/metadata.php";
+    include __DIR__ . "/../action/global/include_top.php";
     ?>
 </head>
 
@@ -25,8 +25,8 @@ if (!isset($_SESSION['ACCESS'])) {
         <div class="layout-container">
 
             <?php
-        include DOMAIN_PATH . "/action/global/sidebar.php";
-        include DOMAIN_PATH . "/action/global/header.php"; 
+        include __DIR__ . "/../action/global/sidebar.php";
+        include __DIR__ . "/../action/global/header.php"; 
         ?>
 
             <!-- Content wrapper -->
@@ -74,7 +74,7 @@ if (!isset($_SESSION['ACCESS'])) {
                                             </div>
 
                                             <!-- Add Modal -->
-                                            <?php include DOMAIN_PATH . "/modals/request_list_modal.php"; ?>
+                                            <?php include __DIR__ . "/../modals/request_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
                                             <div class="tabulator-table" id="request-list-table"
@@ -95,7 +95,7 @@ if (!isset($_SESSION['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include FOOTER_PATH;
+                    include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
 
@@ -119,7 +119,7 @@ if (!isset($_SESSION['ACCESS'])) {
 
 
     <?php
-        include DOMAIN_PATH . "/action/global/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
       ?>
 </body>
 
@@ -165,7 +165,7 @@ var table = new Tabulator("#request-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "<?php echo BASE_URL; ?>ajax_data/request_list_data.php",
+    ajaxURL: "/request_list_data.php",
     columns: [
         {
             title: "Details",
@@ -257,7 +257,7 @@ function handlePdfDownload() {
                 fontSize: 7
             },
             addPageContent: function(data) {
-                data.doc.addImage('../assets/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
+                data.doc.addImage('/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
                 data.doc.setFont("times");
                 data.doc.setFontSize(11); // Set the font size for the second line
                 data.doc.text("Learning and Development", 360, 20);

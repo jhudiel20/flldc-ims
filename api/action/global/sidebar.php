@@ -3,16 +3,13 @@ $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") 
 
 $user_id = $decrypted_array['ID'];
 
-        $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE APPROVAL = :PENDING");
-        $stmt->bindParam(':PENDING', 'PENDING', PDO::PARAM_STR);
+        $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE APPROVAL = 'PENDING'");
         $stmt->execute();
         $count_pending = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE STATUS = :PENDING AND APPROVAL = :APPROVED ");
-        $stmt->bindParam(':PENDING', 'PENDING', PDO::PARAM_STR);
-        $stmt->bindParam(':APPROVED', 'APPROVED', PDO::PARAM_STR);
-        $stmt->execute();
-        $pr_status = $stmt->fetch(PDO::FETCH_ASSOC);
+        $pr = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE STATUS = 'PENDING' AND APPROVAL = 'APPROVED' ");
+        $pr->execute();
+        $pr_status = $pr->fetch(PDO::FETCH_ASSOC);
 ?>
 <!-- Menu -->
 

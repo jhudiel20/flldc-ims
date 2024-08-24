@@ -1,153 +1,73 @@
 <?php
-include '../DBConnection.php';
-include '../config/config.php';
-
-
-
-
-// $session_class->session_close();
-if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')){
-	include HTTP_404;
-	exit();
-}
-
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php';
 
 header("Content-type: application/json; charset=utf-8");
-// if(!($g_user_role[0] == "TEACHER")){  
-// 	$output =  json_encode(["last_page"=>1, "data"=>"","total_record"=>0]);
-// 	echo $output;
-// 	exit();
-// }
 
-$query_limit = 40;
-$table_name= "product";
-$field_query ='*';	
-$pages = 0;
-$start = 0;
-$size = 0;
+$query_limit = isset($_GET['size']) && $_GET['size'] == 'true' ? PHP_INT_MAX : 20;
+$table_name = "purchase_order";
+$sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
+$page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
+$start = $page * $query_limit;
 
-$sorters =array();
-$orderby ="REQUEST_DATE_CREATED desc";
-$sql_where="";
-$sql_conds="";
-$sql_where_array=array();
-$to_encode=array();
-$output="";
-$total_query=0;
-$flag_all = false;
+$sort_field = 'request_date_created';
+$sort_dir = 'DESC';
 
-
-
- 
-$dbfield = array('ID','REQUEST_ID','ITEM_NAME','QUANTITY','APPROVAL','EMAIL','REMARKS','STATUS','EMAIL','REQUEST_DATE_CREATED'); // need iset based sa table columns na need sa query
-$db_orig = array('ID','REQUEST_ID','ITEM_NAME','QUANTITY','APPROVAL','EMAIL','REMARKS','STATUS','REQUEST_DATE_CREATED','EMAIL'); //gamit sa filter  tabulator
-
-if(isset($_GET['filter'])){
-	$filters =array();
-	$sort_filters =array();
-	$filters = $_GET['filter'];
-	foreach($filters as $filter){
-		if(isset($filter['field'])){
-			$id = $filter['field'];
-			$sort_filters[$id] = $filter['value'];
-		}
-	}
-	// var_dump($filter);
-	foreach($db_orig as $id){
-		if(isset($sort_filters[$id])){
-			$value = mysqli_real_escape_string($conn,$sort_filters[$id]);	
-			if($id == "PRICE"){
-				array_push($sql_where_array,$id.' = \''.$value.'\'');
-			// }elseif($id == "PRICE" ){
-			// 	array_push($sql_where_array,$id.' = \''.$value.'\'');
-			}else{
-			// 	if($id =="name"){
-			// 		$id="u.name";
-			// 	}
-				array_push($sql_where_array,$id.' LIKE \''.$value.'%\'');
-			}
-		}
-	}
+if (!empty($sorters)) {
+    $valid_sorts = ['id', 'requesst_id', 'item_name', 'quantity','approval','email','remarks','status','request_dated_created','email'];
+    $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
+    $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
 
-// array_push($sql_where_array, " APPROVAL = 'PENDING'"); //set default WHERE CONDITION HERE
+$filters = isset($_GET['filter']) ? $_GET['filter'] : [];
+$filter_clauses = [];
+$filter_params = [];
 
-if(!empty($sql_where_array)){
-	$temp_arr = implode(' AND ',$sql_where_array);
-	$sql_where = (empty($temp_arr)) ? '' : $temp_arr;		
-}
-
-if(isset($_GET['sort'])){
-	$sorters = $_GET['sort'];
-	$tag =array('asc','desc');
-	if(in_array($sorters[0]['field'],$db_orig) AND in_array($sorters[0]['dir'],$tag)){
-		$orderby = $sorters[0]['field'].' '.$sorters[0]['dir'];
-	}
-	// var_dump($orderby);
-
-}
-
-if(isset($_GET['size'])){
-    if($_GET['size'] == 'true'){
-        $flag_all = true;
-    }else{
-	$query_limit = ($_GET['size'] > $query_limit) ? $_GET['size'] : $query_limit;
+foreach ($filters as $filter) {
+    if (isset($filter['field']) && isset($filter['value'])) {
+        $field = $filter['field'];
+        $value = '%' . $filter['value'] . '%';
+        $filter_clauses[] = "$field ILIKE :$field";
+        $filter_params[$field] = $value;
     }
 }
 
+$filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
 
-//total query counter 
-$total_query = 0;
-$field_query ='COUNT(DISTINCT ID) AS count'; // baguhin based sa need
-$sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
+$count_query = "SELECT COUNT(DISTINCT id) as count
+                FROM purchase_order
+                $filter_sql";
 
-$default_query ="SELECT ".$field_query." FROM purchase_order ".$sql_conds;
-if($query = mysqli_query($conn,$default_query)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$total_query = $data['count'];
-		}
-	}
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->execute($filter_params);
+$total_query = (int) $count_stmt->fetchColumn();
+
+$pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
+
+$data_query = "SELECT *, TO_CHAR(request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
+                FROM purchase_order $filter_sql
+                ORDER BY $sort_field $sort_dir
+                LIMIT :limit OFFSET :offset";
+
+$data_stmt = $conn->prepare($data_query);
+$data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
+$data_stmt->bindValue(':offset', $start, PDO::PARAM_INT);
+
+foreach ($filter_params as $key => $value) {
+    $data_stmt->bindValue(":$key", $value);
 }
 
-$pages= ($total_query===0) ? 1 : ceil($total_query/($query_limit));
-if(isset($_GET['page'])){
-	$page_no = $_GET['page'] - 1;
-	$start = $page_no * $query_limit;
-}
+$data_stmt->execute();
+$rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$start_no = ($start >= $total_query) ? $total_query : $start;
+$response = [
+    "last_page" => $pages,
+    "total_record" => $total_query,
+    "data" => $rows
+];
 
-$field_query = implode(',',$dbfield);
-$sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
- 
-$default_query ="SELECT ".$field_query.",DATE_FORMAT(REQUEST_DATE_CREATED, '%Y-%m-%d %h:%i:%s %p') as REQUEST_DATE_CREATED 
-FROM purchase_order ".$sql_conds. " ORDER BY ".$orderby;
-$limit=" LIMIT ". $start_no.",".$query_limit; 
-if($flag_all){
-    $limit = '';
-    $pages = 1;
-}
-$sql_limit=$default_query.' '.$limit;
-// echo $sql_limit;
-if($query = mysqli_query($conn,$sql_limit)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$class_text ="";
-			$data['xid'] = encrypted_string($data['ID']);
-			// $data['shared'] = ($data['share_to']=='[]') ? 'No': 'Yes';
-			$to_encode[] = $data;
-		}
-	}
-	
-}
-
-if(empty($to_encode)){
-    $output =  json_encode(["last_page"=>1, "data"=>"","total_record"=>0]);
-}else{
-    $output = json_encode(["last_page"=>$pages, "data"=>$to_encode,"total_record"=>$total_query]);
-}
-
-echo $output; //output
-
+echo json_encode($response);
 ?>
+
+
+

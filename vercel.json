@@ -14,6 +14,7 @@
       }
     },
     "routes": [
+        
       {
         "src": "/user_image/(.*)",
         "dest": "/public/user_image/$1"
@@ -57,6 +58,14 @@
       {
         "src": "/dashboard-mrs.php",
         "dest": "/api/pages/dashboard-mrs.php"
+      },
+      {
+        "src": "/request-list.php",
+        "dest": "/api/pages/request-list.php"
+      },
+      {
+        "src": "/request_list_data",
+        "dest": "/api/ajax_data/request_list_data.php"
       },
       {
         "src": "/logs.php",
