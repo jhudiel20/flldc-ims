@@ -10,11 +10,11 @@ $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
 $page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
 $start = $page * $query_limit;
 
-$sort_field = 'DATE_CREATED';
+$sort_field = 'date_created';
 $sort_dir = 'DESC';
 
 if (!empty($sorters)) {
-    $valid_sorts = ['ID', 'USER_ID', 'ACTION_MADE', 'DATE_CREATED'];
+    $valid_sorts = ['id', 'user_id', 'action_made', 'date_created'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
@@ -34,9 +34,8 @@ foreach ($filters as $filter) {
 
 $filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
 
-$count_query = "SELECT COUNT(DISTINCT logs.ID) as count
+$count_query = "SELECT COUNT(DISTINCT logs.id) as count
                 FROM logs
-                JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
                 $filter_sql";
 
 $count_stmt = $conn->prepare($count_query);
@@ -45,11 +44,10 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
-$data_query = "SELECT logs.ID, logs.USER_ID, logs.ACTION_MADE, 
-                       TO_CHAR(logs.DATE_CREATED, 'YYYY-MM-DD HH12:MI:SS AM') as DATE_CREATED, 
-                       user_account.FNAME, user_account.MNAME, user_account.LNAME
+$data_query = "SELECT id, user_id, action_made, 
+                       TO_CHAR(logs.date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created, 
+                       fname, mname, lname
                 FROM logs
-                JOIN ldims_accounts.user_account ON logs.user_id = user_account.ID
                 $filter_sql
                 ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
