@@ -22,8 +22,8 @@ if (!empty($sorters)) {
 }
 
 $filters = isset($_GET['filter']) ? $_GET['filter'] : [];
-$filter_clauses = ['APPROVAL = "APPROVED"'];
-$filter_params = [];
+$filter_clauses = ['approval = :approval'];
+$filter_params = ['approval' => 'APPROVED'];
 
 foreach ($filters as $filter) {
     if (isset($filter['field']) && isset($filter['value'])) {

@@ -14,7 +14,7 @@ $sort_field = 'request_date_created';
 $sort_dir = 'DESC';
 
 if (!empty($sorters)) {
-    $valid_sorts = ['id', 'requesst_id', 'item_name', 'quantity','approval','email','remarks','status','request_dated_created','email'];
+    $valid_sorts = ['id', 'requesst_id', 'item_name', 'quantity','approval','email','remarks','status','request_date_created','email'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
@@ -45,8 +45,7 @@ $total_query = (int) $count_stmt->fetchColumn();
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
 $data_query = "SELECT *, TO_CHAR(request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
-                FROM purchase_order $filter_sql
-                ORDER BY $sort_field $sort_dir
+                FROM purchase_order $filter_sql ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
 $data_stmt = $conn->prepare($data_query);
