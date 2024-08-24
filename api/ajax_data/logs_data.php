@@ -44,7 +44,7 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
-$data_query = "SELECT id, user_id, action_made,TO_CHAR(logs.date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created, fname, mname, lname
+$data_query = "SELECT id, user_id, action_made,date_created, fname, mname, lname
                 FROM logs
                 $filter_sql
                 ORDER BY $sort_field $sort_dir
