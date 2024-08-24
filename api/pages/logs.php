@@ -125,7 +125,7 @@ var table = new Tabulator("#example-table", {
     columns: [
         {
             title: "Date created",
-            field: "DATE_CREATED",
+            field: "date_created",
             sorter: "date",
             headerFilter: "input",
             hozAlign: "center",
@@ -135,7 +135,7 @@ var table = new Tabulator("#example-table", {
             title: "Full Name",
             width: 300,
             hozAlign: "center",
-            field: "FNAME", // You can use any field here since we'll combine the values
+            field: "fname", // You can use any field here since we'll combine the values
             headerFilter: "input",
             headerFilterLiveFilter: false,
             download : false,
@@ -144,8 +144,8 @@ var table = new Tabulator("#example-table", {
                 var rowData = cell.getData();
 
                 // Combine the "First Name" and "Middle Name" fields
-                var fullName = rowData.FNAME + (rowData.MNAME ? " " + rowData.MNAME : "") + (rowData
-                    .LNAME ? " " + rowData.LNAME : "");
+                var fullName = rowData.fname + (rowData.mname ? " " + rowData.mname : "") + (rowData
+                    .lname ? " " + rowData.lname : "");
 
                 // Return the combined name
                 return fullName;
@@ -153,7 +153,7 @@ var table = new Tabulator("#example-table", {
         },
         {
             title: "First Name",
-            field: "FNAME",
+            field: "fname",
             hozAlign: "center",
             headerFilter: "input",
             headerFilterLiveFilter: false,
@@ -162,7 +162,7 @@ var table = new Tabulator("#example-table", {
         },
         {
             title: "Middle Name",
-            field: "MNAME",
+            field: "mname",
             hozAlign: "center",
             headerFilter: "input",
             headerFilterLiveFilter: false,
@@ -171,7 +171,7 @@ var table = new Tabulator("#example-table", {
         },
         {
             title: "Last Name",
-            field: "LNAME",
+            field: "lname",
             hozAlign: "center",
             headerFilter: "input",
             headerFilterLiveFilter: false,
@@ -180,7 +180,7 @@ var table = new Tabulator("#example-table", {
         },
         {
             title: "Action Made",
-            field: "ACTION_MADE",
+            field: "action_made",
             hozAlign: "center",
             headerFilter: "input",
             headerFilterLiveFilter: false
