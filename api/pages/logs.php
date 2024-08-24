@@ -187,7 +187,11 @@ var table = new Tabulator("#example-table", {
         },
     ],
     ajaxResponse: function(url, params, response) {
-        return response.data; //response.data; //return the tableData property of a response json object
+        return {
+                last_page: response.last_page,
+                total: response.total_record,
+                data: response.data // This should be an array
+            }; //response.data; //return the tableData property of a response json object
     },
 
 });
