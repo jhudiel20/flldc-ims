@@ -120,7 +120,7 @@ var table = new Tabulator("#example-table", {
     paginationSize: 20,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "https://flldc-ims.vercel.app/logs_data.php",
+    ajaxURL: "/logs_data.php",
     placeholder: "No Data Found",
     columns: [
         {
