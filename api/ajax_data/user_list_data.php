@@ -1,6 +1,9 @@
 <?php
-include '../DBConnection.php';
-include '../config/config.php';
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
+
+error_reporting(0);
+ini_set('display_errors', 0);
 
 // $session_class->session_close();
 if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')){
@@ -94,12 +97,13 @@ $total_query = 0;
 $field_query ='COUNT(DISTINCT ID) as count'; // baguhin based sa need
 $sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
 $default_query ="SELECT ".$field_query." FROM user_account ".$sql_conds;
-if($query = mysqli_query($conn_acc,$default_query)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$total_query = $data['count'];
-		}
-	}
+
+if ($query = pg_query($conn, $default_query)) {
+    if ($num = pg_num_rows($query)) {
+        while ($data = pg_fetch_assoc($query)) {
+            $total_query = $data['count'];
+        }
+    }
 }
 
 // $field_query ='COUNT(DISTINCT q.exam_id) as count'; // baguhin based sa need
@@ -143,35 +147,37 @@ $start_no = ($start >= $total_query) ? $total_query : $start;
 $field_query = implode(',',$dbfield);
 $sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
 
-$default_query ="SELECT ".$field_query." FROM user_account ".$sql_conds." ORDER BY ".$orderby;
-$limit=" LIMIT ". $start_no.",".$query_limit; 
-if($flag_all){
+$default_query = "SELECT " . $field_query . " FROM user_account " . $sql_conds . " ORDER BY " . $orderby;
+$limit = " LIMIT " . $query_limit . " OFFSET " . $start_no;
+
+if ($flag_all) {
     $limit = '';
     $pages = 1;
 }
-$sql_limit=$default_query.' '.$limit;
+$sql_limit = $default_query . ' ' . $limit;
+
 // echo $sql_limit;
-if($query = mysqli_query($conn_acc,$sql_limit)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$class_text ="";
-			$data['data'] = $data['STATUS'];
+if ($query = pg_query($conn_acc, $sql_limit)) {
+    if ($num = pg_num_rows($query)) {
+        while ($data = pg_fetch_assoc($query)) {
+            $class_text = "";
+            $data['data'] = $data['STATUS'];
             $data['data_id'] = $data['ID'];
             $data['data_fname'] = $data['FNAME'];
             $data['data_mname'] = $data['MNAME'];
             $data['data_lname'] = $data['LNAME'];
-			$data['data_locked'] = $data['LOCKED'];
+            $data['data_locked'] = $data['LOCKED'];
             $data['data_suffix'] = $data['EXT_NAME'];
             $data['data_access'] = $data['ACCESS'];
             $data['data_email'] = $data['EMAIL'];
-			$data['data_approved'] = $data['APPROVED_STATUS'];
-			// $data['data_pass'] = $data['PASSWORD'];
-			// $data['shared'] = ($data['share_to']=='[]') ? 'No': 'Yes';
-			$to_encode[] = $data;
-		}
-	}
-	
+            $data['data_approved'] = $data['APPROVED_STATUS'];
+            // $data['data_pass'] = $data['PASSWORD'];
+            // $data['shared'] = ($data['share_to'] == '[]') ? 'No' : 'Yes';
+            $to_encode[] = $data;
+        }
+    }
 }
+
 
 if(empty($to_encode)){
     $output =  json_encode(["last_page"=>1, "data"=>"","total_record"=>0]);

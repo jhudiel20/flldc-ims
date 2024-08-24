@@ -98,7 +98,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include __DIR__ . "/modals/edit_delete_userlist_modal.php";
+                    include __DIR__ . "/../modals/edit_delete_userlist_modal.php";
                     include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
