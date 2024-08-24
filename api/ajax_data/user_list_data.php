@@ -38,8 +38,21 @@ $data = [
     // Add more user data as needed
 ];
 
+// For demonstration, hardcoding total records and page count
+$totalRecords = 100; // Total number of records in the database
+$perPage = 20; // Number of records per page
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get current page from request
+
+// Calculate total pages
+$lastPage = ceil($totalRecords / $perPage);
+
 // Set the Content-Type header to application/json
 header('Content-Type: application/json');
 
-// Return the data as JSON
-echo json_encode($data);
+// Return the data as JSON with pagination information
+echo json_encode([
+    'last_page' => $lastPage,
+    'total' => $totalRecords,
+    'data' => $data
+]);
+?>
