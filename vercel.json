@@ -15,6 +15,14 @@
     },
     "routes": [
       {
+        "src": "/ITEM_PHOTO/(.*)",
+        "dest": "/public/ITEM_PHOTO/$1"
+      },      
+      {
+        "src": "/PO_ATTACHMENTS/(.*)",
+        "dest": "/public/PO_ATTACHMENTS/$1"
+      },      
+      {
         "src": "/user_image/(.*)",
         "dest": "/public/user_image/$1"
       },

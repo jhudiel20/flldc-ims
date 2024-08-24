@@ -170,9 +170,9 @@ $user_id = $decrypted_array['ID'];
             <a href="rca-list.php" class="menu-link">
                 <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                 <div> RCA/PCV List</div>
-                <!-- <?php if($count_pending['TOTAL'] == 0){}else{?>
+                <!-- <?php if($count_pending['total'] == 0){}else{?>
                 <span
-                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['TOTAL']?></span>
+                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['total']?></span>
                 <?php }?> -->
             </a>
         </li>
@@ -180,9 +180,9 @@ $user_id = $decrypted_array['ID'];
             <a href="request-list.php" class="menu-link">
                 <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                 <div> Request List</div>
-                <?php if($count_pending['TOTAL'] == 0){}else{?>
+                <?php if($count_pending['total'] == 0){}else{?>
                 <span
-                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['TOTAL']?></span>
+                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['total']?></span>
                 <?php }?>
             </a>
         </li>
@@ -190,8 +190,8 @@ $user_id = $decrypted_array['ID'];
             <a href="purchase-list.php" class="menu-link">
                 <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                 <div> Purchase List</div>
-                <?php if($pr_status['TOTAL'] == 0){}else{?>
-                <span class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $pr_status['TOTAL']?></span>
+                <?php if($pr_status['total'] == 0){}else{?>
+                <span class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $pr_status['total']?></span>
                 <?php }?>
             </a>
         </li>
