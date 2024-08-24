@@ -44,7 +44,7 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
-$data_query = "SELECT *, TO_CHAR(request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
+$data_query = "SELECT *, TO_CHAR(purchase_order.request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
                 FROM purchase_order $filter_sql ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 

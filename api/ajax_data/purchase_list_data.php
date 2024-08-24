@@ -16,7 +16,7 @@ $sort_dir = 'DESC';
 if (!empty($sorters)) {
 	$db_orig = array('ID','PR_ID','ITEM_NAME','QUANTITY','EMAIL','STATUS','REMARKS','ATTACHMENTS','APPROVAL_DATE_CREATED'); //gamit sa filter  tabulator
 
-    $valid_sorts = ['id', 'requesst_id', 'item_name', 'quantity','approval','email','remarks','status','request_dated_created','email'];
+    $valid_sorts = ['id', 'requesst_id', 'item_name', 'quantity','approval','email','remarks','status','request_date_created','email'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
@@ -46,7 +46,7 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 
-$data_query = "SELECT *, TO_CHAR(request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
+$data_query = "SELECT *, TO_CHAR(purchase_order.purchase_order.request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
                 FROM purchase_order $filter_sql
                 ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
