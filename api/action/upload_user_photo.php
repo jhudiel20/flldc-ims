@@ -16,8 +16,8 @@ define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
 define('GITHUB_TOKEN', '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');
 
 // Check if file is uploaded
-if (isset($_FILES[' image']) && $_FILES[' image']['error'] == UPLOAD_ERR_OK) {
-    $file = $_FILES[' image'];
+if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    $file = $_FILES['image'];
     $filePath = $file['tmp_name'];
     $fileName = $file['name'];
 
@@ -76,7 +76,7 @@ if (isset($_FILES[' image']) && $_FILES[' image']['error'] == UPLOAD_ERR_OK) {
     curl_close($ch);
 } else {
     // Handle the case where no file is uploaded or an error occurred
-    $errorMessage = $_FILES[' image']['error'] ?? 'No file uploaded';
+    $errorMessage = $_FILES['image']['error'] ?? 'No file uploaded';
     echo json_encode([
         'success' => false,
         'title' => 'Upload Error',

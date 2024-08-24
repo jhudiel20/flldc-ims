@@ -84,10 +84,9 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                 width="100"
                                                                 id="uploadedAvatar" />
                                                             <div class="button-wrapper">
-                                                                <form class="" method="post" id="upload_photo_form" enctype="multipart/form-data" style="display: inline-block;">
+                                                                <form class="" method="POST" id="upload_photo_form" enctype="multipart/form-data" style="display: inline-block;">
                                                                     <label for="upload" class="" tabindex="0">
-                                                                        <input type="file" name="image" id="
-                                                                        " class="form-control mb-1">
+                                                                        <input type="file" name="image" id="" class="form-control mb-1">
                                                                         <input type="text" name="user_submit_name" id="user_submit_name" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
                                                                         <input type="text" name="ID" id="ID" value="<?php echo $user_id ?>">  
                                                                         <button type="submit" id="submit_photo" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
