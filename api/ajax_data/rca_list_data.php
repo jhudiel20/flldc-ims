@@ -1,152 +1,81 @@
 <?php
-include '../DBConnection.php';
-include '../config/config.php';
-
-
-
-
-// $session_class->session_close();
-if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')){
-	include HTTP_404;
-	exit();
-}
-
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php';
 
 header("Content-type: application/json; charset=utf-8");
-// if(!($g_user_role[0] == "TEACHER")){  
-// 	$output =  json_encode(["last_page"=>1, "data"=>"","total_record"=>0]);
-// 	echo $output;
-// 	exit();
-// }
 
-$query_limit = 40;
-$table_name= "product";
-$field_query ='*';	
-$pages = 0;
-$start = 0;
-$size = 0;
+$query_limit = isset($_GET['size']) && $_GET['size'] == 'true' ? PHP_INT_MAX : 20;
+$table_name = "rca_history";
+$sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
+$page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
+$start = $page * $query_limit;
 
-$sorters =array();
-$orderby ="DATE_CREATED ASC";
-$sql_where="";
-$sql_conds="";
-$sql_where_array=array();
-$to_encode=array();
-$output="";
-$total_query=0;
-$flag_all = false;
+$sort_field = 'date_created';
+$sort_dir = 'DESC';
 
+$query_fields = ['id', 'rca_id', 'name', 'employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments'];
 
+if (!empty($sorters)) {
 
- 
-$dbfield = array('ID','RCA_ID','NAME','EMPLOYEE_NO','PAYGROUP','SBU','BRANCH','PAYEE_NAME','ACCOUNT_NO','AMOUNT','PURPOSE_RCA','DATE_NEEDED','DATE_EVENT','PURPOSE_TRAVEL','DATE_DEPART','DATE_RETURN','STATUS','ATTACHMENTS','DATE_CREATED'); // need iset based sa table columns na need sa query
-$db_orig = array('ID','RCA_ID','NAME','EMPLOYEE_NO','PAYGROUP','SBU','BRANCH','PAYEE_NAME','ACCOUNT_NO','AMOUNT','PURPOSE_RCA','DATE_NEEDED','DATE_EVENT','PURPOSE_TRAVEL','DATE_DEPART','DATE_RETURN','STATUS','ATTACHMENTS','DATE_CREATED'); // need iset based sa table columns na need sa query
-if(isset($_GET['filter'])){
-	$filters =array();
-	$sort_filters =array();
-	$filters = $_GET['filter'];
-	foreach($filters as $filter){
-		if(isset($filter['field'])){
-			$id = $filter['field'];
-			$sort_filters[$id] = $filter['value'];
-		}
-	}
-	// var_dump($filter);
-	foreach($db_orig as $id){
-		if(isset($sort_filters[$id])){
-			$value = mysqli_real_escape_string($conn,$sort_filters[$id]);	
-			if($id == "PRICE"){
-				array_push($sql_where_array,$id.' = \''.$value.'\'');
-			// }elseif($id == "PRICE" ){
-			// 	array_push($sql_where_array,$id.' = \''.$value.'\'');
-			}else{
-			// 	if($id =="name"){
-			// 		$id="u.name";
-			// 	}
-				array_push($sql_where_array,$id.' LIKE \''.$value.'%\'');
-			}
-		}
-	}
+    $valid_sorts = ['id', 'rca_id', 'name', 'employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments','date_created'];
+    $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
+    $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
 
-// array_push($sql_where_array, " APPROVAL = 'PENDING'"); //set default WHERE CONDITION HERE
+$filters = isset($_GET['filter']) ? $_GET['filter'] : [];
+$filter_clauses = [];
+$filter_params = [];
 
-if(!empty($sql_where_array)){
-	$temp_arr = implode(' AND ',$sql_where_array);
-	$sql_where = (empty($temp_arr)) ? '' : $temp_arr;		
-}
-
-if(isset($_GET['sort'])){
-	$sorters = $_GET['sort'];
-	$tag =array('asc','desc');
-	if(in_array($sorters[0]['field'],$db_orig) AND in_array($sorters[0]['dir'],$tag)){
-		$orderby = $sorters[0]['field'].' '.$sorters[0]['dir'];
-	}
-
-}
-
-if(isset($_GET['size'])){
-    if($_GET['size'] == 'true'){
-        $flag_all = true;
-    }else{
-	$query_limit = ($_GET['size'] > $query_limit) ? $_GET['size'] : $query_limit;
+foreach ($filters as $filter) {
+    if (isset($filter['field']) && isset($filter['value'])) {
+        $field = $filter['field'];
+        $value = '%' . $filter['value'] . '%';
+        $filter_clauses[] = "$field ILIKE :$field";
+        $filter_params[$field] = $value;
     }
 }
 
+$filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
 
-//total query counter 
-$total_query = 0;
-$field_query ='COUNT(DISTINCT ID) AS count'; // baguhin based sa need
-$sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
+$count_query = "SELECT COUNT(DISTINCT id) as count
+                FROM rca_history
+                $filter_sql";
 
-$default_query ="SELECT ".$field_query.", DATE_FORMAT(DATE_CREATED, '%Y-%m-%d %h:%i:%s %p') as DATE_CREATED 
-FROM rca_history ".$sql_conds." ORDER BY DATE_CREATED DESC ";
-if($query = mysqli_query($conn,$default_query)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$total_query = $data['count'];
-		}
-	}
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->execute($filter_params);
+$total_query = (int) $count_stmt->fetchColumn();
+
+$pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
+$select_fields = implode(', ', $query_fields);
+$data_query = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
+                FROM rca_history $filter_sql ORDER BY $sort_field $sort_dir
+                LIMIT :limit OFFSET :offset";
+
+$data_stmt = $conn->prepare($data_query);
+$data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
+$data_stmt->bindValue(':offset', $start, PDO::PARAM_INT);
+
+foreach ($filter_params as $key => $value) {
+    $data_stmt->bindValue(":$key", $value);
 }
 
-$pages= ($total_query===0) ? 1 : ceil($total_query/($query_limit));
-if(isset($_GET['page'])){
-	$page_no = $_GET['page'] - 1;
-	$start = $page_no * $query_limit;
+$data_stmt->execute();
+$rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($rows as &$row) {
+    $row['xid'] = encrypted_string($row['ID'], $encryption_key);
 }
 
-$start_no = ($start >= $total_query) ? $total_query : $start;
+$response = [
+    "last_page" => $pages,
+    "total_record" => $total_query,
+    "data" => $rows
+];
 
-$field_query = implode(',',$dbfield);
-$sql_conds = (empty($sql_where)) ? '' : 'WHERE '.$sql_where;
- 
-$default_query ="SELECT ".$field_query.", DATE_FORMAT(DATE_CREATED, '%Y-%m-%d %h:%i:%s %p') as DATE_CREATED 
-FROM rca_history ".$sql_conds." ORDER BY ".$orderby;
-$limit=" LIMIT ". $start_no.",".$query_limit; 
-if($flag_all){
-    $limit = '';
-    $pages = 1;
-}
-$sql_limit=$default_query.' '.$limit;
-// echo $sql_limit;
-if($query = mysqli_query($conn,$sql_limit)){
-	if($num = mysqli_num_rows($query)){
-		while($data = mysqli_fetch_assoc($query)){
-			$class_text ="";
-			$data['xid'] = encrypted_string($data['ID']);
-			// $data['shared'] = ($data['share_to']=='[]') ? 'No': 'Yes';
-			$to_encode[] = $data;
-		}
-	}
-	
-}
-
-if(empty($to_encode)){
-    $output =  json_encode(["last_page"=>1, "data"=>"","total_record"=>0]);
-}else{
-    $output = json_encode(["last_page"=>$pages, "data"=>$to_encode,"total_record"=>$total_query]);
-}
-
-echo $output; //output
-
+echo json_encode($response);
 ?>
+
+
+
+
+

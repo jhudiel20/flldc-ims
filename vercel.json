@@ -67,6 +67,18 @@
         "dest": "/api/pages/dashboard-mrs.php"
       },
       {
+        "src": "/rca-list.php",
+        "dest": "/api/pages/rca-list.php"
+      },
+      {
+        "src": "/rca_list_data.php",
+        "dest": "/api/ajax_data/rca_list_data.php"
+      },
+      {
+        "src": "/rca-details.php",
+        "dest": "/api/pages/rca-details.php"
+      },
+      {
         "src": "/request-list.php",
         "dest": "/api/pages/request-list.php"
       },
