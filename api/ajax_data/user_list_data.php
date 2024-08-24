@@ -13,6 +13,8 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
+$query_fields = ['id', 'contact', 'fname', 'mname','lname','ext_name','image','status','access','email','locked','approved_status','admin_status'];
+
 if (!empty($sorters)) {
     $valid_sorts = ['id', 'contact', 'fname', 'mname','lname','ext_name','image','status','access','date_created','email','locked','approved_status','admin_status'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
@@ -43,7 +45,7 @@ $count_stmt->execute($filter_params);
 $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
-
+$select_fields = implode(', ', $query_fields);
 $data_query = "SELECT * FROM user_account $filter_sql
                 ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";

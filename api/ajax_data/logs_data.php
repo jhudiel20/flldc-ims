@@ -13,8 +13,10 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
+$query_fields = ['logs.id', 'logs.user_id', 'logs.action_made']; //used for query
+
 if (!empty($sorters)) {
-    $valid_sorts = ['id', 'user_id', 'action_made', 'date_created'];
+    $valid_sorts = ['id', 'user_id', 'action_made', 'date_created']; //used for tabulator header
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
@@ -44,9 +46,8 @@ $count_stmt->execute($filter_params);
 $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
-
-$data_query = "SELECT logs.id, logs.user_id, logs.action_made, 
-                       TO_CHAR(logs.date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created, 
+$select_fields = implode(', ', $query_fields);
+$data_query = "SELECT $select_fields, TO_CHAR(logs.date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created, 
                        user_account.fname, user_account.mname, user_account.lname
                 FROM logs
                 JOIN user_account ON logs.user_id = user_account.ID $filter_sql
