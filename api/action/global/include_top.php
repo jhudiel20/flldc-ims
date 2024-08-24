@@ -48,7 +48,7 @@
     <!-- TABULATOR -->
     <link id="themeStylesheet"
         href="<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>"
-        rel="stylesheet">
+        rel="stylesheet"/>
     <script src="<?php BASE_URL; ?>../tabulator/dist/js/tabulator.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <!-- XLSX Script Includes -->
@@ -60,7 +60,7 @@
 
 
     <!-- dropify -->
-    <link href="<?php BASE_URL; ?>../assets/css/dropify.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet">
+    <link href="<?php BASE_URL; ?>../assets/css/dropify.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet"/>
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>

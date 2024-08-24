@@ -489,7 +489,6 @@ function handlePdfDownload() {
 
 
 $(document).ready(function() {
-    (function() {
 
         $('#add_user').on('click', function() {
             var formdata = new FormData(add_user_form);
@@ -568,10 +567,7 @@ $(document).ready(function() {
                     }
                 }
             });
-        })
-
-    })();
-
+        });
 
     $('#edit_userlist_info').on('click', function() {
         var formdata = new FormData(edit_user_form);
@@ -609,7 +605,7 @@ $(document).ready(function() {
                 }
             }
         });
-    })
+    });
     $('#delete_userlist_info').on('click', function() {
         var formdata = new FormData(delete_user_form);
 
@@ -647,7 +643,7 @@ $(document).ready(function() {
                 }
             }
         });
-    })
+    });
     $('#approved_acc_info').on('click', function() {
         var formdata = new FormData(approvalForm);
 
@@ -685,7 +681,7 @@ $(document).ready(function() {
                 }
             }
         });
-    })
+    });
     $('#disapproved_acc_info').on('click', function() {
         var formdata = new FormData(disapprovalForm);
 
@@ -723,8 +719,8 @@ $(document).ready(function() {
                 }
             }
         });
-    })
-    // $('.dropify').dropify();
+    });
+    $('.dropify').dropify();
 
     $('#submit_clear_attempts').on('click', function() {
         var formdata = new FormData(clear_attempts_form);
@@ -764,7 +760,7 @@ $(document).ready(function() {
                 }
             }
         });
-    })
+    });
 
 
 
