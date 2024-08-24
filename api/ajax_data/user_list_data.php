@@ -46,6 +46,11 @@ $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get current pag
 // Calculate total pages
 $lastPage = ceil($totalRecords / $perPage);
 
+// Validate that $data is an array
+if (!is_array($data)) {
+    $data = []; // Ensure $data is an empty array if validation fails
+}
+
 // Set the Content-Type header to application/json
 header('Content-Type: application/json');
 

@@ -425,8 +425,20 @@ var table = new Tabulator("#user-table", {
         <?php } ?>
     ],
     ajaxResponse: function(url, params, response) {
-        return response.data; //response.data; //return the tableData property of a response json object
-
+        if (response && typeof response === 'object' && Array.isArray(response.data)) {
+            return {
+                last_page: response.last_page,
+                total: response.total_record,
+                data: response.data // This should be an array
+            };
+        } else {
+            console.error("Invalid data format received:", response);
+            return {
+                last_page: 0,
+                total: 0,
+                data: [] // Return an empty array if the format is invalid
+            };
+        }
     },
 
 });
