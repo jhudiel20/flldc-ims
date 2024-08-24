@@ -14,10 +14,6 @@
       }
     },
     "routes": [
-        {
-            "src": "/DBConnection.php",
-            "dest": "/api/DBConnection.php"
-      }, 
       {
         "src": "/user_image/(.*)",
         "dest": "/public/user_image/$1"
