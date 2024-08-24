@@ -59,8 +59,8 @@
         "dest": "/api/pages/logs.php"
       },
       {
-        "src": "/api/ajax_data/(.*)",
-        "dest": "/api/ajax_data/$1"
+        "src": "/logs_data.php",
+        "dest": "/api/ajax_data/logs_data.php"
       },
       {
         "src": "/api/pages/(.*)",
