@@ -16,8 +16,8 @@ define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
 define('GITHUB_TOKEN', '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');
 
 // Get the uploaded file
-if (isset($_FILES['photo'])) {
-    $file = $_FILES['photo'];
+if (isset($_FILES['image'])) {
+    $file = $_FILES['image'];
     $filePath = $file['tmp_name'];
     $fileName = $file['name'];
 
