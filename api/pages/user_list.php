@@ -425,7 +425,7 @@ var table = new Tabulator("#user-table", {
         <?php } ?>
     ],
     ajaxResponse: function(url, params, response) {
-        return response; //response.data; //return the tableData property of a response json object
+        return response.data; //response.data; //return the tableData property of a response json object
 
     },
 
