@@ -190,7 +190,7 @@ var table = new Tabulator("#user-table", {
     paginationSize: 20,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "../ajax_data/user_list_data.php",
+    ajaxURL: "/user_list_data.php",
     ajaxLoaderLoading: 'Fetching data from Database..',
 
     columns: [{
