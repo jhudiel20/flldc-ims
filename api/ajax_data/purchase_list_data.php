@@ -13,7 +13,7 @@ $start = $page * $query_limit;
 $sort_field = 'request_date_created';
 $sort_dir = 'DESC';
 
-$valid_sorts = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','email'];
+$query_fields = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','email'];
 
 if (!empty($sorters)) {
 
@@ -63,7 +63,7 @@ foreach ($filter_params as $key => $value) {
 $data_stmt->execute();
 $rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($data as &$row) {
+foreach ($rows as &$row) {
     $row['xid'] = encrypt_string($row['ID'], $encryption_key);
 }
 

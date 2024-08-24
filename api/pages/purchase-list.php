@@ -152,21 +152,21 @@ var table = new Tabulator("#purchase-list-table", {
         },
         {
             title: "Item ID",
-            field: "PR_ID",
+            field: "pr_id",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
             title: "Purchase Item",
-            field: "ITEM_NAME",
+            field: "item_name",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
             title: "Quantity",
-            field: "QUANTITY",
+            field: "quantity",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -175,7 +175,7 @@ var table = new Tabulator("#purchase-list-table", {
         },
         {
             title: "Status",
-            field: "STATUS",
+            field: "status",
             hozAlign: "center",
             sorter: "date",
             headerFilter: "list",
@@ -188,14 +188,14 @@ var table = new Tabulator("#purchase-list-table", {
         },
         {
             title: "Approval Date Created",
-            field: "APPROVAL_DATE_CREATED",
+            field: "approval_date_created",
             headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
             title: "Remarks",
-            field: "REMARKS",
+            field: "remarks",
             headerFilter: "input",
             hozAlign: "center",
             width: 300,
@@ -205,7 +205,7 @@ var table = new Tabulator("#purchase-list-table", {
         },
         {
             title: "Requestor Email ",
-            field: "EMAIL",
+            field: "email",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -244,7 +244,7 @@ function handlePdfDownload() {
                 fontSize: 7
             },
             addPageContent: function(data) {
-                data.doc.addImage('../assets/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
+                data.doc.addImage('/img/LOGO.PNG', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
                 data.doc.setFont("times");
                 data.doc.setFontSize(11); // Set the font size for the second line
                 data.doc.text("Learning and Development", 360, 20);
@@ -277,8 +277,6 @@ function handlePdfDownload() {
 
 
 $(document).ready(function() {
-    (function() {
-
         $('#add_pr').on('click', function() {
             var formdata = new FormData(add_pr_form);
 
@@ -345,11 +343,6 @@ $(document).ready(function() {
                 }
             });
         })
-
-    })();
-
-    $('.dropify').dropify();
-
 });
 </script>
 

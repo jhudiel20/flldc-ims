@@ -61,7 +61,7 @@ foreach ($filter_params as $key => $value) {
 $data_stmt->execute();
 $rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($data as &$row) {
+foreach ($rows as &$row) {
     $row['xid'] = encrypt_string($row['ID'], $encryption_key);
 }
 
