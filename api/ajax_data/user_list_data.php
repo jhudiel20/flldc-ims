@@ -39,7 +39,7 @@ $data = [
 ];
 
 // For demonstration, hardcoding total records and page count
-$totalRecords = 100; // Total number of records in the database
+$totalRecords = 2; // Total number of records in the database
 $perPage = 20; // Number of records per page
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get current page from request
 
@@ -52,7 +52,7 @@ header('Content-Type: application/json');
 // Return the data as JSON with pagination information
 echo json_encode([
     'last_page' => $lastPage,
-    'total' => $totalRecords,
-    'data' => $data
+    'data' => $data,
+	'total_record' => $totalRecords
 ]);
 ?>
