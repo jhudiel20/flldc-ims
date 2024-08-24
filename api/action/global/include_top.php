@@ -60,7 +60,7 @@
 
 
     <!-- dropify -->
-    <link href="<?php BASE_URL; ?>../assets/css/dropify.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet"/>
+    <!-- <link href="<?php //BASE_URL; ?>../assets/css/dropify.min.css?v=<?php //echo FILE_VERSION; ?>" rel="stylesheet"/> -->
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>

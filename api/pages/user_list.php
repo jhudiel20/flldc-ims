@@ -720,8 +720,6 @@ $(document).ready(function() {
             }
         });
     });
-    $('.dropify').dropify();
-
     $('#submit_clear_attempts').on('click', function() {
         var formdata = new FormData(clear_attempts_form);
         // console.log(formdata);

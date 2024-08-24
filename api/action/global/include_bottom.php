@@ -27,4 +27,4 @@
     <!-- Sweet Alert -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert.min.js?v=<?php echo FILE_VERSION; ?>"></script>
     <!-- dropify -->
-    <script src="<?php BASE_URL; ?>../js/dropify.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+    <!-- <script src="<?php //BASE_URL; ?>../js/dropify.min.js?v=<?php //echo FILE_VERSION; ?>"></script> -->
