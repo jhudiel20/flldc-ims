@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 // }
 
 // Get the image file name from the query parameter
-$fileName = $_GET['file'] ?? 'default.png'; // Fallback to a default image if no file specified
+$fileName = $_GET['file'] ?? '/user_image/user.png'; // Fallback to a default image if no file specified
 
 // Ensure the file name is sanitized
 $fileName = basename($fileName);

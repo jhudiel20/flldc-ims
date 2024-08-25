@@ -1,21 +1,27 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-include '../DBConnection.php';
-include '../config/config.php';
+// Include database connection and config
+require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-response();
-// var_dump($_REQUEST);
-$user_id = mysqli_real_escape_string($conn, isset($_POST['ID']) ? trim($_POST['ID']) : '');
-$currentusername = mysqli_real_escape_string($conn, isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '');
-$username = mysqli_real_escape_string($conn, isset($_POST['username']) ? trim($_POST['username']) : '');
+$user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
+$currentusername = isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '';
+$username = isset($_POST['username']) ? trim($_POST['username']) : '';
 
-if($_SESSION['USERNAME'] !== $currentusername){
+$db_username = $conn->prepare("SELECT username FROM user_account WHERE id = :id ");
+$db_username->bindParam(':id', $user_id, PDO::PARAM_STR);
+$db_username->execute();
+$row_username = $db_username->fetch(PDO::FETCH_ASSOC);
+
+if($row_username['username'] !== $currentusername){
     $response['message'] = 'Current username doesnt match to your existing username!';
         echo json_encode($response);
         exit();
 }
 
-if($_SESSION['USERNAME'] === $username){
+if($row_username['username'] === $username){
     $response['message'] = 'Please enter new username!';
         echo json_encode($response);
         exit();
@@ -26,9 +32,12 @@ if(strlen($username) < 8){
     echo json_encode($response);
     exit();
 }
-$sql = mysqli_query($conn_acc,"SELECT USERNAME FROM user_account ");
-    while($row_sql = mysqli_fetch_assoc($sql)){
-    if($row_sql['USERNAME'] == $username){
+$verify = "SELECT USERNAME FROM user_account";
+$verify = $conn->prepare($verify);
+$verify->execute();
+
+while ($row_sql = $verify->fetch(PDO::FETCH_ASSOC)) {
+    if ($row_sql['USERNAME'] == $username) {
         $response['success'] = false;
         $response['title'] = "Error!";
         $response['message'] = 'Username already taken!';
@@ -38,14 +47,19 @@ $sql = mysqli_query($conn_acc,"SELECT USERNAME FROM user_account ");
 }
 
 
-$student = mysqli_query($conn_acc, "UPDATE user_account SET USERNAME = '" . $username . "' WHERE ID ='$user_id'");
 
+$sql = "UPDATE user_account SET username = :username WHERE id = :user_id";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':username', $username);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
 
-
-$user_id = $_SESSION['ID'];
-$action = "Change Username : User # " . $user_id . " | Full Name : ".$_SESSION['FNAME'] .' '.$_SESSION['MNAME'] .' '.$_SESSION['LNAME'];
-
-$logs = mysqli_query($conn, "INSERT INTO `logs` (`USER_ID`,`ACTION_MADE`) VALUES('$user_id','$action')");
+$action = "Change Username : User # " . $user_id . " | Full Name : ".$decrypted_array['FNAME'] .' '.$decrypted_array['MNAME'] .' '.$decrypted_array['LNAME'];
+$user_id = $decrypted_array['ID'];
+$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+$logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+$logs->bindParam(':action', $action, PDO::PARAM_STR);
+$logs->execute();
 
 $response['success'] = true;
 $response['title'] = 'Success';

@@ -15,12 +15,17 @@ $newpassword = isset($_POST['newpassword']) ? trim($_POST['newpassword']) : '';
 $currentpassword = set_password($currentpassword);
 $checkpassword = set_password($password);
 
-if($decrypted_array['PASSWORD'] !== $currentpassword){
+$db_password = $conn->prepare("SELECT password FROM user_account WHERE id = :id ");
+$db_password->bindParam(':id', $user_id, PDO::PARAM_STR);
+$db_password->execute();
+$row_password = $db_password->fetch(PDO::FETCH_ASSOC);
+
+if($row_password['password'] !== $currentpassword){
     $response['message'] = 'Current password doesnt match to your existing password!';
         echo json_encode($response);
         exit();
 }
-if($decrypted_array['PASSWORD'] === $checkpassword){
+if($row_password['password'] === $checkpassword){
     $response['message'] = 'Please enter new password!';
         echo json_encode($response);
         exit();
@@ -59,7 +64,6 @@ if(strlen($password) < 8){
 
 $password = set_password($password);
 
-$student = mysqli_query($conn_acc, "UPDATE user_account SET PASSWORD = '" . $password . "' WHERE ID ='$user_id'");
 $sql = "UPDATE user_account SET password = :password WHERE id = :user_id";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':password', $password);
