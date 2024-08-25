@@ -15,7 +15,7 @@ $repo = 'flldc-user-image';
 
 // Define constants for GitHub repository and token
 define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
-define('GITHUB_TOKEN', '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');
+define('GITHUB_TOKEN', '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');
 
 // Check if file is uploaded
 if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
