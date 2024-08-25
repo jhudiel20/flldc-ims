@@ -75,15 +75,11 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     <!-- Account -->
                                                     <div class="card-body mb-3">
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                        <img src="/image_proxy.php?file=<?php echo urlencode($user['image'] ?? 'default.png'); ?>" alt="User Image">
-  
-                                                            <img
-                                                                src="<?php if(empty($user['image'])){ $user['image'] = 'user.png'; echo $user['image']; }else{ echo 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/'.$user['image'];}?>"
-                                                                alt="user-avatar"
+                                                        <img src="/image_proxy.php?file=<?php echo urlencode($user['image'] ?? 'default.png'); ?>" alt="user-avatar"
                                                                 class="d-block rounded"
                                                                 height="100"
                                                                 width="100"
-                                                                id="uploadedAvatar" />
+                                                                id="uploadedAvatar">
                                                             <div class="button-wrapper">
                                                                 <form class="" method="POST" id="upload_photo_form" enctype="multipart/form-data" style="display: inline-block;">
                                                                     <label for="upload" class="" tabindex="0">
@@ -476,7 +472,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     var formdata = new FormData(user_password_form);
 
                     $.ajax({
-                        url: "../action/user_change_pass.php",
+                        url: "/user_change_pass.php",
                         method: "POST",
                         data: formdata,
                         dataType: "json",
@@ -512,7 +508,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
                 $('#user_change_username').on('click', function() {
-                    var formdata = new FormData(change_username_form);
+                    var formdata = new FormData(elementById('#'));
 
                     $.ajax({
                         url: "../action/user_change_username.php",

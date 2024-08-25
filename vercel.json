@@ -41,6 +41,10 @@
       {
         "src": "/user_edit_info.php",
         "dest": "/api/action/user_edit_info.php"
+      },      
+      {
+        "src": "/user_change_pass.php",
+        "dest": "/api/action/user_change_pass.php"
       },
       {
         "src": "/upload_user_photo.php",
