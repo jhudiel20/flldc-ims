@@ -473,4 +473,8 @@ function generate_PCV_ID($length = 10) {
   return $generate_PCV_ID;
 }
 
+function isUserAuthenticated() {
+  // Check if the user is logged in (adjust according to your authentication mechanism)
+  return isset($decrypted_array['user_id']) && !empty($decrypted_array['user_id']);
+}
 

@@ -27,6 +27,10 @@
         "dest": "/public/user_image/$1"
       },
       {
+        "src": "/image_proxy.php",
+        "dest": "/api/action/image_proxy.php"
+      },
+      {
         "src": "/img/(.*)",
         "dest": "/public/assets/img/$1"
       },

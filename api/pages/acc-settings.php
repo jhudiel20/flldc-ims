@@ -75,7 +75,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     <!-- Account -->
                                                     <div class="card-body mb-3">
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                                    
+                                                        <img src="/image_proxy.php?file=<?php echo urlencode($user['image'] ?? 'default.png'); ?>" alt="User Image">
+  
                                                             <img
                                                                 src="<?php if(empty($user['image'])){ $user['image'] = 'user.png'; echo $user['image']; }else{ echo 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/'.$user['image'];}?>"
                                                                 alt="user-avatar"
