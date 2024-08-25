@@ -3,9 +3,6 @@
 require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-if (isset($_COOKIE['secure_data'])) {
-    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
-}
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location:index.php");
 }
@@ -75,7 +72,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     <!-- Account -->
                                                     <div class="card-body mb-3">
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                        <img src="/image_proxy.php?file=<?php echo urlencode($user['image'] ?? 'default.png'); ?>" alt="user-avatar"
+                                                        <img src="/image_proxy.php?file=<?php echo urlencode($user['image'] ?? '/user_image/user.png'); ?>" alt="user-avatar"
                                                                 class="d-block rounded"
                                                                 height="100"
                                                                 width="100"
@@ -373,7 +370,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             </ul>
                                                         </div>
                                                         <div class="col-12 mt-1">
-                                                            <button type="button" class="btn btn-primary me-2" id="user_change_pass">Save changes</button>
+                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_pass">Save changes</button>
                                                             <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
                                                         </div>
                                                         </div>
@@ -468,13 +465,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 })
             })();
 
-                $('#user_change_pass').on('click', function() {
-                    var formdata = new FormData(user_password_form);
+                $('#user_password_form').on('submit', function(e) {
+                    e.preventDefault();  
 
                     $.ajax({
                         url: "/user_change_pass.php",
                         method: "POST",
-                        data: formdata,
+                        data: $(this).serialize(),
                         dataType: "json",
                         contentType: false,
                         cache: false,

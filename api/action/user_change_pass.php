@@ -55,35 +55,22 @@ if(strlen($password) < 8){
     echo json_encode($response);
     exit();
 }
-// $sql = mysqli_query($conn_acc,"SELECT USERNAME FROM user_account ");
-//     while($row_sql = mysqli_fetch_assoc($sql)){
-//     if($row_sql['USERNAME'] == $username){
-//         $response['success'] = false;
-//         $response['title'] = "Error!";
-//         $response['message'] = 'Username already taken!';
-//         echo json_encode($response);
-//         exit();
-//     }
-// }
-
-// $is_password = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
-// if(!preg_match($is_password,$password)){
-//     $response['message'] = 'Minimum eight characters, at least one letter and one number:';
-//     echo json_encode($response);
-//     exit();
-// }
-
 
 $password = set_password($password);
 
 $student = mysqli_query($conn_acc, "UPDATE user_account SET PASSWORD = '" . $password . "' WHERE ID ='$user_id'");
+$sql = "UPDATE user_account SET password = :password WHERE id = :user_id";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':password', $password);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
 
-
-
-$user_id = $_SESSION['ID'];
-$action = "Change Password : User # " . $user_id . " | Full Name : ".$_SESSION['FNAME'] .' '.$_SESSION['MNAME'] .' '.$_SESSION['LNAME'];
-
-$logs = mysqli_query($conn, "INSERT INTO `logs` (`USER_ID`,`ACTION_MADE`) VALUES('$user_id','$action')");
+$action = "Change Password : User # " . $user_id . " | Full Name : ".$decrypted_array['FNAME'] .' '.$decrypted_array['MNAME'] .' '.$decrypted_array['LNAME'];
+$user_id = $decrypted_array['ID'];
+$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+$logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+$logs->bindParam(':action', $action, PDO::PARAM_STR);
+$logs->execute();
 
 $response['success'] = true;
 $response['title'] = 'Success';
