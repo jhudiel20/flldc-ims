@@ -6,6 +6,11 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
+    // Send email using PHPMailer
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -106,10 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Send email using PHPMailer
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
+
 
     require __DIR__ . '/../../public/mail/Exception.php';
     require __DIR__ . '/../../public/mail/PHPMailer.php';
@@ -216,6 +218,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ';
 
         $mail->send();
+
+
+        // Prepare the INSERT statement for purchase_order
+        $sql = $conn->prepare("INSERT INTO purchase_order (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)");
+
+        // Execute the prepared statement with the actual values
+        $sql->execute([$generate_REQUEST_ID, $ITEM_NAME, $QUANTITY, $REMARKS, $EMAIL, $PURPOSE, $DATE_NEEDED, $DESCRIPTION, $img]);
+
+        // Prepare the INSERT statement for po_history
+        $history_title = "Request Created";
+        $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
+        "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
+        "\n" . "Description : " . $DESCRIPTION;
+
+        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
+        VALUES ($1, $2, $3)");
+
+        // Execute the prepared statement with the actual values
+        $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
+
+
+        $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
+        $user_id = $_COOKIE['ID'];
+        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $logs->bindParam(':action', $action, PDO::PARAM_STR);
+        $logs->execute();
+
+
         $response['success'] = true;
         $response['title'] = 'Success';
         $response['message'] = 'Request added successfully!';
