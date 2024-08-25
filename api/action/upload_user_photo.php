@@ -40,7 +40,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Authorization: token ' . GITHUB_TOKEN,
-        'User-Agent: PHP Script',
+        'User-Agent: PHP script access',
         'Content-Type: application/json',
     ]);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
