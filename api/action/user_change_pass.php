@@ -16,7 +16,7 @@ $currentpassword = set_password($currentpassword);
 $checkpassword = set_password($password);
 
 $db_password = $conn->prepare("SELECT password FROM user_account WHERE ID = :id ");
-$db_password->bindParam(':id', $user_id, PDO::PARAM_STR);
+$db_password->bindParam(':id', $user_id, PDO::PARAM_INT);
 $db_password->execute();
 $row_password = $db_password->fetch(PDO::FETCH_ASSOC);
 
@@ -89,7 +89,7 @@ $stmt->execute();
 $action = "Change Password : User # " . $user_id . " | Full Name : ".$decrypted_array['FNAME'] .' '.$decrypted_array['MNAME'] .' '.$decrypted_array['LNAME'];
 $user_id = $decrypted_array['ID'];
 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-$logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+$logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $logs->bindParam(':action', $action, PDO::PARAM_STR);
 $logs->execute();
 

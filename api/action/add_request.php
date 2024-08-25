@@ -58,9 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_FILES['item_photo']['name']) && in_array($_FILES['item_photo']['type'], $fileMimes)) {
         $img = $_FILES['item_photo']['name'];
         $img_temp_loc = $_FILES['item_photo']['tmp_name'];
-
+        $githubToken = getenv('GITHUB_TOKEN');
         // Define the GitHub API URL
-        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/images/' . $img;
+        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $img;
 
         // Read the file content
         $fileContent = file_get_contents($img);
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ch = curl_init($githubApiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: token YOUR_GITHUB_TOKEN', // Replace YOUR_GITHUB_TOKEN with your actual token
+            'Authorization: token ' . $githubToken,  // Replace YOUR_GITHUB_TOKEN with your actual token
             'User-Agent: PHP Script',
             'Content-Type: application/json'
         ]);

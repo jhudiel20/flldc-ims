@@ -11,8 +11,8 @@ $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $currentusername = isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '';
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 
-$db_username = $conn->prepare("SELECT username FROM user_account WHERE ID = :id ");
-$db_username->bindParam(':id', $user_id, PDO::PARAM_STR);
+$db_username = $conn->prepare("SELECT username FROM user_account WHERE ID = :id");
+$db_username->bindParam(':id', $user_id, PDO::PARAM_INT);
 $db_username->execute();
 $row_username = $db_username->fetch(PDO::FETCH_ASSOC);
 
@@ -64,7 +64,7 @@ $stmt->execute();
 $action = "Change Username : User # " . $user_id . " | Full Name : ".$decrypted_array['FNAME'] .' '.$decrypted_array['MNAME'] .' '.$decrypted_array['LNAME'];
 $user_id = $decrypted_array['ID'];
 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-$logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+$logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $logs->bindParam(':action', $action, PDO::PARAM_STR);
 $logs->execute();
 
