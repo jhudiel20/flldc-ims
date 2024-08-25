@@ -8,12 +8,14 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 
 // GitHub credentials and repository details
 // $token = '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';
+// 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
+
 $owner = 'jhudiel20'; // or organization name if applicable
 $repo = 'flldc-user-image';
 
 // Define constants for GitHub repository and token
 define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
-define('GITHUB_TOKEN', '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');
+define('GITHUB_TOKEN', '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');
 
 // Check if file is uploaded
 if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
