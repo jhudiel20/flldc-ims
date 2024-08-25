@@ -11,8 +11,7 @@ $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $currentusername = isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '';
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 
-$db_username = $conn->prepare("SELECT username FROM user_account WHERE ID = :id");
-$db_username->bindParam(':id', $user_id, PDO::PARAM_INT);
+$db_username = $conn->prepare("SELECT username FROM user_account WHERE ID = '$user_id'");
 $db_username->execute();
 $row_username = $db_username->fetch(PDO::FETCH_ASSOC);
 

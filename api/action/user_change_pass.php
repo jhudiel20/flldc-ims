@@ -15,8 +15,7 @@ $newpassword = isset($_POST['newpassword']) ? trim($_POST['newpassword']) : '';
 $currentpassword = set_password($currentpassword);
 $checkpassword = set_password($password);
 
-$db_password = $conn->prepare("SELECT password FROM user_account WHERE ID = :id ");
-$db_password->bindParam(':id', $user_id, PDO::PARAM_INT);
+$db_password = $conn->prepare("SELECT password FROM user_account WHERE ID = '$user_id' ");
 $db_password->execute();
 $row_password = $db_password->fetch(PDO::FETCH_ASSOC);
 
