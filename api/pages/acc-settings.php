@@ -77,7 +77,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                                                                     
                                                             <img
-                                                                src="../user_image/<?php if(empty($user['image'])){ $user['image'] = 'user.png'; echo $user['image']; }else{ echo $user['image'];}?>"
+                                                                src="<?php if(empty($user['image'])){ $user['image'] = 'user.png'; echo $user['image']; }else{ echo 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/'.$user['image'];}?>"
                                                                 alt="user-avatar"
                                                                 class="d-block rounded"
                                                                 height="100"

@@ -44,6 +44,19 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
 
     $response = curl_exec($ch);
 
+    $sql = "UPDATE user_account SET image = :img WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':img', $fileName);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    $action = "Updated picture in User : " . $decrypted_array['fname'] . ' ' . $decrypted_array['mname'] . ' ' . $decrypted_array['lname'];
+    $user_id = $decrypted_array['id'];
+    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+    $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+    $logs->bindParam(':action', $action, PDO::PARAM_STR);
+    $logs->execute();
+
     if (curl_errno($ch)) {
         // Output curl errors for debugging
         echo json_encode([
