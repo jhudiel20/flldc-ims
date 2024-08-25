@@ -6,20 +6,12 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-// GitHub credentials and repository details
-// $token = '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';
-// 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
+// Load the GitHub token from the environment variables
+$githubToken = getenv('GITHUB_TOKEN');
 
-$owner = 'jhudiel20'; // or organization name if applicable
+// Define your GitHub repository and token
+$owner = 'jhudiel20'; // GitHub username or organization
 $repo = 'flldc-user-image';
-
-// Define constants for GitHub repository and token
-define('GITHUB_REPO', 'jhudiel20/flldc-user-image');
-<<<<<<< HEAD
-define('GITHUB_TOKEN', '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');
-=======
-define('GITHUB_TOKEN', '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');
->>>>>>> 75dcf1d414f2058f31addced04d5e3b91db696a2
 
 // Check if file is uploaded
 if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -34,7 +26,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     $base64Content = base64_encode($fileContent);
 
     // Prepare the API request
-    $apiUrl = 'https://api.github.com/repos/' . GITHUB_REPO . '/contents/images/' . $fileName;
+    $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/images/' . $fileName;
     $data = json_encode([
         'message' => 'Upload ' . $fileName,
         'content' => $base64Content,
@@ -43,8 +35,8 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     $ch = curl_init($apiUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: token ' . GITHUB_TOKEN,
-        'User-Agent: PHP script access',
+        'Authorization: token ' . $githubToken,  // Use the token from the environment variable
+        'User-Agent: PHP Script',
         'Content-Type: application/json',
     ]);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
