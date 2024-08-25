@@ -307,7 +307,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             </ul>
                                                         </div>
                                                         <div class="col-12 mt-1">
-                                                            <button type="button" class="btn btn-primary me-2" id="user_change_username">Save changes</button>
+                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_username">Save changes</button>
                                                             <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
                                                         </div>
                                                         </div>
@@ -421,7 +421,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <script>
         $(document).ready(function() {
 
-            (function() {
+
                 $('#user_edit_form').on('submit', function(e) {
                     e.preventDefault();            
                     $.ajax({
@@ -462,12 +462,10 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             }
                         }
                     });
-                })
-            })();
+                });
 
                 $('#user_password_form').on('submit', function(e) {
                     e.preventDefault();  
-
                     $.ajax({
                         url: "/user_change_pass.php",
                         method: "POST",
@@ -504,13 +502,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         }
                     });
                 });
-                $('#user_change_username').on('click', function() {
-                    var formdata = new FormData(elementById('#'));
+                $('#change_username_form').on('submit', function(e) {
+                    e.preventDefault();  
 
                     $.ajax({
-                        url: "../action/user_change_username.php",
+                        url: "/user_change_username.php",
                         method: "POST",
-                        data: formdata,
+                        data: $(this).serialize(),
                         dataType: "json",
                         contentType: false,
                         cache: false,

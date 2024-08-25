@@ -7,10 +7,10 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 // Check if the user is authenticated
-if (!isUserAuthenticated()) {
-    header('HTTP/1.0 403 Forbidden');
-    exit('Unauthorized');
-}
+// if (!isUserAuthenticated()) {
+//     header('HTTP/1.0 403 Forbidden');
+//     exit('Unauthorized');
+// }
 
 // Get the image file name from the query parameter
 $fileName = $_GET['file'] ?? 'default.png'; // Fallback to a default image if no file specified

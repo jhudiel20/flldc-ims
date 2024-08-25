@@ -6,6 +6,7 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $currentpassword = isset($_POST['currentpassword']) ? trim($_POST['currentpassword']) : '';
 $password = isset($_POST['password']) ? trim($_POST['password']) : '';
@@ -77,3 +78,4 @@ $response['title'] = 'Success';
 $response['message'] = 'Successfully Updated!';
 echo json_encode($response);
 exit();
+}

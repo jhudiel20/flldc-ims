@@ -47,6 +47,10 @@
         "dest": "/api/action/user_change_pass.php"
       },
       {
+        "src": "/user_change_username.php",
+        "dest": "/api/action/user_change_username.php"
+      },
+      {
         "src": "/upload_user_photo.php",
         "dest": "/api/action/upload_user_photo.php"
       },
