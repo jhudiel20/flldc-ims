@@ -15,48 +15,64 @@ $newpassword = isset($_POST['newpassword']) ? trim($_POST['newpassword']) : '';
 $currentpassword = set_password($currentpassword);
 $checkpassword = set_password($password);
 
-$db_password = $conn->prepare("SELECT password FROM user_account WHERE id = :id ");
+$db_password = $conn->prepare("SELECT password FROM user_account WHERE ID = :id ");
 $db_password->bindParam(':id', $user_id, PDO::PARAM_STR);
 $db_password->execute();
 $row_password = $db_password->fetch(PDO::FETCH_ASSOC);
 
 if($row_password['password'] !== $currentpassword){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Current password doesnt match to your existing password!';
         echo json_encode($response);
         exit();
 }
 if($row_password['password'] === $checkpassword){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Please enter new password!';
         echo json_encode($response);
         exit();
 }
 
 if ($currentpassword == '' || $password == '' || $newpassword == '') {
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Please fill up all fields with (*) asterisk!';
     echo json_encode($response);
     exit();
 }
 if($newpassword != $password){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Password did not match!';
     echo json_encode($response);
     exit();
 }
 if(!preg_match('@[A-Z]@',$password)){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Password must include at least one Uppercase Letter!';
     echo json_encode($response);
     exit();
 }
 if(!preg_match('@[a-z]@',$password)){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Password must include at least one Lowercase Letter!';
     echo json_encode($response);
     exit();
 }
 if(!preg_match('@[0-9]@',$password)){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Password must include at least one Number!';
     echo json_encode($response);
     exit();
 }
 if(strlen($password) < 8){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Password must be at least 8 characters in length!';
     echo json_encode($response);
     exit();
@@ -64,7 +80,7 @@ if(strlen($password) < 8){
 
 $password = set_password($password);
 
-$sql = "UPDATE user_account SET password = :password WHERE id = :user_id";
+$sql = "UPDATE user_account SET password = :password WHERE ID = :user_id";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':password', $password);
 $stmt->bindParam(':user_id', $user_id);

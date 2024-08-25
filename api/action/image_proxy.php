@@ -33,7 +33,7 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 $data = json_decode($response, true);
-$imageUrl = $data['download_url'] ?? 'default.png';
+$imageUrl = $data['download_url'] ?? '/user_image/default.png';
 
 // Fetch the image content
 $imageContent = file_get_contents($imageUrl);

@@ -6,28 +6,35 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $currentusername = isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '';
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 
-$db_username = $conn->prepare("SELECT username FROM user_account WHERE id = :id ");
+$db_username = $conn->prepare("SELECT username FROM user_account WHERE ID = :id ");
 $db_username->bindParam(':id', $user_id, PDO::PARAM_STR);
 $db_username->execute();
 $row_username = $db_username->fetch(PDO::FETCH_ASSOC);
 
 if($row_username['username'] !== $currentusername){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Current username doesnt match to your existing username!';
         echo json_encode($response);
         exit();
 }
 
 if($row_username['username'] === $username){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Please enter new username!';
         echo json_encode($response);
         exit();
 }
 
 if(strlen($username) < 8){
+    $response['success'] = false;
+    $response['title'] = "Error!";
     $response['message'] = 'Username must be at least 8 characters in length!';
     echo json_encode($response);
     exit();
@@ -66,3 +73,4 @@ $response['title'] = 'Success';
 $response['message'] = 'Successfully Updated!';
 echo json_encode($response);
 exit();
+}
