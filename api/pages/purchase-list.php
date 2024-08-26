@@ -122,7 +122,7 @@ var detail_btn = function(cell, formatterParams, onRendered) {
         // $_SESSION['PAGE_CLICK'] = "";
         // $_SESSION['PAGE_CLICK'] = $geturl;
     ?>
-    return "<a class='btn btn-outline-primary' href='purchase-details.php?ID=" + purchase_id +
+    return "<a class='btn btn-outline-primary' href='purchase-details?ID=" + purchase_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 

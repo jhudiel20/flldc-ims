@@ -15,12 +15,12 @@ use PHPMailer\PHPMailer\Exception;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Get POST data and sanitize inputs
-    $ITEM_NAME = $_POST['item_name'];
-    $QUANTITY = $_POST['quantity'];
-    $REMARKS = $_POST['remarks'];
-    $PURPOSE = $_POST['purpose'];
-    $DESCRIPTION = $_POST['description'];
-    $DATE_NEEDED = $_POST['date_needed'];
+    $ITEM_NAME = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
+    $QUANTITY = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
+    $REMARKS = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
+    $PURPOSE = isset($_POST['purpose']) ? trim($_POST['purpose']) : '';
+    $DESCRIPTION = isset($_POST['description']) ? trim($_POST['description']) : '';
+    $DATE_NEEDED = isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
 
     // Sanitize item name
     $ITEM_NAME = str_replace("'", "", $ITEM_NAME);
