@@ -7,7 +7,7 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$user_id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
+$user_id = isset($_POST['id']) ? trim($_POST['id']) : '';
 $currentusername = isset($_POST['currentusername']) ? trim($_POST['currentusername']) : '';
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 

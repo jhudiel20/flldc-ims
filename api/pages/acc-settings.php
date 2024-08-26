@@ -97,7 +97,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     </div>
                                                     <hr class="my-0 mb-3" />
                                                     <div class="card-body">
-                                                        <form id="formAccountSettings" method="GET" onsubmit="return false">
+                                                        <form id="formAccountSettings" method="POST" onsubmit="return false">
                                                         <div class="row">
                                                             <div class="mb-3 col-md-6">
                                                                 <label for="firstName" class="form-label">Full Name</label>
@@ -274,7 +274,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 <h5 class="card-header">Change Username</h5>
                                                 <div class="card-body">
                                                     <form  method="post" id="change_username_form">
-                                                        <input type="hidden" name="ID" id="id" value="<?php echo $user_id ?>">
+                                                        <input type="hidden" name="id" id="id" value="<?php echo $user_id ?>">
                                                         <div class="row">
                                                         <div class="mb-3 col-md-6 form-password-toggle">
                                                             <label class="form-label" for="newPassword">Current Username</label>
@@ -318,7 +318,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 <h5 class="card-header">Change Password</h5>
                                                 <div class="card-body">
                                                     <form  method="post" id="user_password_form">
-                                                        <input type="hidden" name="ID" id="id" value="<?php echo $user_id ?>">
+                                                        <input type="hidden" name="id" id="id" value="<?php echo $user_id ?>">
                                                         <div class="row">
                                                             <div class="mb-3 col-md-6 form-password-toggle">
                                                                 <label class="form-label" for="currentPassword">Current Password</label>

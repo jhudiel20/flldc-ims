@@ -31,8 +31,8 @@
         "dest": "/api/action/image_proxy.php"
       },
       {
-        "src": "/img/(.*)",
-        "dest": "/public/assets/img/$1"
+        "src": "/LOGO.png",
+        "dest": "/public/assets/img/LOGO.png"
       },
       {
         "src": "/acc-settings.php",

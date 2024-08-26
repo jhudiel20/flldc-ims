@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Remarks</label>
-                                <textarea type="text" class="form-control" name="remarks" id="fname" cols="20"
+                                <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
                                     rows="3"></textarea>
                             </div>
                             <div class="col-md-12">

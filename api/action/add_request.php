@@ -6,36 +6,38 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-    // Send email using PHPMailer
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-    
+// PHPMailer integration
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Get POST data
-    $ITEM_NAME = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
-    $QUANTITY = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
-    $REMARKS = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
-    $PURPOSE = isset($_POST['purpose']) ? trim($_POST['purpose']) : '';
-    $DESCRIPTION = isset($_POST['description']) ? trim($_POST['description']) : '';
+    // Get POST data and sanitize inputs
+    $ITEM_NAME = isset($_POST['item_name']) ? trim(filter_var($_POST['item_name'], FILTER_SANITIZE_STRING)) : '';
+    $QUANTITY = isset($_POST['quantity']) ? trim(filter_var($_POST['quantity'], FILTER_VALIDATE_INT)) : '';
+    $REMARKS = isset($_POST['remarks']) ? trim(filter_var($_POST['remarks'], FILTER_SANITIZE_STRING)) : '';
+    $PURPOSE = isset($_POST['purpose']) ? trim(filter_var($_POST['purpose'], FILTER_SANITIZE_STRING)) : '';
+    $DESCRIPTION = isset($_POST['description']) ? trim(filter_var($_POST['description'], FILTER_SANITIZE_STRING)) : '';
     $DATE_NEEDED = isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
 
     // Sanitize item name
     $ITEM_NAME = str_replace("'", "", $ITEM_NAME);
 
+    // Generate a unique request ID
     $generate_REQUEST_ID = generate_REQUEST_ID();
 
-    // Validate fields
+    // Validate required fields
     if ($ITEM_NAME == '' || $QUANTITY == '' || $DATE_NEEDED == '') {
         $response['message'] = 'Please fill up all fields with (*) asterisk!';
         echo json_encode($response);
         exit();
     }
 
+    // Check if email is provided for admins
     if ($decrypted_array['ACCESS'] == 'ADMIN') {
-        $EMAIL = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $EMAIL = isset($_POST['email']) ? trim(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) : '';
         if ($EMAIL == '') {
             $response['message'] = 'Please enter the email of requestor!';
             echo json_encode($response);
@@ -45,14 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $EMAIL = $decrypted_array['EMAIL'];
     }
 
-    $fileMimes = array(
-        'image/gif',
-        'image/jpeg',
-        'image/jpg',
-        'image/png',
-        'application/pdf'
-    );
-
+    // File validation
+    $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
     if ($_FILES['item_photo']['name'] == '') {
         $response['message'] = 'Please select a photo';
         $response['title'] = 'Warning!';
@@ -64,11 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $img = $_FILES['item_photo']['name'];
         $img_temp_loc = $_FILES['item_photo']['tmp_name'];
         $githubToken = getenv('GITHUB_TOKEN');
-        // Define the GitHub API URL
-        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $img;
 
         // Read the file content
-        $fileContent = file_get_contents($img);
+        $fileContent = file_get_contents($img_temp_loc);
+        if ($fileContent === false) {
+            $response['message'] = 'Failed to read file content.';
+            echo json_encode($response);
+            exit();
+        }
 
         // Prepare the data for GitHub API
         $data = json_encode([
@@ -76,11 +75,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'content' => base64_encode($fileContent)
         ]);
 
+        // Define the GitHub API URL
+        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $img;
+
         // Initialize cURL
         $ch = curl_init($githubApiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: token ' . $githubToken,  // Replace YOUR_GITHUB_TOKEN with your actual token
+            'Authorization: token ' . $githubToken,
             'User-Agent: PHP Script',
             'Content-Type: application/json'
         ]);
@@ -103,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Internet connection validation
     if (!$sock = @fsockopen('www.google.com', 80)) {
         $response['success'] = false;
         $response['title'] = 'Error';
@@ -111,8 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
-
+    // Mailer setup
     require __DIR__ . '/../../public/mail/Exception.php';
     require __DIR__ . '/../../public/mail/PHPMailer.php';
     require __DIR__ . '/../../public/mail/SMTP.php';
@@ -128,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $support_emails[] = $row_admins['email'];
         }
 
-        //Server settings
+        // Server settings
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
@@ -137,12 +139,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
 
-        //Recipients
+        // Recipients
         $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
         foreach ($support_emails as $email) {
             $mail->addAddress($email);
         }
 
+        // Content
         $mail->isHTML(true);
         $mail->Subject = 'New Request Added';
         $mail->Body    = '
@@ -219,27 +222,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->send();
 
+        // Insert into database with validation
+        $conn->beginTransaction();
 
-        // Prepare the INSERT statement for purchase_order
+        // Prepare and execute INSERT statement for purchase_order
         $sql = $conn->prepare("INSERT INTO purchase_order (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)");
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $sql->execute([$generate_REQUEST_ID, $ITEM_NAME, $QUANTITY, $REMARKS, $EMAIL, $PURPOSE, $DATE_NEEDED, $DESCRIPTION, $img_url]);
 
-        // Execute the prepared statement with the actual values
-        $sql->execute([$generate_REQUEST_ID, $ITEM_NAME, $QUANTITY, $REMARKS, $EMAIL, $PURPOSE, $DATE_NEEDED, $DESCRIPTION, $img]);
-
-        // Prepare the INSERT statement for po_history
+        // Prepare and execute INSERT statement for po_history
         $history_title = "Request Created";
         $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
         "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
         "\n" . "Description : " . $DESCRIPTION;
 
         $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
-        VALUES ($1, $2, $3)");
-
-        // Execute the prepared statement with the actual values
+        VALUES (?, ?, ?)");
         $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
 
-
+        // Log the action
         $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
         $user_id = $_COOKIE['ID'];
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
@@ -247,6 +248,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $logs->bindParam(':action', $action, PDO::PARAM_STR);
         $logs->execute();
 
+        // Commit the transaction
+        $conn->commit();
 
         $response['success'] = true;
         $response['title'] = 'Success';
@@ -255,11 +258,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
 
     } catch (Exception $e) {
+        $conn->rollBack();
         $response['success'] = false;
         $response['title'] = 'Error';
-        $response['message'] = 'Mailer Error: ' . $mail->ErrorInfo;
+        $response['message'] = 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        echo json_encode($response);
+        exit();
+    } catch (PDOException $e) {
+        $conn->rollBack();
+        $response['success'] = false;
+        $response['title'] = 'Error';
+        $response['message'] = 'Database error: ' . $e->getMessage();
         echo json_encode($response);
         exit();
     }
+} else {
+    $response['message'] = 'Invalid request method.';
+    echo json_encode($response);
+    exit();
 }
-?>
