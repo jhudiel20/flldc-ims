@@ -585,8 +585,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $('#photo_delete_btn').on('click', function() {
                 var formdata = new FormData(document.getElementById('delete_photo_form'));
-                e.preventDefault();  
-
                 $.ajax({
                     url:"/delete_user_photo.php",
                     method: "POST",

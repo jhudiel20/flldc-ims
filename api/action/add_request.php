@@ -15,12 +15,12 @@ use PHPMailer\PHPMailer\Exception;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Get POST data and sanitize inputs
-    $ITEM_NAME = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
-    $QUANTITY = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
-    $REMARKS = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
-    $PURPOSE = isset($_POST['purpose']) ? trim($_POST['purpose']) : '';
-    $DESCRIPTION = isset($_POST['description']) ? trim($_POST['description']) : '';
-    $DATE_NEEDED = isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
+    $ITEM_NAME = $_POST['item_name'];
+    $QUANTITY = $_POST['quantity'];
+    $REMARKS = $_POST['remarks'];
+    $PURPOSE = $_POST['purpose'];
+    $DESCRIPTION = $_POST['description'];
+    $DATE_NEEDED = $_POST['date_needed'];
 
     // Sanitize item name
     $ITEM_NAME = str_replace("'", "", $ITEM_NAME);
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
 
         // Define the GitHub API URL
-        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $img;
+        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' .  urlencode($img);
 
         // Initialize cURL
         $ch = curl_init($githubApiUrl);
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($ch);
-        
+
         if (curl_errno($ch)) {
             $response['message'] = 'cURL Error: ' . curl_error($ch);
             echo json_encode($response);
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <tbody>
                                         <tr>
                                         <td style="width:138px">
-                                            <img alt="" title="" height="100px" width="200px" src="logo" width="100" style="">
+                                            <img alt="" title="" height="100px" width="200px" src="/LOGO.png" width="100" style="">
                                         </td>
                                         </tr>
                                     </tbody>
@@ -212,6 +212,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                             <b>Date Needed:</b> ' . $DATE_NEEDED . '<br>
                                                             <b>Remarks:</b> ' . $REMARKS . '<br>
                                                             <b>Image:</b> <a href="' . $img_url . '">View Image</a></p>
+                                                            <p> Please click the link below to Approved or Declined the request :</p>
+                                                            <a href="https://flldc-ims.vercel.app/request-list">Approved / Declined<a>
                                                             <p>Best Regards,<br>L&D Inventory Management System</p>
                                                         </div>
                                                     </td>

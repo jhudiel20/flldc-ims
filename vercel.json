@@ -15,6 +15,10 @@
     },
     "routes": [
       {
+        "src": "/(.*)",
+        "dest": "/api/$1.php"
+      },
+      {
         "src": "/ITEM_PHOTO/(.*)",
         "dest": "/public/ITEM_PHOTO/$1"
       },      
