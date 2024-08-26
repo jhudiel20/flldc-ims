@@ -48,12 +48,12 @@ if(strlen($username) < 8){
     echo json_encode($response);
     exit();
 }
-$verify = "SELECT USERNAME FROM user_account";
+$verify = "SELECT username FROM user_account";
 $verify = $conn->prepare($verify);
 $verify->execute();
 
 while ($row_sql = $verify->fetch(PDO::FETCH_ASSOC)) {
-    if ($row_sql['USERNAME'] == $username) {
+    if ($row_sql['username'] == $username) {
         $response['success'] = false;
         $response['title'] = "Error!";
         $response['message'] = 'Username already taken!';

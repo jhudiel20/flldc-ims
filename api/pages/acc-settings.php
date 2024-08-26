@@ -72,7 +72,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     <!-- Account -->
                                                     <div class="card-body mb-3">
                                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                        <img src="/image_proxy.php?file=<?php echo $user['image'] ?? 'user.png'; ?>" alt="user-avatar"
+                                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/<?php echo empty($user['image']) ? 'user.png' : $user['image']; ?>" alt="user-avatar"
                                                                 class="d-block rounded"
                                                                 height="100"
                                                                 width="100"
