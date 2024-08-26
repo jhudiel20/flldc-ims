@@ -89,6 +89,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($ch);
+        
+        if (curl_errno($ch)) {
+            $response['message'] = 'cURL Error: ' . curl_error($ch);
+            echo json_encode($response);
+            curl_close($ch);
+            exit();
+        }
+        
         curl_close($ch);
 
         $responseData = json_decode($response, true);
@@ -164,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <tbody>
                                         <tr>
                                         <td style="width:138px">
-                                            <img alt="" title="" height="100px" width="200px" src="cid:logo" width="100" style="">
+                                            <img alt="" title="" height="100px" width="200px" src="logo" width="100" style="">
                                         </td>
                                         </tr>
                                     </tbody>

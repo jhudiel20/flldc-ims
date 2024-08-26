@@ -583,7 +583,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
 
-            $('#delete_photo_form').on('submit', function(e) {
+            $('#photo_delete_btn').on('click', function() {
                 var formdata = new FormData(document.getElementById('delete_photo_form'));
                 e.preventDefault();  
 
@@ -670,7 +670,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
             <div class="modal-footer">
                 <form method="post" id="delete_photo_form" class="nav-link ">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="photo_delete" class="btn btn-label-danger">Delete</button>
+                    <button name="" type="button" id="photo_delete_btn" class="btn btn-label-danger">Delete</button>
                     <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
                     <input type="hidden" name="photo_to_delete" value="<?php echo $user['image']; ?>">
                     <input  type="hidden" name="ID" id="ID" value="<?php echo $user_id?>">
