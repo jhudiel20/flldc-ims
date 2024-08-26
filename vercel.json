@@ -1,171 +1,166 @@
 {
-    "functions": {
-      "api/*.php": {
-        "runtime": "vercel-php@0.7.1"
-      },
-      "api/action/*.php": {
-        "runtime": "vercel-php@0.7.1"
-      },
-      "api/pages/*.php": {
-        "runtime": "vercel-php@0.7.1"
-      },
-      "api/ajax_data/*.php": {
-        "runtime": "vercel-php@0.7.1"
-      }
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.1"
     },
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/api/$1.php"
-      },
-      {
-        "src": "/ITEM_PHOTO/(.*)",
-        "dest": "/public/ITEM_PHOTO/$1"
-      },      
-      {
-        "src": "/PO_ATTACHMENTS/(.*)",
-        "dest": "/public/PO_ATTACHMENTS/$1"
-      },      
-      {
-        "src": "/user_image/(.*)",
-        "dest": "/public/user_image/$1"
-      },
-      {
-        "src": "/image_proxy.php",
-        "dest": "/api/action/image_proxy.php"
-      },
-      {
-        "src": "/LOGO.png",
-        "dest": "/public/assets/img/LOGO.png"
-      },
-      {
-        "src": "/acc-settings.php",
-        "dest": "/api/pages/acc-settings.php"
-      },
-      {
-        "src": "/user_edit_info.php",
-        "dest": "/api/action/user_edit_info.php"
-      },      
-      {
-        "src": "/user_change_pass.php",
-        "dest": "/api/action/user_change_pass.php"
-      },
-      {
-        "src": "/user_change_username.php",
-        "dest": "/api/action/user_change_username.php"
-      },
-      {
-        "src": "/upload_user_photo.php",
-        "dest": "/api/action/upload_user_photo.php"
-      },
-      {
-        "src": "/delete_user_photo.php",
-        "dest": "/api/action/delete_user_photo.php"
-      },
-      {
-        "src": "/userlogin.php",
-        "dest": "/api/action/userlogin.php"
-      },
-      {
-        "src": "/Actions.php",
-        "dest": "/api/action/Actions.php"
-      },
-      {
-        "src": "/dashboard-lnd.php",
-        "dest": "/api/pages/dashboard-lnd.php"
-      },
-      {
-        "src": "/dashboard-eval.php",
-        "dest": "/api/pages/dashboard-eval.php"
-      },
-      {
-        "src": "/dashboard-lms.php",
-        "dest": "/api/pages/dashboard-lms.php"
-      },
-      {
-        "src": "/dashboard-mrs.php",
-        "dest": "/api/pages/dashboard-mrs.php"
-      },
-      {
-        "src": "/rca-list.php",
-        "dest": "/api/pages/rca-list.php"
-      },
-      {
-        "src": "/rca_list_data.php",
-        "dest": "/api/ajax_data/rca_list_data.php"
-      },
-      {
-        "src": "/rca-details.php",
-        "dest": "/api/pages/rca-details.php"
-      },
-      {
-        "src": "/request-list.php",
-        "dest": "/api/pages/request-list.php"
-      },
-      {
-        "src": "/request_list_data.php",
-        "dest": "/api/ajax_data/request_list_data.php"
-      },
-      {
-        "src": "/add_request.php",
-        "dest": "/api/action/add_request.php"
-      },
-      {
-        "src": "/request-details.php",
-        "dest": "/api/pages/request-details.php"
-      },
-      {
-        "src": "/purchase-list.php",
-        "dest": "/api/pages/purchase-list.php"
-      },
-      {
-        "src": "/purchase_list_data.php",
-        "dest": "/api/ajax_data/purchase_list_data.php"
-      },
-      {
-        "src": "/purchase-details.php",
-        "dest": "/api/pages/purchase-details.php"
-      },
-      {
-        "src": "/logs.php",
-        "dest": "/api/pages/logs.php"
-      },
-      {
-        "src": "/logs_data.php",
-        "dest": "/api/ajax_data/logs_data.php"
-      },
-      {
-        "src": "/user_list.php",
-        "dest": "/api/pages/user_list.php"
-      },
-      {
-        "src": "/user_list_data.php",
-        "dest": "/api/ajax_data/user_list_data.php"  
-      },
-      {
-        "src": "/api/pages/(.*)",
-        "dest": "/api/pages/$1"
-      },
-      {
-        "src": "/assets/(.*)",
-        "dest": "/public/assets/$1"
-      },
-      {
-        "src": "/css/(.*)",
-        "dest": "/public/css/$1"
-      },
-      {
-        "src": "/tabulator/(.*)",
-        "dest": "/public/tabulator/$1"
-      },
-      {
-        "src": "/mail/(.*)",
-        "dest": "/public/mail/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/api/index.php"
-      }
-    ]
-  }
-  
+    "api/action/*.php": {
+      "runtime": "vercel-php@0.7.1"
+    },
+    "api/pages/*.php": {
+      "runtime": "vercel-php@0.7.1"
+    },
+    "api/ajax_data/*.php": {
+      "runtime": "vercel-php@0.7.1"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/$1.php"
+    },
+    {
+      "src": "/ITEM_PHOTO/(.*)",
+      "dest": "/public/ITEM_PHOTO/$1"
+    },
+    {
+      "src": "/PO_ATTACHMENTS/(.*)",
+      "dest": "/public/PO_ATTACHMENTS/$1"
+    },
+    {
+      "src": "/user_image/(.*)",
+      "dest": "/public/user_image/$1"
+    },
+    {
+      "src": "/image_proxy",
+      "dest": "/api/action/image_proxy.php"
+    },
+    {
+      "src": "/LOGO.png",
+      "dest": "/public/assets/img/LOGO.png"
+    },
+    {
+      "src": "/acc-settings",
+      "dest": "/api/pages/acc-settings.php"
+    },
+    {
+      "src": "/user_edit_info",
+      "dest": "/api/action/user_edit_info.php"
+    },
+    {
+      "src": "/user_change_pass",
+      "dest": "/api/action/user_change_pass.php"
+    },
+    {
+      "src": "/user_change_username",
+      "dest": "/api/action/user_change_username.php"
+    },
+    {
+      "src": "/upload_user_photo",
+      "dest": "/api/action/upload_user_photo.php"
+    },
+    {
+      "src": "/delete_user_photo",
+      "dest": "/api/action/delete_user_photo.php"
+    },
+    {
+      "src": "/userlogin",
+      "dest": "/api/action/userlogin.php"
+    },
+    {
+      "src": "/Actions",
+      "dest": "/api/action/Actions.php"
+    },
+    {
+      "src": "/dashboard-lnd",
+      "dest": "/api/pages/dashboard-lnd.php"
+    },
+    {
+      "src": "/dashboard-eval",
+      "dest": "/api/pages/dashboard-eval.php"
+    },
+    {
+      "src": "/dashboard-lms",
+      "dest": "/api/pages/dashboard-lms.php"
+    },
+    {
+      "src": "/dashboard-mrs",
+      "dest": "/api/pages/dashboard-mrs.php"
+    },
+    {
+      "src": "/rca-list",
+      "dest": "/api/pages/rca-list.php"
+    },
+    {
+      "src": "/rca_list_data",
+      "dest": "/api/ajax_data/rca_list_data.php"
+    },
+    {
+      "src": "/rca-details",
+      "dest": "/api/pages/rca-details.php"
+    },
+    {
+      "src": "/request-list",
+      "dest": "/api/pages/request-list.php"
+    },
+    {
+      "src": "/request_list_data",
+      "dest": "/api/ajax_data/request_list_data.php"
+    },
+    {
+      "src": "/add_request",
+      "dest": "/api/action/add_request.php"
+    },
+    {
+      "src": "/request-details",
+      "dest": "/api/pages/request-details.php"
+    },
+    {
+      "src": "/purchase-list",
+      "dest": "/api/pages/purchase-list.php"
+    },
+    {
+      "src": "/purchase_list_data",
+      "dest": "/api/ajax_data/purchase_list_data.php"
+    },
+    {
+      "src": "/purchase-details",
+      "dest": "/api/pages/purchase-details.php"
+    },
+    {
+      "src": "/logs",
+      "dest": "/api/pages/logs.php"
+    },
+    {
+      "src": "/logs_data",
+      "dest": "/api/ajax_data/logs_data.php"
+    },
+    {
+      "src": "/user_list",
+      "dest": "/api/pages/user_list.php"
+    },
+    {
+      "src": "/user_list_data",
+      "dest": "/api/ajax_data/user_list_data.php"
+    },
+    {
+      "src": "/api/pages/(.*)",
+      "dest": "/api/pages/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/public/assets/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/public/css/$1"
+    },
+    {
+      "src": "/tabulator/(.*)",
+      "dest": "/public/tabulator/$1"
+    },
+    {
+      "src": "/mail/(.*)",
+      "dest": "/public/mail/$1"
+    }
+  ]
+}
