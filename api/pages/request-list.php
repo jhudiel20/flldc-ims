@@ -296,6 +296,7 @@ function handlePdfDownload() {
 $(document).ready(function() {
 
         $('#add_request_form').on('submit', function(e) {
+            var formdata = new FormData(document.getElementById('add_request_form'));
             e.preventDefault();  
 
             if ($('#item_name').val() == "") {
@@ -347,7 +348,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/add_request.php",
                 method: "POST",
-                data: $(this).serialize(),
+                data: formdata,
                 dataType: "json",
                 contentType: false,
                 cache: false,
