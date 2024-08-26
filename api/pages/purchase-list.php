@@ -140,7 +140,6 @@ var table = new Tabulator("#purchase-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/purchase_list_data.php",
-    ajaxLoaderLoading: 'Fetching data from Database..',
     columns: [{
             title: "Details",
             field: "",

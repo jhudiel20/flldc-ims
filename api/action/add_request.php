@@ -276,14 +276,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
 
     } catch (Exception $e) {
-        $conn->rollBack();
         $response['success'] = false;
         $response['title'] = 'Error';
         $response['message'] = 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
         echo json_encode($response);
         exit();
     } catch (PDOException $e) {
-        $conn->rollBack();
         $response['success'] = false;
         $response['title'] = 'Error';
         $response['message'] = 'Database error: ' . $e->getMessage();
