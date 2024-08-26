@@ -15,11 +15,11 @@ use PHPMailer\PHPMailer\Exception;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Get POST data and sanitize inputs
-    $ITEM_NAME = isset($_POST['item_name']) ? trim(filter_var($_POST['item_name'], FILTER_SANITIZE_STRING)) : '';
-    $QUANTITY = isset($_POST['quantity']) ? trim(filter_var($_POST['quantity'], FILTER_VALIDATE_INT)) : '';
-    $REMARKS = isset($_POST['remarks']) ? trim(filter_var($_POST['remarks'], FILTER_SANITIZE_STRING)) : '';
-    $PURPOSE = isset($_POST['purpose']) ? trim(filter_var($_POST['purpose'], FILTER_SANITIZE_STRING)) : '';
-    $DESCRIPTION = isset($_POST['description']) ? trim(filter_var($_POST['description'], FILTER_SANITIZE_STRING)) : '';
+    $ITEM_NAME = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
+    $QUANTITY = isset($_POST['quantity']) ? trim($_POST['quantity']) : '';
+    $REMARKS = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
+    $PURPOSE = isset($_POST['purpose']) ? trim($_POST['purpose']) : '';
+    $DESCRIPTION = isset($_POST['description']) ? trim($_POST['description']) : '';
     $DATE_NEEDED = isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
 
     // Sanitize item name

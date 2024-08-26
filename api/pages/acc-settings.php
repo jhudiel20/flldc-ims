@@ -583,11 +583,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
 
-            $('#photo_delete').on('click', function() {
-                var formdata = new FormData(delete_photo);
+            $('#delete_photo_form').on('submit', function(e) {
+                var formdata = new FormData(document.getElementById('delete_photo_form'));
+                e.preventDefault();  
 
                 $.ajax({
-                    url:"../action/delete_user_photo.php",
+                    url:"/delete_user_photo.php",
                     method: "POST",
                     data: formdata,
                     dataType: "json",
@@ -667,7 +668,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
-                <form method="post" id="delete_photo" class="nav-link ">
+                <form method="post" id="delete_photo_form" class="nav-link ">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button name="" type="button" id="photo_delete" class="btn btn-label-danger">Delete</button>
                     <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
