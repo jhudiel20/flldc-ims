@@ -15,10 +15,6 @@
     },
     "routes": [
       {
-        "src": "/(.*)",
-        "dest": "/api/$1.php"
-      },
-      {
         "src": "/ITEM_PHOTO/(.*)",
         "dest": "/public/ITEM_PHOTO/$1"
       },      
@@ -39,7 +35,7 @@
         "dest": "/public/assets/img/LOGO.png"
       },
       {
-        "src": "/acc-settings.php",
+        "src": "/acc-settings",
         "dest": "/api/pages/acc-settings.php"
       },
       {
@@ -67,27 +63,27 @@
         "dest": "/api/action/userlogin.php"
       },
       {
-        "src": "/Actions.php",
+        "src": "/Actions",
         "dest": "/api/action/Actions.php"
       },
       {
-        "src": "/dashboard-lnd.php",
+        "src": "/dashboard-lnd",
         "dest": "/api/pages/dashboard-lnd.php"
       },
       {
-        "src": "/dashboard-eval.php",
+        "src": "/dashboard-eval",
         "dest": "/api/pages/dashboard-eval.php"
       },
       {
-        "src": "/dashboard-lms.php",
+        "src": "/dashboard-lms",
         "dest": "/api/pages/dashboard-lms.php"
       },
       {
-        "src": "/dashboard-mrs.php",
+        "src": "/dashboard-mrs",
         "dest": "/api/pages/dashboard-mrs.php"
       },
       {
-        "src": "/rca-list.php",
+        "src": "/rca-list",
         "dest": "/api/pages/rca-list.php"
       },
       {
@@ -95,11 +91,11 @@
         "dest": "/api/ajax_data/rca_list_data.php"
       },
       {
-        "src": "/rca-details.php",
+        "src": "/rca-details",
         "dest": "/api/pages/rca-details.php"
       },
       {
-        "src": "/request-list.php",
+        "src": "/request-list",
         "dest": "/api/pages/request-list.php"
       },
       {
@@ -111,11 +107,11 @@
         "dest": "/api/action/add_request.php"
       },
       {
-        "src": "/request-details.php",
+        "src": "/request-details",
         "dest": "/api/pages/request-details.php"
       },
       {
-        "src": "/purchase-list.php",
+        "src": "/purchase-list",
         "dest": "/api/pages/purchase-list.php"
       },
       {
@@ -123,11 +119,11 @@
         "dest": "/api/ajax_data/purchase_list_data.php"
       },
       {
-        "src": "/purchase-details.php",
+        "src": "/purchase-details",
         "dest": "/api/pages/purchase-details.php"
       },
       {
-        "src": "/logs.php",
+        "src": "/logs",
         "dest": "/api/pages/logs.php"
       },
       {
@@ -135,7 +131,7 @@
         "dest": "/api/ajax_data/logs_data.php"
       },
       {
-        "src": "/user_list.php",
+        "src": "/user_list",
         "dest": "/api/pages/user_list.php"
       },
       {
@@ -164,7 +160,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/api/index.php"
+        "dest": "/api/index"
       }
     ]
   }
