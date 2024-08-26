@@ -19,7 +19,7 @@ $checkpassword = set_password($password);
     if (empty($user_id) || !is_numeric($user_id)) {
         $response['success'] = false;
         $response['title'] = "Error!";
-        $response['message'] = 'Invalid user ID!';
+        $response['message'] = 'Invalid user ID!'.$user_id;
         echo json_encode($response);
         exit();
     }
