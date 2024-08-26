@@ -55,14 +55,14 @@ if (isset($_POST['photo_to_delete']) && isset($_POST['ID'])) {
         // Update database and log the action if successful
         if ($httpCode == 200) {
             $user_id = $decrypted_array['ID'];
-            $sql = "UPDATE user_account SET image = NULL WHERE id = :user_id";
+            $sql = "UPDATE user_account SET image = '' WHERE id = :user_id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':user_id', $user_id);
             $stmt->execute();
 
             $action = "Deleted picture for User ID: " . $id;
             $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-            $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $logs->bindParam(':action', $action, PDO::PARAM_STR);
             $logs->execute();
 

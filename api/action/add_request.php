@@ -238,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare and execute INSERT statement for purchase_order
         $sql = $conn->prepare("INSERT INTO purchase_order (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $sql->execute([$generate_REQUEST_ID, $ITEM_NAME, $QUANTITY, $REMARKS, $EMAIL, $PURPOSE, $DATE_NEEDED, $DESCRIPTION, $img_url]);
+        $sql->execute([$generate_REQUEST_ID, $ITEM_NAME, $QUANTITY, $REMARKS, $EMAIL, $PURPOSE, $DATE_NEEDED, $DESCRIPTION, $img ]);
 
         // Prepare and execute INSERT statement for po_history
         $history_title = "Request Created";
@@ -252,9 +252,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Log the action
         $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
-        $user_id = $_COOKIE['ID'];
+        $user_id = $decrypted_array['ID'];
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $logs->bindParam(':action', $action, PDO::PARAM_STR);
         $logs->execute();
 

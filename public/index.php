@@ -280,7 +280,7 @@ include 'config/config.php';
                                     text: response.message,
                                 })
                                 .then(function() {
-                                    window.location.href = '/dashboard-lnd.php';
+                                    window.location.href = '/dashboard-lnd';
                                 });
                         } else {
                             Toast.fire({
