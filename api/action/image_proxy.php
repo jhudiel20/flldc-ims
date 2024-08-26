@@ -6,14 +6,8 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-// Check if the user is authenticated
-// if (!isUserAuthenticated()) {
-//     header('HTTP/1.0 403 Forbidden');
-//     exit('Unauthorized');
-// }
-
 // Get the image file name from the query parameter
-$fileName = $_GET['file'] ?? '/user_image/user.png'; // Fallback to a default image if no file specified
+$fileName = $_GET['file'] ?? 'user.png'; // Fallback to a default image if no file specified
 
 // Ensure the file name is sanitized
 $fileName = basename($fileName);
@@ -33,7 +27,7 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 $data = json_decode($response, true);
-$imageUrl = $data['download_url'] ?? '/user_image/default.png';
+$imageUrl = $data['download_url'] ?? 'user.png';
 
 // Fetch the image content
 $imageContent = file_get_contents($imageUrl);
