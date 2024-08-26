@@ -107,14 +107,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
+                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['image']; ?>"  style="height:220px;" />
 
-                                                <!-- Item Image -->
-                                                <embed type="image/jpg" src="/ITEM_PHOTO/<?php if (empty($row['item_photo'])) {
-                                                                                    $row['item_photo'] = 'default.png';
-                                                                                    echo $row['item_photo'];
-                                                                                } else {
-                                                                                    echo $row['item_photo'];
-                                                                                    } ?>" style="height:220px;">
                                                 <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
                                                     <form class="row g-3" method="post" id="upload_item_photo_form"
