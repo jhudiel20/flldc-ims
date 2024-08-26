@@ -15,18 +15,28 @@ $newpassword = isset($_POST['newpassword']) ? trim($_POST['newpassword']) : '';
 $currentpassword = set_password($currentpassword);
 $checkpassword = set_password($password);
 
-$db_password = $conn->prepare("SELECT password FROM user_account WHERE ID = '$user_id' ");
-$db_password->execute();
-$row_password = $db_password->fetch(PDO::FETCH_ASSOC);
+    // Validate user_id
+    if (empty($user_id) || !is_numeric($user_id)) {
+        $response['success'] = false;
+        $response['title'] = "Error!";
+        $response['message'] = 'Invalid user ID!';
+        echo json_encode($response);
+        exit();
+    }
 
-if($row_password['password'] !== $currentpassword){
+    $db_pass = $conn->prepare("SELECT username FROM user_account WHERE ID = :user_id");
+    $db_pass->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $db_pass->execute();
+    $row_pass = $db_pass->fetch(PDO::FETCH_ASSOC);
+
+if($row_pass['password'] !== $currentpassword){
     $response['success'] = false;
     $response['title'] = "Error!";
     $response['message'] = 'Current password doesnt match to your existing password!';
         echo json_encode($response);
         exit();
 }
-if($row_password['password'] === $checkpassword){
+if($row_pass['password'] === $checkpassword){
     $response['success'] = false;
     $response['title'] = "Error!";
     $response['message'] = 'Please enter new password!';
