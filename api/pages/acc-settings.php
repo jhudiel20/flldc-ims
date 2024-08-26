@@ -274,7 +274,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 <h5 class="card-header">Change Username</h5>
                                                 <div class="card-body">
                                                     <form  method="post" id="change_username_form">
-                                                        <input type="hidden" name="id" id="id" value="<?php echo $user_id ?>">
+                                                        <input type="text" name="id" id="id" value="<?php echo $user_id ?>">
                                                         <div class="row">
                                                         <div class="mb-3 col-md-6 form-password-toggle">
                                                             <label class="form-label" for="newPassword">Current Username</label>
@@ -465,11 +465,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 });
 
                 $('#user_password_form').on('submit', function(e) {
+                    var formdata = new FormData(document.getElementById('user_password_form'));
                     e.preventDefault();  
                     $.ajax({
                         url: "/user_change_pass.php",
                         method: "POST",
-                        data: $(this).serialize(),
+                        data: formdata,
                         dataType: "json",
                         contentType: false,
                         cache: false,
@@ -503,12 +504,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
                 $('#change_username_form').on('submit', function(e) {
+                    var formdata = new FormData(document.getElementById('change_username_form'));
                     e.preventDefault();  
 
                     $.ajax({
                         url: "/user_change_username.php",
                         method: "POST",
-                        data: $(this).serialize(),
+                        data: formdata,
                         dataType: "json",
                         contentType: false,
                         cache: false,
