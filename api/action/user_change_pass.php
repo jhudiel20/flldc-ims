@@ -24,7 +24,7 @@ $checkpassword = set_password($password);
         exit();
     }
 
-    $db_pass = $conn->prepare("SELECT username FROM user_account WHERE ID = :user_id");
+    $db_pass = $conn->prepare("SELECT password FROM user_account WHERE ID = :user_id");
     $db_pass->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $db_pass->execute();
     $row_pass = $db_pass->fetch(PDO::FETCH_ASSOC);

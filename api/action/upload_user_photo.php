@@ -15,6 +15,7 @@ $repo = 'flldc-user-image';
 
 // Check if file is uploaded
 if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    $id = $_POST['ID'];
     $file = $_FILES['image'];
     $filePath = $file['tmp_name'];
     $fileName = $file['name'];
@@ -43,15 +44,14 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
     $response = curl_exec($ch);
-
-    $sql = "UPDATE user_account SET image = :img WHERE id = :id";
+    $user_id = $decrypted_array['ID'];
+    $sql = "UPDATE user_account SET image = :img WHERE id = :user_id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':img', $fileName);
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
 
     $action = "Updated picture in User : " . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'];
-    $user_id = $decrypted_array['ID'];
     $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
     $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $logs->bindParam(':action', $action, PDO::PARAM_STR);

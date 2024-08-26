@@ -434,11 +434,14 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <img type="image/jpg" src="/user_image/<?php if(empty($decrypted_array['IMAGE'])){ 
-                                    $decrypted_array['IMAGE'] = 'user.png'; echo $decrypted_array['IMAGE']; 
-                                    }else{ 
-                                    echo $decrypted_array['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
-                                    
+
+                        <?php $user_id = $decrypted_array['ID'];
+                            $profile = $conn->prepare("SELECT * FROM user_account WHERE ID = :user_id");
+                            $profile->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                            $profile->execute();
+                            $profile_user = $profile->fetch(PDO::FETCH_ASSOC);   ?>
+
+                        <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/<?php echo empty($profile_user['image']) ? 'user.png' : $profile_user['image']; ?>"  alt class="w-px-40 h-auto rounded-circle" />
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -447,10 +450,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                            <img type="image/jpg" src="../user_image/<?php if(empty($decrypted_array['IMAGE'])){ 
-                                                $decrypted_array['IMAGE'] = 'user.png'; echo $decrypted_array['IMAGE']; 
-                                                }else{ 
-                                                echo $decrypted_array['IMAGE'];}?>" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/<?php echo empty($profile_user['image']) ? 'user.png' : $profile_user['image']; ?>"  alt class="w-px-40 h-auto rounded-circle" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">

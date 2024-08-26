@@ -274,7 +274,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                 <h5 class="card-header">Change Username</h5>
                                                 <div class="card-body">
                                                     <form  method="post" id="change_username_form">
-                                                        <input type="text" name="id" id="id" value="<?php echo $user_id ?>">
+                                                        <input type="hidden" name="id" id="id" value="<?php echo $user_id ?>">
                                                         <div class="row">
                                                         <div class="mb-3 col-md-6 form-password-toggle">
                                                             <label class="form-label" for="newPassword">Current Username</label>
