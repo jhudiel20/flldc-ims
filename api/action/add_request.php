@@ -110,10 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':item_photo', $fileName, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':item_photo', $fileName, PDO::PARAM_STR);
 
         // Execute the prepared statement
         $sql_purchase_order->execute();
+
+        $sql = "UPDATE purchase_order SET item_photo = :img WHERE request_id = :request_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':img', $fileName);
+        $stmt->bindParam(':request_id', $generate_REQUEST_ID);
+        $stmt->execute();
 
         // Prepare and execute INSERT statement for po_history
         $history_title = "Request Created";
