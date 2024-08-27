@@ -55,7 +55,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $EMAIL = $current_access;
         }
     }
+    $githubToken = getenv('GITHUB_TOKEN');
     if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
+        $owner = 'jhudiel20'; // GitHub username or organization
+        $repo = 'flldc-user-image';
+
+        $img = $_FILES['item_photo'];
+        $img_temp_loc = $_FILES['item_photo']['tmp_name'];
+        $fileName = $img['name'];
+        $fileContent = file_get_contents($img_temp_loc);
+
+        // Encode the content to base64
+        $base64Content = base64_encode($fileContent);
+
+        // Prepare the API request
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/requested-items/' . urlencode($fileName);
+        $data = json_encode([
+            'message' => 'Upload image: ' . $fileName,
+            'content' => $base64Content,
+        ]);
+
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: token ' . $githubToken,
+                'User-Agent: PHP Script',
+                'Content-Type: application/json'
+            ]);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($ch);
         // File validation
         $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
         if ($_FILES['item_photo']['name'] == '') {
@@ -65,39 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        if (!empty($_FILES['item_photo']['name']) && in_array($_FILES['item_photo']['type'], $fileMimes)) {
-            $img = $_FILES['item_photo']['name'];
-            $img_temp_loc = $_FILES['item_photo']['tmp_name'];
-            $githubToken = getenv('GITHUB_TOKEN');
-
-            // Read the file content
-            $fileContent = file_get_contents($img_temp_loc);
-            if ($fileContent === false) {
-                $response['message'] = 'Failed to read file content.';
-                echo json_encode($response);
-                exit();
-            }
-
-            // Prepare the data for GitHub API
-            $data = json_encode([
-                'message' => 'Upload image: ' . $img,
-                'content' => base64_encode($fileContent)
-            ]);
-
-            // Define the GitHub API URL
-            $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' .  urlencode($img);
-
-            // Initialize cURL
-            $ch = curl_init($githubApiUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: token ' . $githubToken,
-                'User-Agent: PHP Script',
-                'Content-Type: application/json'
-            ]);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            $response = curl_exec($ch);
+        if (in_array($_FILES['item_photo']['type'], $fileMimes)) {
 
             if (curl_errno($ch)) {
                 $response['message'] = 'cURL Error: ' . curl_error($ch);
@@ -108,14 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             curl_close($ch);
 
-            $responseData = json_decode($response, true);
-            if (isset($responseData['content']['download_url'])) {
-                $img_url = $responseData['content']['download_url'];
-            } else {
-                $response['message'] = 'Failed to upload image to GitHub.';
-                echo json_encode($response);
-                exit();
-            }
         } else {
             $response['message'] = 'Invalid file type.';
             echo json_encode($response);
@@ -138,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':item_photo', $img, PDO::PARAM_STR);
+        $sql_purchase_order->bindParam(':item_photo', $fileName, PDO::PARAM_STR);
 
         // Execute the prepared statement
         $sql_purchase_order->execute();
