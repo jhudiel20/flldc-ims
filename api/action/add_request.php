@@ -56,17 +56,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     $githubToken = getenv('GITHUB_TOKEN');
-    if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
+    if (!isset($_FILES['item_photo']) || $_FILES['item_photo']['error'] != UPLOAD_ERR_OK) {
+        $response['title'] = 'Error';
+        $response['message'] = 'File upload failed.';
+        echo json_encode($response);
+        exit();
+    }
+    
         $owner = 'jhudiel20'; // GitHub username or organization
         $repo = 'flldc-user-image';
 
         $img = $_FILES['item_photo'];
         $img_temp_loc = $_FILES['item_photo']['tmp_name'];
         $fileName = $img['name'];
-        $fileContent = file_get_contents($img_temp_loc);
 
-        // Encode the content to base64
-        $base64Content = base64_encode($fileContent);
+        $fileContent = file_get_contents($img_temp_loc);
+    if ($fileContent === false) {
+        $response['title'] = 'Error';
+        $response['message'] = 'Failed to read the uploaded file.';
+        echo json_encode($response);
+        exit();
+    }
+
 
         // Prepare the API request
         $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/requested-items/' . $fileName;
@@ -75,17 +86,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'content' => $base64Content,
         ]);
 
+        $base64Content = base64_encode($fileContent);
+        if ($base64Content === false) {
+            $response['title'] = 'Error';
+            $response['message'] = 'Failed to encode the file content.';
+            echo json_encode($response);
+            exit();
+        }
+        
+
+
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: token ' . $githubToken,
-                'User-Agent: PHP Script',
-                'Content-Type: application/json'
-            ]);
+            'Authorization: token ' . $githubToken,
+            'User-Agent: PHP script access',
+            'Content-Type: application/json'
+        ]);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            $response = curl_exec($ch);
-        // File validation
+        
+        $response = curl_exec($ch);
+        if ($response === false) {
+            $response['title'] = 'Error';
+            $response['message'] = 'Failed to upload the file to GitHub: ' . curl_error($ch);
+            echo json_encode($response);
+            exit();
+        }
+        
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
+            $response['title'] = 'Error';
+            $response['message'] = 'GitHub API returned an error: ' . $response;
+            echo json_encode($response);
+            exit();
+        }
+        curl_close($ch);
+        
         if ($_FILES['item_photo']['name'] == '') {
             $response['message'] = 'Please select a photo';
             $response['title'] = 'Warning!';
