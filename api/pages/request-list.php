@@ -348,7 +348,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/add_request.php",
                 method: "POST",
-                data: formdata,
+                data: $(this).serialize(),
                 dataType: "json",
                 contentType: false,
                 cache: false,
