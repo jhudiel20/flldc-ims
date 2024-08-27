@@ -233,56 +233,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Prepare the INSERT statement for purchase_order
-        $sql_purchase_order = $conn->prepare("
-            INSERT INTO purchase_order 
-            (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
-            VALUES 
-            (:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :item_photo)
-        ");
+        // $sql_purchase_order = $conn->prepare("
+        //     INSERT INTO purchase_order 
+        //     (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
+        //     VALUES 
+        //     (:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :item_photo)
+        // ");
 
-        // Bind the parameters to the prepared statement
-        $sql_purchase_order->bindParam(':request_id', $generate_REQUEST_ID, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':email', $EMAIL, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':item_photo', $img, PDO::PARAM_STR);
+        // // Bind the parameters to the prepared statement
+        // $sql_purchase_order->bindParam(':request_id', $generate_REQUEST_ID, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':email', $EMAIL, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':item_photo', $img, PDO::PARAM_STR);
 
-        // Execute the prepared statement
-        $sql_purchase_order->execute();
+        // // Execute the prepared statement
+        // $sql_purchase_order->execute();
 
-        // Prepare and execute INSERT statement for po_history
-        $history_title = "Request Created";
-        $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
-        "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
-        "\n" . "Description : " . $DESCRIPTION;
+        // // Prepare and execute INSERT statement for po_history
+        // $history_title = "Request Created";
+        // $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
+        // "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
+        // "\n" . "Description : " . $DESCRIPTION;
 
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
-        VALUES (?, ?, ?)");
-        $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
+        // $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
+        // VALUES (?, ?, ?)");
+        // $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
 
-        // Log the action
-        $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
-        $user_id = $decrypted_array['ID'];
+        // // Log the action
+        // $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
+        // $user_id = $decrypted_array['ID'];
 
-        if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
-            $user_id = (int)$decrypted_array['ID'];
-        } else {
-            // Handle the case where ID is missing or invalid
-            $response['success'] = false;
-            $response['message'] = 'Invalid user ID.';
-            echo json_encode($response);
-            exit();
-        }
+        // if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
+        //     $user_id = (int)$decrypted_array['ID'];
+        // } else {
+        //     // Handle the case where ID is missing or invalid
+        //     $response['success'] = false;
+        //     $response['message'] = 'Invalid user ID.';
+        //     echo json_encode($response);
+        //     exit();
+        // }
 
 
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-        $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $logs->bindParam(':action', $action, PDO::PARAM_STR);
-        $logs->execute();
+        // $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        // $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        // $logs->bindParam(':action', $action, PDO::PARAM_STR);
+        // $logs->execute();
 
         $response['success'] = true;
         $response['title'] = 'Success';
