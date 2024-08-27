@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $PURPOSE = isset($_POST['purpose']) ? trim($_POST['purpose']) : '';
     $DESCRIPTION = isset($_POST['description']) ? trim($_POST['description']) : '';
     $DATE_NEEDED = isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
-
     // Sanitize item name
     $ITEM_NAME = str_replace("'", "", $ITEM_NAME);
 
@@ -37,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if email is provided for admins
     if ($decrypted_array['ACCESS'] == 'ADMIN') {
-        $EMAIL = isset($_POST['email']) ? trim($_POST['email']) : '';
+        
         if ($EMAIL == '') {
             $response['message'] = 'Please enter the email of requestor!';
             echo json_encode($response);
@@ -46,71 +45,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $EMAIL = $decrypted_array['EMAIL'];
     }
-
-    // File validation
-    $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
-    if ($_FILES['item_photo']['name'] == '') {
-        $response['message'] = 'Please select a photo';
-        $response['title'] = 'Warning!';
-        echo json_encode($response);
-        exit();
-    }
-
-    if (!empty($_FILES['item_photo']['name']) && in_array($_FILES['item_photo']['type'], $fileMimes)) {
-        $img = $_FILES['item_photo']['name'];
-        $img_temp_loc = $_FILES['item_photo']['tmp_name'];
-        $githubToken = getenv('GITHUB_TOKEN');
-
-        // Read the file content
-        $fileContent = file_get_contents($img_temp_loc);
-        if ($fileContent === false) {
-            $response['message'] = 'Failed to read file content.';
+    if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
+        // File validation
+        $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
+        if ($_FILES['item_photo']['name'] == '') {
+            $response['message'] = 'Please select a photo';
+            $response['title'] = 'Warning!';
             echo json_encode($response);
             exit();
         }
 
-        // Prepare the data for GitHub API
-        $data = json_encode([
-            'message' => 'Upload image: ' . $img,
-            'content' => base64_encode($fileContent)
-        ]);
+        if (!empty($_FILES['item_photo']['name']) && in_array($_FILES['item_photo']['type'], $fileMimes)) {
+            $img = $_FILES['item_photo']['name'];
+            $img_temp_loc = $_FILES['item_photo']['tmp_name'];
+            $githubToken = getenv('GITHUB_TOKEN');
 
-        // Define the GitHub API URL
-        $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' .  urlencode($img);
+            // Read the file content
+            $fileContent = file_get_contents($img_temp_loc);
+            if ($fileContent === false) {
+                $response['message'] = 'Failed to read file content.';
+                echo json_encode($response);
+                exit();
+            }
 
-        // Initialize cURL
-        $ch = curl_init($githubApiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: token ' . $githubToken,
-            'User-Agent: PHP Script',
-            'Content-Type: application/json'
-        ]);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($ch);
+            // Prepare the data for GitHub API
+            $data = json_encode([
+                'message' => 'Upload image: ' . $img,
+                'content' => base64_encode($fileContent)
+            ]);
 
-        if (curl_errno($ch)) {
-            $response['message'] = 'cURL Error: ' . curl_error($ch);
-            echo json_encode($response);
+            // Define the GitHub API URL
+            $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' .  urlencode($img);
+
+            // Initialize cURL
+            $ch = curl_init($githubApiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: token ' . $githubToken,
+                'User-Agent: PHP Script',
+                'Content-Type: application/json'
+            ]);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                $response['message'] = 'cURL Error: ' . curl_error($ch);
+                echo json_encode($response);
+                curl_close($ch);
+                exit();
+            }
+            
             curl_close($ch);
-            exit();
-        }
-        
-        curl_close($ch);
 
-        $responseData = json_decode($response, true);
-        if (isset($responseData['content']['download_url'])) {
-            $img_url = $responseData['content']['download_url'];
+            $responseData = json_decode($response, true);
+            if (isset($responseData['content']['download_url'])) {
+                $img_url = $responseData['content']['download_url'];
+            } else {
+                $response['message'] = 'Failed to upload image to GitHub.';
+                echo json_encode($response);
+                exit();
+            }
         } else {
-            $response['message'] = 'Failed to upload image to GitHub.';
+            $response['message'] = 'Invalid file type.';
             echo json_encode($response);
             exit();
         }
     } else {
-        $response['message'] = 'Invalid file type.';
-        echo json_encode($response);
-        exit();
+        // Handle the case where no file is uploaded or an error occurred
+        $errorMessage = $_FILES['item_photo']['error'] ?? 'No file uploaded';
+        echo json_encode([
+            'success' => false,
+            'title' => 'Upload Error',
+            'message' => 'File upload failed. Error Code: ' . $errorMessage,
+    ]);
     }
 
     // Internet connection validation
