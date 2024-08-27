@@ -35,15 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if email is provided for admins
-    if ($decrypted_array['ACCESS'] == 'ADMIN') {
-        
+    if ($decrypted_array['ACCESS'] === 'ADMIN') {
+        $EMAIL = isset($_POST['email']) ? trim($_POST['email']) : '';
         if ($EMAIL == '') {
             $response['message'] = 'Please enter the email of requestor!';
             echo json_encode($response);
             exit();
         }
     } else {
-        $EMAIL = $decrypted_array['EMAIL'];
+        if ($EMAIL == '') {
+            $response['message'] = 'Please enter the email of requestor!';
+            echo json_encode($response);
+            exit();
+        }else{
+            $EMAIL = $decrypted_array['EMAIL'];
+        }
     }
     if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
         // File validation
