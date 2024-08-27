@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
             INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
-            VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :item_photo)
+            VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description)
         ");
 
         // Bind the parameters to the prepared statement
