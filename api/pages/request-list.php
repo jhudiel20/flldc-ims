@@ -351,6 +351,7 @@ $(document).ready(function() {
                 data: formData,
                 dataType: "json",
                 contentType: false,   // Important: prevents jQuery from setting the content type header
+                cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
                 beforeSend: function() {
                     $('#add_request').hide();

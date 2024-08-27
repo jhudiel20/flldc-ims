@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3" method="post" id="add_request_form">
+                <form class="row g-3" method="POST" id="add_request_form" enctype="multipart/form-data">
 
                     <div class="tab-pane fade show active" id="USER" role="tabpanel">
                         <div class="row">
@@ -51,7 +51,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Item Actual Photo<span
                                         class="require asterisk">*</span></label>
-                                <input type="file" class="form-control" name="item_photo" id="item_photo" />
+                                <input type="file" class="form-control" name="item_photo" id="item_photo">
                             </div>
                         </div>
                     </div>
