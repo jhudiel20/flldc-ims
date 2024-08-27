@@ -350,9 +350,6 @@ $(document).ready(function() {
                 method: "POST",
                 data: $(this).serialize(),
                 dataType: "json",
-                contentType: false,
-                cache: false,
-                processData: false,
                 beforeSend: function() {
                     $('#add_request').hide();
                     $('#request_icon').removeClass('d-none').prop('disabled', true);
