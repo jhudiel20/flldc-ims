@@ -35,9 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode($response);
         exit();
     }
+    $current_access = $decrypted_array['ACCESS'];
 
     // Check if email is provided for admins
-    if ($decrypted_array['ACCESS'] === 'ADMIN') {
+    if ($current_access === 'ADMIN') {
         if ($EMAIL == '') {
             $response['title'] = 'Warning!';
             $response['message'] = 'Please enter the email of requestor!';
@@ -51,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
             exit();
         }else{
-            $EMAIL = $decrypted_array['EMAIL'];
+            $EMAIL = $current_access;
         }
     }
     if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
