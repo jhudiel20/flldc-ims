@@ -350,6 +350,8 @@ $(document).ready(function() {
                 method: "POST",
                 data: formData,
                 dataType: "json",
+                contentType: false,   // Important: prevents jQuery from setting the content type header
+                processData: false,   // Important: prevents jQuery from processing the FormD
                 beforeSend: function() {
                     $('#add_request').hide();
                     $('#request_icon').removeClass('d-none').prop('disabled', true);
