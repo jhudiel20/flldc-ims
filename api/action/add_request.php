@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-    } 
+    
 
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
