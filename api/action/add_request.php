@@ -86,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             $response = curl_exec($ch);
         // File validation
-        $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
         if ($_FILES['item_photo']['name'] == '') {
             $response['message'] = 'Please select a photo';
             $response['title'] = 'Warning!';
@@ -94,22 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        if (in_array($_FILES['item_photo']['type'], $fileMimes)) {
-
-            if (curl_errno($ch)) {
-                $response['message'] = 'cURL Error: ' . curl_error($ch);
-                echo json_encode($response);
-                curl_close($ch);
-                exit();
-            }
-            
-            curl_close($ch);
-
-        } else {
-            $response['message'] = 'Invalid file type.';
-            echo json_encode($response);
-            exit();
-        }
     } 
 
         // Prepare the INSERT statement for purchase_order
