@@ -34,120 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'Please fill up all fields with (*) asterisk!'.$decrypted_array['ACCESS'].' + '.$decrypted_array['ID']. ' + ' .$decrypted_array['EMAIL'];
         echo json_encode($response);
         exit();
-    }
-    $current_access = $decrypted_array['ACCESS'];
-
-    // Check if email is provided for admins
-    if ($current_access === 'ADMIN') {
-        if ($EMAIL == '') {
-            $response['title'] = 'Warning!';
-            $response['message'] = 'Please enter the email of requestor!';
-            echo json_encode($response);
-            exit();
-        }
-    } else {
-        if ($EMAIL == '') {
-            $response['title'] = 'Warning!';
-            $response['message'] = 'Please enter the email of requestor!';
-            echo json_encode($response);
-            exit();
-        }else{
-            $EMAIL = $current_access;
-        }
-    }
-    if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
-        // File validation
-        $fileMimes = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf');
-        if ($_FILES['item_photo']['name'] == '') {
-            $response['message'] = 'Please select a photo';
-            $response['title'] = 'Warning!';
-            echo json_encode($response);
-            exit();
-        }
-
-        if (!empty($_FILES['item_photo']['name']) && in_array($_FILES['item_photo']['type'], $fileMimes)) {
-            $img = $_FILES['item_photo']['name'];
-            $img_temp_loc = $_FILES['item_photo']['tmp_name'];
-            $githubToken = getenv('GITHUB_TOKEN');
-
-            // Read the file content
-            $fileContent = file_get_contents($img_temp_loc);
-            if ($fileContent === false) {
-                $response['message'] = 'Failed to read file content.';
-                echo json_encode($response);
-                exit();
-            }
-
-            // Prepare the data for GitHub API
-            $data = json_encode([
-                'message' => 'Upload image: ' . $img,
-                'content' => base64_encode($fileContent)
-            ]);
-
-            // Define the GitHub API URL
-            $githubApiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' .  urlencode($img);
-
-            // Initialize cURL
-            $ch = curl_init($githubApiUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: token ' . $githubToken,
-                'User-Agent: PHP Script',
-                'Content-Type: application/json'
-            ]);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            $response = curl_exec($ch);
-
-            if (curl_errno($ch)) {
-                $response['message'] = 'cURL Error: ' . curl_error($ch);
-                echo json_encode($response);
-                curl_close($ch);
-                exit();
-            }
-            
-            curl_close($ch);
-
-            $responseData = json_decode($response, true);
-            if (isset($responseData['content']['download_url'])) {
-                $img_url = $responseData['content']['download_url'];
-            } else {
-                $response['message'] = 'Failed to upload image to GitHub.';
-                echo json_encode($response);
-                exit();
-            }
-        } else {
-            $response['message'] = 'Invalid file type.';
-            echo json_encode($response);
-            exit();
-        }
-    } 
-
-    // Internet connection validation
-    if (!$sock = @fsockopen('www.google.com', 80)) {
-        $response['success'] = false;
-        $response['title'] = 'Error';
-        $response['message'] = 'Please Check Internet Connection!';
-        echo json_encode($response);
-        exit();
-    }
-
-    // Mailer setup
-    require __DIR__ . '/../../public/mail/Exception.php';
-    require __DIR__ . '/../../public/mail/PHPMailer.php';
-    require __DIR__ . '/../../public/mail/SMTP.php';
-
-    $mail = new PHPMailer(true);
-
-
-      
+    }      
 
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
-            INSERT INTO purchase_order 
-            (REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
-            VALUES 
-            (:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :item_photo)
+            INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
+            VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :item_photo)
         ");
 
         // Bind the parameters to the prepared statement
@@ -159,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
         $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
-        $sql_purchase_order->bindParam(':item_photo', $img, PDO::PARAM_STR);
+        // $sql_purchase_order->bindParam(':item_photo', $img, PDO::PARAM_STR);
 
         // Execute the prepared statement
         $sql_purchase_order->execute();

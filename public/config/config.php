@@ -438,16 +438,16 @@ function generate_REQUEST_ID($length = 10) {
   return $generate_REQUEST_ID;
 }
 
-function generate_TOKEN($length = 15) {
-  // Characters to be used in the ID
-  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+// function generate_TOKEN($length = 15) {
+//   // Characters to be used in the ID
+//   $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  // Generate a random string of the specified length
-  $randomString = substr(str_shuffle($characters), 0, $length);
+//   // Generate a random string of the specified length
+//   $randomString = substr(str_shuffle($characters), 0, $length);
 
-  $generate_REQUEST_ID = $randomString;
-  return $generate_TOKEN;
-}
+//   $generate_REQUEST_ID = $randomString;
+//   return $generate_TOKEN;
+// }
 
 function generate_RCA_ID($length = 10) {
   // Characters to be used in the ID
