@@ -30,14 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate required fields
     if ($ITEM_NAME == '' || $QUANTITY == '' || $DATE_NEEDED == '') {
-        $response['message'] = 'Please fill up all fields with (*) asterisk!'.$decrypted_array['ACCESS'].' + '.$decrypted_array['ID'];
+        $response['message'] = 'Please fill up all fields with (*) asterisk!'.$decrypted_array['ACCESS'].' + '.$decrypted_array['ID']. ' + ' .$decrypted_array['EMAIL'];
         echo json_encode($response);
         exit();
     }
 
     // Check if email is provided for admins
     if ($decrypted_array['ACCESS'] == 'ADMIN') {
-        $EMAIL = isset($_POST['email']) ? trim(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) : '';
+        $EMAIL = isset($_POST['email']) ? trim($_POST['email']) : '';
         if ($EMAIL == '') {
             $response['message'] = 'Please enter the email of requestor!';
             echo json_encode($response);
