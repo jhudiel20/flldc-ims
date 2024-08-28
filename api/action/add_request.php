@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
         $base64Content = base64_encode($fileContent);
+        $fileName = urlencode($img['name']); // URL-encode the file name
         // Prepare the API request
         $apiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $fileName;
         $data = json_encode([
