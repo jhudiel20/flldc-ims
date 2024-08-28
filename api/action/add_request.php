@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
+        $base64Content = base64_encode($fileContent);
         // Prepare the API request
         $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/requested-items/' . $fileName;
         $data = json_encode([
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'content' => $base64Content,
         ]);
 
-        $base64Content = base64_encode($fileContent);
+        
         if ($base64Content === false) {
             $response['title'] = 'Error';
             $response['message'] = 'Failed to encode the file content.';
