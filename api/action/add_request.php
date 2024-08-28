@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $repo = 'flldc-user-image';
 
         $img = $_FILES['item_photo'];
-        $img_temp_loc = $_FILES['item_photo']['tmp_name'];
+        $img_temp_loc = $img['tmp_name'];
         $fileName = $img['name'];
 
         $fileContent = file_get_contents($img_temp_loc);
