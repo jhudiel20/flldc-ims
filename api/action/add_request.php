@@ -100,17 +100,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-     // Check if the response is a valid JSON
-     $responseArray = json_decode($response, true);
-     if ($responseArray === null && json_last_error() !== JSON_ERROR_NONE) {
-         $response['title'] = 'Error';
-         $response['message'] = 'Invalid response from GitHub API: ' . $response;
-         echo json_encode($response);
-         exit();
-     }
+    // Debugging: Print the raw response
+    file_put_contents('debug_response.txt', $response);
 
-   // Check the HTTP code and handle accordingly
-   if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
+    // Check if the response is a valid JSON
+    $responseArray = json_decode($response, true);
+    if ($responseArray === null && json_last_error() !== JSON_ERROR_NONE) {
+        $response['title'] = 'Error';
+        $response['message'] = 'Invalid response from GitHub API: ' . $response;
+        echo json_encode($response);
+        exit();
+    }
+
+    // Check the HTTP code and handle accordingly
+    if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
         $errorMessage = $responseArray['message'] ?? 'Unknown error';
         $response['title'] = 'Error';
         $response['message'] = 'GitHub API returned an error: ' . $errorMessage;
