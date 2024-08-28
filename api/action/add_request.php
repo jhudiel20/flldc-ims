@@ -80,13 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $base64Content = base64_encode($fileContent);
         // Prepare the API request
-        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/requested-items/' . $fileName;
+        $apiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $fileName;
         $data = json_encode([
             'message' => 'Upload image: ' . $fileName,
             'content' => $base64Content,
         ]);
 
-        
         if ($base64Content === false) {
             $response['title'] = 'Error';
             $response['message'] = 'Failed to encode the file content.';
@@ -94,8 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
         
-
-
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -129,8 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
             exit();
         }
-
-    
 
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
