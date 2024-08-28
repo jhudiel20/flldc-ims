@@ -104,13 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         
-        $response = curl_exec($ch);
-        if ($response === false) {
-            $response['title'] = 'Error';
-            $response['message'] = 'Failed to upload the file to GitHub: ' . curl_error($ch);
-            echo json_encode($response);
-            exit();
-        }
         
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
