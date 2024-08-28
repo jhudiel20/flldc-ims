@@ -60,24 +60,6 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/js/config.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            iconColor: 'white',
-            customClass: {
-                popup: 'colored-toast',
-            },
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-    </script>
     <style>
         /* sweetalert2 colored toast */
             .colored-toast.swal2-icon-success {
@@ -259,6 +241,22 @@ include 'config/config.php';
     <script src="<?php echo BASE_URL; ?>assets/js/pages-auth.js"></script>
 
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            iconColor: 'white',
+            customClass: {
+                popup: 'colored-toast',
+            },
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
         $(document).ready(function() {
             $('#user_login_form').on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
