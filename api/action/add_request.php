@@ -57,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Check file upload
+    $githubToken = getenv('GITHUB_TOKEN');
+    
     if (!isset($_FILES['item_photo']) || $_FILES['item_photo']['error'] != UPLOAD_ERR_OK) {
         $response['title'] = 'Error';
         $response['message'] = 'File upload failed.';
@@ -65,13 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     
-    // GitHub API integration
-    $githubToken = getenv('GITHUB_TOKEN');
+    $owner = 'jhudiel20'; // GitHub username or organization
+    $repo = 'flldc-user-image';
+
     $img = $_FILES['item_photo'];
     $img_temp_loc = $img['tmp_name'];
-    $fileName = urlencode($img['name']); // URL-encode the file name
+    $fileName = $img['name'];
 
     $fileContent = file_get_contents($img_temp_loc);
+    
     if ($fileContent === false) {
         $response['title'] = 'Error';
         $response['message'] = 'Failed to read the uploaded file.';
@@ -80,6 +83,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $base64Content = base64_encode($fileContent);
+    $fileName = urlencode($img['name']); // URL-encode the file name
+    
+    // Prepare the API request
     $apiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $fileName;
     $data = json_encode([
         'message' => 'Upload image: ' . $fileName,
@@ -96,37 +102,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    $response = curl_exec($ch); // Execute the cURL request and get the response
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP status code
+    curl_close($ch); // Close the cURL session
 
-    // Debugging: Print the raw response
-    file_put_contents('debug_response.txt', $response);
+    // Print the raw response for debugging purposes
+    echo "Raw API Response: " . $response . "\n";
 
-    // Check if the response is a valid JSON
+    // Stop the script execution here to inspect the response
+    exit();
+
+    // Decode the response into an associative array
     $responseArray = json_decode($response, true);
+
+    // Check if the response is valid JSON
     if ($responseArray === null && json_last_error() !== JSON_ERROR_NONE) {
         $response['title'] = 'Error';
-        $response['message'] = 'Invalid response from GitHub API: ' . $response;
+        $response['message'] = 'Invalid JSON response from GitHub API. Raw response: ' . $response;
         echo json_encode($response);
         exit();
     }
 
-    // Check the HTTP code and handle accordingly
-    if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
-        $errorMessage = $responseArray['message'] ?? 'Unknown error';
+    // Check if the API returned the expected status code
+    if ($httpCode != 201) {
+        $errorMessage = $responseArray['message'] ?? 'Unknown error from GitHub API';
         $response['title'] = 'Error';
         $response['message'] = 'GitHub API returned an error: ' . $errorMessage;
         echo json_encode($response);
         exit();
     }
 
-    // Database insertion for purchase_order
+    if ($_FILES['item_photo']['name'] == '') {
+        $response['message'] = 'Please select a photo';
+        $response['title'] = 'Warning!';
+        echo json_encode($response);
+        exit();
+    }
+
+    // Prepare the INSERT statement for purchase_order
     $sql_purchase_order = $conn->prepare("
         INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION) 
         VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description)
     ");
 
+    // Bind the parameters to the prepared statement
     $sql_purchase_order->bindParam(':request_id', $generate_REQUEST_ID, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
@@ -135,39 +154,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
+
+    // Execute the prepared statement
     $sql_purchase_order->execute();
 
-    // Update purchase_order with the image file name
     $sql = "UPDATE purchase_order SET item_photo = :img WHERE request_id = :request_id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':img', $fileName);
     $stmt->bindParam(':request_id', $generate_REQUEST_ID);
     $stmt->execute();
 
-        // Prepare and execute INSERT statement for po_history
-        $history_title = "Request Created";
-        $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
-        "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
-        "\n" . "Description : " . $DESCRIPTION;
+    // Prepare and execute INSERT statement for po_history
+    $history_title = "Request Created";
+    $history_remarks = "Created by Email : " . $EMAIL . "\n" . "Request ID : " . $generate_REQUEST_ID . "\n" . "Request Item: " . $ITEM_NAME . "\n" . "Quantity : " . $QUANTITY .
+    "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
+    "\n" . "Description : " . $DESCRIPTION;
 
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
-        VALUES (?, ?, ?)");
-        $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
+    $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
+    VALUES (?, ?, ?)");
+    $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
 
-        // Log the action
-        $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
-        $user_id = $decrypted_array['ID'];
+    // Log the action
+    $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
 
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-        $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $logs->bindParam(':action', $action, PDO::PARAM_STR);
-        $logs->execute();
-
-        $response['success'] = true;
-        $response['title'] = 'Success';
-        $response['message'] = 'Request added successfully!';
+    if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
+        $user_id = (int)$decrypted_array['ID'];
+    } else {
+        // Handle the case where ID is missing or invalid
+        $response['success'] = false;
+        $response['message'] = 'Invalid user ID.';
         echo json_encode($response);
         exit();
+    }
+
+    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+    $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $logs->bindParam(':action', $action, PDO::PARAM_STR);
+    $logs->execute();
+
+    $response['success'] = true;
+    $response['title'] = 'Success';
+    $response['message'] = 'Request added successfully!';
+    echo json_encode($response);
+    exit();
 
 } else {
     $response['message'] = 'Invalid request method.';
