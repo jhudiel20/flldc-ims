@@ -139,11 +139,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     curl_close($ch);
 
     // Print the raw response for debugging purposes
-    echo "Raw API Response: " . $response . "\n";
+    // echo "Raw API Response: " . $response . "\n";
 
-    // Stop the script execution here to inspect the response
-    exit();
-
+    // Check for successful upload
     if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
         $response['title'] = 'Error';
         $response['message'] = 'GitHub API returned an error: ' . $response;
