@@ -199,11 +199,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-    $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $logs->bindParam(':action', $action, PDO::PARAM_STR);
     $logs->execute();
 
     // Respond to the client
+    $response['success'] = true;
     $response['title'] = 'Success!';
     $response['message'] = 'You have successfully added a new request.';
     echo json_encode($response);
