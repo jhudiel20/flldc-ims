@@ -158,17 +158,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
         $user_id = $decrypted_array['ID'];
 
-        if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
-            $user_id = (int)$decrypted_array['ID'];
-        } else {
-            // Handle the case where ID is missing or invalid
-            $response['success'] = false;
-            $response['message'] = 'Invalid user ID.';
-            echo json_encode($response);
-            exit();
-        }
-
-
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $logs->bindParam(':action', $action, PDO::PARAM_STR);
@@ -179,7 +168,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'Request added successfully!';
         echo json_encode($response);
         exit();
-
 
 } else {
     $response['message'] = 'Invalid request method.';
