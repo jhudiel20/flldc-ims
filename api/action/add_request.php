@@ -136,8 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
     // Print the raw response for debugging purposes
     // echo "Raw API Response: " . $response . "\n";
 
@@ -152,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare the INSERT statement for purchase_order
     $sql_purchase_order = $conn->prepare("
         INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION) 
-        VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description)
+        VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :img)
     ");
 
     // Bind the parameters to the prepared statement
@@ -164,15 +162,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_purchase_order->bindParam(':purpose', $PURPOSE, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':date_needed', $DATE_NEEDED, PDO::PARAM_STR);
     $sql_purchase_order->bindParam(':description', $DESCRIPTION, PDO::PARAM_STR);
-
+    $sql_purchase_order->bindParam(':img', $fileName, PDO::PARAM_STR);
     // Execute the prepared statement
     $sql_purchase_order->execute();
 
-    $sql = "UPDATE purchase_order SET item_photo = :img WHERE request_id = :request_id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':img', $fileName);
-    $stmt->bindParam(':request_id', $generate_REQUEST_ID);
-    $stmt->execute();
 
     // Prepare and execute INSERT statement for po_history
     $history_title = "Request Created";
@@ -188,16 +181,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
     $user_id = $decrypted_array['ID'];
 
-    if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
-        $user_id = (int)$decrypted_array['ID'];
-    } else {
-        // Handle the case where ID is missing or invalid
-        $response['success'] = false;
-        $response['message'] = 'Invalid user ID.';
-        echo json_encode($response);
-        exit();
-    }
-
     $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
     $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $logs->bindParam(':action', $action, PDO::PARAM_STR);
@@ -208,5 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response['title'] = 'Success!';
     $response['message'] = 'You have successfully added a new request.';
     echo json_encode($response);
+
+    curl_close($ch);
 }
 ?>
