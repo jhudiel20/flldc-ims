@@ -11,6 +11,29 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// Function to get the sha of an existing file from GitHub
+function getGitHubFileSha($owner, $repo, $filePath, $githubToken) {
+    $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$filePath";
+    
+    $ch = curl_init($apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: token ' . $githubToken,
+        'User-Agent: PHP script access',
+        'Content-Type: application/json'
+    ]);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode == 200) {
+        $responseArray = json_decode($response, true);
+        return $responseArray['sha'] ?? null;
+    }
+
+    return null;
+}
+
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -58,14 +81,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $githubToken = getenv('GITHUB_TOKEN');
-    
+
     if (!isset($_FILES['item_photo']) || $_FILES['item_photo']['error'] != UPLOAD_ERR_OK) {
         $response['title'] = 'Error';
         $response['message'] = 'File upload failed.';
         echo json_encode($response);
         exit();
     }
-    
+
     $owner = 'jhudiel20'; // GitHub username or organization
     $repo = 'flldc-user-image';
 
@@ -74,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fileName = $img['name'];
 
     $fileContent = file_get_contents($img_temp_loc);
-    
     if ($fileContent === false) {
         $response['title'] = 'Error';
         $response['message'] = 'Failed to read the uploaded file.';
@@ -84,14 +106,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $base64Content = base64_encode($fileContent);
     $fileName = urlencode($img['name']); // URL-encode the file name
-    
-    // Prepare the API request
-    $apiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/requested-items/' . $fileName;
-    $data = json_encode([
+    $filePath = "requested-items/" . $fileName;
+
+    // Check if the file exists on GitHub and get its sha if it does
+    $fileSha = getGitHubFileSha($owner, $repo, $filePath, $githubToken);
+
+    // Prepare the API request for uploading or updating the file
+    $data = [
         'message' => 'Upload image: ' . $fileName,
         'content' => $base64Content,
-    ]);
+    ];
 
+    if ($fileSha !== null) {
+        $data['sha'] = $fileSha; // Add sha if the file exists
+    }
+
+    $data = json_encode($data);
+
+    $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$filePath";
     $ch = curl_init($apiUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -102,9 +134,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-    $response = curl_exec($ch); // Execute the cURL request and get the response
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP status code
-    curl_close($ch); // Close the cURL session
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
     // Print the raw response for debugging purposes
     echo "Raw API Response: " . $response . "\n";
@@ -112,29 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Stop the script execution here to inspect the response
     exit();
 
-    // Decode the response into an associative array
-    $responseArray = json_decode($response, true);
-
-    // Check if the response is valid JSON
-    if ($responseArray === null && json_last_error() !== JSON_ERROR_NONE) {
+    if ($httpCode != 201) { // 201 is the expected status code for a successful file creation in GitHub
         $response['title'] = 'Error';
-        $response['message'] = 'Invalid JSON response from GitHub API. Raw response: ' . $response;
-        echo json_encode($response);
-        exit();
-    }
-
-    // Check if the API returned the expected status code
-    if ($httpCode != 201) {
-        $errorMessage = $responseArray['message'] ?? 'Unknown error from GitHub API';
-        $response['title'] = 'Error';
-        $response['message'] = 'GitHub API returned an error: ' . $errorMessage;
-        echo json_encode($response);
-        exit();
-    }
-
-    if ($_FILES['item_photo']['name'] == '') {
-        $response['message'] = 'Please select a photo';
-        $response['title'] = 'Warning!';
+        $response['message'] = 'GitHub API returned an error: ' . $response;
         echo json_encode($response);
         exit();
     }
@@ -176,6 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Log the action
     $action = "Added New Request | Request ID : " . $generate_REQUEST_ID . " | Item Name : " . $ITEM_NAME;
+    $user_id = $decrypted_array['ID'];
 
     if (isset($decrypted_array['ID']) && is_numeric($decrypted_array['ID'])) {
         $user_id = (int)$decrypted_array['ID'];
@@ -192,14 +205,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $logs->bindParam(':action', $action, PDO::PARAM_STR);
     $logs->execute();
 
-    $response['success'] = true;
-    $response['title'] = 'Success';
-    $response['message'] = 'Request added successfully!';
+    // Respond to the client
+    $response['title'] = 'Success!';
+    $response['message'] = 'You have successfully added a new request.';
     echo json_encode($response);
-    exit();
-
-} else {
-    $response['message'] = 'Invalid request method.';
-    echo json_encode($response);
-    exit();
 }
+?>

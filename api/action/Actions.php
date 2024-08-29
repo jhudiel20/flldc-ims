@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 // Include the database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
-
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 $user_id = $decrypted_array['ID'];
 
 // Update the user's status to logged out
