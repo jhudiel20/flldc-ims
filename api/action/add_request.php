@@ -90,12 +90,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $response = curl_exec($ch);
 
-        $responseData = json_decode($response);
+        if (curl_errno($ch)) {
+            // Handle cURL errors
+            echo json_encode([
+                'success' => false,
+                'title' => 'Curl Error',
+                'message' => curl_error($ch),
+            ]);
+            curl_close($ch);
+            exit();
+        }
+
+        // Decode the response
+        $responseData = json_decode($response, true);
+
+        // Check for a valid JSON response
+        if ($responseData === null && json_last_error() !== JSON_ERROR_NONE) {
+            echo json_encode([
+                'success' => false,
+                'title' => 'GitHub API Error',
+                'message' => 'Failed to decode GitHub API response: ' . json_last_error_msg(),
+            ]);
+            curl_close($ch);
+            exit();
+        }
+
+        // Check if the file was successfully uploaded
         if (isset($responseData['content']['download_url'])) {
             $img_url = $responseData['content']['download_url'];
         } else {
-            $response['message'] = 'Failed to upload image to GitHub.';
-            echo json_encode($response);
+            echo json_encode([
+                'success' => false,
+                'title' => 'GitHub API Error',
+                'message' => 'Failed to upload image to GitHub. Response: ' . $response,
+            ]);
+            curl_close($ch);
             exit();
         }
 
