@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $base64Content = base64_encode($fileContent);
 
         // Check if the file exists on GitHub and get its sha if it does
-        $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$fileName";
+        $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/requested-items/$fileName";
         $data = json_encode([
             'message' => 'Upload image: ' . $fileName,
             'content' => $base64Content,
