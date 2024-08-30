@@ -58,6 +58,7 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/vendor/js/template-customizer.js"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="<?php BASE_URL; ?>assets/js/config.js"></script>
+    <script src="<?php BASE_URL; ?>assets/js/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
@@ -219,7 +220,7 @@ include 'config/config.php';
         
 </body>
 
-<script src="<?php echo BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/popper/popper.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/vendor/js/bootstrap.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -233,7 +234,7 @@ include 'config/config.php';
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/popular.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
     <!-- Main JS -->
     <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
 

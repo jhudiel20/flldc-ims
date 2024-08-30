@@ -11,29 +11,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// Function to get the sha of an existing file from GitHub
-function getGitHubFileSha($owner, $repo, $filePath, $githubToken) {
-    $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$filePath";
-    
-    $ch = curl_init($apiUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: token ' . $githubToken,
-        'User-Agent: PHP script access',
-        'Content-Type: application/json'
-    ]);
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($httpCode == 200) {
-        $responseArray = json_decode($response, true);
-        return $responseArray['sha'] ?? null;
-    }
-
-    return null;
-}
-
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -112,6 +89,120 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
         $response = curl_exec($ch);
+
+        $mail = new PHPMailer(true);
+
+    try {
+        $support_emails = [];
+        $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
+        $admins->execute();
+
+        while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
+            $support_emails[] = $row_admins['email'];
+        }
+
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'lndreports2024@gmail.com';
+        $mail->Password   = 'yzmxbjcntuwkfdpe';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = 465;
+
+        // Recipients
+        $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
+        foreach ($support_emails as $email) {
+            $mail->addAddress($email);
+        }
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'New Request Added';
+        $mail->Body    = '
+            <div style="background:#f3f3f3">
+                <div style="margin:0px auto;max-width:640px;background:transparent">
+                <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:40px 0px">
+                        <div aria-labelledby="mj-column-per-100" class="m_29934315870093561mj-column-per-100" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                            <tbody>
+                                <tr>
+                                <td style="word-break:break-word;font-size:0px;padding:0px" align="center">
+                                    <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px" align="center" border="0">
+                                    <tbody>
+                                        <tr>
+                                        <td style="width:138px">
+                                            <img alt="" title="" height="100px" width="200px" src="/LOGO.png" width="100" style="">
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div style="max-width:640px;margin:0 auto;border-radius:4px;overflow:hidden">
+                <div style="margin:0px auto;max-width:640px;background:#fdfdfd">
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:#fdfdfd" align="center" border="0">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:40px 50px">
+                                    <div aria-labelledby="mj-column-per-100" class="m_29934315870093561mj-column-per-100" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="word-break:break-word;font-size:0px;padding:0px" align="left">
+                                                        <div style="color:#737f8d;font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-size:16px;line-height:24px;text-align:left">
+                    
+                                                            <h2 style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-size:18px;line-height:28px;margin:0px">New Request Submitted</h2>
+                                                            <p>Dear Admin,</p>
+                                                            <p>A new request has been submitted:</p>
+                                                            <p><b>Request ID:</b> ' . $generate_REQUEST_ID . '<br>
+                                                            <b>Item Name:</b> ' . $ITEM_NAME . '<br>
+                                                            <b>Quantity:</b> ' . $QUANTITY . '<br>
+                                                            <b>Description:</b> ' . $DESCRIPTION . '<br>
+                                                            <b>Purpose:</b> ' . $PURPOSE . '<br>
+                                                            <b>Date Needed:</b> ' . $DATE_NEEDED . '<br>
+                                                            <b>Remarks:</b> ' . $REMARKS . '<br>
+                                                            <b>Image:</b> <a href="' . $img_url . '">View Image</a></p>
+                                                            <p> Please click the link below to Approved or Declined the request :</p>
+                                                            <a href="https://flldc-ims.vercel.app/request-list">Approved / Declined<a>
+                                                            <p>Best Regards,<br>L&D Inventory Management System</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        ';
+
+        $mail->send();
+    }catch (Exception $e) {
+        $response['success'] = false;
+        $response['title'] = 'Error';
+        $response['message'] = 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        echo json_encode($response);
+        exit();
+    }
+
+
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
             INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
@@ -166,7 +257,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo json_encode([
                     'success' => true,
                     'title' => 'Success',
-                    'message' => 'File uploaded successfully.',
+                    'message' => 'Successfully Added',
                 ]);
             } else {
                 // Output response for debugging
