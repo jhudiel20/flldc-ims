@@ -90,6 +90,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $response = curl_exec($ch);
 
+        $responseData = json_decode($response, true);
+        if (isset($responseData['content']['download_url'])) {
+            $img_url = $responseData['content']['download_url'];
+        } else {
+            $response['message'] = 'Failed to upload image to GitHub.';
+            echo json_encode($response);
+            exit();
+        }
+
         // Mailer setup
         require __DIR__ . '/../../public/mail/Exception.php';
         require __DIR__ . '/../../public/mail/PHPMailer.php';
