@@ -90,6 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $response = curl_exec($ch);
 
+        // Mailer setup
+        require __DIR__ . '/../../public/mail/Exception.php';
+        require __DIR__ . '/../../public/mail/PHPMailer.php';
+        require __DIR__ . '/../../public/mail/SMTP.php';
+
         $mail = new PHPMailer(true);
 
     try {
