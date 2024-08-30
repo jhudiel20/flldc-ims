@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $response = curl_exec($ch);
 
-        $responseData = json_decode($response, true);
+        $responseData = json_decode($response);
         if (isset($responseData['content']['download_url'])) {
             $img_url = $responseData['content']['download_url'];
         } else {
