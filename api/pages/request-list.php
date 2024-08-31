@@ -388,11 +388,12 @@ $(document).ready(function() {
             });
         })
 
-    $('#submit_approval').on('click', function() {
-        var formdata = new FormData(request_approval_form);
+    $('#request_approval_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
         $.ajax({
-            url: "../action/update_request_status.php",
+            url: "/update_request_status.php",
             method: "POST",
             data: formdata,
             dataType: "json",
