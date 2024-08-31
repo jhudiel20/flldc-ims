@@ -59,6 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $githubToken = getenv('GITHUB_TOKEN');
 
+    if ($_FILES['item_photo']['name'] == '') {
+        $response['message'] = 'Please select a photo';
+        $response['title'] = 'Warning!';
+        echo json_encode($response);
+    }
+
     if (isset($_FILES['item_photo']) && $_FILES['item_photo']['error'] == UPLOAD_ERR_OK) {
         $owner = 'jhudiel20'; // GitHub username or organization
         $repo = 'flldc-user-image';
@@ -66,6 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $img = $_FILES['item_photo'];
         $img_temp_loc = $img['tmp_name'];
         $fileName = $img['name'];
+
+        
 
         $fileContent = file_get_contents($img_temp_loc);
 
@@ -178,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <tbody>
                                         <tr>
                                         <td style="width:138px">
-                                            <img alt="" title="" height="100px" width="200px" src="/LOGO.png" width="100" style="">
+                                            <img alt="" title="" height="100px" width="200px" src="../assets/img/LOGO.png" width="100" style="">
                                         </td>
                                         </tr>
                                     </tbody>
