@@ -107,6 +107,11 @@
         "dest": "/api/action/add_request.php"
       },
       {
+        "src": "/update_request_status.php",
+        "dest": "/api/action/update_request_status.php"
+      },
+      
+      {
         "src": "/request-details",
         "dest": "/api/pages/request-details.php"
       },
