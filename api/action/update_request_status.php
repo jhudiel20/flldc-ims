@@ -68,7 +68,7 @@ $generate_PR_ID  = generate_PR_ID();
                                         <tbody>
                                             <tr>
                                             <td style="width:138px">
-                                                <img alt="" title="" height="100px" width="200px" src="../assets/img/LOGO.png" width="100" style="">
+                                                <img alt="" title="" height="100px" width="200px" src="cid:logo" width="100" style="">
                                             </td>
                                             </tr>
                                         </tbody>
@@ -215,7 +215,7 @@ $generate_PR_ID  = generate_PR_ID();
                 </div>
             ';
         }
-
+        $mail->AddEmbeddedImage('../assets/img/LOGO.png','logo','LOGO.png');
         $mail->send();
 
         $sql = $conn->prepare("UPDATE purchase_order SET PR_ID = :pr_id ,

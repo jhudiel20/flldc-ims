@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 // Set the encrypted value as a single cookie
                 setcookie('secure_data', $encrypted_value, [
-                    'expires' => time() + (86400 * 30), // Cookie expires in 30 days
+                    'expires' => time() + 1800,  // Cookie expires in 30 minutes (1800 seconds)
                     'path' => '/',                       // Available within the entire domain
                     'domain' => '',                     // Use the default domain
                     'secure' => true,                   // Only sent over HTTPS

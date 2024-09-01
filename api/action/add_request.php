@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <tbody>
                                         <tr>
                                         <td style="width:138px">
-                                            <img alt="" title="" height="100px" width="200px" src="../assets/img/LOGO.png" width="100" style="">
+                                            <img alt="" title="" height="100px" width="200px" src="cid:logo" width="100" style="">
                                         </td>
                                         </tr>
                                     </tbody>
@@ -250,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         ';
-
+        $mail->AddEmbeddedImage('../assets/img/LOGO.png','logo','LOGO.png');
         $mail->send();
     }catch (Exception $e) {
         $response['success'] = false;

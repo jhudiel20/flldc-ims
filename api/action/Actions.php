@@ -39,11 +39,12 @@ if ($logSuccess) {
     // Loop through the array and destroy each cookie
     foreach ($cookieNames as $cookieName) {
         setcookie($cookieName, '', time() - 3600, '/');
-    }
+    } 
+    exit();
 
     // Redirect to the index page
     header("Location: /");
-    exit();
+   
 } else {
     // Handle the error if the logging failed
     echo "Error logging out. Please try again.";

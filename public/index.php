@@ -3,8 +3,10 @@ require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
 
 if(isset($decrypted_array['status'])){
-    if($decrypted_array['status'] == true){
-    header("Location: /dashboard-lnd");
+    if($decrypted_array['status'] === true){
+        header("Location: /dashboard-lnd");
+    }else{
+        header("Location: /index");
     }
   }
 
