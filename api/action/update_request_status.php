@@ -215,7 +215,8 @@ $generate_PR_ID  = generate_PR_ID();
                 </div>
             ';
         }
-        $mail->AddEmbeddedImage('../assets/img/LOGO.png','logo','LOGO.png');
+        $logoPath = __DIR__ . '/../../public/assets/img/LOGO.png';
+        $mail->AddEmbeddedImage($logoPath,'logo','LOGO.png');
         $mail->send();
 
         $sql = $conn->prepare("UPDATE purchase_order SET PR_ID = :pr_id ,
