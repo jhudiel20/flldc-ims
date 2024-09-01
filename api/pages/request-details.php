@@ -110,264 +110,259 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
 
-                    <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
+                        <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
 
-                        <!-- <div class="card"> -->
-                        <div class="row row-bordered g-0">
-                            <div class="col-md-12">
-                                <div class="card-body" style="overflow-x:auto;">
+                            <!-- <div class="card"> -->
+                            <div class="row row-bordered g-0">
+                                <div class="col-md-12">
+                                    <div class="card-body" style="overflow-x:auto;">
 
-                                    <div class="nav-align-top mb-2">
-                                        <ul class="nav nav-tabs nav-fill" role="tablist">
-                                            <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#purchase-info" aria-controls="navs-justified-home"
-                                                    aria-selected="true">
-                                                    <i class="fa-solid fa-circle-info"></i> Request Info
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#attachments" aria-controls="navs-justified-profile"
-                                                    aria-selected="false">
-                                                    <i class="fa-solid fa-file-pdf"></i> Attachments
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#history" aria-controls="navs-justified-profile"
-                                                    aria-selected="false">
-                                                    <i class="fa-solid fa-timeline"></i> History
-                                                </button>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade" id="purchase-info" role="tabpanel">
-                                                <form class="row g-3" method="post" id="purchase_details_form">
-                                                    <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                                                    <input type="hidden" id="PR_OLD" name="PR_OLD"
-                                                        value="<?php echo $row['pr_no'];?>">
-                                                    <input type="hidden" id="PO_OLD" name="PO_OLD"
-                                                        value="<?php echo $row['po_no'];?>">
-                                                    <input type="hidden" id="OSTICKET_OLD" name="OSTICKET_OLD"
-                                                        value="<?php echo $row['os_ticket_no'];?>">
-                                                    <input type="hidden" id="REQUEST_ID" name="REQUEST_ID"
-                                                        value="<?php echo $row['request_id']; ?>">
+                                        <div class="nav-align-top mb-2">
+                                            <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                <li class="nav-item">
+                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                        data-bs-target="#purchase-info" aria-controls="navs-justified-home"
+                                                        aria-selected="true">
+                                                        <i class="fa-solid fa-circle-info"></i> Request Info
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                        data-bs-target="#attachments" aria-controls="navs-justified-profile"
+                                                        aria-selected="false">
+                                                        <i class="fa-solid fa-file-pdf"></i> Attachments
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                        data-bs-target="#history" aria-controls="navs-justified-profile"
+                                                        aria-selected="false">
+                                                        <i class="fa-solid fa-timeline"></i> History
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade" id="purchase-info" role="tabpanel">
+                                                    <form class="row g-3" method="post" id="purchase_details_form">
+                                                        <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+                                                        <input type="hidden" id="PR_OLD" name="PR_OLD"
+                                                            value="<?php echo $row['pr_no'];?>">
+                                                        <input type="hidden" id="PO_OLD" name="PO_OLD"
+                                                            value="<?php echo $row['po_no'];?>">
+                                                        <input type="hidden" id="OSTICKET_OLD" name="OSTICKET_OLD"
+                                                            value="<?php echo $row['os_ticket_no'];?>">
+                                                        <input type="hidden" id="REQUEST_ID" name="REQUEST_ID"
+                                                            value="<?php echo $row['request_id']; ?>">
 
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Request ID</label>
-                                                        <input type="text" class="form-control"
-                                                            value="<?php echo $row['request_id']; ?>" disabled>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Approval Date Created</label>
-                                                        <input type="text" class="form-control"
-                                                            name="APPROVAL_DATE_CREATED" id="APPROVAL_DATE_CREATED"
-                                                            value="<?php echo ($row['approval_date_created'] ? (new DateTime($row['approval_date_created']))->format('M d, Y h:i A') : ''); ?>"
-                                                            disabled>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Purpose</label>
-                                                        <input type="text" class="form-control"
-                                                            value="<?php echo $row['purpose']; ?>" disabled>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Date Needed</label>
-                                                        <input type="text" class="form-control"
-                                                            value="<?php echo ($row['date_needed'] ? (new DateTime($row['date_needed']))->format('M d, Y') : ''); ?>"
-                                                            disabled>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">PR No.</label>
-                                                        <input type="text" class="form-control" name="PR_NO" id="PR_NO"
-                                                            value="<?php echo $row['pr_no']; ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">PO No.</label>
-                                                        <input type="text" class="form-control" name="PO_NO" id="PO_NO"
-                                                            value="<?php echo $row['po_no']; ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">OS-TICKET NO.</label>
-                                                        <input type="text" class="form-control" name="OS_TICKET_NO"
-                                                            id="OS_TICKET_NO"
-                                                            value="<?php echo $row['os_ticket_no']; ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Item Name<span
-                                                                class="require asterisk">*</span></label>
-                                                        <input type="text" class="form-control" name="ITEM_NAME"
-                                                            id="ITEM_NAME" value="<?php echo $row['item_name']; ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Quantity<span
-                                                                class="require asterisk">*</span></label>
-                                                        <input type="text" class="form-control" name="QUANTITY"
-                                                            id="QUANTITY" value="<?php echo $row['quantity']; ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Status</label>
-                                                        <select name="STATUS" id="STATUS" class="form-select"
-                                                            <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR') ? 'disabled' : ''; ?>>
-                                                            <?php foreach (PR_STATUS as $value) { ?>
-                                                            <option value="<?= $value; ?>"
-                                                                <?php echo ($value == $row['status']) ? 'selected' : ''; ?>>
-                                                                <?= $value; ?>
-                                                            </option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label class="form-label py-1">Item Description </label>
-                                                        <textarea class="form-control" type="text" cols="30"
-                                                            name="ITEM_DESC" id="ITEM_DESC"
-                                                            rows="3"><?php echo $row['description']; ?></textarea>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <label class="form-label py-1">Remarks </label>
-                                                        <textarea class="form-control" name="REMARKS" id="REMARKS"
-                                                            type="text" cols="30"
-                                                            rows="3"><?php echo $row['remarks']; ?></textarea>
-                                                    </div>
-
-                                                    <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                    <button type="button" class="btn btn-label-primary"
-                                                        id="submit_edit_purchase_details"
-                                                        name="submit_edit_purchase_details">Save</button>
-                                                    <?php }?>
-                                                </form>
-                                            </div>
-                                            <div class="tab-pane fade" id="attachments" role="tabpanel">
-
-                                                <div class="card-body">
-                                                    <div class="col-xl-12">
-                                                        <div class="card">
-                                                            <?php if(empty($row['attachments'])){ ?>
-                                                            <h1
-                                                                style="width: auto;height:500px;text-align:center;padding-top:200px">
-                                                                Empty!</h1>
-                                                            <?php }else{ ?>
-                                                            <embed type="application/pdf"
-                                                                src="/PO_ATTACHMENTS/<?php echo $row['attachments'];?>"
-                                                                width="auto" height="700px">
-                                                            <?php }?>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Request ID</label>
+                                                            <input type="text" class="form-control"
+                                                                value="<?php echo $row['request_id']; ?>" disabled>
                                                         </div>
-                                                    </div>
-                                                    <?php if($decrypted_array['ACCESS'] != "REQUESTOR"){?>
-                                                    <div class="col-6 py-3" style="float: left; display: inline-block;">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Approval Date Created</label>
+                                                            <input type="text" class="form-control"
+                                                                name="APPROVAL_DATE_CREATED" id="APPROVAL_DATE_CREATED"
+                                                                value="<?php echo ($row['approval_date_created'] ? (new DateTime($row['approval_date_created']))->format('M d, Y h:i A') : ''); ?>"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Purpose</label>
+                                                            <input type="text" class="form-control"
+                                                                value="<?php echo $row['purpose']; ?>" disabled>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Date Needed</label>
+                                                            <input type="text" class="form-control"
+                                                                value="<?php echo ($row['date_needed'] ? (new DateTime($row['date_needed']))->format('M d, Y') : ''); ?>"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">PR No.</label>
+                                                            <input type="text" class="form-control" name="PR_NO" id="PR_NO"
+                                                                value="<?php echo $row['pr_no']; ?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">PO No.</label>
+                                                            <input type="text" class="form-control" name="PO_NO" id="PO_NO"
+                                                                value="<?php echo $row['po_no']; ?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">OS-TICKET NO.</label>
+                                                            <input type="text" class="form-control" name="OS_TICKET_NO"
+                                                                id="OS_TICKET_NO"
+                                                                value="<?php echo $row['os_ticket_no']; ?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Item Name<span
+                                                                    class="require asterisk">*</span></label>
+                                                            <input type="text" class="form-control" name="ITEM_NAME"
+                                                                id="ITEM_NAME" value="<?php echo $row['item_name']; ?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Quantity<span
+                                                                    class="require asterisk">*</span></label>
+                                                            <input type="text" class="form-control" name="QUANTITY"
+                                                                id="QUANTITY" value="<?php echo $row['quantity']; ?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Status</label>
+                                                            <select name="STATUS" id="STATUS" class="form-select"
+                                                                <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR') ? 'disabled' : ''; ?>>
+                                                                <?php foreach (PR_STATUS as $value) { ?>
+                                                                <option value="<?= $value; ?>"
+                                                                    <?php echo ($value == $row['status']) ? 'selected' : ''; ?>>
+                                                                    <?= $value; ?>
+                                                                </option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="form-label py-1">Item Description </label>
+                                                            <textarea class="form-control" type="text" cols="30"
+                                                                name="ITEM_DESC" id="ITEM_DESC"
+                                                                rows="3"><?php echo $row['description']; ?></textarea>
+                                                        </div>
 
-                                                        <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#upload-PO_ATTACHMENT-modal"
-                                                            class="btn btn-label-primary"
-                                                            style="width:95%">Upload</button>
+                                                        <div class="col-md-12">
+                                                            <label class="form-label py-1">Remarks </label>
+                                                            <textarea class="form-control" name="REMARKS" id="REMARKS"
+                                                                type="text" cols="30"
+                                                                rows="3"><?php echo $row['remarks']; ?></textarea>
+                                                        </div>
+
+                                                        <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
+                                                        <button type="button" class="btn btn-label-primary"
+                                                            id="submit_edit_purchase_details"
+                                                            name="submit_edit_purchase_details">Save</button>
+                                                        <?php }?>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane fade" id="attachments" role="tabpanel">
+
+                                                    <div class="card-body">
+                                                        <div class="col-xl-12">
+                                                            <div class="card">
+                                                                <?php if(empty($row['attachments'])){ ?>
+                                                                <h1
+                                                                    style="width: auto;height:500px;text-align:center;padding-top:200px">
+                                                                    Empty!</h1>
+                                                                <?php }else{ ?>
+                                                                <embed type="application/pdf"
+                                                                    src="/PO_ATTACHMENTS/<?php echo $row['attachments'];?>"
+                                                                    width="auto" height="700px">
+                                                                <?php }?>
+                                                            </div>
+                                                        </div>
+                                                        <?php if($decrypted_array['ACCESS'] != "REQUESTOR"){?>
+                                                        <div class="col-6 py-3" style="float: left; display: inline-block;">
+
+                                                            <button type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#upload-PO_ATTACHMENT-modal"
+                                                                class="btn btn-label-primary"
+                                                                style="width:95%">Upload</button>
+                                                        </div>
+
+                                                        <div class="col-6 py-3" style="display:inline-block;">
+                                                            <button type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#delete-PO_ATTACHMENT-modal"
+                                                                class="btn btn-label-danger"
+                                                                style="width:95%">Delete</button>
+                                                        </div>
+                                                        <?php } ?>
+
                                                     </div>
 
-                                                    <div class="col-6 py-3" style="display:inline-block;">
-                                                        <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#delete-PO_ATTACHMENT-modal"
-                                                            class="btn btn-label-danger"
-                                                            style="width:95%">Delete</button>
-                                                    </div>
-                                                    <?php } ?>
 
                                                 </div>
-
-
-                                            </div>
-                                            <div class="tab-pane fade" id="history" role="tabpanel">
-                                                <div class="col-xl-12 mb-4 mb-xl-0">
-                                                    <div class="card">
-                                                        <h5 class="card-header">History</h5>
-                                                        <div class="card-body">
-                                                            <ul class="timeline">
-                                                                        <?php
-                                                                        $request_id = $row['request_id'];
-                                                                        $sql_history = $conn->prepare("SELECT * FROM po_history WHERE request_id = :request_id ORDER BY date_created DESC");
-                                                                        $sql_history->bindParam(':request_id', $request_id, PDO::PARAM_STR);
-                                                                        $sql_history->execute();
-                                                                        
-                                                                        $classes = ['primary', 'success', 'danger', 'info', 'warning'];
-                                                                        $class_index = 0; // Initialize class index
-                                                                        
-                                                                        while ($row_sql_history = $sql_history->fetch(PDO::FETCH_ASSOC)) {
-                                                                            // Get the class from the array based on the index
-                                                                            $class = $classes[$class_index];
-                                                                        
-                                                                            // Increment the index, looping back to the beginning if necessary
-                                                                            $class_index = ($class_index + 1) % count($classes);
-                                                                            ?>
-                                                                            <li class="timeline-item timeline-item-transparent">
-                                                                                <span class="timeline-point-wrapper">
-                                                                                    <span class="timeline-point timeline-point-<?php echo htmlspecialchars($class); ?>"></span>
-                                                                                </span>
-                                                                                <div class="timeline-event">
-                                                                                    <div class="timeline-header border-bottom mb-3">
-                                                                                        <h6 class="mb-0">
-                                                                                            <?php echo htmlspecialchars($row_sql_history['title']); ?>
-                                                                                        </h6>
-                                                                                        <span class="text-muted">
-                                                                                            <?php echo date('M d, Y', strtotime($row_sql_history['date_created'])); ?>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-between flex-wrap mb-2">
-                                                                                        <div>
-                                                                                            <span><?php echo nl2br(htmlspecialchars($row_sql_history['remarks'])); ?></span>
-                                                                                        </div>
-                                                                                        <div>
+                                                <div class="tab-pane fade" id="history" role="tabpanel">
+                                                    <div class="col-xl-12 mb-4 mb-xl-0">
+                                                        <div class="card">
+                                                            <h5 class="card-header">History</h5>
+                                                            <div class="card-body">
+                                                                <ul class="timeline">
+                                                                            <?php
+                                                                            $request_id = $row['request_id'];
+                                                                            $sql_history = $conn->prepare("SELECT * FROM po_history WHERE request_id = :request_id ORDER BY date_created DESC");
+                                                                            $sql_history->bindParam(':request_id', $request_id, PDO::PARAM_STR);
+                                                                            $sql_history->execute();
+                                                                            
+                                                                            $classes = ['primary', 'success', 'danger', 'info', 'warning'];
+                                                                            $class_index = 0; // Initialize class index
+                                                                            
+                                                                            while ($row_sql_history = $sql_history->fetch(PDO::FETCH_ASSOC)) {
+                                                                                // Get the class from the array based on the index
+                                                                                $class = $classes[$class_index];
+                                                                            
+                                                                                // Increment the index, looping back to the beginning if necessary
+                                                                                $class_index = ($class_index + 1) % count($classes);
+                                                                                ?>
+                                                                                <li class="timeline-item timeline-item-transparent">
+                                                                                    <span class="timeline-point-wrapper">
+                                                                                        <span class="timeline-point timeline-point-<?php echo htmlspecialchars($class); ?>"></span>
+                                                                                    </span>
+                                                                                    <div class="timeline-event">
+                                                                                        <div class="timeline-header border-bottom mb-3">
+                                                                                            <h6 class="mb-0">
+                                                                                                <?php echo htmlspecialchars($row_sql_history['title']); ?>
+                                                                                            </h6>
                                                                                             <span class="text-muted">
-                                                                                                <?php echo date('h:i:s A', strtotime($row_sql_history['date_created'])); ?>
+                                                                                                <?php echo date('M d, Y', strtotime($row_sql_history['date_created'])); ?>
                                                                                             </span>
                                                                                         </div>
+                                                                                        <div class="d-flex justify-content-between flex-wrap mb-2">
+                                                                                            <div>
+                                                                                                <span><?php echo nl2br(htmlspecialchars($row_sql_history['remarks'])); ?></span>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span class="text-muted">
+                                                                                                    <?php echo date('h:i:s A', strtotime($row_sql_history['date_created'])); ?>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <?php
-                                                                        }
-                                                                        ?>
-                                                                        
+                                                                                </li>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                            
 
-                                                                <li class="timeline-end-indicator">
-                                                                    <i class="bx bx-check-circle"></i>
-                                                                </li>
-                                                            </ul>
+                                                                    <li class="timeline-end-indicator">
+                                                                        <i class="bx bx-check-circle"></i>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-                        <!-- </div> -->
+                            <!-- </div> -->
 
+                        </div>
                     </div>
                 </div>
                 <!-- / Content -->
             </div>
+        
+            <!-- Footer -->
+            <?php include __DIR__ . "/../action/global/footer.php"; ?>
+            <!-- / Footer -->
 
+            <div class="content-backdrop fade"></div>
 
-
-
-        </div>
-        <!-- Footer -->
-        <?php 
-                    include __DIR__ . "/../action/global/footer.php";
-                    ?>
-        <!-- / Footer -->
-
-        <div class="content-backdrop fade"></div>
-
-    </div>
-    <!-- Content wrapper -->
+        </div><!-- Content wrapper -->
+        
     </div>
     <!-- / Layout page -->
-    </div>
+    
 
 
 

@@ -43,7 +43,7 @@ if ($logSuccess) {
     exit();
 
     // Redirect to the index page
-    header("Location: /");
+    header("Location: /index");
    
 } else {
     // Handle the error if the logging failed
