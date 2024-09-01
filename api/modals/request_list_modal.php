@@ -78,7 +78,7 @@
                 <h5 class="modal-title" id="modalCenterTitle">Select Status</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" id="request_approval_form">
+            <form method="POST" id="request_approval_form">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
@@ -98,7 +98,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-label-primary" id="submit_approval">Save changes</button>
+                    <button type="button" class="btn btn-label-primary" id="submit_approval_btn">Save changes</button>
 
                     <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
                         <span class="spinner-border me-1" role="status" aria-hidden="true"></span>

@@ -107,7 +107,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
-                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
+                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:13.75rem;" />
 
                                                 <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
@@ -199,7 +199,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <label class="form-label">Approval Date Created</label>
                                                         <input type="text" class="form-control"
                                                             name="APPROVAL_DATE_CREATED" id="APPROVAL_DATE_CREATED"
-                                                            value="<?php echo date('M d ,Y h:i A', @strtotime($row['approval_date_created']) ?: ''); ?>"
+                                                            value="<?php echo date('M d ,Y h:i A',strtotime($row['approval_date_created']) ?: ''); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">
@@ -210,7 +210,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-md-6">
                                                         <label class="form-label">Date Needed</label>
                                                         <input type="text" class="form-control"
-                                                            value="<?php echo date('M d ,Y', @strtotime($row['date_needed']) ?: '' ); ?>"
+                                                            value="<?php echo date('M d ,Y', strtotime($row['date_needed']) ?: '' ); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">
