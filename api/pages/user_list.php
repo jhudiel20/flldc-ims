@@ -181,7 +181,7 @@ var btn_clear_attempts = function(cell, formatterParams, onRendered) {
 var table = new Tabulator("#user-table", {
 
     // height: "650px",
-    layout: "fitData",
+    layout: "fitDataStretch",
     movableColumns: true,
     placeholder: "No Data Found",
     pagination: true, //enable pagination

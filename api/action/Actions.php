@@ -20,6 +20,7 @@ $logSuccess = $logAction->execute([':user_id' => $user_id, ':action_made' => $ac
 if ($logSuccess) {
     // Unset the cookies only if the log was successfully inserted
     $cookieNames = [
+        'status',
         'ID',
         'ACCESS',
         'USERNAME',

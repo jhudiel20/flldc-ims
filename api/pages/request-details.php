@@ -3,7 +3,7 @@ require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location:index.php");
+    header("Location: index");
 }
 
 
@@ -14,7 +14,7 @@ if(empty($id)){
     header("Location:404.php");
 }
 
-$sql = $conn->prepare("SELECT * FROM purchase_order WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM purchase_order WHERE id = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
@@ -30,12 +30,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     include __DIR__ . "/../action/global/metadata.php";
     include __DIR__ . "/../action/global/include_top.php";
     ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
-
-
-
 
 <div class="modal fade" id="upload-PO_ATTACHMENT-modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -108,37 +103,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                         <div class="card-body">
                                             <div class="text-center">
                                             <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:13.75rem;" />
-
-                                                <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
-                                                <div class="my-3">
-                                                    <form class="row g-3" method="post" id="upload_item_photo_form"
-                                                        enctype="multipart/form-data" style="display: inline-block;">
-
-                                                        <div class="col-md-12 col-lg-12">
-                                                            <input type="file" name="item_photo" id="item_photo"
-                                                                class="form-control w-100">
-                                                            <input type="hidden" name="ID" id="ID"
-                                                                value="<?php echo $id ?>">
-                                                            <input type="hidden" name="photo_item_name"
-                                                                id="photo_item_name"
-                                                                value="<?php echo $row['item_name'] ?>">
-                                                            <input type="hidden" name="photo_pr_id" id="photo_pr_id"
-                                                                value="<?php echo $row['pr_id'] ?>">
-
-                                                        </div>
-                                                        <div class="text-center">
-                                                            <button type="button" id="submit_upload_item_photo"
-                                                                value="Upload" class="btn btn-label-primary"><i
-                                                                    class="fa-solid fa-upload"></i></button>
-                                                    </form>
-                                                    <button type="button" class="btn btn-label-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete_item_photo_modal"><i
-                                                            class="fa-solid fa-trash-can"></i></button>
-
-                                                </div>
                                             </div>
-                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +124,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#purchase-info" aria-controls="navs-justified-home"
                                                     aria-selected="true">
-                                                    <i class="fa-solid fa-circle-info"></i> Purchase Order Info
+                                                    <i class="fa-solid fa-circle-info"></i> Request Order Info
                                                 </button>
                                             </li>
                                             <li class="nav-item">
