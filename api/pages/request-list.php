@@ -388,7 +388,7 @@ $(document).ready(function() {
             });
         })
 
-    $('#request_approval_form').on('submit', function(e) {
+    $('#submit_approval_btn').on('click', function(e) {
             var formdata = new FormData(document.getElementById('request_approval_form'));
             e.preventDefault();  
         $.ajax({
