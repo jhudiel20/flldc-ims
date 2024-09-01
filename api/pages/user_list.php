@@ -133,7 +133,7 @@ if (window.history.replaceState) {
 }
 
 var status_show = function(cell, formatterParams, onRendered) {
-    var data = cell.getData().data; // Get the employee ID from the cell
+    var data = cell.getData().status; // Get the employee ID from the cell
 
     if (data == 0) {
         return "<span class='badge rounded-pill bg-secondary'>Offline</span>"; // Gray style for Offline
@@ -143,8 +143,8 @@ var status_show = function(cell, formatterParams, onRendered) {
 };
 
 var approval_status = function(cell, formatterParams, onRendered) {
-    var data_approved = cell.getData().data_approved; // Get the approved status from the cell
-    var ID = cell.getRow().getData().ID; // Get the ID of the user
+    var data_approved = cell.getData().approved_status; // Get the approved status from the cell
+    var ID = cell.getRow().getData().id; // Get the ID of the user
 
     if (data_approved == 2) {
         return "<span class='badge rounded-pill bg-primary'>Approved</span>"; // Gray style for Offline
@@ -165,8 +165,8 @@ var approval_status = function(cell, formatterParams, onRendered) {
 };
 
 var btn_clear_attempts = function(cell, formatterParams, onRendered) {
-    var data = cell.getData().data_locked;
-    var id = cell.getData().data_id; // Get the ID of
+    var data = cell.getData().locked;
+    var id = cell.getData().id; // Get the ID of
 
     if (data == 0) {
         return data;
@@ -195,7 +195,7 @@ var table = new Tabulator("#user-table", {
 
     columns: [{
             title: "First Name",
-            field: "FNAME",
+            field: "fname",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -204,7 +204,7 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Middle Name",
-            field: "MNAME",
+            field: "mname",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -213,7 +213,7 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Last Name",
-            field: "LNAME",
+            field: "lname",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -222,7 +222,7 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Suffix",
-            field: "EXT_NAME",
+            field: "ext_name",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -232,7 +232,7 @@ var table = new Tabulator("#user-table", {
         {
             title: "Status",
             formatter: status_show,
-            field: "STATUS",
+            field: "status",
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {
@@ -246,7 +246,7 @@ var table = new Tabulator("#user-table", {
             title: "Full Name",
             width: 250,
             hozAlign: "center",
-            field: "FNAME", // You can use any field here since we'll combine the values
+            field: "fname", // You can use any field here since we'll combine the values
             headerFilter: "input",
             headerFilterLiveFilter: false,
             download: false,
@@ -255,9 +255,9 @@ var table = new Tabulator("#user-table", {
                 var rowData = cell.getData();
 
                 // Combine the "First Name" and "Middle Name" fields
-                var fullName = rowData.FNAME + (rowData.MNAME ? " " + rowData.MNAME : "") + (rowData
-                    .LNAME ? " " + rowData.LNAME : "") + (rowData.EXT_NAME ? " " + rowData
-                    .EXT_NAME : "");
+                var fullName = rowData.fname + (rowData.mname ? " " + rowData.mname : "") + (rowData
+                    .fname ? " " + rowData.lname : "") + (rowData.ext_name ? " " + rowData
+                    .ext_name : "");
 
                 // Return the combined name
                 return fullName;
@@ -265,21 +265,21 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Email",
-            field: "EMAIL",
+            field: "email",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
             title: "Contact No.",
-            field: "CONTACT",
+            field: "contact",
             headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
         {
             title: "Access",
-            field: "ACCESS",
+            field: "access",
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {
@@ -290,16 +290,16 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "",
-            field: "IMAGE",
+            field: "image",
             formatter: function(cell, formatterParams) {
                 var imageValue = cell.getValue();
                 var imageUrl = "";
 
                 if (imageValue) {
-                    imageUrl = "<?php echo BASE_URL; ?>/user_image/" + imageValue;
+                    imageUrl = "https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/" + imageValue;
                 } else {
                     // Use default picture URL
-                    imageUrl = "<?php echo BASE_URL; ?>/user_image/user.png";
+                    imageUrl = "https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/images/user.png";
                 }
 
                 var imageElement = document.createElement("img");
@@ -319,7 +319,7 @@ var table = new Tabulator("#user-table", {
         {
             title: "Login Attempts",
             formatter: btn_clear_attempts,
-            field: "LOCKED",
+            field: "locked",
             headerFilter: false,
             hozAlign: "center",
             headerFilterLiveFilter: false,
@@ -327,7 +327,7 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Approval Status",
-            field: "APPROVED_STATUS",
+            field: "approved_status",
             hozAlign: "center",
             download: true,
             headerFilter: "list",
@@ -336,12 +336,10 @@ var table = new Tabulator("#user-table", {
                 clearable: true
             },
             formatter: function(cell, formatterParams, onRendered) {
-                var data_approved = cell.getData()
-                    .data_approved; // Get the approved status from the cell
-                var UserID = cell.getRow().getData().ID; // Get the ID of the user
-                var FirstName = cell.getRow().getData().FNAME;
-                var LastName = cell.getRow().getData().LNAME;
-                var LastName = cell.getRow().getData().LNAME;
+                var data_approved = cell.getData().approved_status; // Get the approved status from the cell
+                var UserID = cell.getRow().getData().id; // Get the ID of the user
+                var FirstName = cell.getRow().getData().fname;
+                var LastName = cell.getRow().getData().lname;
                 if (data_approved == 2) {
                     return "<span class='badge rounded-pill bg-primary'>Approved</span>"; // Gray style for Offline
                 } else if (data_approved == 0) {
@@ -380,17 +378,17 @@ var table = new Tabulator("#user-table", {
         <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?> {
             title: "Action",
             formatter: function(cell, formatterParams, onRendered) {
-                var ID = cell.getRow().getData().ID;
-                var FNAME = cell.getRow().getData().FNAME;
-                var MNAME = cell.getRow().getData().MNAME;
-                var LNAME = cell.getRow().getData().LNAME;
-                var CONTACT = cell.getRow().getData().CONTACT;
-                var LOCKED = cell.getRow().getData().LOCKED;
-                var EXT_NAME = cell.getRow().getData().EXT_NAME;
-                var EMAIL = cell.getRow().getData().EMAIL;
-                var ACCESS = cell.getRow().getData().ACCESS;
-                var APPROVED_STATUS = cell.getRow().getData().APPROVED_STATUS;
-                var admin_status = cell.getRow().getData().ADMIN_STATUS;
+                var ID = cell.getRow().getData().id;
+                var FNAME = cell.getRow().getData().fname;
+                var MNAME = cell.getRow().getData().mname;
+                var LNAME = cell.getRow().getData().lname;
+                var CONTACT = cell.getRow().getData().contact;
+                var LOCKED = cell.getRow().getData().locked;
+                var EXT_NAME = cell.getRow().getData().ext_name;
+                var EMAIL = cell.getRow().getData().email;
+                var ACCESS = cell.getRow().getData().access;
+                var APPROVED_STATUS = cell.getRow().getData().approved_status;
+                var admin_status = cell.getRow().getData().admin_status;
                 // console.log(admin_status);
 
                 var editBtn = $("<button class='btn btn-label-primary' >").addClass("user-edit")
@@ -460,7 +458,7 @@ function handlePdfDownload() {
                 fontSize: 7
             },
             addPageContent: function(data) {
-                data.doc.addImage('/LOGO.png', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
+                data.doc.addImage('../assets/img/LOGO.png', 'PNG', 35, 7, 45, 30); // Change the image URL or data URI and dimensions
                 data.doc.setFont("times");
                 data.doc.setFontSize(11); // Set the font size for the second line
                 data.doc.text("Learning and Development", 360, 20);
