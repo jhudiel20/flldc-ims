@@ -134,13 +134,15 @@ var approval_status = function(cell, formatterParams, onRendered) {
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
-    if (data_approval == "PENDING") {
-        return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
-            REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
-            " ' data-email=' " + EMAIL + " ' >PENDING</button>";
-    } else {
-        return data_approval;
-    }
+        if (data_approval == "PENDING") {
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
+                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
+                " ' data-email=' " + EMAIL + " ' >PENDING</button>";
+        } else {
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
+                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
+                " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
+        }
     <?php }else{ ?>
     return data_approval;
     <?php } ?>

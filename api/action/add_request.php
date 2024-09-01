@@ -241,6 +241,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </table>
                     </div>
                 </div>
+                <div>
+                    <table align="center">
+                        <tr>
+                        <td style="height:150px;  border:none;border-radius:3px;color:black;padding:15px 19px" align="center" valign="middle">&copy; 2024-2025 <strong><span>FAST Learning and Development Inventory Management System</span></strong></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         ';
 

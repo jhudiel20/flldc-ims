@@ -150,7 +150,7 @@ $generate_PR_ID  = generate_PR_ID();
                                         <tbody>
                                             <tr>
                                             <td style="width:138px">
-                                                <img alt="" title="" height="100px" width="200px" src="cid:logo" width="100" style="">
+                                                <img alt="" title="" height="100px" width="200px" src="../assets/img/LOGO.png" width="100" style="">
                                             </td>
                                             </tr>
                                         </tbody>
@@ -205,7 +205,7 @@ $generate_PR_ID  = generate_PR_ID();
                             </tbody>    
                         </table>
                     </div>
-                    <div>
+                <div>
                     <table align="center">
                         <tr>
                         <td style="height:150px;  border:none;border-radius:3px;color:black;padding:15px 19px" align="center" valign="middle">&copy; 2024-2025 <strong><span>FAST Learning and Development Inventory Management System</span></strong></td>
@@ -230,7 +230,7 @@ $generate_PR_ID  = generate_PR_ID();
         $history_remarks = "Status Request : " . $approval_status;
 
         $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
-        VALUES (':request_id',':title',':remarks')");
+        VALUES (:request_id,:title,:remarks)");
         $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
         $sql_history->bindParam(':title', $history_title, PDO::PARAM_STR);
         $sql_history->bindParam(':remarks', $history_remarks, PDO::PARAM_STR);
