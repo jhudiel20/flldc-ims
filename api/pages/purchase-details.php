@@ -30,8 +30,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     include __DIR__ . "/../action/global/metadata.php";
     include __DIR__ . "/../action/global/include_top.php";
     ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 
@@ -107,7 +105,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
-                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['image']; ?>"  style="height:220px;" />
+                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
                                                 <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
                                                     <form class="row g-3" method="post" id="upload_item_photo_form"
@@ -198,7 +196,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <label class="form-label">Approval Date Created</label>
                                                         <input type="text" class="form-control"
                                                             name="APPROVAL_DATE_CREATED" id="APPROVAL_DATE_CREATED"
-                                                            value="<?php echo date('M d ,Y h:i A', strtotime($row['approval_date_created'])) ?>"
+                                                            value="<?php echo ($row['approval_date_created'] ? (new DateTime($row['approval_date_created']))->format('M d, Y h:i A') : ''); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">
@@ -209,7 +207,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-md-6">
                                                         <label class="form-label">Date Needed</label>
                                                         <input type="text" class="form-control"
-                                                            value="<?php echo date('M d ,Y', strtotime($row['date_needed'])) ?>"
+                                                            value="<?php echo ($row['date_needed'] ? (new DateTime($row['date_needed']))->format('M d, Y') : ''); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">

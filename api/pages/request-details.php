@@ -3,7 +3,7 @@ require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location: index");
+    header("Location:index.php");
 }
 
 
@@ -14,7 +14,7 @@ if(empty($id)){
     header("Location:404.php");
 }
 
-$sql = $conn->prepare("SELECT * FROM purchase_order WHERE id = :id ");
+$sql = $conn->prepare("SELECT * FROM purchase_order WHERE ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
@@ -31,6 +31,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     include __DIR__ . "/../action/global/include_top.php";
     ?>
 </head>
+
+
+
 
 <div class="modal fade" id="upload-PO_ATTACHMENT-modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -102,7 +105,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
-                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:13.75rem;" />
+                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +127,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#purchase-info" aria-controls="navs-justified-home"
                                                     aria-selected="true">
-                                                    <i class="fa-solid fa-circle-info"></i> Request Order Info
+                                                    <i class="fa-solid fa-circle-info"></i> Request Info
                                                 </button>
                                             </li>
                                             <li class="nav-item">
@@ -181,34 +184,34 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-md-6">
                                                         <label class="form-label">PR No.</label>
                                                         <input type="text" class="form-control" name="PR_NO" id="PR_NO"
-                                                            value="<?php echo $row['pr_no']; ?>" disabled>
+                                                            value="<?php echo $row['pr_no']; ?>">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">PO No.</label>
                                                         <input type="text" class="form-control" name="PO_NO" id="PO_NO"
-                                                            value="<?php echo $row['po_no']; ?>" disabled>
+                                                            value="<?php echo $row['po_no']; ?>">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">OS-TICKET NO.</label>
                                                         <input type="text" class="form-control" name="OS_TICKET_NO"
                                                             id="OS_TICKET_NO"
-                                                            value="<?php echo $row['os_ticket_no']; ?>" disabled>
+                                                            value="<?php echo $row['os_ticket_no']; ?>">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">Item Name<span
                                                                 class="require asterisk">*</span></label>
                                                         <input type="text" class="form-control" name="ITEM_NAME"
-                                                            id="ITEM_NAME" value="<?php echo $row['item_name']; ?>" disabled>
+                                                            id="ITEM_NAME" value="<?php echo $row['item_name']; ?>">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">Quantity<span
                                                                 class="require asterisk">*</span></label>
                                                         <input type="text" class="form-control" name="QUANTITY"
-                                                            id="QUANTITY" value="<?php echo $row['quantity']; ?>" disabled>
+                                                            id="QUANTITY" value="<?php echo $row['quantity']; ?>">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">Status</label>
-                                                        <select name="STATUS" id="STATUS" class="form-select" disabled
+                                                        <select name="STATUS" id="STATUS" class="form-select"
                                                             <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR') ? 'disabled' : ''; ?>>
                                                             <?php foreach (PR_STATUS as $value) { ?>
                                                             <option value="<?= $value; ?>"
@@ -221,17 +224,22 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-md-12">
                                                         <label class="form-label py-1">Item Description </label>
                                                         <textarea class="form-control" type="text" cols="30"
-                                                            name="ITEM_DESC" id="ITEM_DESC" disabled
+                                                            name="ITEM_DESC" id="ITEM_DESC"
                                                             rows="3"><?php echo $row['description']; ?></textarea>
                                                     </div>
 
                                                     <div class="col-md-12">
                                                         <label class="form-label py-1">Remarks </label>
                                                         <textarea class="form-control" name="REMARKS" id="REMARKS"
-                                                            type="text" cols="30" disabled
+                                                            type="text" cols="30"
                                                             rows="3"><?php echo $row['remarks']; ?></textarea>
                                                     </div>
 
+                                                    <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
+                                                    <button type="button" class="btn btn-label-primary"
+                                                        id="submit_edit_purchase_details"
+                                                        name="submit_edit_purchase_details">Save</button>
+                                                    <?php }?>
                                                 </form>
                                             </div>
                                             <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -250,7 +258,22 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <?php }?>
                                                         </div>
                                                     </div>
-                                                   
+                                                    <?php if($decrypted_array['ACCESS'] != "REQUESTOR"){?>
+                                                    <div class="col-6 py-3" style="float: left; display: inline-block;">
+
+                                                        <button type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#upload-PO_ATTACHMENT-modal"
+                                                            class="btn btn-label-primary"
+                                                            style="width:95%">Upload</button>
+                                                    </div>
+
+                                                    <div class="col-6 py-3" style="display:inline-block;">
+                                                        <button type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#delete-PO_ATTACHMENT-modal"
+                                                            class="btn btn-label-danger"
+                                                            style="width:95%">Delete</button>
+                                                    </div>
+                                                    <?php } ?>
 
                                                 </div>
 
@@ -336,7 +359,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         </div>
         <!-- Footer -->
         <?php 
-                    include __DIR__ . "/../action/global/include_bottom.php";
+                    include __DIR__ . "/../action/global/footer.php";
                     ?>
         <!-- / Footer -->
 
@@ -367,9 +390,211 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 </body>
 
 <script>
+$(document).ready(function() {
+    if ("<?php echo $decrypted_array['ACCESS']; ?>" === "REQUESTOR") {
+        // Get all input elements with type "text"
+        var form = document.getElementById('purchase_details_form');
 
+        // Get all input elements with type "text" within the form
+        var textInputs = form.querySelectorAll('input[type="text"]');
+        var textareas = form.querySelectorAll('textarea');
+        // Loop through each text input and disable it
+        textInputs.forEach(function(input) {
+            input.disabled = true;
+        });
+        textareas.forEach(function(textarea) {
+            textarea.disabled = true;
+        });
+    }
+    $('#submit_edit_purchase_details').on('click', function() {
+        var formdata = new FormData(purchase_details_form);
 
+        $.ajax({
+            url: "../action/edit_purchase_details_info.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
 
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
+
+    $('#submit_po_attachments').on('click', function() {
+        var formdata = new FormData(dropzone_basic);
+
+        $.ajax({
+            url: "../action/upload_po_attachment.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
+    $('#delete_po_attachments').on('click', function() {
+        var formdata = new FormData(delete_po_attachments_form);
+
+        $.ajax({
+            url: "../action/delete_po_attachments.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
+    $('#submit_upload_item_photo').on('click', function() {
+        var formdata = new FormData(upload_item_photo_form);
+
+        $.ajax({
+            url: "../action/upload_item_photo.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
+    $('#delete_item_photo').on('click', function() {
+        var formdata = new FormData(delete_item_photo_form);
+
+        $.ajax({
+            url: "../action/delete_item_photo.php",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
+
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     // Get the active tab for the first set of tabs from localStorage or set a default value
@@ -389,8 +614,32 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(tab1);
 });
 
-
 // STORING CLICK TABS 
 </script>
 
 </html>
+
+<div class="modal fade" id="delete_item_photo_modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to
+                        delete a photo?</i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <form method="post" id="delete_item_photo_form" style="display: inline-block;">
+                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
+                    <input type="hidden" name="photo_pr_id" id="photo_pr_id" value="<?php echo $row['pr_id'] ?>">
+                    <input type="hidden" name="photo_item_name" id="photo_item_name"
+                        value="<?php echo $row['item_name'] ?>">
+                    <input style="width:auto" type="hidden" name="item_image_to_delete" class="form-control"
+                        value="<?php echo $row['item_photo']; ?>">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="delete_item_photo" class="btn btn-danger"
+                        data-bs-dismiss="modal">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- End delete employee photo Modal-->
