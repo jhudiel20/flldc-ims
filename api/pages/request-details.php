@@ -199,7 +199,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <label class="form-label">Approval Date Created</label>
                                                         <input type="text" class="form-control"
                                                             name="APPROVAL_DATE_CREATED" id="APPROVAL_DATE_CREATED"
-                                                            value="<?php echo date('M d ,Y h:i A',strtotime($row['approval_date_created']) ?: ''); ?>"
+                                                            value="<?php echo ($row['approval_date_created'] ? (new DateTime($row['approval_date_created']))->format('M d, Y h:i A') : ''); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">
@@ -210,7 +210,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-md-6">
                                                         <label class="form-label">Date Needed</label>
                                                         <input type="text" class="form-control"
-                                                            value="<?php echo date('M d ,Y', strtotime($row['date_needed']) ?: '' ); ?>"
+                                                            value="<?php echo ($row['date_needed'] ? (new DateTime($row['date_needed']))->format('M d, Y') : ''); ?>"
                                                             disabled>
                                                     </div>
                                                     <div class="col-md-6">

@@ -389,9 +389,8 @@ $(document).ready(function() {
         })
 
     $('#request_approval_form').on('submit', function(e) {
-            var formData = new FormData(this);
+            var formdata = new FormData(document.getElementById('request_approval_form'));
             e.preventDefault();  
-
         $.ajax({
             url: "/update_request_status.php",
             method: "POST",
@@ -401,13 +400,13 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#submit_approval').hide();
+                $('#submit_approval_btn').hide();
                 $('#submit_icon').removeClass('d-none').prop('disabled', true);
             },
 
             success: function(response) {
                 $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_approval').show();
+                $('#submit_approval_btn').show();
                 console.log(response);
                 if (response.success) {
                     $('#approval_modal').modal('hide');
