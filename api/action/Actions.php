@@ -58,9 +58,9 @@ if ($logSuccess) {
     setcookie('ADMIN_STATUS', '', time() - 3600, '/');
     
     // Redirect to the index page
-    // header("Location: /index");
+    header("Location: /index");
     exit();
-    print_r($_COOKIE);
+    // print_r($_COOKIE);
 } else {
     // Handle the error if the logging failed
     echo "Error logging out. Please try again.";

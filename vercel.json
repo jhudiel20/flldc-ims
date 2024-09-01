@@ -116,7 +116,7 @@
       },
       {
         "src": "/edit_purchase_details_info.php",
-        "dest": "/api/pages/edit_purchase_details_info.php"
+        "dest": "/api/action/edit_purchase_details_info.php"
       },
       {
         "src": "/purchase-list",

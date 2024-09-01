@@ -250,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         ';
-        $mail->AddEmbeddedImage('/../../public/assets/img/LOGO.png','logo','LOGO.png');
+        $mail->AddEmbeddedImage('../assets/img/LOGO.png','logo','LOGO.png');
         $mail->send();
     }catch (Exception $e) {
         $response['success'] = false;
