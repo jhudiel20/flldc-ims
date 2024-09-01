@@ -476,7 +476,7 @@ $(document).ready(function() {
         var formdata = new FormData(dropzone_basic);
 
         $.ajax({
-            url: "../action/upload_po_attachment.php",
+            url: "/upload_po_attachment.php",
             method: "POST",
             data: formdata,
             dataType: "json",

@@ -115,10 +115,6 @@
         "dest": "/api/pages/request-details.php"
       },
       {
-        "src": "/edit_purchase_details_info.php",
-        "dest": "/api/action/edit_purchase_details_info.php"
-      },
-      {
         "src": "/purchase-list",
         "dest": "/api/pages/purchase-list.php"
       },
@@ -129,6 +125,14 @@
       {
         "src": "/purchase-details",
         "dest": "/api/pages/purchase-details.php"
+      },
+      {
+        "src": "/edit_purchase_details_info.php",
+        "dest": "/api/action/edit_purchase_details_info.php"
+      },
+      {
+        "src": "/upload_po_attachment.php",
+        "dest": "/api/action/upload_po_attachment.php"
       },
       {
         "src": "/logs",
