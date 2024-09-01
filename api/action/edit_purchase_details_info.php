@@ -42,9 +42,9 @@ if($row_compare['pr_no'] == '' || $row_compare['pr_no'] == NULL){
         $history_remarks = "PR No. : " . $PR_NO;
         $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
         VALUES (:request_id,:history_title,:history_remarks)");
-        $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+        $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
         $sql_history->execute();
     }
 }else{
@@ -54,9 +54,9 @@ if($row_compare['pr_no'] == '' || $row_compare['pr_no'] == NULL){
             $history_remarks = "PR No. : " . $PR_NO;
             $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
             VALUES (:request_id,:history_title,:history_remarks)");
-            $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+            $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
             $sql_history->execute();
         }
     }
@@ -66,9 +66,9 @@ if($row_compare['pr_no'] == '' || $row_compare['pr_no'] == NULL){
             $history_remarks = "PR No. : " . $PR_NO;
             $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
             VALUES (:request_id,:history_title,:history_remarks)");
-            $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+            $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
             $sql_history->execute();
         } 
     }
@@ -80,9 +80,9 @@ if($row_compare['po_no'] == '' || $row_compare['po_no'] == NULL){
         $history_remarks = "PO No. : " . $PO_NO;
         $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
         VALUES (:request_id,:history_title,:history_remarks)");
-        $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+        $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
         $sql_history->execute();
     }
 }else{
@@ -92,9 +92,9 @@ if($row_compare['po_no'] == '' || $row_compare['po_no'] == NULL){
             $history_remarks = "PO No. : " . $PO_NO;
             $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
             VALUES (:request_id,:history_title,:history_remarks)");
-            $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+            $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);  
             $sql_history->execute();
         }
     }
@@ -104,9 +104,9 @@ if($row_compare['po_no'] == '' || $row_compare['po_no'] == NULL){
             $history_remarks = "PO No. : " . $PO_NO;
             $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
             VALUES (:request_id,:history_title,:history_remarks)");
-            $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+            $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
             $sql_history->execute();
         } 
     }
@@ -118,9 +118,9 @@ if($row_compare['os_ticket_no'] == '' || $row_compare['os_ticket_no'] == NULL){
         $history_remarks = "OS-Ticket No. : " . $OS_TICKET_NO;
         $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
         VALUES (:request_id,:history_title,:history_remarks)");
-        $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-        $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+        $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+        $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
         $sql_history->execute();
     }
 }else{
@@ -138,9 +138,9 @@ if($row_compare['os_ticket_no'] == '' || $row_compare['os_ticket_no'] == NULL){
             $history_remarks = "OS-Ticket No. : " . $OS_TICKET_NO;
             $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
             VALUES (:request_id,:history_title,:history_remarks)");
-            $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-            $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+            $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+            $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
             $sql_history->execute();
         } 
     }
@@ -151,24 +151,24 @@ if($STATUS !== 'PENDING'){
     $history_remarks = "Status : " . $STATUS;
     $sql_history = mysqli_query($conn, "INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
     VALUES (:request_id,:history_title,:history_remarks)");
-    $sql_history = bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-    $sql_history = bindParam(':history_title', $history_title, PDO::PARAM_STR);
-    $sql_history = bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
+    $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
+    $sql_history->bindParam(':history_title', $history_title, PDO::PARAM_STR);
+    $sql_history->bindParam(':history_remarks', $history_remarks, PDO::PARAM_STR);
     $sql_history->execute();
 }
 
 
 $sql = mysqli_query($conn, "UPDATE purchase_order SET ITEM_NAME = :item_name, QUANTITY = :quantity, STATUS = :status, 
 DESCRIPTION = :item_desc, REMARKS = :remarks, PR_NO = :pr_no, PO_NO = :po_no, OS_TICKET_NO = :os_ticket_no WHERE ID = :id ");
-$sql = bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
-$sql = bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
-$sql = bindParam(':status', $STATUS, PDO::PARAM_STR);
-$sql = bindParam(':item_desc', $ITEM_DESC, PDO::PARAM_STR);
-$sql = bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
-$sql = bindParam(':pr_no', $PR_NO, PDO::PARAM_STR);
-$sql = bindParam(':po_no', $PO_NO, PDO::PARAM_STR);
-$sql = bindParam(':os_ticket_no', $ITEM_NAME, PDO::PARAM_STR);
-$sql = bindParam(':id', $ID, PDO::PARAM_STR);
+$sql->bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
+$sql->bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
+$sql->bindParam(':status', $STATUS, PDO::PARAM_STR);
+$sql->bindParam(':item_desc', $ITEM_DESC, PDO::PARAM_STR);
+$sql->bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
+$sql->bindParam(':pr_no', $PR_NO, PDO::PARAM_STR);
+$sql->bindParam(':po_no', $PO_NO, PDO::PARAM_STR);
+$sql->bindParam(':os_ticket_no', $ITEM_NAME, PDO::PARAM_STR);
+$sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
 
 $user_id = $_SESSION['ID'];
