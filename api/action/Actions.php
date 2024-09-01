@@ -19,32 +19,24 @@ $logSuccess = $logAction->execute([':user_id' => $user_id, ':action_made' => $ac
 
 if ($logSuccess) {
     // Unset the cookies only if the log was successfully inserted
-    $cookieNames = [
-        'status',
-        'ID',
-        'ACCESS',
-        'USERNAME',
-        'PASSWORD',
-        'DATE_CREATED',
-        'FNAME',
-        'MNAME',
-        'LNAME',
-        'EXT_NAME',
-        'EMAIL',
-        'IMAGE',
-        'LOCKED',
-        'ADMIN_STATUS'
-    ];
-
-    // Loop through the array and destroy each cookie
-    foreach ($cookieNames as $cookieName) {
-        setcookie($cookieName, '', time() - 3600, '/');
-    } 
-    exit();
-
+    setcookie('status', '', time() - 3600, '/');
+    setcookie('ID', '', time() - 3600, '/');
+    setcookie('ACCESS', '', time() - 3600, '/');
+    setcookie('USERNAME', '', time() - 3600, '/');
+    setcookie('PASSWORD', '', time() - 3600, '/');
+    setcookie('DATE_CREATED', '', time() - 3600, '/');
+    setcookie('FNAME', '', time() - 3600, '/');
+    setcookie('MNAME', '', time() - 3600, '/');
+    setcookie('LNAME', '', time() - 3600, '/');
+    setcookie('EXT_NAME', '', time() - 3600, '/');
+    setcookie('EMAIL', '', time() - 3600, '/');
+    setcookie('IMAGE', '', time() - 3600, '/');
+    setcookie('LOCKED', '', time() - 3600, '/');
+    setcookie('ADMIN_STATUS', '', time() - 3600, '/');
+    
     // Redirect to the index page
     header("Location: /index");
-   
+    exit();
 } else {
     // Handle the error if the logging failed
     echo "Error logging out. Please try again.";

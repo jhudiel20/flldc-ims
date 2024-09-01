@@ -439,7 +439,7 @@ $(document).ready(function() {
         var formdata = new FormData(purchase_details_form);
 
         $.ajax({
-            url: "../action/edit_purchase_details_info.php",
+            url: "/edit_purchase_details_info.php",
             method: "POST",
             data: formdata,
             dataType: "json",

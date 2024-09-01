@@ -103,9 +103,11 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             <div class="card">
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
-                                        <div class="card-body">
+                                        <div class="card-body"> 
+                                            <div class="text-center">
                                             <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
-                                        </div>
+                                            </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -232,12 +234,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 type="text" cols="30"
                                                                 rows="3"><?php echo $row['remarks']; ?></textarea>
                                                         </div>
-
-                                                        <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                        <button type="button" class="btn btn-label-primary"
-                                                            id="submit_edit_purchase_details"
-                                                            name="submit_edit_purchase_details">Save</button>
-                                                        <?php }?>
                                                     </form>
                                                 </div>
                                                 <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -256,23 +252,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <?php }?>
                                                             </div>
                                                         </div>
-                                                        <?php if($decrypted_array['ACCESS'] != "REQUESTOR"){?>
-                                                        <div class="col-6 py-3" style="float: left; display: inline-block;">
-
-                                                            <button type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#upload-PO_ATTACHMENT-modal"
-                                                                class="btn btn-label-primary"
-                                                                style="width:95%">Upload</button>
-                                                        </div>
-
-                                                        <div class="col-6 py-3" style="display:inline-block;">
-                                                            <button type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#delete-PO_ATTACHMENT-modal"
-                                                                class="btn btn-label-danger"
-                                                                style="width:95%">Delete</button>
-                                                        </div>
-                                                        <?php } ?>
-
                                                     </div>
 
 
@@ -359,7 +338,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
             <div class="content-backdrop fade"></div>
 
         </div><!-- Content wrapper -->
-        
+
     </div>
     <!-- / Layout page -->
     
