@@ -285,7 +285,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 style="width: auto;height:500px;text-align:center;padding-top:200px">
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
-                                                                <div id="pdf-viewer" style="width: 100%; height: 700px;"></div>
                                                                 <iframe
                                                                     src="/fetch_pdf.php?file=<?php echo urlencode($row['attachments']); ?>"
                                                                     width="auto"
@@ -431,21 +430,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 </body>
 
 <script>
-
-const pdfUrl = 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/<?php echo $row['attachments']; ?>';
-
-fetch(pdfUrl)
-  .then(response => response.blob())
-  .then(blob => {
-    const objectUrl = URL.createObjectURL(blob);
-    const embedHtml = `<iframe src="${objectUrl}" width="100%" height="700px" style="border: none;"></iframe>`;
-    document.getElementById('pdf-viewer').innerHTML = embedHtml;
-  })
-  .catch(error => {
-    console.error('Error fetching the PDF:', error);
-    document.getElementById('pdf-viewer').innerHTML = 'Failed to load PDF.';
-  });
-  
 $(document).ready(function() {
     if ("<?php echo $decrypted_array['ACCESS']; ?>" === "REQUESTOR") {
         // Get all input elements with type "text"

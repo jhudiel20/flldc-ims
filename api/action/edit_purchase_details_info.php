@@ -171,7 +171,7 @@ $sql->bindParam(':os_ticket_no', $ITEM_NAME, PDO::PARAM_STR);
 $sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
 
-$user_id = $decrypted['ID'];
+$user_id = $decrypted_array['ID'];
 $action = "Updated Purchase Order Details | Product Item : ".$ITEM_NAME;
 
 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
