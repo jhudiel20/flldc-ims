@@ -135,6 +135,10 @@
         "dest": "/api/action/upload_po_attachment.php"
       },
       {
+        "src": "/fetch_pdf.php",
+        "dest": "/api/action/fetch_pdf.php"
+      },
+      {
         "src": "/logs",
         "dest": "/api/pages/logs.php"
       },
