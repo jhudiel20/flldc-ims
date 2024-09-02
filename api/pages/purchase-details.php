@@ -268,6 +268,10 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <button type="button" class="btn btn-label-primary"
                                                         id="submit_edit_purchase_details"
                                                         name="submit_edit_purchase_details">Save</button>
+                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
+                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                            Loading...
+                                                        </button>
                                                     <?php }?>
                                                 </form>
                                             </div>
@@ -280,11 +284,17 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <h1
                                                                 style="width: auto;height:500px;text-align:center;padding-top:200px">
                                                                 Empty!</h1>
-                                                            <?php }else{ ?>
-                                                                <iframe src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/<?php echo $row['attachments']; ?>"
-                                                                        width="auto" height="700px" type="application/pdf">
-                                                                </iframe>
-                                                            <?php }?>
+                                                            <?php }else{ 
+                                                                $fileUrl = 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/' . $row['attachments'];
+
+                                                                // Set the headers to display the PDF inline
+                                                                header('Content-Type: application/pdf');
+                                                                header('Content-Disposition: inline; filename="' . basename($fileUrl) . '"');
+
+                                                                // Fetch the content of the PDF file from GitHub
+                                                                $pdfContent = file_get_contents($fileUrl); 
+                                                                echo $pdfContent;
+                                                            } ?>
                                                         </div>
                                                     </div>
                                                     <?php if($decrypted_array['ACCESS'] != "REQUESTOR"){?>
@@ -294,6 +304,10 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             data-bs-target="#upload-PO_ATTACHMENT-modal"
                                                             class="btn btn-label-primary"
                                                             style="width:95%">Upload</button>
+                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
+                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                            Loading...
+                                                        </button>
                                                     </div>
 
                                                     <div class="col-6 py-3" style="display:inline-block;">
@@ -446,8 +460,13 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
-
+            beforeSend: function() {
+                $('#submit_edit_purchase_details').hide();
+                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+            },
             success: function(response) {
+                $('#submit_icon').addClass('d-none').prop('disabled', false);
+                $('#submit_edit_purchase_details').show();
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -482,7 +501,13 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function() {
+                $('#submit_po_attachments').hide();
+                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+            },
             success: function(response) {
+                $('#submit_icon').addClass('d-none').prop('disabled', false);
+                $('#submit_po_attachments').show();
                 console.log(response);
                 if (response.success) {
                     $('#upload-PO_ATTACHMENT-modal').modal('hide');

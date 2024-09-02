@@ -281,7 +281,9 @@ include 'config/config.php';
                                 icon: response.icon,
                                 title: response.title,
                                 text: response.message,
-                            })
+                            }).then(function() {
+                                location.reload();
+                            });
                         }
                     },
                     error: function(xhr, status, error) {

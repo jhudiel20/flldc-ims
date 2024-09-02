@@ -51,8 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                session_start();
-                $_SESSION['STATUS'] = 'true';
                 $cookieData = [
                     'status' => 'true',
                     'ID' => $user['id'],  // Consider encrypting this for security
