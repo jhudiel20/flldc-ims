@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-if ($decrypted_array['ACCESS'] != 'true') {
+if ($decrypted_array['status'] != 'true') {
     header("Location:index.php");
 }
 ?>
