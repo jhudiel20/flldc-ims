@@ -56,7 +56,7 @@ if ($logSuccess) {
     setcookie('IMAGE', '', time() - 3600, '/');
     setcookie('LOCKED', '', time() - 3600, '/');
     setcookie('ADMIN_STATUS', '', time() - 3600, '/');
-    
+    session_destroy ();
     // Redirect to the index page
     header("Location: /index");
     exit();

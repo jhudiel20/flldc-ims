@@ -60,6 +60,7 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         
+        $response = curl_exec($ch);
         $sql = "UPDATE purchase_order SET attachments = :file WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':file', $fileName);
@@ -102,8 +103,11 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
         curl_close($ch);
 
     }  else {
-        $response['message'] = 'PLEASE INSERT VALID FORMAT! (jpg, png, jpeg, gif,pdf)';
-        echo json_encode($response);
+        echo json_encode([
+            'success' => false,
+            'title' => 'error',
+            'message' => 'PLEASE INSERT VALID FORMAT! (jpg, png, jpeg, gif,pdf)',
+        ]);
         exit();
     }
 } else {
