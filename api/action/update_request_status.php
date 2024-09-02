@@ -54,36 +54,6 @@ $generate_PR_ID  = generate_PR_ID();
             $mail->Subject = 'Request Status Update : '.$approval_status;
             $mail->Body    = '
                 <div style="background:#f3f3f3">
-                    <div style="margin:0px auto;max-width:640px;background:transparent">
-                    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
-                        <tbody>
-                        <tr>
-                            <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:40px 0px">
-                            <div aria-labelledby="mj-column-per-100" class="m_29934315870093561mj-column-per-100" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%">
-                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                <tbody>
-                                    <tr>
-                                    <td style="word-break:break-word;font-size:0px;padding:0px" align="center">
-                                        <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px" align="center" border="0">
-                                        <tbody>
-                                            <tr>
-                                            <td style="width:138px">
-                                                <img alt="" title="" height="100px" width="200px" src="cid:logo" width="100" style="">
-                                            </td>
-                                            </tr>
-                                        </tbody>
-                                        </table>
-                                    </td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </div>
-
                     <div style="max-width:640px;margin:0 auto;border-radius:4px;overflow:hidden">
                     <div style="margin:0px auto;max-width:640px;background:#fdfdfd">
                         <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:#fdfdfd" align="center" border="0">
@@ -215,8 +185,6 @@ $generate_PR_ID  = generate_PR_ID();
                 </div>
             ';
         }
-        $logoPath = __DIR__ . '/../../public/assets/img/LOGO.png';
-        $mail->AddEmbeddedImage($logoPath,'logo','LOGO.png');
         $mail->send();
 
         $sql = $conn->prepare("UPDATE purchase_order SET PR_ID = :pr_id ,
