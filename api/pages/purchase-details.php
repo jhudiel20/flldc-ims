@@ -282,7 +282,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
                                                             <embed type="application/pdf"
-                                                                src="/PO_ATTACHMENTS/<?php echo $row['attachments'];?>"
+                                                                src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/<?php echo $row['attachments']; ?>"
                                                                 width="auto" height="700px">
                                                             <?php }?>
                                                         </div>
@@ -471,7 +471,6 @@ $(document).ready(function() {
             }
         });
     })
-
     $('#submit_po_attachments').on('click', function() {
         var formdata = new FormData(dropzone_basic);
 
