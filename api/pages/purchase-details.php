@@ -281,9 +281,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 style="width: auto;height:500px;text-align:center;padding-top:200px">
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
-                                                            <embed type="application/pdf"
-                                                                src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/<?php echo $row['attachments']; ?>"
-                                                                width="auto" height="700px">
+                                                                <iframe src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/<?php echo $row['attachments']; ?>"
+                                                                        width="auto" height="700px" type="application/pdf">
+                                                                </iframe>
                                                             <?php }?>
                                                         </div>
                                                     </div>
