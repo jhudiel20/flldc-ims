@@ -33,7 +33,7 @@ $REMARKS =  isset($_POST['REMARKS']) ? trim($_POST['REMARKS']) : '';
 $compare = $conn->prepare("SELECT pr_no,po_no,os_ticket_no FROM purchase_order WHERE id = :id ");
 $compare->bindParam('id', $id, PDO::PARAM_STR);
 $compare->execute();
-$sql_compare = $compare->fetch(PDO::FETCH_ASSOC);
+$row_compare = $compare->fetch(PDO::FETCH_ASSOC);
 
 
 if($row_compare['pr_no'] == '' || $row_compare['pr_no'] == NULL){

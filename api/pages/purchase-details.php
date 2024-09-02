@@ -287,12 +287,10 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <?php }else{ 
                                                                 $fileUrl = 'https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/PO_ATTACHMENTS/' . $row['attachments'];
 
+                                                                $pdfContent = file_get_contents($fileUrl);
                                                                 // Set the headers to display the PDF inline
                                                                 header('Content-Type: application/pdf');
                                                                 header('Content-Disposition: inline; filename="' . basename($fileUrl) . '"');
-
-                                                                // Fetch the content of the PDF file from GitHub
-                                                                $pdfContent = file_get_contents($fileUrl); 
                                                                 echo $pdfContent;
                                                             } ?>
                                                         </div>

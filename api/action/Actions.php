@@ -19,28 +19,6 @@ $logSuccess = $logAction->execute([':user_id' => $user_id, ':action_made' => $ac
 
 if ($logSuccess) {
 
-    $cookieNames = [
-        'status',
-        'ID',
-        'ACCESS',
-        'USERNAME',
-        'PASSWORD',
-        'DATE_CREATED',
-        'FNAME',
-        'MNAME',
-        'LNAME',
-        'EXT_NAME',
-        'EMAIL',
-        'IMAGE',
-        'LOCKED',
-        'ADMIN_STATUS'
-    ];
-
-    // Loop through the array and destroy each cookie
-    foreach ($cookieNames as $cookieName) {
-        setcookie($cookieName, '', time() - 3600, '/');
-    } 
-
     // Unset the cookies only if the log was successfully inserted
     setcookie('status', '', time() - 3600, '/');
     setcookie('ID', '', time() - 3600, '/');
