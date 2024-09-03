@@ -534,7 +534,7 @@ $(document).ready(function() {
         var formdata = new FormData(delete_po_attachments_form);
 
         $.ajax({
-            url: "../action/delete_po_attachments.php",
+            url: "/delete_po_attachments.php",
             method: "POST",
             data: formdata,
             dataType: "json",

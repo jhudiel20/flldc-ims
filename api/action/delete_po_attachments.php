@@ -13,7 +13,7 @@ $githubToken = getenv('GITHUB_TOKEN');
 $owner = 'jhudiel20'; // GitHub username or organization
 $repo = 'flldc-user-image';
 
-if(empty($_POST['photo_to_delete'])){
+if(empty($_POST['attachment_to_delete'])){
     echo json_encode([
         'success' => false,
         'title' => 'Warning!',
@@ -23,12 +23,14 @@ if(empty($_POST['photo_to_delete'])){
 }
 
 // Check if the file to delete is specified
-if (isset($_POST['photo_to_delete']) && isset($_POST['ID'])) {
-    $fileName = $_POST['photo_to_delete'];
-    $id = $_POST['ID'];
+if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
+    $fileName = $_POST['attachment_to_delete'];
+
+    $id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
+    $DELETE_ITEM_NAME = isset($_POST['DELETE_ITEM_NAME']) ? trim($_POST['DELETE_ITEM_NAME']) : '';
 
     // Prepare the API request URL
-    $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/images/' . $fileName;
+    $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . $fileName;
 
     // Get the current file SHA (necessary for deletion)
     $ch = curl_init($apiUrl);
@@ -61,15 +63,15 @@ if (isset($_POST['photo_to_delete']) && isset($_POST['ID'])) {
         $deleteResponse = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        // Update database and log the action if successful
+                // Update database and log the action if successful
         if ($httpCode == 200) {
-            $user_id = $decrypted_array['ID'];
-            $sql = "UPDATE user_account SET image = '' WHERE id = :user_id";
+            $sql = "UPDATE purchase_order SET attachments = '' WHERE id = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
 
-            $action = "Deleted picture for User ID: " . $id;
+            $user_id = $decrypted_array['ID'];
+            $action = "Deleted Attachmet in Item Name : " . $DELETE_ITEM_NAME;
             $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
             $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $logs->bindParam(':action', $action, PDO::PARAM_STR);
@@ -88,21 +90,8 @@ if (isset($_POST['photo_to_delete']) && isset($_POST['ID'])) {
                 'message' => 'Failed to delete file. HTTP Code: ' . $httpCode . ' Response: ' . $deleteResponse,
             ]);
         }
-    } else {
-        // Handle the case where file SHA is not found
-        echo json_encode([
-            'success' => false,
-            'title' => 'GitHub API Error',
-            'message' => 'File not found or unable to retrieve SHA.',
-        ]);
-    }
 
-    curl_close($ch);
-} else {
-    // Handle the case where no file is specified
-    echo json_encode([
-        'success' => false,
-        'title' => 'Delete Error',
-        'message' => 'No file specified for deletion.',
-    ]);
+    }
 }
+
+
