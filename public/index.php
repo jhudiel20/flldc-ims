@@ -252,13 +252,14 @@ include 'config/config.php';
         });
 
         $(document).ready(function() {
-            $('#user_login_form').on('submit', function(e) {
-                e.preventDefault(); // Prevent the default form submission
+            $('#signin_btn').on('click', function(e) {
+                var formdata = new FormData(document.getElementById('user_login_form'));
+                e.preventDefault();  
 
                 $.ajax({
                     url: '/userlogin.php', // Ensure this path is correct
                     type: 'POST',
-                    data: $(this).serialize(),
+                    data: formdata,
                     dataType: 'json',
                     beforeSend: function() {
                         $('#signin_btn').hide();

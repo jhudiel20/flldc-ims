@@ -168,7 +168,7 @@ $sql->bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
 $sql->bindParam(':pr_no', $PR_NO, PDO::PARAM_STR);
 $sql->bindParam(':po_no', $PO_NO, PDO::PARAM_STR);
 $sql->bindParam(':os_ticket_no', $ITEM_NAME, PDO::PARAM_STR);
-$sql->bindParam(':id', $ID, PDO::PARAM_STR);
+$sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 
 $user_id = $decrypted_array['ID'];

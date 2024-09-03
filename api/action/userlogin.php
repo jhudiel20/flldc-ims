@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }
                 $cookieData = [
-                    'status' => 'true',
+                    'status' => true,
                     'ID' => $user['id'],  // Consider encrypting this for security
                     'ACCESS' => $user['access'],
                     'USERNAME' => $user['username'],
