@@ -490,6 +490,28 @@ $(document).ready(function() {
                         timer: '2000',
                     })
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText); // For debugging
+                var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
+
+                if (xhr.status === 413) {
+                    swal({
+                        icon: 'error',
+                        title: 'Upload Error',
+                        text: 'File size too large. Please select a file less than 100 MB.',
+                        buttons: false,
+                        timer: 2000,
+                    });
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: 'Upload Error',
+                        text: errorMessage,
+                        buttons: false,
+                        timer: 2000,
+                    });
+                }
             }
         });
     })
