@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
                 }
 
-                if ($decrypted_array['ACCESS'] == '') {
+                if ($user['ACCESS'] == '') {
                     $response['icon'] = "info";
                     $response['success'] = false;
                     $response['title'] = "Error!";
@@ -95,8 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'REQUESTOR') {
-                    if ($decrypted_array['LOCKED'] == 3) {
+                if ($user['ACCESS'] == 'ENCODER' || $user['ACCESS'] == 'REQUESTOR') {
+                    if ($user['LOCKED'] == 3) {
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Error!";
@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Log the user action
                 $action = "Logged in the system.";
                 $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
-                $stmt->bindParam(':user_id', $decrypted_array['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $user['ID'], PDO::PARAM_INT);
                 $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();
 
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Update user status
                 $stmt = $conn->prepare("UPDATE user_account SET status = '1', locked = '0' WHERE id = :id");
-                $stmt->bindParam(':id', $decrypted_array['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':id', $user['ID'], PDO::PARAM_INT);
                 $stmt->execute();
             } else {
                 // Password does not match

@@ -246,9 +246,12 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     style="width: auto;height:500px;text-align:center;padding-top:200px">
                                                                     Empty!</h1>
                                                                 <?php }else{ ?>
-                                                                <embed type="application/pdf"
-                                                                    src="/PO_ATTACHMENTS/<?php echo $row['attachments'];?>"
-                                                                    width="auto" height="700px">
+                                                                    <iframe
+                                                                    src="/fetch_pdf.php?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                    width="auto"
+                                                                    height="700px"
+                                                                    style="border: none;">
+                                                                </iframe>
                                                                 <?php }?>
                                                             </div>
                                                         </div>
