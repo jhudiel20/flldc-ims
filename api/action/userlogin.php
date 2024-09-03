@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
                 }
 
-                if ($decrypted_array['ACCESS'] == '') {
+                if ($user['access'] == '') {
                     $response['icon'] = "info";
                     $response['success'] = false;
                     $response['title'] = "Error!";
@@ -95,8 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'REQUESTOR') {
-                    if ($user['LOCKED'] == 3) {
+                if ($user['access'] == 'ENCODER' || $user['access'] == 'REQUESTOR') {
+                    if ($user['locked'] == 3) {
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Error!";
