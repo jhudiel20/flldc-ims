@@ -165,7 +165,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
+                                <button type="button" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
                                 <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                     Loading...
