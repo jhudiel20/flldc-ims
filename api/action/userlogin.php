@@ -108,8 +108,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Log the user action
                 $action = "Logged in the system.";
+                $log_id = $decrypted_array['ID'];
                 $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
-                $stmt->bindParam(':user_id', $user['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $log_id, PDO::PARAM_INT);
                 $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();
 
@@ -120,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Update user status
                 $stmt = $conn->prepare("UPDATE user_account SET status = '1', locked = '0' WHERE id = :id");
-                $stmt->bindParam(':id', $user['ID'], PDO::PARAM_INT);
+                $stmt->bindParam(':id', $user['id'], PDO::PARAM_INT);
                 $stmt->execute();
             } else {
                 // Password does not match
