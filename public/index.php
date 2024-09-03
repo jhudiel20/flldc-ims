@@ -252,9 +252,10 @@ include 'config/config.php';
         });
 
         $(document).ready(function() {
-            $('#signin_btn').on('click', function(e) {
-                var formdata = new FormData(document.getElementById('user_login_form'));
-                e.preventDefault();  
+            $('#signin_btn').on('click', function() {
+                // var formdata = new FormData(document.getElementById('user_login_form'));
+                var formdata = new FormData(user_login_form);
+                // e.preventDefault();  
 
                 $.ajax({
                     url: '/userlogin.php', // Ensure this path is correct
