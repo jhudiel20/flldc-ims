@@ -3,119 +3,94 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include database connection and config
-require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
-require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../DBConnection.php'; 
+require_once __DIR__ . '/../../public/config/config.php';
 
 $uploaded_item_name = isset($_POST['uploaded_item_name']) ? trim($_POST['uploaded_item_name']) : '';
 
-// Load the GitHub token from the environment variables
+// Load the GitHub token from environment variables
 $githubToken = getenv('GITHUB_TOKEN');
 
-// Define your GitHub repository and token
-$owner = 'jhudiel20'; // GitHub username or organization
+// GitHub repository and token details
+$owner = 'jhudiel20';
 $repo = 'flldc-user-image';
 
-$fileMimes = array(
-    'image/gif',
-    'image/jpeg',
-    'image/jpg',
-    'application/pdf',
-    'image/png'
-);
+$fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'application/pdf', 'image/png'];
 
-if ($_FILES['attach']['name'] == '') {
-    $response['message'] = 'Please select a photo';
-    $response['title'] = 'Warning!';
-    echo json_encode($response);
+if (empty($_FILES['attach']['name'])) {
+    echo json_encode(['success' => false, 'title' => 'Warning!', 'message' => 'Please select a file.']);
     exit();
 }
 
+// File upload handling
 if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
-    if(in_array($_FILES['attach']['type'], $fileMimes)){
+    if (in_array($_FILES['attach']['type'], $fileMimes)) {
         $id = $_POST['ID'];
         $file = $_FILES['attach'];
+        $fileSize = $file['size'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
 
-        // Read the file content
-        $fileContent = file_get_contents($filePath);
+        // Check if the file size exceeds the limit
+        if ($fileSize > 100 * 1024 * 1024) { // 100 MB limit for GitHub API
+            echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'File size too large.']);
+            exit();
+        }
 
-        // Encode the content to base64
+        // Read and encode the file content to base64
+        $fileContent = file_get_contents($filePath);
         $base64Content = base64_encode($fileContent);
 
         // Prepare the API request
-        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . urlencode($fileName);
-        $data = json_encode([
-            'message' => 'Upload ' . $fileName,
-            'content' => $base64Content,
-        ]);
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . $fileName;
+        $data = json_encode(['message' => 'Upload ' . $fileName, 'content' => $base64Content]);
 
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: token ' . $githubToken,  // Use the token from the environment variable
+            'Authorization: token ' . $githubToken,
             'User-Agent: PHP Script',
             'Content-Type: application/json',
         ]);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        
-        $response = curl_exec($ch);
-        $sql = "UPDATE purchase_order SET attachments = :file WHERE id = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':file', $fileName);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
 
-        $user_id = $decrypted_array['ID'];
-        $action = "Uploaded Purchase Order Attachments in Item Name : " . $uploaded_item_name;
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-        $logs->bindParam(':action', $action, PDO::PARAM_STR);
-        $logs->execute();
+        $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            // Output curl errors for debugging
-            echo json_encode([
-                'success' => false,
-                'title' => 'Curl Error',
-                'message' => curl_error($ch),
-            ]);
+            echo json_encode(['success' => false, 'title' => 'Curl Error', 'message' => curl_error($ch)]);
         } else {
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if ($httpCode == 201) {
                 // Successful upload
-                echo json_encode([
-                    'success' => true,
-                    'title' => 'Success',
-                    'message' => 'File uploaded successfully.',
-                ]);
+                $sql = "UPDATE purchase_order SET attachments = :file WHERE id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':file', $fileName);
+                $stmt->bindParam(':id', $id);
+                $stmt->execute();
+
+                $user_id = $decrypted_array['ID'];
+                $action = "Uploaded Purchase Order Attachments in Item Name: " . $uploaded_item_name;
+                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+                $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                $logs->bindParam(':action', $action, PDO::PARAM_STR);
+                $logs->execute();
+
+                echo json_encode(['success' => true, 'title' => 'Success', 'message' => 'File uploaded successfully.']);
+            } elseif ($httpCode == 413) {
+                echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'File size too large.']);
             } else {
-                // Output response for debugging
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'GitHub API Error',
-                    'message' => 'Failed to upload file. HTTP Code: ' . $httpCode . ' Response: ' . $response,
-                ]);
+                echo json_encode(['success' => false, 'title' => 'GitHub API Error', 'message' => 'Failed to upload file. HTTP Code: ' . $httpCode . ' Response: ' . $response]);
             }
         }
         curl_close($ch);
-
-    }  else {
-        echo json_encode([
-            'success' => false,
-            'title' => 'error',
-            'message' => 'PLEASE INSERT VALID FORMAT! (jpg, png, jpeg, gif,pdf)',
-        ]);
+    } else {
+        echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif, pdf)']);
         exit();
     }
 } else {
-    // Handle the case where no file is uploaded or an error occurred
     $errorMessage = $_FILES['attach']['error'] ?? 'No file uploaded';
-    echo json_encode([
-        'success' => false,
-        'title' => 'Upload Error',
-        'message' => 'File upload failed. Error Code: ' . $errorMessage,
-    ]);
+    echo json_encode(['success' => false, 'title' => 'Upload Error', 'message' => 'File upload failed. Error Code: ' . $errorMessage]);
 }
+?>
