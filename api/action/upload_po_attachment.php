@@ -44,7 +44,7 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
         $base64Content = base64_encode($fileContent);
 
         // Prepare the API request
-        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . $fileName;
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . urlencode($fileName);
         $data = json_encode([
             'message' => 'Upload ' . $fileName,
             'content' => $base64Content,
