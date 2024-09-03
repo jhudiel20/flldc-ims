@@ -165,7 +165,7 @@ include 'config/config.php';
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
+                                <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
                                 <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                     Loading...
@@ -252,15 +252,13 @@ include 'config/config.php';
         });
 
         $(document).ready(function() {
-            $('#signin_btn').on('click', function() {
-                var formdata = new FormData(document.getElementById('user_login_form'));
-                // var formdata = new FormData(user_login_form);
-                // e.preventDefault();  
+            $('#user_login_form').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
 
                 $.ajax({
                     url: '/userlogin.php', // Ensure this path is correct
                     type: 'POST',
-                    data: formdata,
+                    data: $(this).serialize(),
                     dataType: 'json',
                     beforeSend: function() {
                         $('#signin_btn').hide();
