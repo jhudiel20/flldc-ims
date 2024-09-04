@@ -6,8 +6,6 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 
-// $response = array('status' => 'error', 'message' => '');
-
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = isset($_POST['username']) ? trim($_POST['username']) : '';
@@ -15,19 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate inputs
     if (strpos($password, "'") !== false || strpos($username, "'") !== false || strpos($password, '"') !== false || strpos($username, '"') !== false) {
-        $response['icon'] = "warning";
-        $response['success'] = false;
-        $response['title'] = "Error!";
-        $response['message'] = 'Username and password cannot contain single or double quotes!';
+        $response = [
+            'icon' => "warning",
+            'success' => false,
+            'title' => "Error!",
+            'message' => 'Username and password cannot contain single or double quotes!'
+        ];
         echo json_encode($response);
         exit();
     }
 
     if (empty($username) || empty($password)) {
-        $response['icon'] = "warning";
-        $response['success'] = false;
-        $response['title'] = "Something Went Wrong!";
-        $response['message'] = "Please fill all fields!";
+        $response = [
+            'icon' => "warning",
+            'success' => false,
+            'title' => "Something Went Wrong!",
+            'message' => "Please fill all fields!"
+        ];
         echo json_encode($response);
         exit();
     }
@@ -44,13 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (set_password($password) === $user['password']) {
                 // Password matches
                 if ($user['approved_status'] == 1) {
-                    $response['icon'] = "error";
-                    $response['success'] = false;
-                    $response['title'] = "Error!";
-                    $response['message'] = "The administrator has rejected your registration!";
+                    $response = [
+                        'icon' => "error",
+                        'success' => false,
+                        'title' => "Error!",
+                        'message' => "The administrator has rejected your registration!"
+                    ];
                     echo json_encode($response);
                     exit();
                 }
+
+                // Encrypt the array before setting the cookie
                 $cookieData = [
                     'status' => true,
                     'ID' => $user['id'],  // Consider encrypting this for security
@@ -68,10 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'ADMIN_STATUS' => $user['admin_status']
                 ];
 
-                // Encrypt the array before setting the cookie
                 $encrypted_value = encrypt_cookie($cookieData, $encryption_key, $cipher_method);
                 
-                // Set the encrypted value as a single cookie
                 setcookie('secure_data', $encrypted_value, [
                     'expires' => time() + 1800,  // Cookie expires in 30 minutes (1800 seconds)
                     'path' => '/',                       // Available within the entire domain
@@ -81,66 +85,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'samesite' => 'Strict'              // Restrict cookie to same-site requests
                 ]);
 
-                $decrypted_array = [];
-
-                if (isset($_COOKIE['secure_data'])) {
-                    $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
-                }
-
-                if ($decrypted_array['ACCESS'] == '') {
-                    $response['icon'] = "info";
-                    $response['success'] = false;
-                    $response['title'] = "Error!";
-                    $response['message'] = "Your registration is in process!";
-                    echo json_encode($response);
-                    exit();
-                }
-                if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'REQUESTOR') {
-                    if ($decrypted_array['LOCKED'] == 3) {
-                        $response['icon'] = "warning";
-                        $response['success'] = false;
-                        $response['title'] = "Error!";
-                        $response['message'] = "Your account is locked. Please contact the admin.";
-                        echo json_encode($response);
-                        exit();
-                    }
-                }
-
                 // Log the user action
                 $action = "Logged in the system.";
-                $log_id = $decrypted_array['ID'];
                 $stmt = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action_made)");
-                $stmt->bindParam(':user_id', $log_id, PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $user['id'], PDO::PARAM_INT);
                 $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();
-
-                $response['success'] = true;
-                $response['title'] = 'Welcome!';
-                $response['message'] = 'Login successful!';
-                echo json_encode($response);
 
                 // Update user status
                 $stmt = $conn->prepare("UPDATE user_account SET status = '1', locked = '0' WHERE id = :id");
                 $stmt->bindParam(':id', $user['id'], PDO::PARAM_INT);
                 $stmt->execute();
+
+                $response = [
+                    'success' => true,
+                    'title' => 'Welcome!',
+                    'message' => 'Login successful!'
+                ];
+                echo json_encode($response);
+
             } else {
                 // Password does not match
-                $response['icon'] = "warning";
-                $response['success'] = false;
-                $response['title'] = "Wrong Password!";
-                $response['message'] = "Invalid username or password.";
+                $response = [
+                    'icon' => "warning",
+                    'success' => false,
+                    'title' => "Wrong Password!",
+                    'message' => "Invalid username or password."
+                ];
                 echo json_encode($response);
             }
         } else {
             // Username does not exist
-            $response['icon'] = "error";
-            $response['title'] = "Error!";
-            $response['success'] = false;
-            $response['message'] = 'Invalid username or password.';
+            $response = [
+                'icon' => "error",
+                'title' => "Error!",
+                'success' => false,
+                'message' => 'Invalid username or password.'
+            ];
             echo json_encode($response);
         }
     } catch (PDOException $e) {
-        $response['message'] = 'Database error: ' . $e->getMessage();
+        $response = [
+            'message' => 'Database error: ' . $e->getMessage(),
+            'success' => false
+        ];
         echo json_encode($response);
     }
 }
