@@ -217,19 +217,19 @@ if ($row_username_count > 0) {
             $admin_status = 'DEFAULT';
 
             // Bind the parameters to the prepared statement
-            $sql_purchase_order->bindParam(':username', $username, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':password', $password, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':email', $email, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':fname', $fname, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':mname', $mname, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':lname', $lname, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':ext_name', $suffix, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':access', $access, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':approved_status', $approved_status, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':admin_status', $admin_status, PDO::PARAM_STR);
-            $sql_purchase_order->bindParam(':contact', $contact, PDO::PARAM_STR);
+            $create_user->bindParam(':username', $username, PDO::PARAM_STR);
+            $create_user->bindParam(':password', $password, PDO::PARAM_STR);
+            $create_user->bindParam(':email', $email, PDO::PARAM_STR);
+            $create_user->bindParam(':fname', $fname, PDO::PARAM_STR);
+            $create_user->bindParam(':mname', $mname, PDO::PARAM_STR);
+            $create_user->bindParam(':lname', $lname, PDO::PARAM_STR);
+            $create_user->bindParam(':ext_name', $suffix, PDO::PARAM_STR);
+            $create_user->bindParam(':access', $access, PDO::PARAM_STR);
+            $create_user->bindParam(':approved_status', $approved_status, PDO::PARAM_STR);
+            $create_user->bindParam(':admin_status', $admin_status, PDO::PARAM_STR);
+            $create_user->bindParam(':contact', $contact, PDO::PARAM_STR);
             // Execute the prepared statement
-            $sql_purchase_order->execute();
+            $create_user->execute();
 
 
             $action = "Inserted New User ";
