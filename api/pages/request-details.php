@@ -490,8 +490,7 @@ $(document).ready(function() {
                         timer: '2000',
                     })
                 }
-            },
-            error: function(xhr, status, error) {
+            },error: function(xhr, status, error) {
                 console.error(xhr.responseText); // For debugging
                 var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
 

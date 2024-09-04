@@ -12,85 +12,97 @@ $githubToken = getenv('GITHUB_TOKEN');
 // Define your GitHub repository and token
 $owner = 'jhudiel20'; // GitHub username or organization
 $repo = 'flldc-user-image';
+$fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'];
+
+if (empty($_FILES['image']['name'])) {
+    echo json_encode(['success' => false, 'title' => 'Warning!', 'message' => 'Please select an image.']);
+    exit();
+}
 
 // Check if file is uploaded
 if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-    $id = $_POST['ID'];
-    $file = $_FILES['image'];
-    $filePath = $file['tmp_name'];
-    $fileName = $file['name'];
+        $id = $_POST['ID'];
+        $file = $_FILES['image'];
+        $filePath = $file['tmp_name'];
+        $fileName = $file['name'];
+    if (in_array($_FILES['attach']['type'], $fileMimes)) {
+        
 
-    // Read the file content
-    $fileContent = file_get_contents($filePath);
+        // Read the file content
+        $fileContent = file_get_contents($filePath);
 
-    // Encode the content to base64
-    $base64Content = base64_encode($fileContent);
+        // Encode the content to base64
+        $base64Content = base64_encode($fileContent);
 
-    // Prepare the API request
-    $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/images/' . $fileName;
-    $data = json_encode([
-        'message' => 'Upload ' . $fileName,
-        'content' => $base64Content,
-    ]);
-
-    $ch = curl_init($apiUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: token ' . $githubToken,  // Use the token from the environment variable
-        'User-Agent: PHP Script',
-        'Content-Type: application/json',
-    ]);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-    $response = curl_exec($ch);
-    $user_id = $decrypted_array['ID'];
-    $sql = "UPDATE user_account SET image = :img WHERE id = :user_id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':img', $fileName);
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->execute();
-
-    $action = "Updated picture in User : " . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'];
-    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-    $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-    $logs->bindParam(':action', $action, PDO::PARAM_STR);
-    $logs->execute();
-
-    if (curl_errno($ch)) {
-        // Output curl errors for debugging
-        echo json_encode([
-            'success' => false,
-            'title' => 'Curl Error',
-            'message' => curl_error($ch),
+        // Prepare the API request
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/images/' . $fileName;
+        $data = json_encode([
+            'message' => 'Upload ' . $fileName,
+            'content' => $base64Content,
         ]);
-    } else {
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if ($httpCode == 201) {
-            // Successful upload
-            echo json_encode([
-                'success' => true,
-                'title' => 'Success',
-                'message' => 'File uploaded successfully.',
-            ]);
-        } else {
-            // Output response for debugging
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: token ' . $githubToken,  // Use the token from the environment variable
+            'User-Agent: PHP Script',
+            'Content-Type: application/json',
+        ]);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        $response = curl_exec($ch);
+        $user_id = $decrypted_array['ID'];
+        $sql = "UPDATE user_account SET image = :img WHERE id = :user_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':img', $fileName);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->execute();
+
+        $action = "Updated picture in User : " . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'];
+        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $logs->bindParam(':action', $action, PDO::PARAM_STR);
+        $logs->execute();
+
+        if (curl_errno($ch)) {
+            // Output curl errors for debugging
             echo json_encode([
                 'success' => false,
-                'title' => 'GitHub API Error',
-                'message' => 'Failed to upload file. HTTP Code: ' . $httpCode . ' Response: ' . $response,
+                'title' => 'Curl Error',
+                'message' => curl_error($ch),
             ]);
-        }
-    }
+        } else {
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-    curl_close($ch);
+            if ($httpCode == 201) {
+                // Successful upload
+                echo json_encode([
+                    'success' => true,
+                    'title' => 'Success',
+                    'message' => 'File uploaded successfully.',
+                ]);
+            } else {
+                // Output response for debugging
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'GitHub API Error',
+                    'message' => 'Failed to upload file. HTTP Code: ' . $httpCode . ' Response: ' . $response,
+                ]);
+            }
+        }
+
+        curl_close($ch);
+    }else{
+        echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif, pdf)']);
+        exit();
+    }
 } else {
     // Handle the case where no file is uploaded or an error occurred
     $errorMessage = $_FILES['image']['error'] ?? 'No file uploaded';
     echo json_encode([
-        'success' => false,
-        'title' => 'Upload Error',
-        'message' => 'File upload failed. Error Code: ' . $errorMessage,
+    'success' => false,
+    'title' => 'Upload Error',
+    'message' => 'File upload failed. Error Code: ' . $errorMessage,
     ]);
 }

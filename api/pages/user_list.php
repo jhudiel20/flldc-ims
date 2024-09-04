@@ -244,7 +244,6 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Full Name",
-            width: 250,
             hozAlign: "center",
             field: "fname", // You can use any field here since we'll combine the values
             headerFilter: "input",
