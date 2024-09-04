@@ -79,7 +79,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" name="delete_po_attachments" id="delete_po_attachments"
                         class="btn btn-label-danger">Delete</button>
-                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
+                        <button class="btn btn-label-primary d-none" type="button" id="delete_po_icon" disabled>
                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                     Loading...
                                 </button>
@@ -547,6 +547,8 @@ $(document).ready(function() {
                         text: 'File size too large.',
                         buttons: false,
                         timer: 2000,
+                    }).then(function() {
+                        location.reload();
                     });
                 } else {
                     swal({
@@ -573,10 +575,10 @@ $(document).ready(function() {
             processData: false,
             beforeSend: function() {
                 $('#delete_po_attachments').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+                $('#delete_po_icon').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
+                $('#delete_po_icon').addClass('d-none').prop('disabled', false);
                 $('#delete_po_attachments').show();
                 console.log(response);
                 if (response.success) {

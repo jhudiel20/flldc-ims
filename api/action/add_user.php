@@ -118,6 +118,7 @@ if ($row_username_count > 0) {
             //Recipients
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
             $mail->addAddress($email);     //Add a recipient
+            $mail->addEmbeddedImage('../assets/img/LOGO.png', 'logo_cid');
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
 
@@ -135,7 +136,15 @@ if ($row_username_count > 0) {
                                         <tbody>
                                         <tr>
                                             <td style="word-break:break-word;font-size:0px;padding:0px" align="center">
-                                           
+                                                <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px" align="center" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                        <td style="width:138px">
+                                                            <img alt="" title="" height="100px" width="200px" src="cid:logo_cid" width="100" style="">
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                         </tbody>
