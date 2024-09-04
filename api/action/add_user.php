@@ -118,7 +118,7 @@ if ($row_username_count > 0) {
             //Recipients
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
             $mail->addAddress($email);     //Add a recipient
-            $mail->addEmbeddedImage(__DIR__ . '/../public/assets/img/LOGO.png', 'logo_cid');
+            $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
 
