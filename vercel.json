@@ -154,10 +154,9 @@
         "src": "/user_list",
         "dest": "/api/pages/user_list.php"
       },
-      
       {
         "src": "/add_user",
-        "dest": "/api/pages/add_user.php"
+        "dest": "/api/action/add_user.php"
       },
       {
         "src": "/user_list_data.php",
