@@ -63,10 +63,11 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if ($httpCode == 201) {
+                $fileName = urlencode($fileName);
                 // Successful upload
                 $sql = "UPDATE purchase_order SET attachments = :file WHERE id = :id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':file', urlencode($fileName));
+                $stmt->bindParam(':file', $fileName);
                 $stmt->bindParam(':id', $id);
                 $stmt->execute();
 
