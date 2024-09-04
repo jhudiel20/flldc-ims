@@ -155,7 +155,7 @@
         "dest": "/api/pages/user_list.php"
       },
       {
-        "src": "/add_user",
+        "src": "/add_user.php",
         "dest": "/api/action/add_user.php"
       },
       {
