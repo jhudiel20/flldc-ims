@@ -294,7 +294,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
                                                                 <iframe
-                                                                    src="/fetch_pdf.php?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                    src="/fetch_attachments.php?file=<?php echo $row['attachments']; ?>"
                                                                     width="auto"
                                                                     height="700px"
                                                                     style="border: none;">
@@ -534,6 +534,28 @@ $(document).ready(function() {
                         buttons: false,
                         timer: '2000',
                     })
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText); // For debugging
+                var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
+
+                if (xhr.status === 413) {
+                    swal({
+                        icon: 'error',
+                        title: 'Upload Error',
+                        text: 'File size too large.',
+                        buttons: false,
+                        timer: 2000,
+                    });
+                } else {
+                    swal({
+                        icon: 'error',
+                        title: 'Upload Error',
+                        text: errorMessage,
+                        buttons: false,
+                        timer: 2000,
+                    });
                 }
             }
         });

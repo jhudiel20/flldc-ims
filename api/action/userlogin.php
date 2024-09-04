@@ -81,13 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'samesite' => 'Strict'              // Restrict cookie to same-site requests
                 ]);
 
-                $decrypted_array = null;
+                $decrypted_array = [];
 
                 if (isset($_COOKIE['secure_data'])) {
                     $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
                 }
 
-                if ($user['access'] == '') {
+                if ($decrypted_array['ACCESS'] == '') {
                     $response['icon'] = "info";
                     $response['success'] = false;
                     $response['title'] = "Error!";
@@ -95,8 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode($response);
                     exit();
                 }
-                if ($user['access'] == 'ENCODER' || $user['access'] == 'REQUESTOR') {
-                    if ($user['locked'] == 3) {
+                if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'REQUESTOR') {
+                    if ($decrypted_array['LOCKED'] == 3) {
                         $response['icon'] = "warning";
                         $response['success'] = false;
                         $response['title'] = "Error!";
@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Log the user action
                 $action = "Logged in the system.";
                 $log_id = $decrypted_array['ID'];
-                $stmt = $conn->prepare("INSERT INTO logs (user_id, action_made) VALUES (:user_id, :action_made)");
+                $stmt = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action_made)");
                 $stmt->bindParam(':user_id', $log_id, PDO::PARAM_INT);
                 $stmt->bindParam(':action_made', $action, PDO::PARAM_STR);
                 $stmt->execute();

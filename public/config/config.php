@@ -312,7 +312,7 @@ function decrypt_cookie($encrypted_data, $key, $cipher_method) {
     $decrypted_data = openssl_decrypt($encrypted_data, $cipher_method, $key, 0, $iv);
     return unserialize($decrypted_data);
 }
-
+$decrypted_array = [];
 if (isset($_COOKIE['secure_data'])) {
   $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
 }
