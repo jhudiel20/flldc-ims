@@ -294,7 +294,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
                                                                 <iframe
-                                                                    src="/fetch_attachments.php?file=<?php echo $row['attachments']; ?>"
+                                                                    src="/fetch_attachments.php?file=<?php echo urlencode($row['attachments']); ?>"
                                                                     width="auto"
                                                                     height="700px"
                                                                     style="border: none;">
