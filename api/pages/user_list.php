@@ -526,7 +526,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "../action/add_user.php",
+                url: "/add_user.php",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
