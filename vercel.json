@@ -63,8 +63,8 @@
         "dest": "/api/action/userlogin.php"
       },
       {
-        "src": "/Actions",
-        "dest": "/api/action/Actions.php"
+        "src": "/logout",
+        "dest": "/api/action/logout.php"
       },
       {
         "src": "/dashboard-lnd",

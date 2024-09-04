@@ -8,7 +8,7 @@
                  <a href="dashboard.php" class="footer-text fw-bold">Learning and Development</a> ©
              </div>
              <div>
-                 <a href="/Actions" class="btn btn-sm btn-outline-danger"><i
+                 <a href="/logout" class="btn btn-sm btn-outline-danger"><i
                          class="bx bx-log-out-circle me-1"></i>Logout</a>
              </div>
          </div>
