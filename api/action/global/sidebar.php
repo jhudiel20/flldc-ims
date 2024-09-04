@@ -67,21 +67,6 @@ $user_id = $decrypted_array['ID'];
                         <div class="text-truncate" data-i18n="Training Evaluation">Training Evalution</div>
                     </a>
                 </li>
-                <!-- <li class="menu-item">
-                    <a href="app-ecommerce-dashboard.html" class="menu-link">
-                        <div class="text-truncate" data-i18n="eCommerce">eCommerce</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-logistics-dashboard.html" class="menu-link">
-                        <div class="text-truncate" data-i18n="Logistics">Logistics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-academy-dashboard.html" class="menu-link">
-                        <div class="text-truncate" data-i18n="Academy">Academy</div>
-                    </a>
-                </li> -->
             </ul>
         </li>
         <li class="menu-item <?php echo ($geturl == 'cashier_page')? 'active' : 'collapsed' ?>">

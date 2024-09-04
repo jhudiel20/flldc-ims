@@ -118,7 +118,7 @@ if ($row_username_count > 0) {
             //Recipients
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
             $mail->addAddress($email);     //Add a recipient
-            $mail->addEmbeddedImage('/public/assets/img/LOGO.png', 'logo_cid');
+            $mail->addEmbeddedImage(__DIR__ . '/../public/assets/img/LOGO.png', 'logo_cid');
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
 
@@ -224,8 +224,6 @@ if ($row_username_count > 0) {
                 VALUES(:username, :password, :email, :fname, :mname, :lname, :ext_name, :access, :approved_status, :admin_status, :contact)
             ");
     
-
-
             // Bind the parameters to the prepared statement
             $create_user->bindParam(':username', $username, PDO::PARAM_STR);
             $create_user->bindParam(':password', $password, PDO::PARAM_STR);
