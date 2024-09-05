@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($support_emails as $email) {
             $mail->addAddress($email);
         }
-        $mail->addEmbeddedImage('../assets/img/LOGO.png', 'logo_cid');
+        $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
         // Content
         $mail->isHTML(true);
         $mail->Subject = 'New Request Added';

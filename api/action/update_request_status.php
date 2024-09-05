@@ -44,7 +44,7 @@ $generate_PR_ID  = generate_PR_ID();
         //Recipients
         $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
         $mail->addAddress($EMAIL);     //Add a recipient
-        $mail->addEmbeddedImage('../assets/img/LOGO.png', 'logo_cid');
+        $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
         $code = $REQUEST_ID;
         $ITEM_NAME = $ITEM_NAME;
         //Content
