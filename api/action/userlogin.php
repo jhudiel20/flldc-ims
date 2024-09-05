@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        // Check if user is in the database
+        $password = set_password($password);
         $stmt = $conn->prepare("SELECT * FROM user_account WHERE username = :username");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user) {
             // Verify password
-            if (set_password($password) === $user['password']) {
+            if ($password === $user['password']) {
                 // Password matches
                 if ($user['approved_status'] == 1) {
                     $response = [
@@ -164,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'icon' => "warning",
                     'success' => false,
                     'title' => "Wrong Password!",
-                    'message' => "Invalid username or password."
+                    'message' => "Invalid username or password.1"
                 ];
                 echo json_encode($response);
             }
@@ -188,10 +188,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $exist->bindParam(':username', $username, PDO::PARAM_STR);
                 $exist->execute();
                 $row_exist = $exist->fetch(PDO::FETCH_ASSOC);
-                $rowexist = $exist->rowCount();
                 
-                if($rowexist > 0){
-                  $id = $row_exist['id'];  
+                if(!empty($row_exist)){
+                  $row_exist_id = $row_exist['id'];  
                   if($row_exist['locked'] >= 3){
                     $response = [
                         'icon' => "warning",
@@ -238,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'icon' => "error",
                         'title' => "Error!",
                         'success' => false,
-                        'message' => 'Invalid username or password.'
+                        'message' => 'Invalid username or password.2'
                     ];
                     echo json_encode($response);
                 }
