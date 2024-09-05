@@ -90,7 +90,7 @@ if($access == 'ADMIN'){
 
 }
 
-$sql = $conn->prepare("SELECT fname,mname,lname,ext_name FROM user_account WHERE id= :user_id");
+$sql = $conn->prepare("SELECT fname,mname,lname,ext_name FROM user_account WHERE id = :user_id");
 $sql->bindParam(':user_id',$user_id,PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
