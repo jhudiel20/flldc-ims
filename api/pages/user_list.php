@@ -724,7 +724,7 @@ $(document).ready(function() {
         var formdata = new FormData(clear_attempts_form);
         // console.log(formdata);
         $.ajax({
-            url: "../action/user_clear_attempts.php",
+            url: "/user_clear_attempts.php",
             method: "POST",
             data: formdata,
             dataType: "json",
