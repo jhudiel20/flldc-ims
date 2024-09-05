@@ -166,6 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     'success' => false,
                                     'message' => 'Your Account is Locked. Please contact the admin.'
                                 ];
+                                echo json_encode($response);
                             } else {
                                 // Update the lock count
                                 $add_locked = $conn->prepare("UPDATE user_account SET locked = :locked WHERE id = :id");
@@ -187,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             'icon' => "error",
                             'title' => "Error!",
                             'success' => false,
-                            'message' => 'Invalid username or password.1'
+                            'message' => 'Invalid username or password.'
                         ];
                         echo json_encode($response);
                     }
@@ -199,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'icon' => "error",
                 'title' => "Error!",
                 'success' => false,
-                'message' => 'Invalid username or password.2'
+                'message' => 'Invalid username or password.'
             ];
             echo json_encode($response);
         }
