@@ -69,18 +69,19 @@ $user_id = $decrypted_array['ID'];
                 </li>
             </ul>
         </li>
+        <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
         <li class="menu-item <?php echo ($geturl == 'cashier_page')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>cashier_page" class="menu-link">
                         <i class="menu-icon fa-solid fa-box-open"></i>
                         <div> To be use Items</div>
                     </a>
-                </li>
-                <li class="menu-item <?php echo ($geturl == 'transaction_list')? 'active' : 'collapsed' ?>">
+        </li>
+        <li class="menu-item <?php echo ($geturl == 'transaction_list')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>transaction_list" class="menu-link">
                         <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                         <div> Used Supplies List</div>
                     </a>
-                </li>
+        </li>
         <li class="menu-item <?php echo ($geturl == 'item-list' ||$geturl == 'archive_list' ||$geturl == 'brand-list' ||$geturl == 'supplier_list' ||$geturl == 'category_list') ? 'active open' : 'collapsed' ?>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon fa-solid fa-box'></i>
@@ -94,7 +95,7 @@ $user_id = $decrypted_array['ID'];
                         <div> Item List</div>
                     </a>
                 </li>
-                <?php if($decrypted_array['ACCESS'] != 'CASHIER'){?>
+                <?php if($decrypted_array['ADMINSTA'] != 'CASHIER'){?>
                 <li class="menu-item <?php echo ($geturl == 'archive_list')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>archive_list" class="menu-link">
                         <i class='menu-icon fa-solid fa-box'></i>
@@ -125,8 +126,6 @@ $user_id = $decrypted_array['ID'];
                 <?php } ?>
             </ul>
         </li>
-
-        <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
         <li class="menu-item <?php echo ($geturl == 'inventory_list' ||$geturl == 'monthly_inventory_list') ? 'active open' : 'collapsed' ?>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon fa-solid fa-cubes-stacked'></i>
