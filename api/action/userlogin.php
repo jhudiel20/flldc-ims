@@ -159,82 +159,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo json_encode($response);
 
             } else {
-                // Password does not match
-                $response = [
-                    'icon' => "warning",
-                    'success' => false,
-                    'title' => "Wrong Password!",
-                    'message' => "Invalid username or password.1"
-                ];
-                echo json_encode($response);
-            }
-        } else {
-            $admin_access = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND access = 'ADMIN' ");
-            $admin_access->bindParam(':username', $username, PDO::PARAM_STR);
-            $admin_access->execute();
-            $admin_access = $admin_access->rowCount();
+                $admin_access = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND access = 'ADMIN' ");
+                $admin_access->bindParam(':username', $username, PDO::PARAM_STR);
+                $admin_access->execute();
+                $admin_access = $admin_access->rowCount();
 
-            if($admin_access > 0 ){
-                $response = [
-                    'icon' => "error",
-                    'title' => "Error!",
-                    'success' => false,
-                    'message' => 'Wrong Password!'
-                ];
-                echo json_encode($response);
-                exit;
-            }else{
-
-                $exist = $conn->prepare("SELECT id,locked,username FROM user_account WHERE username = :username ");
-                $exist->bindParam(':username', $username, PDO::PARAM_STR);
-                $exist->execute();
-                $row_exist = $exist->fetch(PDO::FETCH_ASSOC);
-                
-                if($row_exist){
-                  $id = $row_exist['id'];  
-                  if($row_exist['locked'] >= 3){
-                    $response = [
-                        'icon' => "warning",
-                        'title' => "Account Locked!",
-                        'success' => false,
-                        'message' => 'Your Account is Locked Please Contact the admin.'
-                    ];
-                    echo json_encode($response);
-                  }else{
-                    $locked = $row_exist['locked'] + 1;
-                    if ($locked >= 3) {
-                        $response = [
-                            'icon' => "warning",
-                            'title' => "Account Locked!",
-                            'success' => false,
-                            'message' => 'Your Account is Locked. Please contact the admin.'
-                        ];
-                    } else {
-                        // Update the lock count
-                        $add_locked = $conn->prepare("UPDATE user_account SET locked = :locked WHERE id = :id");
-                        $add_locked->bindParam(':locked', $locked, PDO::PARAM_INT);
-                        $add_locked->bindParam(':id', $id, PDO::PARAM_INT);
-                        $add_locked->execute();
-            
-                        $response = [
-                            'icon' => "warning",
-                            'title' => "Wrong Password!",
-                            'success' => false,
-                            'message' => 'Attempt ' . $locked
-                        ];
-                    }
-                  }
-                }else{
-
+                if($admin_access > 0 ){
                     $response = [
                         'icon' => "error",
                         'title' => "Error!",
                         'success' => false,
-                        'message' => 'Invalid username or password.2'
+                        'message' => 'Wrong Password!'
                     ];
                     echo json_encode($response);
-                }
+                    exit;
+                }else{
 
+                    $exist = $conn->prepare("SELECT id,locked,username FROM user_account WHERE username = :username ");
+                    $exist->bindParam(':username', $username, PDO::PARAM_STR);
+                    $exist->execute();
+                    $row_exist = $exist->fetch(PDO::FETCH_ASSOC);
+                    
+                    if($row_exist){
+                    $id = $row_exist['id'];  
+                    if($row_exist['locked'] >= 3){
+                        $response = [
+                            'icon' => "warning",
+                            'title' => "Account Locked!",
+                            'success' => false,
+                            'message' => 'Your Account is Locked Please Contact the admin.'
+                        ];
+                        echo json_encode($response);
+                    }else{
+                        $locked = $row_exist['locked'] + 1;
+                        if ($locked >= 3) {
+                            $response = [
+                                'icon' => "warning",
+                                'title' => "Account Locked!",
+                                'success' => false,
+                                'message' => 'Your Account is Locked. Please contact the admin.'
+                            ];
+                        } else {
+                            // Update the lock count
+                            $add_locked = $conn->prepare("UPDATE user_account SET locked = :locked WHERE id = :id");
+                            $add_locked->bindParam(':locked', $locked, PDO::PARAM_INT);
+                            $add_locked->bindParam(':id', $id, PDO::PARAM_INT);
+                            $add_locked->execute();
+                
+                            $response = [
+                                'icon' => "warning",
+                                'title' => "Wrong Password!",
+                                'success' => false,
+                                'message' => 'Attempt ' . $locked
+                            ];
+                        }
+                    }
+                    }else{
+
+                        $response = [
+                            'icon' => "error",
+                            'title' => "Error!",
+                            'success' => false,
+                            'message' => 'Invalid username or password.2'
+                        ];
+                        echo json_encode($response);
+                    }
+
+                }
             }
         }
     } catch (PDOException $e) {
