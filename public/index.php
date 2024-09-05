@@ -108,108 +108,109 @@ include 'config/config.php';
     </style>
 </head>
 
-<body data-layout="detached" class="bg-image h-100">
-	<div id="main-content">
-		<div class="text-montserrat">
-			<div class="wrapper in">
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
 
-				<div class="content-page mt-5">
-					<div class="content">
-						<div class="row justify-content-md-center">
-							<div class="col-xs-12  col-sm-12 col-xl-5 col-lg-6 col-md-10">
-								<div class="card d-none d-sm-block d-md-block text-white mt-5 h-display">
-									<div class="card-body pt-1 pb-1 pl-3">
-										<div class="d-flex justify-content-center align-items-center">
-											<img src="https://lms.ccc.edu.ph/images/logo-lms.png?v=1.1.8" alt="" height="100">
-											<div class="page-title font-weight-normal text-center p-3 fs-xl">
-												e-GURO: CCC Learning Management System
-											</div>
-										</div>
-									</div>
-								</div>
+            <div class="authentication-wrapper authentication-cover">
+                <div class="authentication-inner row m-0">
+                    <!-- /Left Text -->
+                    <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
+                        <div class="w-100 d-flex justify-content-center">
+                            <img src="<?php BASE_URL; ?>assets/img/illustrations/boy-with-rocket-light.png"
+                                class="img-fluid" alt="Login image" width="700"
+                                data-app-dark-img="illustrations/boy-with-rocket-dark.png"
+                                data-app-light-img="illustrations/boy-with-rocket-light.png" />
+                        </div>
+                    </div>
+                    <!-- /Left Text -->
 
-								<div class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-0">
-									<div class="card-body text-center pt-1 pb-1 pl-3">
-										<div class="d-flex justify-content-center align-items-center">
-											<img src="https://lms.ccc.edu.ph/images/logo-mlms.png?v=1.1.8" alt="" height="80">
-											<div class="page-title font-weight-normal fs-medium text-center pl-2">e-GURO: CCC Learning Management System</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                    <!-- Login -->
+                    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+                        <div class="w-px-400 mx-auto">
+                            <!-- Logo -->
+                            <div class="app-brand mb-3" style="display: flex; justify-content: center;">
+                                <a href="index.html" class="app-brand-link gap-2">
+                                    <span class="app-brand-logo demo">
 
-						<div class="row justify-content-md-center">
-							<div class="col-xs-12  col-sm-12 col-xl-5 col-lg-6 col-md-10">
-								<div class="card b-display">
-									<div class="card-body">
-										<form class="" name='login_form' id="login_form" action="https://lms.ccc.edu.ph/app/login.php?formSubmitted=true" method="POST">
-											<h4 id="log_title">SIGN-IN</h4>
-											<div class="row">
-												<div class="form-group col-xs-12 col-sm-12 col-lg-12">
-													<div class="input-group bg-iform">
-														<div class="input-group-prepend">
-															<span class="input-group-text" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
-														</div>
-														<input type="text" class="form-control" name="username" id="username" value="" placeholder="Username" required>
-													</div>
-												</div>
+                                        <img src="assets/img/LOGO.png" height="150px" alt=""
+                                            style="border-radius:20%" />
 
-												<div class="form-group col-xs-12 col-sm-12 col-lg-12 text-center" id="password_div">
-													<div class="input-group bg-iform">
-														<div class="input-group-prepend">
-															<span class="input-group-text" id="basic-addon1"><i class="fa fa-lock" aria-hidden="true"></i></span>
-														</div>
-														<input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-													</div>
-													<span class="float-left" style="font-size:1em;">Login Attempts: 0</span>
-												</div>
-												<div class="form-group col-xs-12 col-sm-12 col-lg-12 mt-0 pt-0">
-													<button type="submit" id="btn_submit" name="submit" value="login" class="btn btn-custom w-100">LOGIN</button>
-												</div>
-												<div class="form-group col-xs-12 col-sm-12 col-lg-12 text-center" id="forgotlogin">
-													<a href="#" id="forgot_action" data-toggle="tooltip" data-html="true" title="To reset your password, please click this link to process your reset." class="text-lgrey" style="font-size:1.1em;"> <i class="fas fa-question-circle"></i><span> Forgot Password / Reset Password</span> </a>
-												</div>
-												<div class="form-group col-xs-12 col-sm-12 col-lg-12 text-center" id="backlogin" style="display:none;">
-													<a href="#" id="back_login" class="text-lgrey" style="font-size:1.1em;"> <i class="fas fa-chevron-left"></i><span> Back to Sign In</span> </a>
-												</div>
-												<input type="hidden" name="token_login_form"  id="token_login_form" value="10e1b8203714fa6358be4f681a093b615e8faa3a6b686a957566be07a68a145a"/>											</div>
-										</form>
-									</div>
-								</div>
-							</div> <!-- end col-->
-						</div>
-						<!-- END PLACE PAGE CONTENT HERE -->
-					</div>
-				</div>
-				<!-- END CONTENT -->
-			</div>
-		</div>
-		<div class="feedback_toolbar">
-			<div class="inside">
-				<a href="https://lms.ccc.edu.ph/faq.php" target="_blank" style="color: white;" title="FEEDBACK">
-					<i class="fas fa-comment" style="color: white;"></i>
-					<span class="toolbox-tooltip">FAQs</span>
-				</a>
-			</div>
-		</div>
-	</div>
+                                    </span>
+                                    <!-- <span class="app-brand-text demo fw-bold">Learning and Development</span> -->
+                                </a>
+                            </div>
+                            <!-- /Logo -->
+                            <!-- <h4 class="mb-2">Welcome to Sneat! 👋</h4> -->
+                            <p class="mb-4">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
 
+                            <form id="user_login_form" class="mb-3" method="post">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        placeholder="Enter your email or username" autofocus />
+                                </div>
+                                <div class="mb-3 form-password-toggle">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label" for="password">Password</label>
+                                        <a href="<?php BASE_URL; ?>forgot-password.php">
+                                            <small>Forgot Password?</small>
+                                        </a>
+                                    </div>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password" class="form-control" name="password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" />
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
+                                <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
+                                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                                <!-- <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button> -->
+                            </form>
 
-	<!-- all the js files -->
-	<!-- bundle -->
-	<!-- Begin of Footer -->
-<footer class="sticky-footer p-3 mt-5 mb-0 pb-0" style="margin-top:10px;position: absolute; bottom: 0; width: 100%;  background-color:rgba(0, 16, 77,0.95)!important; z-index:1005;">
-  <div class="my-auto">
-    <div class="copyright text-center my-auto mx-5">
-      <span class="text-center text-white" id="copyright">Copyright &copy; 2021 City College of Calamba. All Rights Reserved.</span>
-      <!-- <span class="float-right text-white" id="contact">
-        <i class='fas fa-map-marker-alt' style='font-size:12px'></i> Old Municipal Site, Burgos St, Brgy. VII, Poblacion, Calamba City &ensp; <i class='fas fa-phone' style='font-size:12px'></i> (049) 559 8900 | (02) 8 539 5170 &ensp; <i class='fa fa-envelope' style='font-size:12px'></i><mail><a href="mailto:support@ccc.edu.ph" class="text-white"> support@ccc.edu.ph</a></mail>
-      </span> -->
-    </div>
-  </div>
-</footer>
-<!-- End of Footer -->
+                            <p class="text-center">
+                                <span>Not Registered?</span>
+                                <a href="auth-register-cover.html">
+                                    <span>Create an account</span>
+                                </a>
+                            </p>
+
+                            <div class="divider my-4">
+                                <div class="divider-text">or</div>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
+                                    <i class="tf-icons bx bxl-facebook"></i>
+                                </a>
+
+                                <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
+                                    <i class="tf-icons bx bxl-google-plus"></i>
+                                </a>
+
+                                <a href="javascript:;" class="btn btn-icon btn-label-twitter">
+                                    <i class="tf-icons bx bxl-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Login -->
+                </div>
+            </div>
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+
+            <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+            <div class="drag-target"></div>
+        </div>
+        <!-- / Layout wrapper -->
+        
 </body>
 
     <script src="<?php echo BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
