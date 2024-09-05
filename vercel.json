@@ -159,6 +159,14 @@
         "dest": "/api/action/add_user.php"
       },
       {
+        "src": "/edit_userlist_info.php",
+        "dest": "/api/action/edit_userlist_info.php"
+      },
+      {
+        "src": "/delete_userlist_info.php",
+        "dest": "/api/action/delete_userlist_info.php"
+      },
+      {
         "src": "/user_list_data.php",
         "dest": "/api/ajax_data/user_list_data.php"  
       },

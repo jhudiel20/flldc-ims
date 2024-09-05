@@ -573,7 +573,7 @@ $(document).ready(function() {
         var formdata = new FormData(edit_user_form);
 
         $.ajax({
-            url: "../action/edit_userlist_info.php",
+            url: "/edit_userlist_info.php",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -610,7 +610,7 @@ $(document).ready(function() {
         var formdata = new FormData(delete_user_form);
 
         $.ajax({
-            url: "../action/delete_userlist_info.php",
+            url: "/delete_userlist_info.php",
             method: "POST",
             data: formdata,
             dataType: "json",
