@@ -219,9 +219,9 @@ if ($row_username_count > 0) {
                 $password = set_password($password);
                 $approved_status = '2';
                 $admin_status = 'DEFAULT';
-
-            $create_user = $conn->prepare(" INSERT INTO user_account(USERNAME, PASSWORD, EMAIL, FNAME, MNAME, LNAME, EXT_NAME, ACCESS, APPROVED_STATUS, ADMIN_STATUS, CONTACT) 
-                VALUES(:username, :password, :email, :fname, :mname, :lname, :ext_name, :access, :approved_status, :admin_status, :contact)
+                $locked = 0;
+            $create_user = $conn->prepare(" INSERT INTO user_account(USERNAME, PASSWORD, EMAIL, FNAME, MNAME, LNAME, EXT_NAME, ACCESS, APPROVED_STATUS, ADMIN_STATUS, CONTACT, LOCKED) 
+                VALUES(:username, :password, :email, :fname, :mname, :lname, :ext_name, :access, :approved_status, :admin_status, :contact, :locked)
             ");
     
             // Bind the parameters to the prepared statement
@@ -236,6 +236,7 @@ if ($row_username_count > 0) {
             $create_user->bindParam(':approved_status', $approved_status, PDO::PARAM_STR);
             $create_user->bindParam(':admin_status', $admin_status, PDO::PARAM_STR);
             $create_user->bindParam(':contact', $contact, PDO::PARAM_STR);
+            $create_user->bindParam(':locked', $locked, PDO::PARAM_STR);
             // Execute the prepared statement
             $create_user->execute();
 
