@@ -68,7 +68,8 @@ include 'config/config.php';
             <div class="container-xxl">
                 <div class="row justify-content-md-center mb-3 pt-5">
                     <div class="col-xs-12 col-sm-12 col-xl-5 col-lg-6 col-md-10">
-                        <div class="card d-none d-sm-block d-md-block mt-5 h-display card-logo">
+                        <div class="card d-none d-sm-block d-md-block mt-5 h-display card-logo"
+                            style="background-color:#0100b7">
                             <div class="card-body pt-1 pb-1 pl-3">
                                 <div class="d-flex justify-content-center text-white align-items-center">
                                     <img src="<?php BASE_URL; ?>assets/img/LOGO.png" alt="" height="100">
@@ -80,7 +81,8 @@ include 'config/config.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-5 card-logo-mobile">
+                        <div
+                            class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-5 card-logo-mobile">
                             <div class="card-body text-center pt-1 pb-1 pl-3">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <img src="<?php BASE_URL; ?>assets/img/LOGO.png" alt="" height="80">
@@ -103,7 +105,8 @@ include 'config/config.php';
                                     <form id="user_login_form" class="mb-3" method="post">
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email or username" />
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder="Enter your email or username" />
                                         </div>
                                         <div class="mb-3 form-password-toggle">
                                             <div class="d-flex justify-content-between">
@@ -113,12 +116,18 @@ include 'config/config.php';
                                                 </a>
                                             </div>
                                             <div class="input-group input-group-merge">
-                                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                <input type="password" id="password" class="form-control"
+                                                    name="password"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                    aria-describedby="password" />
+                                                <span class="input-group-text cursor-pointer"><i
+                                                        class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
-                                        <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
+                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign
+                                            in</button>
+                                        <button class="btn btn-label-primary d-none w-100" type="button"
+                                            id="request_icon" disabled>
                                             <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                             Loading...
                                         </button>
@@ -129,15 +138,20 @@ include 'config/config.php';
                     </div>
                 </div>
             </div>
-            <footer class="sticky-footer p-3 mt-5 mb-0 pb-0 footer">
-                <div class="copyright text-center my-auto mx-5">
-                    <b><span class="text-center text-white">Copyright &copy; 2024 FAST Learning and Development Center. All Rights Reserved.</span></b>
-                </div>
-            </footer>
+
             <div class="layout-overlay layout-menu-toggle"></div>
             <div class="drag-target"></div>
         </div>
     </div>
+
+    <footer class="sticky-footer p-3 mt-5 mb-0 pb-0" style="background-color:#0100b7; margin-top:10px;position:
+        absolute; bottom: 0; width: 100%; z-index:1005;">
+        <div class="copyright text-center my-auto mx-5">
+            <b><span class="text-center text-white">Copyright &copy; 2024 FAST Learning and Development
+                    Center. All Rights Reserved.</span>
+            </b>
+        </div>
+    </footer>
 
 </body>
 
