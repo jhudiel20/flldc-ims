@@ -52,32 +52,47 @@ body {
     padding: 20px;
 }
 
-.colored-toast {
-    color: white;
-}
-
 .colored-toast.swal2-icon-success {
     background-color: #27c251 !important;
+    color: white;
 }
 
 .colored-toast.swal2-icon-error {
     background-color: #f27474 !important;
+    color: white;
+}
+
+.swal2-error {
+    background-color: white;
 }
 
 .colored-toast.swal2-icon-warning {
     background-color: #f8bb86 !important;
+    color: white;
 }
 
 .colored-toast.swal2-icon-info {
     background-color: #3fc3ee !important;
+    color: white;
 }
 
 .colored-toast.swal2-icon-question {
     background-color: #87adbd !important;
+    color: white;
 }
 
-.colored-toast .swal2-title,
-.colored-toast .swal2-close,
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
 .colored-toast .swal2-html-container {
+    color: white;
+}
+
+.colored-toast {
     color: white;
 }
