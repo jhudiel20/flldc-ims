@@ -57,7 +57,7 @@ include 'config/config.php';
     <style>
             /* Adjusting Background Image with 29% Transparency */
             body {
-                background-image: url('<?php BASE_URL; ?>assets/img/BG_PICTUREjpeg');
+                background-image: url('<?php BASE_URL; ?>assets/img/bg_picture.jpg');
                 background-size: cover; /* Adjusts the background to cover the entire page */
                 background-repeat: no-repeat; /* Prevents the image from repeating */
                 background-position: center; /* Centers the background image */
