@@ -45,6 +45,21 @@ include 'config/config.php';
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/css/index.css" />
+    <style>
+        body {
+    background-image: url('<?php BASE_URL; ?>assets/img/bg_picture.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.29);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    </style>
 </head>
 
 <body>
