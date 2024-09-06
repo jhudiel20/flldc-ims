@@ -82,7 +82,7 @@ include 'config/config.php';
                             </div>
                         </div>
                         <div
-                            class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-5 card-logo-mobile">
+                            class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-5 card-logo-mobile" style="background-color:#0100b7">
                             <div class="card-body text-center pt-1 pb-1 pl-3">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <img src="<?php BASE_URL; ?>assets/img/LOGO.png" alt="" height="80">
