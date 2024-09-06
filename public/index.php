@@ -55,6 +55,18 @@ include 'config/config.php';
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
+            /* Adjusting Background Image with 29% Transparency */
+            body {
+                background-image: url('<?php BASE_URL; ?>assets/img/BG_PICTUREjpeg');
+                background-size: cover; /* Adjusts the background to cover the entire page */
+                background-repeat: no-repeat; /* Prevents the image from repeating */
+                background-position: center; /* Centers the background image */
+                background-color: rgba(255, 255, 255, 0.29); /* Applies 29% transparency */
+            }
+            .bg-modify {
+                background: linear-gradient(to right, #0000A7, #E40000);
+                opacity: 0.29; /* Ensures the gradient itself has 29% transparency */
+            }
         /* sweetalert2 colored toast */
             .colored-toast.swal2-icon-success {
                 background-color: #27c251 !important;
