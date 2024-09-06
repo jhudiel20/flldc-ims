@@ -1,6 +1,6 @@
 <?php 
-require_once __DIR__ . '/../api/DBConnection.php';
-include 'config/config.php'; 
+// require_once __DIR__ . '/../api/DBConnection.php';
+// include 'config/config.php'; 
 ?>
 <!DOCTYPE html>
 
@@ -55,17 +55,22 @@ include 'config/config.php';
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
-            /* Adjusting Background Image with 29% Transparency */
             body {
                 background-image: url('<?php BASE_URL; ?>assets/img/bg_picture.jpg');
-                background-size: cover; /* Adjusts the background to cover the entire page */
-                background-repeat: no-repeat; /* Prevents the image from repeating */
-                background-position: center; /* Centers the background image */
-                background-color: rgba(255, 255, 255, 0.29); /* Applies 29% transparency */
-            }
-            .bg-modify {
-                background: linear-gradient(to right, #0000A7, #E40000);
-                opacity: 0.29; /* Ensures the gradient itself has 29% transparency */
+                background-size: cover;
+                /* Adjusts the background to cover the entire page */
+                background-repeat: no-repeat;
+                /* Prevents the image from repeating */
+                background-position: center;
+                /* Centers the background image */
+                background-color: rgba(255, 255, 255, 0.29);
+                /* Applies 29% transparency */
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+                /* display: flex; */
+                justify-content: center;
+                align-items: center;
             }
         /* sweetalert2 colored toast */
             .colored-toast.swal2-icon-success {
@@ -112,10 +117,6 @@ include 'config/config.php';
             .colored-toast {
                 color: white;
             }
-
-            .bg-modify {
-                background: linear-gradient(to right, #0000A7, #E40000);
-            }
         /* end */
     </style>
 </head>
@@ -125,95 +126,95 @@ include 'config/config.php';
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
 
-            <div class="authentication-wrapper authentication-cover">
-                <div class="authentication-inner row m-0">
-                    <!-- /Left Text -->
-                    <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
-                        <div class="w-100 d-flex justify-content-center">
-                            <img src="<?php BASE_URL; ?>assets/img/illustrations/boy-with-rocket-light.png"
-                                class="img-fluid" alt="Login image" width="700"
-                                data-app-dark-img="illustrations/boy-with-rocket-dark.png"
-                                data-app-light-img="illustrations/boy-with-rocket-light.png" />
+            <div class="container-xxl">
+
+                <div class="row justify-content-md-center mb-3 pt-5">
+                    <div class="col-xs-12  col-sm-12 col-xl-5 col-lg-6 col-md-10">
+                        <div class="card d-none d-sm-block d-md-block mt-5 h-display" style="background-color:#0100b6">
+                            <div class="card-body pt-1 pb-1 pl-3">
+                                <div class="d-flex justify-content-center text-white align-items-center">
+                                    <img src="<?php BASE_URL; ?>assets/img/LOGO.png" alt="" height="100">
+                                    <b>
+                                        <div class="page-title font-weight-normal text-center p-3 fs-xl">
+                                            Learning and Development Inventory Management System
+                                        </div>
+                                    </b>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Left Text -->
 
-                    <!-- Login -->
-                    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
-                        <div class="w-px-400 mx-auto">
-                            <!-- Logo -->
-                            <div class="app-brand mb-3" style="display: flex; justify-content: center;">
-                                <a href="index.html" class="app-brand-link gap-2">
-                                    <span class="app-brand-logo demo">
-
-                                        <img src="assets/img/LOGO.png" height="150px" alt=""
-                                            style="border-radius:20%" />
-
-                                    </span>
-                                    <!-- <span class="app-brand-text demo fw-bold">Learning and Development</span> -->
-                                </a>
-                            </div>
-                            <!-- /Logo -->
-                            <!-- <h4 class="mb-2">Welcome to Sneat! 👋</h4> -->
-                            <p class="mb-4">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
-
-                            <form id="user_login_form" class="mb-3" method="post">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username"
-                                        placeholder="Enter your email or username" autofocus />
+                        <div class="card d-sm-none d-md-none d-lg-none d-xl-none text-white h-display mt-5"
+                            style="background-color:#0100b6">
+                            <div class="card-body text-center pt-1 pb-1 pl-3">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="<?php BASE_URL; ?>assets/img/LOGO.png" alt="" height="80">
+                                    <b>
+                                        <div class="page-title font-weight-normal fs-medium text-center pl-2">Learning and
+                                            Development Inventory Management System
+                                        </div>
+                                    </b>
                                 </div>
-                                <div class="mb-3 form-password-toggle">
-                                    <div class="d-flex justify-content-between">
-                                        <label class="form-label" for="password">Password</label>
-                                        <a href="<?php BASE_URL; ?>forgot-password.php">
-                                            <small>Forgot Password?</small>
-                                        </a>
-                                    </div>
-                                    <div class="input-group input-group-merge">
-                                        <input type="password" id="password" class="form-control" name="password"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                            aria-describedby="password" />
-                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
-                                <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
-                                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                    Loading...
-                                </button>
-                                <!-- <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button> -->
-                            </form>
-
-                            <p class="text-center">
-                                <span>Not Registered?</span>
-                                <a href="auth-register-cover.html">
-                                    <span>Create an account</span>
-                                </a>
-                            </p>
-
-                            <div class="divider my-4">
-                                <div class="divider-text">or</div>
-                            </div>
-
-                            <div class="d-flex justify-content-center">
-                                <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-                                    <i class="tf-icons bx bxl-facebook"></i>
-                                </a>
-
-                                <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-                                    <i class="tf-icons bx bxl-google-plus"></i>
-                                </a>
-
-                                <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-                                    <i class="tf-icons bx bxl-twitter"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
-                    <!-- /Login -->
                 </div>
+
+                <div class="row justify-content-md-center">
+                    <div class="col-xs-12  col-sm-12 col-xl-5 col-lg-6 col-md-10">
+                        <div class="authentication-inner">
+                            <!-- Register -->
+                            <div class="card" style="opacity:80%">
+                                <div class="card-body">
+                                    <p class="mb-2">SIGN-IN <?php //echo $_SESSION['status']; ?> </p>
+
+                                    <form id="user_login_form" class="mb-3" method="post">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder="Enter your email or username" autofocus />
+                                        </div>
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                                <label class="form-label" for="password">Password</label>
+                                                <a href="<?php BASE_URL; ?>forgot-password.php">
+                                                    <small>Forgot Password?</small>
+                                                </a>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                                <input type="password" id="password" class="form-control" name="password"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                    aria-describedby="password" />
+                                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign in</button>
+                                        <button class="btn btn-label-primary d-none w-100" type="button" id="request_icon" disabled>
+                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </button>
+                                        <!-- <button type="button" id="login_btn" class="btn btn-primary d-grid w-100">Sign in</button> -->
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div>
+
+                            </div>
+                            <!-- /Register -->
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+
+            <footer class="sticky-footer p-3 mt-5 mb-0 pb-0" style="background-color:#0100b7; margin-top:10px;position:
+                absolute; bottom: 0; width: 100%; z-index:1005;">
+                <div class="copyright text-center my-auto mx-5">
+                    <b><span class="text-center text-white">Copyright &copy; 2024 FAST Learning and Development
+                            Center. All Rights Reserved.</span>
+                    </b>
+                </div>
+            </footer>
 
             <!-- Overlay -->
             <div class="layout-overlay layout-menu-toggle"></div>
