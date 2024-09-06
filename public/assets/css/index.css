@@ -12,6 +12,22 @@ body {
     align-items: center;
 }
 
+.authentication-inner {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly opaque background */
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-authentication {
+    background-color: #ffffff; /* Solid white background */
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
 .colored-toast {
     color: white;
 }

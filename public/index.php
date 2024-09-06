@@ -88,7 +88,7 @@ include 'config/config.php';
                                     <form id="user_login_form" class="mb-3" method="post">
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email or username" autofocus />
+                                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email or username" />
                                         </div>
                                         <div class="mb-3 form-password-toggle">
                                             <div class="d-flex justify-content-between">
