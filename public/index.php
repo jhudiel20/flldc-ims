@@ -45,21 +45,6 @@ include 'config/config.php';
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/css/index.css" />
-    <style>
-        body {
-    background-image: url('<?php BASE_URL; ?>assets/img/bg_picture.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgba(255, 255, 255, 0.29);
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-    </style>
 </head>
 
 <body>
@@ -101,16 +86,16 @@ include 'config/config.php';
                         <div class="authentication-inner">
                             <div class="card card-authentication">
                                 <div class="card-body">
-                                    <p class="mb-2">SIGN-IN</p>
+                                    <p class="label-shadow mb-2">SIGN-IN</p>
                                     <form id="user_login_form" class="mb-3" method="post">
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
+                                            <label for="username" class="form-label label-shadow">Username</label>
                                             <input type="text" class="form-control" id="username" name="username"
                                                 placeholder="Enter your email or username" />
                                         </div>
                                         <div class="mb-3 form-password-toggle">
                                             <div class="d-flex justify-content-between">
-                                                <label class="form-label" for="password">Password</label>
+                                                <label class="form-label label-shadow" for="password">Password</label>
                                                 <a href="<?php BASE_URL; ?>forgot-password.php">
                                                     <small>Forgot Password?</small>
                                                 </a>
