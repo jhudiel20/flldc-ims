@@ -17,7 +17,7 @@ $user_id = $decrypted_array['ID'];
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index" class="app-brand-link">
+        <a href="dashboard-lnd" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <img src="../assets/img/F-LOGO.png" height="40px" alt="" style="border-radius:20%" />
             </span>

@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('<?php BASE_URL; ?>img/bg_picture.jpg');
+    background-image: url('<?php BASE_URL; ?>../assets/img/bg_picture.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
