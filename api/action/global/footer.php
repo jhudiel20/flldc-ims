@@ -13,7 +13,7 @@
              </div>
          </div>
      </footer>
-     <footer class="container-fluid d-flex flex-md-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3" style="background-color:#0100b7;">
+     <footer class="container-fluid d-flex flex-md-row flex-column gap-1 container-p-x py-3" style="background-color:#0100b7;">
         <div class="copyright text-center my-auto mx-5">
             <b><span class="text-center text-white">Copyright &copy; 2024 FAST Learning and Development
                     Center. All Rights Reserved.</span>
