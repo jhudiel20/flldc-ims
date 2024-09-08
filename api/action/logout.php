@@ -20,20 +20,20 @@ $logSuccess = $logAction->execute([':user_id' => $user_id, ':action_made' => $ac
 if ($logSuccess) {
 
     // Unset the cookies only if the log was successfully inserted
-    setcookie('status', '', time() - 3600, '/');
-    setcookie('ID', '', time() - 3600, '/');
-    setcookie('ACCESS', '', time() - 3600, '/');
-    setcookie('USERNAME', '', time() - 3600, '/');
-    setcookie('PASSWORD', '', time() - 3600, '/');
-    setcookie('DATE_CREATED', '', time() - 3600, '/');
-    setcookie('FNAME', '', time() - 3600, '/');
-    setcookie('MNAME', '', time() - 3600, '/');
-    setcookie('LNAME', '', time() - 3600, '/');
-    setcookie('EXT_NAME', '', time() - 3600, '/');
-    setcookie('EMAIL', '', time() - 3600, '/');
-    setcookie('IMAGE', '', time() - 3600, '/');
-    setcookie('LOCKED', '', time() - 3600, '/');
-    setcookie('ADMIN_STATUS', '', time() - 3600, '/');
+    setcookie('status', '', time() - 1000000, '/');
+    setcookie('ID', '', time() - 1000000, '/');
+    setcookie('ACCESS', '', time() - 1000000, '/');
+    setcookie('USERNAME', '', time() - 1000000, '/');
+    setcookie('PASSWORD', '', time() - 1000000, '/');
+    setcookie('DATE_CREATED', '', time() - 1000000, '/');
+    setcookie('FNAME', '', time() - 1000000, '/');
+    setcookie('MNAME', '', time() - 1000000, '/');
+    setcookie('LNAME', '', time() - 1000000, '/');
+    setcookie('EXT_NAME', '', time() - 1000000, '/');
+    setcookie('EMAIL', '', time() - 1000000, '/');
+    setcookie('IMAGE', '', time() - 1000000, '/');
+    setcookie('LOCKED', '', time() - 1000000, '/');
+    setcookie('ADMIN_STATUS', '', time() - 1000000, '/');
     // Redirect to the index page
     header("Location: /index");
     exit();
