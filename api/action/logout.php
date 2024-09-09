@@ -19,25 +19,33 @@ $logSuccess = $logAction->execute([':user_id' => $user_id, ':action_made' => $ac
 
 if ($logSuccess) {
 
-    // Unset the cookies only if the log was successfully inserted
-    setcookie('status', '', time() - 1000000, '/');
-    setcookie('ID', '', time() - 1000000, '/');
-    setcookie('ACCESS', '', time() - 1000000, '/');
-    setcookie('USERNAME', '', time() - 1000000, '/');
-    setcookie('PASSWORD', '', time() - 1000000, '/');
-    setcookie('DATE_CREATED', '', time() - 1000000, '/');
-    setcookie('FNAME', '', time() - 1000000, '/');
-    setcookie('MNAME', '', time() - 1000000, '/');
-    setcookie('LNAME', '', time() - 1000000, '/');
-    setcookie('EXT_NAME', '', time() - 1000000, '/');
-    setcookie('EMAIL', '', time() - 1000000, '/');
-    setcookie('IMAGE', '', time() - 1000000, '/');
-    setcookie('LOCKED', '', time() - 1000000, '/');
-    setcookie('ADMIN_STATUS', '', time() - 1000000, '/');
-    // Redirect to the index page
+    // Check if the cookie exists
+    if (isset($_COOKIE['secure_data'])) {
+        // Decrypt the cookie data
+        $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
+
+        // Check if decryption was successful
+        if ($decrypted_array !== null) {
+            // Clear the decrypted array
+            foreach ($decrypted_array as &$value) {
+                $value = null; // Set each value to null or use unset($value) to remove key-value pairs completely
+            }
+
+            // Set the cookie with an expiration time in the past to delete it
+            setcookie('secure_data', '', time() - 10000000, [
+                'path' => '/',
+                'domain' => '',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]);
+        }
+    }
+
+    // Redirect to the index page after successful logout and cookie unset
     header("Location: /index");
     exit();
-    // print_r($_COOKIE);
+
 } else {
     // Handle the error if the logging failed
     echo "Error logging out. Please try again.";
