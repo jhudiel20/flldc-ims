@@ -32,13 +32,7 @@ if ($logSuccess) {
             }
 
             // Set the cookie with an expiration time in the past to delete it
-            setcookie('secure_data', '', time() - 10000000, [
-                'path' => '/',
-                'domain' => '',
-                'secure' => true,
-                'httponly' => true,
-                'samesite' => 'Strict'
-            ]);
+            setcookie('secure_data', '', time() - 1000000, '/', '', true, true);
         }
     }
 
