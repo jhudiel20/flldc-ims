@@ -147,9 +147,6 @@ $user_id = $decrypted_array['ID'];
                 </li>
             </ul>
         </li>
-        <?php } ?>
-
-
         <li class="menu-item <?php echo ($geturl == 'rca-list')? 'active' : 'collapsed' ?>">
             <a href="rca-list" class="menu-link">
                 <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
@@ -160,6 +157,10 @@ $user_id = $decrypted_array['ID'];
                 <?php }?> -->
             </a>
         </li>
+        <?php } ?>
+
+
+
         <li class="menu-item <?php echo ($geturl == 'request-list')? 'active' : 'collapsed' ?>">
             <a href="request-list" class="menu-link">
                 <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>

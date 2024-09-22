@@ -9,7 +9,7 @@ include 'config/config.php';
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="description" content="Learning & Development IMS">
-    <meta http-equiv="refresh" content="1800;<?php BASE_URL; ?>Actions" />
+    <meta http-equiv="refresh" content="" />
     <title><?php echo PAGE_TITLE; ?></title>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="<?php BASE_URL; ?>assets/img/LOGO.png" />
