@@ -5,18 +5,18 @@ require_once __DIR__ . '/../../public/config/config.php';
 header("Content-type: application/json; charset=utf-8");
 
 $query_limit = isset($_GET['size']) && $_GET['size'] == 'true' ? PHP_INT_MAX : 20;
-$table_name = "purchase_order";
+$table_name = "reservations";
 $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
 $page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
 $start = $page * $query_limit;
 
-$sort_field = 'request_date_created';
+$sort_field = 'date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','email'];
+$query_fields = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
 
 if (!empty($sorters)) {
-    $valid_sorts = ['id', 'request_id', 'item_name', 'quantity','approval','email','remarks','status','request_date_created','email'];
+    $valid_sorts = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
@@ -37,7 +37,7 @@ foreach ($filters as $filter) {
 $filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
 
 $count_query = "SELECT COUNT(DISTINCT id) as count
-                FROM purchase_order
+                FROM reservations
                 $filter_sql";
 
 $count_stmt = $conn->prepare($count_query);
@@ -46,8 +46,8 @@ $total_query = (int) $count_stmt->fetchColumn();
 
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 $select_fields = implode(', ', $query_fields);
-$data_query = "SELECT $select_fields, TO_CHAR(request_date_created, 'YYYY-MM-DD HH12:MI:SS AM') as request_date_created
-                FROM purchase_order $filter_sql ORDER BY $sort_field $sort_dir
+$data_query = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
+                FROM reservations $filter_sql ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
 $data_stmt = $conn->prepare($data_query);

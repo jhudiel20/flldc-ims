@@ -83,6 +83,14 @@
         "dest": "/api/pages/dashboard-mrs.php"
       },
       {
+        "src": "/reservation-list",
+        "dest": "/api/pages/reservation-list.php"
+      },
+      {
+        "src": "/reservation-approved-list",
+        "dest": "/api/pages/reservation-approved-list.php"
+      },
+      {
         "src": "/rca-list",
         "dest": "/api/pages/rca-list.php"
       },
