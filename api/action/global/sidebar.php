@@ -40,7 +40,7 @@ $user_id = $decrypted_array['ID'];
             <span class="menu-header-text" data-i18n="Navigation">Navigation</span>
         </li>
         <li
-            class="menu-item <?php echo ($geturl == 'dashboard-lnd.php' ||$geturl == 'dashboard-mrs.php' ||$geturl == 'dashboard-lms.php'||$geturl == 'dashboard-eval.php' )? 'active open' : 'collapsed' ?>">
+            class="menu-item <?php echo ($geturl == 'dashboard-lnd' ||$geturl == 'dashboard-mrs' ||$geturl == 'dashboard-lms'||$geturl == 'dashboard-eval' )? 'active open' : 'collapsed' ?>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
@@ -48,7 +48,7 @@ $user_id = $decrypted_array['ID'];
             </a>
             <ul class="menu-sub">
                 <li class="menu-item <?php echo ($geturl == 'dashboard-lnd')? 'active' : 'collapsed' ?>">
-                    <a href="dashboard-lnd.php" class="menu-link">
+                    <a href="dashboard-lnd" class="menu-link">
                         <div class="text-truncate" data-i18n="Training Database">Training Database</div>
                     </a>
                 </li>
@@ -69,6 +69,28 @@ $user_id = $decrypted_array['ID'];
                 </li>
             </ul>
         </li>
+        <li
+            class="menu-item <?php echo ($geturl == 'reservation-list' ||$geturl == 'reservation-approved-list' )? 'active open' : 'collapsed' ?>">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div class="text-truncate" data-i18n="Reservation">Reservation</div>
+                <!-- <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span> -->
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
+                    <a href="reservation-list" class="menu-link">
+                        <div class="text-truncate" data-i18n="Reservation">Reservation List</div>
+                    </a>
+                </li>
+                <li class="menu-item <?php echo ($geturl == 'reservation-approved-list')? 'active' : 'collapsed' ?>">
+                    <a href="reservation-approved-list" class="menu-link">
+                        <div class="text-truncate" data-i18n="Approved Reservation">Approved Reservation</div>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
         <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
         <li class="menu-item <?php echo ($geturl == 'cashier_page')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>cashier_page" class="menu-link">
