@@ -159,6 +159,45 @@ var table = new Tabulator("#reserve-list-table", {
             headerFilterLiveFilter: false
         },
         {
+            title: "Reservation ID",
+            field: "reservation_id",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Reservation Date",
+            field: "reserve_date",
+            headerFilter: "date",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Time",
+            field: "time",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Room",
+            field: "room",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Room Setup",
+            field: "setup",
+            hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
+            headerFilterLiveFilter: false
+        },
+        {
             title: "Reservation Status",
             field: "status",
             formatter: approval_status,
