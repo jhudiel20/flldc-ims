@@ -13,7 +13,7 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
+$query_fields = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','"table"','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
 
 if (!empty($sorters)) {
     $valid_sorts = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
