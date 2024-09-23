@@ -149,7 +149,7 @@ var table = new Tabulator("#reserve-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/reserve_list_data.php",
+    ajaxURL: "/reserve_list_data",
     columns: [
         {
             title: "Date Created",
@@ -237,9 +237,7 @@ var table = new Tabulator("#reserve-list-table", {
 document.addEventListener("DOMContentLoaded", function() {
     // Your JavaScript code here, including event listener setup
     document.getElementById("download-pdf").addEventListener("click", handlePdfDownload);
-    document.getElementById("download-pdf-1").addEventListener("click", handlePdfDownload);
     document.getElementById("download-xlsx").addEventListener("click", handleXslDownload);
-    document.getElementById("download-xlsx-1").addEventListener("click", handleXslDownload);
 });
 
 //trigger download of data.xlsx file
