@@ -153,7 +153,7 @@ var table = new Tabulator("#reserve-list-table", {
     columns: [
         {
             title: "Date Created",
-            field: "request_date_created",
+            field: "date_created",
             headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
