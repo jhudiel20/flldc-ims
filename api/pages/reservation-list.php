@@ -102,27 +102,23 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <script>
 var approval_status = function(cell, formatterParams, onRendered) {
-    var data_approval = cell.getData().approval; // Get the approved status from the cell
+    var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
     var item_name = cell.getRow().getData().item_name; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
-    var REQUEST_ID = cell.getRow().getData().request_id;
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (data_approval == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (data_approval == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(data_approval == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>

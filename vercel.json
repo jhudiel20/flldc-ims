@@ -95,6 +95,10 @@
         "dest": "/api/pages/reservation-approved-list.php"
       },
       {
+        "src": "/reservation-details",
+        "dest": "/api/pages/reservation-details.php"
+      },
+      {
         "src": "/rca-list",
         "dest": "/api/pages/rca-list.php"
       },
