@@ -49,15 +49,16 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
                         <!-- Details -->
-                        <h4><span class="text-muted fw-light">Reservation List /</span> Reservation Details</h4>
+                        <h4><span class="text-muted fw-light"><a href="reservation-list">Reservation List</a> /</span> Reservation Details</h4>
                         <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
                             <div class="card">
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body"> 
                                             <div class="text-center">
-                                            <img src="<?php echo empty($row['setup']) ? 'default.png' : $row['setup'].''.".png"; ?>"  style="height:220px;" />
-                                            </div>
+                                            <img src="<?php echo empty($row['setup']) ? 'default.png' : "../assets/img/".$row['setup'].''.".png"; ?>"  style="height:220px;" />
+                                            Seating Arrangement    
+                                        </div>
                                         </div> 
                                     </div>
                                 </div>
@@ -70,10 +71,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             <!-- <div class="card"> -->
                             <div class="row row-bordered g-0">
                                 <div class="col-md-12">
-                                    <div class="card-body" style="overflow-x:auto;">
-
-                                        <div class="nav-align-top mb-2">
-                                                    <form class="row g-3" method="post" id="purchase_details_form">
+                                    <div class="card-body">
+                                        <form class="row g-3" method="post" id="reserve_details_form">
                                                         <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Reservation Status</label>
@@ -103,11 +102,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 name="reserve_date" id="reserve_date"
                                                                 value="<?php echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y h:i A') : ''); ?>"
                                                                 disabled>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Purpose</label>
-                                                            <input type="text" class="form-control"
-                                                                value="<?php echo $row['purpose']; ?>" disabled>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label class="form-label">Time</label>
@@ -149,10 +143,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 type="text" cols="30"
                                                                 rows="3"><?php echo $row['message']; ?></textarea>
                                                         </div>
-                                                    </form>
-
-                                        </div>
-
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -248,224 +239,8 @@ $(document).ready(function() {
         });
     })
 
-    $('#submit_po_attachments').on('click', function() {
-        var formdata = new FormData(dropzone_basic);
-
-        $.ajax({
-            url: "../action/upload_po_attachment.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
-
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
-    $('#delete_po_attachments').on('click', function() {
-        var formdata = new FormData(delete_po_attachments_form);
-
-        $.ajax({
-            url: "../action/delete_po_attachments.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
-
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            },error: function(xhr, status, error) {
-                console.error(xhr.responseText); // For debugging
-                var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
-
-                if (xhr.status === 413) {
-                    swal({
-                        icon: 'error',
-                        title: 'Upload Error',
-                        text: 'File size too large. Please select a file less than 100 MB.',
-                        buttons: false,
-                        timer: 2000,
-                    });
-                } else {
-                    swal({
-                        icon: 'error',
-                        title: 'Upload Error',
-                        text: errorMessage,
-                        buttons: false,
-                        timer: 2000,
-                    });
-                }
-            }
-        });
-    })
-    $('#submit_upload_item_photo').on('click', function() {
-        var formdata = new FormData(upload_item_photo_form);
-
-        $.ajax({
-            url: "../action/upload_item_photo.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
-
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
-    $('#delete_item_photo').on('click', function() {
-        var formdata = new FormData(delete_item_photo_form);
-
-        $.ajax({
-            url: "../action/delete_item_photo.php",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-
-            success: function(response) {
-                console.log(response);
-                if (response.success) {
-                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
-
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
-
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Get the active tab for the first set of tabs from localStorage or set a default value
-    let tab1 = localStorage.getItem("tab1") || "#purchase-info";
-
-    // Set the active tab for the first set of tabs only if the screen width is greater than 768px
-    if (window.innerWidth > 768) {
-        $('.nav-align-top .nav-link[data-bs-target="' + tab1 + '"]').tab('show');
-    }
-
-    // Save the active tab for the first set of tabs to localStorage when a tab is clicked
-    $('.nav-align-top .nav-link').on('shown.bs.tab', function(e) {
-        let newActiveTab1 = $(e.target).attr("data-bs-target");
-        localStorage.setItem("tab1", newActiveTab1);
-    });
-
-    console.log(tab1);
-});
-
-// STORING CLICK TABS 
 </script>
 
 </html>
-
-<div class="modal fade" id="delete_item_photo_modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to
-                        delete a photo?</i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <form method="post" id="delete_item_photo_form" style="display: inline-block;">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="photo_pr_id" id="photo_pr_id" value="<?php echo $row['pr_id'] ?>">
-                    <input type="hidden" name="photo_item_name" id="photo_item_name"
-                        value="<?php echo $row['item_name'] ?>">
-                    <input style="width:auto" type="hidden" name="item_image_to_delete" class="form-control"
-                        value="<?php echo $row['item_photo']; ?>">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="delete_item_photo" class="btn btn-danger"
-                        data-bs-dismiss="modal">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div><!-- End delete employee photo Modal-->

@@ -116,7 +116,7 @@ $user_id = $decrypted_array['ID'];
                         <div> Item List</div>
                     </a>
                 </li>
-                <?php if($decrypted_array['ADMINSTA'] != 'CASHIER'){?>
+                <?php if($decrypted_array['ACCESS'] != 'CASHIER'){?>
                 <li class="menu-item <?php echo ($geturl == 'archive_list')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>archive_list" class="menu-link">
                         <i class='menu-icon fa-solid fa-box'></i>
