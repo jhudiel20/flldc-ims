@@ -139,7 +139,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <label class="form-label">Guest</label>
                                                                 <input type="text" class="form-control" name="guest"
                                                                     id="guest"
-                                                                    value="<?php echo $row['guest']; ?>">
+                                                                    value="<?php echo $row['guest']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Contact No.<span
@@ -226,7 +226,7 @@ $(document).ready(function() {
         });
     }
     $('#submit_edit_reserve_details').on('click', function() {
-        var formdata = new FormData(purchase_details_form);
+        var formdata = new FormData(reserve_details_form);
 
         $.ajax({
             url: "/edit_reserve_details_info",

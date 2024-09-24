@@ -13,10 +13,10 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','"table"','hdmi','extension','message','reserve_status','guest','time','setup'];
+$query_fields = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','"table"','hdmi','extension','message','reserve_status','guest','time','setup','booking_id'];
 
 if (!empty($sorters)) {
-    $valid_sorts = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created'];
+    $valid_sorts = ['id', 'reservation_id', 'reserve_date', 'business_unit', 'room','contact','email','table','hdmi','extension','message','reserve_status','guest','time','setup','date_created','booking_id'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }

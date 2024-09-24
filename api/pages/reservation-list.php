@@ -50,7 +50,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             </div>
 
                                             <!-- Add Modal -->
-                                            <?php include __DIR__ . "/../modals/request_list_modal.php"; ?>
+                                            <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
                                             <div class="tabulator-table" id="reserve-list-table"
@@ -104,22 +104,18 @@ if (!isset($decrypted_array['ACCESS'])) {
 var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
-    var item_name = cell.getRow().getData().item_name; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (reserve_status == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >PENDING</button>";
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (reserve_status == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >DECLINED</button>";
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(reserve_status == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>
     return reserve_status;
@@ -385,10 +381,10 @@ $(document).ready(function() {
         })
 
     $('#submit_approval_btn').on('click', function(e) {
-            var formdata = new FormData(document.getElementById('request_approval_form'));
+            var formdata = new FormData(document.getElementById('reserve_approval_form'));
             e.preventDefault();  
         $.ajax({
-            url: "/update_request_status.php",
+            url: "/update_reserve_status",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -406,7 +402,7 @@ $(document).ready(function() {
                 console.log(response);
                 if (response.success) {
                     $('#approval_modal').modal('hide');
-                    $('#request_approval_form')[0].reset();
+                    $('#reserve_approval_form')[0].reset();
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -433,15 +429,11 @@ $(document).ready(function() {
     $(document).on("click", ".approval-status", function() {
         var ID = $(this).data("id");
         var APPROVAL = $(this).data("approved");
-        var ITEM_NAME = $(this).data("item");
         var EMAIL = $(this).data("email");
-        var REQUEST_ID = $(this).data("request_id");
 
         $('#ID').val(ID);
         $('#APPROVAL').val(APPROVAL);
-        $('#ITEM_NAME').val(ITEM_NAME);
         $('#EMAIL').val(EMAIL);
-        $('#REQUEST_ID').val(REQUEST_ID);
 
         // Show the edit modal
         $('#approval_modal').modal('show');

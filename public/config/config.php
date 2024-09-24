@@ -479,3 +479,14 @@ function isUserAuthenticated() {
   return isset($decrypted_array['ACCESS']) && !empty($decrypted_array['ACCESS']);
 }
 
+function generateReserveID($length = 10) {
+  // Characters to be used in the ID
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  // Generate a random string of the specified length
+  $randomString = substr(str_shuffle($characters), 0, $length);
+
+  $year = date("Ymd");
+  $generateReserveID = 'RES-'.$year.'-'.$randomString;
+  return $generateReserveID;
+}

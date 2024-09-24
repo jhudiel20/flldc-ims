@@ -91,6 +91,10 @@
         "dest": "/api/ajax_data/reserve_list_data.php"
       },
       {
+        "src": "/update_reserve_status",
+        "dest": "/api/action/update_reserve_status.php"
+      },
+      {
         "src": "/reservation-approved-list",
         "dest": "/api/pages/reservation-approved-list.php"
       },
