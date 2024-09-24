@@ -22,6 +22,7 @@ define('PAYGROUP', array('ASSOCIATE','PROTECH','SUPERVISOR','MANAGER','EXECUTIVE
 define('SBU', array('FAST SERVICES CORPORATION','FAST LOGISTICS CORPORATION','FAST COLDCHAIN SOLUTION INC.','FAST TOLL MANUFACTURING CORPORATION','FAST UNIMERCHANTS INC.','FAST DISTRIBUTION CORPORATION'));
 
 define('PR_STATUS', array('PENDING','CANCEL','COMPLETED'));
+define('RESERVE_STATUS', array('PENDING','DECLINED','COMPLETED'));
 // define('MODE OF PAYMENT', array('Category','Subcategory'));
 define('UNIT', array('packs','pcs','milligram','kilogram','ounce','litre'));
 // define('UNIT', array('meter','kilometer','centimeter','millimeter','feet','yard','inch','mile','gram','milligram','kilogram','ounce','pound'

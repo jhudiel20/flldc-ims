@@ -131,9 +131,9 @@ var approval_status = function(cell, formatterParams, onRendered) {
 };
 
 var detail_btn = function(cell, formatterParams, onRendered) {
-    var request_id = cell.getData().xid;
+    var reserve_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='request-details?ID=" + request_id +
+    return "<a class='btn btn-outline-primary' href='reservation-details?ID=" + reserve_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
@@ -151,6 +151,15 @@ var table = new Tabulator("#reserve-list-table", {
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
     columns: [
+        {
+            title: "Details",
+            field: "",
+            formatter: detail_btn,
+            hozAlign: "center",
+            headerFilter: "input",
+            headerFilterLiveFilter: false,
+            download: false
+        },
         {
             title: "Date Created",
             field: "date_created",
@@ -175,15 +184,23 @@ var table = new Tabulator("#reserve-list-table", {
         {
             title: "Time",
             field: "time",
-            headerFilter: "input",
             hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
             headerFilterLiveFilter: false
         },
         {
             title: "Room",
             field: "room",
-            headerFilter: "input",
             hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
             headerFilterLiveFilter: false
         },
         {
@@ -199,7 +216,7 @@ var table = new Tabulator("#reserve-list-table", {
         },
         {
             title: "Reservation Status",
-            field: "status",
+            field: "reserve_status",
             formatter: approval_status,
             hozAlign: "center",
             headerFilter: "list",
@@ -220,6 +237,13 @@ var table = new Tabulator("#reserve-list-table", {
                 clearable: true
             },
             // width: 300,
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Reservation ID",
+            field: "reservation_id",
+            headerFilter: "input",
+            hozAlign: "center",
             headerFilterLiveFilter: false
         },
 
