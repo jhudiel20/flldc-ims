@@ -68,86 +68,109 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                         <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
 
-                            <!-- <div class="card"> -->
-                            <div class="row row-bordered g-0">
-                                <div class="col-md-12">
-                                    <div class="card-body">
-                                        <form class="row g-3" method="post" id="reserve_details_form">
-                                                        <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Reservation Status</label>
-                                                            <select name="reserve_status" id="reserve_status" class="form-select"
-                                                                <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
-                                                                <?php foreach (RESERVE_STATUS as $value) { ?>
-                                                                <option value="<?= $value; ?>"
-                                                                    <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>
-                                                                    <?= $value; ?>
-                                                                </option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">First Name</label>
-                                                            <input type="text" class="form-control"
-                                                                value="<?php echo $row['fname']; ?>" disabled>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Last Name</label>
-                                                            <input type="text" class="form-control"
-                                                                value="<?php echo $row['lname']; ?>" disabled>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Date of Reservation</label>
-                                                            <input type="text" class="form-control"
-                                                                name="reserve_date" id="reserve_date"
-                                                                value="<?php echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y h:i A') : ''); ?>"
-                                                                disabled>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Time</label>
-                                                            <input type="text" class="form-control"
-                                                                value="<?php echo $row['time']; ?>"
-                                                                disabled>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Seating Arrangement</label>
-                                                            <input type="text" class="form-control" name="setup" id="setup"
-                                                                value="<?php echo $row['setup']; ?>">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Bussiness Unit</label>
-                                                            <input type="text" class="form-control" name="bu" id="bu"
-                                                                value="<?php echo $row['business_unit']; ?>">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Guest</label>
-                                                            <input type="text" class="form-control" name="guest"
-                                                                id="guest"
-                                                                value="<?php echo $row['guest']; ?>">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Contact No.<span
-                                                                    class="require asterisk">*</span></label>
-                                                            <input type="text" class="form-control" name="contact"
-                                                                id="contact" value="<?php echo $row['contact']; ?>">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Email<span
-                                                                    class="require asterisk">*</span></label>
-                                                            <input type="text" class="form-control" name="email"
-                                                                id="email" value="<?php echo $row['email']; ?>">
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="form-label py-1">Purpose / Message </label>
-                                                            <textarea class="form-control" name="message" id="message"
-                                                                type="text" cols="30"
-                                                                rows="3"><?php echo $row['message']; ?></textarea>
-                                                        </div>
-                                        </form>
+                            <div class="card">
+                                <div class="row row-bordered g-0">
+                                    <div class="col-md-12">
+                                        <div class="card-body">
+                                            <form class="row g-3" method="post" id="reserve_details_form">
+                                                            <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Reservation Status</label>
+                                                                <select name="reserve_status" id="reserve_status" class="form-select"
+                                                                    <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
+                                                                    <?php foreach (RESERVE_STATUS as $value) { ?>
+                                                                    <option value="<?= $value; ?>"
+                                                                        <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>
+                                                                        <?= $value; ?>
+                                                                    </option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Date of Reservation</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="reserve_date" id="reserve_date"
+                                                                    value="<?php echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y h:i A') : ''); ?>"
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">First Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    value="<?php echo $row['fname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Last Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    value="<?php echo $row['lname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                    <select name="time" id="time" class="form-control" required>
+                                                                        <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
+                                                                        <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
+                                                                        <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Seating Arrangement</label>
+                                                                <input type="text" class="form-control" name="setup" id="setup"
+                                                                    value="<?php echo $row['setup']; ?>">
+                                                                    <select name="setup" id="setup" class="form-control">
+                                                                        <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
+                                                                        <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>
+                                                                        <option value="THEATER" <?php if($row['setup'] == "THEATER") echo 'selected'; ?>>THEATER</option>
+                                                                        <option value="U-SHAPE" <?php if($row['setup'] == "U-SHAPE") echo 'selected'; ?>>U-SHAPE</option>
+                                                                        <option value="CONFERENCE" <?php if($row['setup'] == "CONFERENCE") echo 'selected'; ?>>CONFERENCE</option>
+                                                                        <option value="OTHER" <?php if($row['setup'] == "OTHER") echo 'selected'; ?>>OTHER</option>
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Bussiness Unit</label>
+                                                                <select name="businessunit" id="businessunit" class="form-control">
+                                                                    <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
+                                                                    <option value="FSC" <?php if($row['business_unit'] == "FSC") echo 'selected'; ?>>FAST SERVICES CORPORATION</option>
+                                                                    <option value="FTMC" <?php if($row['business_unit'] == "FTMC") echo 'selected'; ?>>FAST TOLL MANUFACTURING CORPORATION</option>
+                                                                    <option value="FCSI" <?php if($row['business_unit'] == "FCSI") echo 'selected'; ?>>FAST COLDCHAIN SOLUTION INC.</option>
+                                                                    <option value="FDC" <?php if($row['business_unit'] == "FDC") echo 'selected'; ?>>FAST DISTRIBUTION CORPORATION</option>
+                                                                    <option value="FUI" <?php if($row['business_unit'] == "FUI") echo 'selected'; ?>>FAST UNIMERCHANT INC.</option>
+                                                                    <option value="other" <?php if($row['business_unit'] == "other") echo 'selected'; ?>>OTHER</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Guest</label>
+                                                                <input type="text" class="form-control" name="guest"
+                                                                    id="guest"
+                                                                    value="<?php echo $row['guest']; ?>">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Contact No.<span
+                                                                        class="require asterisk">*</span></label>
+                                                                <input type="text" class="form-control" name="contact"
+                                                                    id="contact" value="<?php echo $row['contact']; ?>">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Email<span
+                                                                        class="require asterisk">*</span></label>
+                                                                <input type="text" class="form-control" name="email"
+                                                                    id="email" value="<?php echo $row['email']; ?>">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="form-label py-1">Purpose / Message </label>
+                                                                <textarea class="form-control" name="message" id="message"
+                                                                    type="text" cols="30"
+                                                                    rows="3"><?php echo $row['message']; ?></textarea>
+                                                            </div>
+                                                            <button type="button" class="btn btn-label-primary"
+                                                        id="submit_edit_reserve_details"
+                                                        name="submit_edit_reserve_details">Save</button>
+                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
+                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                            Loading...
+                                                        </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- </div> -->
 
                         </div>
                     </div>
@@ -202,11 +225,11 @@ $(document).ready(function() {
             textarea.disabled = true;
         });
     }
-    $('#submit_edit_purchase_details').on('click', function() {
+    $('#submit_edit_reserve_details').on('click', function() {
         var formdata = new FormData(purchase_details_form);
 
         $.ajax({
-            url: "../action/edit_purchase_details_info.php",
+            url: "/edit_reserve_details_info",
             method: "POST",
             data: formdata,
             dataType: "json",

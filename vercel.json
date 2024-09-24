@@ -99,6 +99,10 @@
         "dest": "/api/pages/reservation-details.php"
       },
       {
+        "src": "/edit_reserve_details_info",
+        "dest": "/api/action/edit_reserve_details_info.php"
+      },
+      {
         "src": "/rca-list",
         "dest": "/api/pages/rca-list.php"
       },
