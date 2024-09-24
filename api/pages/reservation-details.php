@@ -14,7 +14,7 @@ if(empty($id)){
     header("Location:404.php");
 }
 
-$sql = $conn->prepare("SELECT * FROM reservation WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
