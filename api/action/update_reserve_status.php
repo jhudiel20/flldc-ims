@@ -18,7 +18,12 @@ $ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';  
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';  
 
-
+if(empty($message) || $message = ''){
+    $response['success'] = false;
+    $response['title'] = 'Error';
+    $response['message'] = 'Please provide message! ';
+    echo json_encode($response);  
+}
 
 
 $sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id ");
@@ -52,7 +57,6 @@ $generateReserveID  = generateReserveID();
         $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
         $mail->addAddress($EMAIL);     //Add a recipient
         $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
-        $code = $REQUEST_ID;
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
   
@@ -237,7 +241,7 @@ $generateReserveID  = generateReserveID();
         }
         $mail->send();
 
-        $sql = $conn->prepare("UPDATE reservation SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+        $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
         $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
         $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
         $sql->bindParam(':id', $ID, PDO::PARAM_STR);
