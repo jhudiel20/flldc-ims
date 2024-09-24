@@ -122,7 +122,7 @@ $generateReserveID  = generateReserveID();
                                                                 <b>Message :</b> '.$message.'<br>
                                                                 </p>
 
-                                                                <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
+                                                                <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at jppsolis@fast.com.ph | Viber Number: +63 969 450 9412.</p>
                                                                 <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center.</p>
 
                                                             </div>
@@ -210,7 +210,7 @@ $generateReserveID  = generateReserveID();
                                                                 <b>Reason for Declining :</b> '.$message.'<br>
                                                                 </p>
         
-                                                                <p style="text-align:justify">If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
+                                                                <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at jppsolis@fast.com.ph | Viber Number: +63 969 450 9412.</p>
                                                                 <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center.</p>
         
                                                             </div>
