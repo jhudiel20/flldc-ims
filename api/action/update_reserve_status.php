@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $approval_status = isset($_POST['approval_status']) ? trim($_POST['approval_status']) : '';
 $ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';  
+$message = isset($_POST['message']) ? trim($_POST['message']) : '';  
+
 
 
 
@@ -113,7 +115,7 @@ $generateReserveID  = generateReserveID();
                                                                 <b>Time:</b> '.$row['time'].'<br>
                                                                 <b>Setup:</b> '.$row['setup'].'<br>
                                                                 <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
-                                                                <b>Message :</b> '.$row['reason'].'<br>
+                                                                <b>Message :</b> '.$message.'<br>
                                                                 </p>
 
                                                                 <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
@@ -201,7 +203,7 @@ $generateReserveID  = generateReserveID();
                                                                 <b>Time:</b> '.$row['time'].'<br>
                                                                 <b>Setup:</b> '.$row['setup'].'<br>
                                                                 <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
-                                                                <b>Reason for Declining :</b> '.$row['reason'].'<br>
+                                                                <b>Reason for Declining :</b> '.$message.'<br>
                                                                 </p>
         
                                                                 <p style="text-align:justify">If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
