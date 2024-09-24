@@ -262,8 +262,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare the INSERT statement for purchase_order
         $sql_purchase_order = $conn->prepare("
-            INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO) 
-            VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :img)
+            INSERT INTO purchase_order(REQUEST_ID, ITEM_NAME, QUANTITY, REMARKS, EMAIL, PURPOSE, DATE_NEEDED, DESCRIPTION, ITEM_PHOTO, REQUEST_DATE_CREATED) 
+            VALUES(:request_id, :item_name, :quantity, :remarks, :email, :purpose, :date_needed, :description, :img ,NOW() AT TIME ZONE 'Asia/Manila')
         ");
 
         // Bind the parameters to the prepared statement
@@ -286,8 +286,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "\n" . "Purpose : " . $PURPOSE . "\n" . "Date Needed : " . $DATE_NEEDED . "\n" . "Remarks : " . $REMARKS . 
         "\n" . "Description : " . $DESCRIPTION;
 
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS) 
-        VALUES (?, ?, ?)");
+        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID, TITLE, REMARKS, DATE_CREATED) 
+        VALUES (?, ?, ?, NOW() AT TIME ZONE 'Asia/Manila')");
         $sql_history->execute([$generate_REQUEST_ID, $history_title, $history_remarks]);
 
         // Log the action

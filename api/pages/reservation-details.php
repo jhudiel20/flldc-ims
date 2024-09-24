@@ -81,7 +81,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <label class="form-label">Reservation Status</label>
                                                             <select name="reserve_status" id="reserve_status" class="form-select"
                                                                 <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
-                                                                <?php foreach (RESERVATION_STATUS as $value) { ?>
+                                                                <?php foreach (RESERVE_STATUS as $value) { ?>
                                                                 <option value="<?= $value; ?>"
                                                                     <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>
                                                                     <?= $value; ?>
@@ -144,18 +144,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     class="require asterisk">*</span></label>
                                                             <input type="text" class="form-control" name="email"
                                                                 id="email" value="<?php echo $row['email']; ?>">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Status</label>
-                                                            <select name="STATUS" id="STATUS" class="form-select"
-                                                                <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR') ? 'disabled' : ''; ?>>
-                                                                <?php foreach (RESERVE_STATUS as $value) { ?>
-                                                                <option value="<?= $value; ?>"
-                                                                    <?php echo ($value == $row['status']) ? 'selected' : ''; ?>>
-                                                                    <?= $value; ?>
-                                                                </option>
-                                                                <?php } ?>
-                                                            </select>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <label class="form-label py-1">Purpose / Message </label>

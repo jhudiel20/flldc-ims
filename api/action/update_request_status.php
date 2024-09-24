@@ -218,7 +218,7 @@ $generate_PR_ID  = generate_PR_ID();
         $mail->send();
 
         $sql = $conn->prepare("UPDATE purchase_order SET PR_ID = :pr_id ,
-        APPROVAL = :approval_status ,APPROVAL_DATE_CREATED = NOW() WHERE id = :id ");
+        APPROVAL = :approval_status ,APPROVAL_DATE_CREATED = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
         $sql->bindParam(':pr_id', $generate_PR_ID, PDO::PARAM_STR);
         $sql->bindParam(':approval_status', $approval_status, PDO::PARAM_STR);
         $sql->bindParam(':id', $ID, PDO::PARAM_STR);
@@ -228,8 +228,8 @@ $generate_PR_ID  = generate_PR_ID();
         $history_title = "Updated Request Status";
         $history_remarks = "Status Request : " . $approval_status;
 
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
-        VALUES (:request_id,:title,:remarks)");
+        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS,DATE_CREATED) 
+        VALUES (:request_id,:title,:remarks,NOW() AT TIME ZONE 'Asia/Manila')");
         $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
         $sql_history->bindParam(':title', $history_title, PDO::PARAM_STR);
         $sql_history->bindParam(':remarks', $history_remarks, PDO::PARAM_STR);
