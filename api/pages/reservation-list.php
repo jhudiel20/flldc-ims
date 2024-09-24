@@ -109,20 +109,20 @@ var approval_status = function(cell, formatterParams, onRendered) {
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
-        if (data_approval == "PENDING") {
+        if (reserve_status == "PENDING") {
             return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
-        if (data_approval == "DECLINED"){
+        if (reserve_status == "DECLINED"){
             return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
-        if(data_approval == "APPROVED"){
+        if(reserve_status == "APPROVED"){
             return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>
-    return data_approval;
+    return reserve_status;
     <?php } ?>
 };
 
