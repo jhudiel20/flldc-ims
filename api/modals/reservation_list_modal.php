@@ -12,7 +12,7 @@
                             <input type="hidden" id="ID" name="ID">
                             <input type="hidden" id="EMAIL" name="EMAIL">
                             <label for="nameWithTitle" class="form-label">Status</label>
-                            <select name="approval_status" id="approval_status" class="form-select">
+                            <select name="approval_status" id="approval_status" class="form-select mb-2">
                                 <option value="APPROVED">APPROVED</option>
                                 <option value="DECLINED">DECLINED</option>
                             </select>

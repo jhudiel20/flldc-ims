@@ -51,7 +51,6 @@ $generateReserveID  = generateReserveID();
         $mail->addAddress($EMAIL);     //Add a recipient
         $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
         $code = $REQUEST_ID;
-        $ITEM_NAME = $ITEM_NAME;
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
   
@@ -114,6 +113,7 @@ $generateReserveID  = generateReserveID();
                                                                 <b>Time:</b> '.$row['time'].'<br>
                                                                 <b>Setup:</b> '.$row['setup'].'<br>
                                                                 <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
+                                                                <b>Message :</b> '.$row['reason'].'<br>
                                                                 </p>
 
                                                                 <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
@@ -144,8 +144,8 @@ $generateReserveID  = generateReserveID();
                     </div>
                 </div>
             ';
-        }else{
-            $mail->Subject = 'Reservation Status Update : '.$approval_status;
+        } else {
+            $mail->Subject = 'Reservation Status Update: '.$approval_status;
             $mail->Body    = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
@@ -162,7 +162,7 @@ $generateReserveID  = generateReserveID();
                                         <tbody>
                                             <tr>
                                             <td style="width:138px">
-                                                <img alt="" title="" height="100px" width="200px" src="../assets/img/LOGO.png" width="100" style="">
+                                                <img alt="" title="" height="100px" width="200px" src="cid:logo_cid" style="">
                                             </td>
                                             </tr>
                                         </tbody>
@@ -177,7 +177,7 @@ $generateReserveID  = generateReserveID();
                         </tbody>
                     </table>
                     </div>
-
+        
                     <div style="max-width:640px;margin:0 auto;border-radius:4px;overflow:hidden">
                     <div style="margin:0px auto;max-width:640px;background:#fdfdfd">
                         <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:#fdfdfd" align="center" border="0">
@@ -190,20 +190,26 @@ $generateReserveID  = generateReserveID();
                                                     <tr>
                                                         <td style="word-break:break-word;font-size:0px;padding:0px" align="left">
                                                             <div style="color:#737f8d;font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-size:16px;line-height:24px;text-align:left">
-                                                
                                                                 <h2 style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:500;font-size:20px;color:#4f545c;letter-spacing:0.27px">Hi good day,</h2>
-                                                                <p style="text-align:justify">I trust this email finds you in good spirits. I am reaching out to provide you with an update on the status of your recent request with us. Ensuring your satisfaction remains our utmost priority, and we are dedicated to keeping you informed throughout the process.</p>
-                                                                <p style="text-align:justify">If you did not initiate a purchase in Learning and Development Inventory Management System, kindly disregard this message.</p>
-                                                                <p style="text-align:justify">Following thorough review and deliberation, I regret to inform you that your request has been declined. The decision was made after careful consideration of various factors, and we understand this may not be the outcome you were hoping for.</p>
-                                                                <p>Here are some details related to your request: <b><br><br> Request ID : <b>'.$code.'</b> <br> Request Item : <b>'.$ITEM_NAME.'</b> <br> Status : <b>Declined</b> </p>
-
-                                                                <p style="text-align:justify">We appreciate the opportunity to assist you and are excited to proceed with your request. If you have any questions or need further assistance, please do not hesitate to contact our support [ bjrufino@fast.com.ph ]. We are here to ensure a smooth and seamless experience for you.</p>
-                                                                <p style="text-align:justify">Thank you for choosing FAST Learning and Development Inventory Management System. We look forward to serving you.</p>
-
+                                                                <p style="text-align:justify">Your reservation request has been declined. Below are the details of your request.</p>
+                                                                
+                                                                <p><strong>Reservation Details:</strong><br>
+                                                                <b>Business Unit:</b> '.$row['business_unit'].'<br>
+                                                                <b>Room:</b> '.$row['room'].'<br>
+                                                                <b>Contact:</b> '.$row['contact'].'<br>
+                                                                <b>Email:</b> '.$row['email'].'<br>
+                                                                <b>Time:</b> '.$row['time'].'<br>
+                                                                <b>Setup:</b> '.$row['setup'].'<br>
+                                                                <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
+                                                                <b>Reason for Declining :</b> '.$row['reason'].'<br>
+                                                                </p>
+        
+                                                                <p style="text-align:justify">If you have any questions or need further assistance, feel free to contact us at [ bjrufino@fast.com.ph ].</p>
+                                                                <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center.</p>
+        
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                 
                                                     <tr>
                                                         <td style="word-break:break-word;font-size:0px;padding:30px 0px">
                                                             <p style="font-size:1px;margin:0px auto;border-top:1px solid #dcddde;width:100%"></p>
@@ -217,42 +223,32 @@ $generateReserveID  = generateReserveID();
                             </tbody>    
                         </table>
                     </div>
-                <div>
-                    <table align="center">
-                        <tr>
-                        <td style="height:150px;  border:none;border-radius:3px;color:black;padding:15px 19px" align="center" valign="middle">&copy; 2024-2025 <strong><span>FAST Learning and Development Inventory Management System</span></strong></td>
-                        </tr>
-                    </table>
+                    <div>
+                        <table align="center">
+                            <tr>
+                            <td style="height:150px; border:none;border-radius:3px;color:black;padding:15px 19px" align="center" valign="middle">&copy; 2024-2025 <strong><span>FAST Learning and Development Center</span></strong></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             ';
         }
         $mail->send();
 
-        $sql = $conn->prepare("UPDATE purchase_order SET PR_ID = :pr_id ,
-        APPROVAL = :approval_status ,APPROVAL_DATE_CREATED = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
-        $sql->bindParam(':pr_id', $generate_PR_ID, PDO::PARAM_STR);
-        $sql->bindParam(':approval_status', $approval_status, PDO::PARAM_STR);
+        $sql = $conn->prepare("UPDATE reservation SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+        $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+        $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
         $sql->bindParam(':id', $ID, PDO::PARAM_STR);
         // Execute the prepared statement
         $sql->execute();
 
-        $history_title = "Updated Request Status";
-        $history_remarks = "Status Request : " . $approval_status;
-
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS,DATE_CREATED) 
-        VALUES (:request_id,:title,:remarks,NOW() AT TIME ZONE 'Asia/Manila')");
-        $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
-        $sql_history->bindParam(':title', $history_title, PDO::PARAM_STR);
-        $sql_history->bindParam(':remarks', $history_remarks, PDO::PARAM_STR);
-        // Execute the prepared statement
-        $sql_history->execute();
-
+        $history_title = "Updated Reserve Status";
+        $history_remarks = "Status Reserve : " . $approval_status;
 
         if($approval_status = " APPROVED "){
-            $action = "Request Status : Approved | Request Item Name : " . $ITEM_NAME;
+            $action = "Reserve Status : Approved | Reserve ID : " . $generateReserveID;
         }else{
-            $action = "Request Status : Declined | Request Item Name : ". $ITEM_NAME;
+            $action = "Reserve Status : Declined | Reserve ID : ". $generateReserveID;
         }
                 // Log the action
                 $user_id = $decrypted_array['ID'];
