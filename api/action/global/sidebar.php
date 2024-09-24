@@ -69,6 +69,7 @@ $user_id = $decrypted_array['ID'];
                 </li>
             </ul>
         </li>
+        <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
         <li
             class="menu-item <?php echo ($geturl == 'reservation-list' ||$geturl == 'reservation-approved-list' )? 'active open' : 'collapsed' ?>">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -90,8 +91,6 @@ $user_id = $decrypted_array['ID'];
 
             </ul>
         </li>
-
-        <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
         <li class="menu-item <?php echo ($geturl == 'cashier_page')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>cashier_page" class="menu-link">
                         <i class="menu-icon fa-solid fa-box-open"></i>
