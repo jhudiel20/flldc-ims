@@ -73,8 +73,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="card-body" style="overflow-x:auto;">
 
                                         <div class="nav-align-top mb-2">
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade" id="purchase-info" role="tabpanel">
                                                     <form class="row g-3" method="post" id="purchase_details_form">
                                                         <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                         <div class="col-md-6">
@@ -152,9 +150,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 rows="3"><?php echo $row['message']; ?></textarea>
                                                         </div>
                                                     </form>
-                                                </div>
-
-                                            </div>
 
                                         </div>
 
