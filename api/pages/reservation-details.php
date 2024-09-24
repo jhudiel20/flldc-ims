@@ -74,6 +74,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                         <div class="card-body">
                                             <form class="row g-3" method="post" id="reserve_details_form">
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+                                                            <input type="hidden" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Reservation Status</label>
                                                                 <select name="reserve_status" id="reserve_status" class="form-select"
@@ -95,15 +96,16 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control" name="fname" id="fname"
                                                                     value="<?php echo $row['fname']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Last Name</label>
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control" name="lname" id="lname"
                                                                     value="<?php echo $row['lname']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
+                                                            <label class="form-label">Time</label>
                                                                     <select name="time" id="time" class="form-control" required>
                                                                         <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
                                                                         <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
@@ -112,8 +114,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Seating Arrangement</label>
-                                                                <input type="text" class="form-control" name="setup" id="setup"
-                                                                    value="<?php echo $row['setup']; ?>">
                                                                     <select name="setup" id="setup" class="form-control">
                                                                         <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
                                                                         <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>

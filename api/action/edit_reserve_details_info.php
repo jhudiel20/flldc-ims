@@ -11,23 +11,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // var_dump($_REQUEST);
 $id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
-$REQUEST_ID =  isset($_POST['REQUEST_ID']) ? trim($_POST['REQUEST_ID']) : '';
+$reserve_status =  isset($_POST['reserve_status']) ? trim($_POST['reserve_status']) : '';
+$reserve_date =  isset($_POST['reserve_date']) ? trim($_POST['reserve_date']) : '';
+$fname =  isset($_POST['fname']) ? trim($_POST['fname']) : '';
+$lname =  isset($_POST['lname']) ? trim($_POST['lname']) : '';
+$time =  isset($_POST['time']) ? trim($_POST['time']) : '';
+$setup =  isset($_POST['setup']) ? trim($_POST['setup']) : '';
+$businessunit =  isset($_POST['businessunit']) ? trim($_POST['businessunit']) : '';
+$guest =  isset($_POST['guest']) ? trim($_POST['guest']) : '';
+$contact =  isset($_POST['contact']) ? trim($_POST['contact']) : '';
+$email =  isset($_POST['email']) ? trim($_POST['email']) : '';
+$message =  isset($_POST['message']) ? trim($_POST['message']) : '';
+$bookingID =  isset($_POST['bookingID']) ? trim($_POST['bookingID']) : '';
 
-$sql = $conn->prepare("UPDATE purchase_order SET ITEM_NAME = :item_name, QUANTITY = :quantity, STATUS = :status, 
-DESCRIPTION = :item_desc, REMARKS = :remarks, PR_NO = :pr_no, PO_NO = :po_no, OS_TICKET_NO = :os_ticket_no WHERE ID = :id ");
-$sql->bindParam(':item_name', $ITEM_NAME, PDO::PARAM_STR);
-$sql->bindParam(':quantity', $QUANTITY, PDO::PARAM_STR);
-$sql->bindParam(':status', $STATUS, PDO::PARAM_STR);
-$sql->bindParam(':item_desc', $ITEM_DESC, PDO::PARAM_STR);
-$sql->bindParam(':remarks', $REMARKS, PDO::PARAM_STR);
-$sql->bindParam(':pr_no', $PR_NO, PDO::PARAM_STR);
-$sql->bindParam(':po_no', $PO_NO, PDO::PARAM_STR);
-$sql->bindParam(':os_ticket_no', $ITEM_NAME, PDO::PARAM_STR);
+$sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
+LNAME = :lname, TIME = :time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+$sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
+$sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+$sql->bindParam(':fname', $fname, PDO::PARAM_STR);
+$sql->bindParam(':lname', $lname, PDO::PARAM_STR);
+$sql->bindParam(':time', $time, PDO::PARAM_STR);
+$sql->bindParam(':setup', $setup, PDO::PARAM_STR);
+$sql->bindParam(':businessunit', $businessunit, PDO::PARAM_STR);
+$sql->bindParam(':guest', $guest, PDO::PARAM_STR);
+$sql->bindParam(':contact', $contact, PDO::PARAM_STR);
+$sql->bindParam(':email', $email, PDO::PARAM_STR);
+$sql->bindParam(':message', $message, PDO::PARAM_STR);
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 
 $user_id = $decrypted_array['ID'];
-$action = "Updated Purchase Order Details | Product Item : ".$ITEM_NAME;
+$action = "Updated Booking Details | Booking ID : ".$bookingID;
 
 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);

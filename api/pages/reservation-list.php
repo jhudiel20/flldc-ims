@@ -157,8 +157,8 @@ var table = new Tabulator("#reserve-list-table", {
             download: false
         },
         {
-            title: "Date Created",
-            field: "date_created",
+            title: "Reservation Date",
+            field: "reserve_date",
             headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
@@ -171,9 +171,9 @@ var table = new Tabulator("#reserve-list-table", {
             headerFilterLiveFilter: false
         },
         {
-            title: "Reservation Date",
-            field: "reserve_date",
-            headerFilter: "date",
+            title: "Booking ID",
+            field: "booking_id",
+            headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
@@ -223,26 +223,6 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
-        {
-            title: "Email ",
-            field: "email",
-            hozAlign: "center",
-            headerFilter: "list",
-            headerFilterParams: {
-                valuesLookup: true,
-                clearable: true
-            },
-            // width: 300,
-            headerFilterLiveFilter: false
-        },
-        {
-            title: "Reservation ID",
-            field: "reservation_id",
-            headerFilter: "input",
-            hozAlign: "center",
-            headerFilterLiveFilter: false
-        },
-
     ],
     ajaxResponse: function(url, params, response) {
         return {
