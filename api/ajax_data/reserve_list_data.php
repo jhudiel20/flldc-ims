@@ -29,7 +29,7 @@ foreach ($filters as $filter) {
     if (isset($filter['field']) && isset($filter['value'])) {
             $field = $filter['field'];
             $value = '%' . $filter['value'] . '%';
-            $filter_clauses[] = "$field LIKE :$field";
+            $filter_clauses[] = "$field ILIKE :$field";
             $filter_params[$field] = $value;
     }
 }
