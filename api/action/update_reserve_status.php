@@ -32,20 +32,6 @@ $sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
 
-
-// $counter = $conn->prepare("SELECT * FROM reservations WHERE reserve_status = :status");
-// $sql->bindParam(':status', $approval_status, PDO::PARAM_STR);
-// $counter->execute();
-  
-// while ($row_counter = $counter->fetch(PDO::FETCH_ASSOC)) {
-//     if($row_counter['time'] == $row['time'] && $row_counter['room'] == $row['room'] && $row_counter['reserve_date'] == $row['reserve_date']){
-//         $response['success'] = false;
-//         $response['title'] = 'Error';
-//         $response['message'] = 'Date is already book provide message! ';
-//         echo json_encode($response);   
-//     }
-// }
-
 $selected_time = $row['time'];
 $room = $row['room'];
 $reserve_date = $row['reserve_date'];
@@ -91,28 +77,6 @@ $counter->execute();
 
 // Check if any conflicting reservation exists
 if ($counter->rowCount() > 0) {
-
-    $decline_query = $conn->prepare("
-        UPDATE reservations 
-        SET reserve_status = 'DECLINED' 
-        WHERE room = :room 
-        AND reserve_date = :reserve_date
-        AND reserve_status = 'PENDING'
-        AND time IN ($inClause)
-    ");
-
-    // Bind the room, reserve_date, and overlapping time slots as before
-    $decline_query->bindParam(':room', $room, PDO::PARAM_STR);
-    $decline_query->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
-
-    // Bind the overlapping time slots dynamically
-    foreach ($overlapping_times as $index => $time) {
-        $decline_query->bindValue(':time' . $index, $time, PDO::PARAM_STR);
-    }
-
-    // Execute the update to decline conflicting reservations
-    $decline_query->execute();
-
     // If a record exists, the room is already booked for the selected time slot
     $response['success'] = false;
     $response['title'] = 'Error';
@@ -121,8 +85,6 @@ if ($counter->rowCount() > 0) {
     exit();  // Stop further execution
 }
 
-
-$generateReserveID  = generateReserveID();
     
         // Mailer setup
         require __DIR__ . '/../../public/mail/Exception.php';
@@ -132,7 +94,7 @@ $generateReserveID  = generateReserveID();
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
-    
+    $generateReserveID  = generateReserveID();
     try {
         //Server settings
         $mail->isSMTP();                                            //Send using SMTP
@@ -330,6 +292,26 @@ $generateReserveID  = generateReserveID();
             ';
         }
         $mail->send();
+
+            // Now, decline all overlapping pending reservations for the same room, date, and overlapping time slots
+        $decline_pending = $conn->prepare("
+            UPDATE reservations 
+            SET reserve_status = 'DECLINED' 
+            WHERE room = :room 
+            AND reserve_date = :reserve_date
+            AND reserve_status = 'PENDING'
+            AND time IN ($inClause)
+        ");
+        $decline_pending->bindParam(':room', $room, PDO::PARAM_STR);
+        $decline_pending->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+
+        // Bind the overlapping time slots for the pending reservations
+        foreach ($overlapping_times as $index => $time) {
+            $decline_pending->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+        }
+
+        // Execute the decline query
+        $decline_pending->execute();
 
         $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
         $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
