@@ -30,7 +30,7 @@ foreach ($filters as $filter) {
         $field = $filter['field'];
         $value = $filter['value'];
 
-        if ($field == 'reserve_date') {
+        if ($filter['field'] == 'reserve_date') {
             $filter_clauses[] = "$field = '" . $value . "'";
         } else {
             $value = '%' . $filter['value'] . '%';
