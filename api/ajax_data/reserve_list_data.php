@@ -29,14 +29,11 @@ foreach ($filters as $filter) {
     if (isset($filter['field']) && isset($filter['value'])) {
         $field = $filter['field'];
         $value = $filter['value'];
-        
-        // If the field is 'reserve_date', use date comparison
+
         if ($field == 'reserve_date') {
             $filter_clauses[] = "$field = '" . $value . "'";
         } else {
-            // Use ILIKE for non-date fields with wildcard for pattern matching
-            $filter_clauses[] = "$field ILIKE :$field";
-            $filter_params[$field] = '%' . $value . '%'; // Add wildcard for non-date fields
+            $filter_clauses[] = "$field ILIKE '%" . $value . "%'";
         }
     }
 }
