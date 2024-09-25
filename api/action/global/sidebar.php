@@ -79,7 +79,7 @@ $user_id = $decrypted_array['ID'];
                 </ul>
             </li>
             <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY' || $decrypted_array['ACCESS'] == 'GUARD'){?>
-                <li class="menu-item <?php echo ($geturl == 'reservation-list' ||$geturl == 'reservation-approved-list' )? 'active open' : 'collapsed' ?>">
+                <li class="menu-item <?php echo ($geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon fa-solid fa-book-bookmark"></i>
                         <div class="text-truncate" data-i18n="Reservation">Reservation</div>
@@ -88,12 +88,22 @@ $user_id = $decrypted_array['ID'];
                     <ul class="menu-sub">
                         <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
                             <a href="reservation-list" class="menu-link">
-                                <div class="text-truncate" data-i18n="Reservation">Reservation List</div>
+                                <div class="text-truncate" data-i18n="All">All</div>
                             </a>
                         </li>
-                        <li class="menu-item <?php echo ($geturl == 'reservation-approved-list')? 'active' : 'collapsed' ?>">
+                        <li class="menu-item <?php echo ($geturl == 'reserve-pending')? 'active' : 'collapsed' ?>">
                             <a href="reservation-approved-list" class="menu-link">
-                                <div class="text-truncate" data-i18n="Approved Reservation">Approved Reservation</div>
+                                <div class="text-truncate" data-i18n="Pending">Pending</div>
+                            </a>
+                        </li>
+                        <li class="menu-item <?php echo ($geturl == 'reserve-approved')? 'active' : 'collapsed' ?>">
+                            <a href="reservation-approved-list" class="menu-link">
+                                <div class="text-truncate" data-i18n="Approved">Approved</div>
+                            </a>
+                        </li>
+                        <li class="menu-item <?php echo ($geturl == 'reserve-declined')? 'active' : 'collapsed' ?>">
+                            <a href="reservation-approved-list" class="menu-link">
+                                <div class="text-truncate" data-i18n="Declined">Declined</div>
                             </a>
                         </li>
 
