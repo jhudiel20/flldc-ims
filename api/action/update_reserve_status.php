@@ -97,14 +97,13 @@ if ($counter->rowCount() > 0) {
         SET reserve_status = 'DECLINED' 
         WHERE room = :room 
         AND reserve_date = :reserve_date
-        AND reserve_status = :reserve_status
+        AND reserve_status = 'PENDING'
         AND time IN ($inClause)
     ");
 
     // Bind the room, reserve_date, and overlapping time slots as before
     $decline_query->bindParam(':room', $room, PDO::PARAM_STR);
     $decline_query->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
-    $decline_query->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
 
     // Bind the overlapping time slots dynamically
     foreach ($overlapping_times as $index => $time) {
