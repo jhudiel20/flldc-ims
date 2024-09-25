@@ -44,8 +44,8 @@ $user_id = $decrypted_array['ID'];
             <span class="menu-header-text" data-i18n="Navigation">Navigation</span>
         </li>
         <?php if($decrypted_array['ACCESS'] == 'GUARD'){?>
-            <li class="menu-item <?php echo ($geturl == 'reservation-list-view')? 'active' : 'collapsed' ?>">
-                <a href="reservation-list-view" class="menu-link">
+            <li class="menu-item <?php echo ($geturl == 'reserve-view')? 'active' : 'collapsed' ?>">
+                <a href="reserve-view" class="menu-link">
                     <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                     <div> Reservation List</div>
                 </a>
