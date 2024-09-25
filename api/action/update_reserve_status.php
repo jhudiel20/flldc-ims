@@ -45,17 +45,22 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 //     }
 // }
 
+$selected_time = $row['time'];
+$room = $_POST['room'];
+$reserve_date = $_POST['reserve_date'];
 
-// Define time ranges for each option
+// Define time slots and their relationships (what overlaps with what)
 $time_slots = [
-    "7:00AM-12:00PM" => ['start' => '07:00:00', 'end' => '12:00:00'],
-    "1:00PM-6:00PM" => ['start' => '13:00:00', 'end' => '18:00:00'],
-    "7:00AM-6:00PM" => ['start' => '07:00:00', 'end' => '18:00:00']
+    "7:00AM-12:00PM" => ['overlaps' => ["7:00AM-12:00PM", "7:00AM-6:00PM"]],
+    "1:00PM-6:00PM" => ['overlaps' => ["1:00PM-6:00PM", "7:00AM-6:00PM"]],
+    "7:00AM-6:00PM" => ['overlaps' => ["7:00AM-12:00PM", "1:00PM-6:00PM", "7:00AM-6:00PM"]]
 ];
 
-// Get the start and end times for the selected time option
-$selected_start_time = $time_slots[$selected_time]['start'];
-$selected_end_time = $time_slots[$selected_time]['end'];
+// Get the overlapping time slots for the selected time
+$overlapping_times = $time_slots[$selected_time]['overlaps'];
+
+// Prepare placeholders for the query (to check for any overlapping time slots)
+$placeholders = str_repeat('?,', count($overlapping_times) - 1) . '?';
 
 // Prepare the SQL query to check for overlapping reservations for the selected room and date
 $counter = $conn->prepare("
@@ -63,21 +68,18 @@ $counter = $conn->prepare("
     WHERE room = :room 
     AND reserve_date = :reserve_date
     AND reserve_status = :reserve_status
-    AND (
-        (time_start < :end_time AND time_end > :start_time)
-    )
+    AND time IN ($placeholders)
 ");
 
-$counter->bindParam(':room', $row['room'], PDO::PARAM_STR);
-$counter->bindParam(':reserve_date', $row['reserve_date'], PDO::PARAM_STR);
-$counter->bindParam(':reserve_status', $row['reserve_status'], PDO::PARAM_STR);
-$counter->bindParam(':start_time', $selected_start_time, PDO::PARAM_STR);
-$counter->bindParam(':end_time', $selected_end_time, PDO::PARAM_STR);
+$approval_status = 'APPROVED';  // Assuming you are checking for approved reservations
+$counter->bindParam(':room', $room, PDO::PARAM_STR);
+$counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+$counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
 
-// Execute the query
-$counter->execute();
+// Bind the time slots for checking overlap
+$counter->execute($overlapping_times);
 
-// Check if any record conflicts with the selected time slot
+// Check if any conflicting reservation exists
 if ($counter->rowCount() > 0) {
     // If a record exists, the room is already booked for the selected time slot
     $response['success'] = false;
