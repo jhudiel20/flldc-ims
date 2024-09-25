@@ -120,7 +120,7 @@ var table = new Tabulator("#reserve-list-view-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/reserve_list_view_table",
+    ajaxURL: "/reserve_approved_data",
     columns: [
         {
             title: "Details",
