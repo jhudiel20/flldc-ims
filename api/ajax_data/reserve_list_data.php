@@ -79,8 +79,7 @@ foreach ($rows as &$row) {
 $response = [
     "last_page" => $pages,
     "total_record" => $total_query,
-    "data" => $rows,
-    "query" => $query_debug
+    "data" => $rows
 ];
 
 echo json_encode($response);
