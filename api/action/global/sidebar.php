@@ -100,7 +100,7 @@ $user_id = $decrypted_array['ID'];
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-pending')? 'active' : 'collapsed' ?>">
-                            <a href="reservation-approved-list" class="menu-link">
+                            <a href="reserve-pending" class="menu-link">
                                 <div class="text-truncate" data-i18n="Pending">Pending</div>
                                 <?php if($r_reserve['total'] == 0){}else{?>
                                 <span
@@ -109,12 +109,12 @@ $user_id = $decrypted_array['ID'];
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-approved')? 'active' : 'collapsed' ?>">
-                            <a href="reservation-approved-list" class="menu-link">
+                            <a href="reserve-approved" class="menu-link">
                                 <div class="text-truncate" data-i18n="Approved">Approved</div>
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-declined')? 'active' : 'collapsed' ?>">
-                            <a href="reservation-approved-list" class="menu-link">
+                            <a href="reserve-declined" class="menu-link">
                                 <div class="text-truncate" data-i18n="Declined">Declined</div>
                             </a>
                         </li>
