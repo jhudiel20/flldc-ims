@@ -96,14 +96,7 @@ if ($counter->rowCount() > 0) {
     $response['message'] = 'The room is already booked for the selected date and time. Please choose another time or date.';
     echo json_encode($response);
     exit();  // Stop further execution
-} else {
-    // If no record exists, the room is available for booking
-    $response['success'] = true;
-    $response['title'] = 'Success';
-    $response['message'] = 'The room is available for booking!';
-    echo json_encode($response);
 }
-
 
 
 $generateReserveID  = generateReserveID();
