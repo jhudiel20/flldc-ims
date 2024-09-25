@@ -163,7 +163,7 @@ if ($counter->rowCount() > 0) {
                                                                 <p style="text-align:justify">Your reservation has been approved! Below are the details of your reservation. Please present the reservation ID at the security desk when you arrive at the center.</p>
                                                                 
                                                                 <p><strong>Reservation Details:</strong><br>
-                                                                <b>Reservation ID:</b> '.$row['reservation_id'].'<br>
+                                                                <b>Reservation ID:</b> '.$generateReserveID.'<br>
                                                                 <b>Business Unit:</b> '.$row['business_unit'].'<br>
                                                                 <b>Room:</b> '.$row['room'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
