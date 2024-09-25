@@ -46,8 +46,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 // }
 
 $selected_time = $row['time'];
-$room = $_POST['room'];
-$reserve_date = $_POST['reserve_date'];
+$room = $row['room'];
+$reserve_date = $row['reserve_date'];
 
 // Define time slots and their relationships (what overlaps with what)
 $time_slots = [
