@@ -95,8 +95,28 @@
         "dest": "/api/action/update_reserve_status.php"
       },
       {
-        "src": "/reservation-approved-list",
-        "dest": "/api/pages/reservation-approved-list.php"
+        "src": "/reserve-approved",
+        "dest": "/api/pages/reserve-approved.php"
+      },
+      {
+        "src": "/reserve_list_view_data",
+        "dest": "/api/ajax_data/reserve_list_view_data.php"
+      },
+      {
+        "src": "/reserve-declined",
+        "dest": "/api/pages/reserve-declined.php"
+      },
+      {
+        "src": "/reserve_declined_data",
+        "dest": "/api/ajax_data/reserve_declined_data.php"
+      },
+      {
+        "src": "/reserve-pending",
+        "dest": "/api/pages/reserve-pending.php"
+      },
+      {
+        "src": "/reserve_pending_data",
+        "dest": "/api/ajax_data/reserve_pending_data.php"
       },
       {
         "src": "/reservation-details",
