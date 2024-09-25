@@ -18,11 +18,12 @@ $ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';  
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';  
 
-if(empty($message) || $message = ''){
+if (empty($message) || $message == '') {
     $response['success'] = false;
     $response['title'] = 'Error';
-    $response['message'] = 'Please provide message! ';
-    echo json_encode($response);  
+    $response['message'] = 'Please provide a message!';
+    echo json_encode($response);
+    exit();
 }
 
 
@@ -90,6 +91,29 @@ $counter->execute();
 
 // Check if any conflicting reservation exists
 if ($counter->rowCount() > 0) {
+
+    $decline_query = $conn->prepare("
+        UPDATE reservations 
+        SET reserve_status = 'DECLINED' 
+        WHERE room = :room 
+        AND reserve_date = :reserve_date
+        AND reserve_status = :reserve_status
+        AND time IN ($inClause)
+    ");
+
+    // Bind the room, reserve_date, and overlapping time slots as before
+    $decline_query->bindParam(':room', $room, PDO::PARAM_STR);
+    $decline_query->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+    $decline_query->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+
+    // Bind the overlapping time slots dynamically
+    foreach ($overlapping_times as $index => $time) {
+        $decline_query->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+    }
+
+    // Execute the update to decline conflicting reservations
+    $decline_query->execute();
+
     // If a record exists, the room is already booked for the selected time slot
     $response['success'] = false;
     $response['title'] = 'Error';
