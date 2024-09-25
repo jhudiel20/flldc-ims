@@ -33,7 +33,9 @@ foreach ($filters as $filter) {
         if ($field == 'reserve_date') {
             $filter_clauses[] = "$field = '" . $value . "'";
         } else {
-            $filter_clauses[] = "$field ILIKE '%" . $value . "%'";
+            $value = '%' . $filter['value'] . '%';
+            $filter_clauses[] = "$field ILIKE :$field";
+            $filter_params[$field] = $value;
         }
     }
 }
