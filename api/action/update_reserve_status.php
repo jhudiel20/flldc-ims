@@ -59,8 +59,12 @@ $time_slots = [
 // Get the overlapping time slots for the selected time
 $overlapping_times = $time_slots[$selected_time]['overlaps'];
 
-// Prepare placeholders for the query (to check for any overlapping time slots)
-$placeholders = str_repeat('?,', count($overlapping_times) - 1) . '?';
+// Prepare placeholders for the query (using named placeholders instead of positional ones)
+$inPlaceholders = [];
+for ($i = 0; $i < count($overlapping_times); $i++) {
+    $inPlaceholders[] = ':time' . $i;
+}
+$inClause = implode(',', $inPlaceholders);
 
 // Prepare the SQL query to check for overlapping reservations for the selected room and date
 $counter = $conn->prepare("
@@ -68,7 +72,7 @@ $counter = $conn->prepare("
     WHERE room = :room 
     AND reserve_date = :reserve_date
     AND reserve_status = :reserve_status
-    AND time IN ($placeholders)
+    AND time IN ($inClause)
 ");
 
 $approval_status = 'APPROVED';  // Assuming you are checking for approved reservations
@@ -76,8 +80,13 @@ $counter->bindParam(':room', $room, PDO::PARAM_STR);
 $counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
 $counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
 
-// Bind the time slots for checking overlap
-$counter->execute($overlapping_times);
+// Bind the overlapping time slots dynamically
+foreach ($overlapping_times as $index => $time) {
+    $counter->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+}
+
+// Execute the query
+$counter->execute();
 
 // Check if any conflicting reservation exists
 if ($counter->rowCount() > 0) {
