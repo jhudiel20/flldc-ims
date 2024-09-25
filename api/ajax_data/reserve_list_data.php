@@ -32,7 +32,7 @@ foreach ($filters as $filter) {
         
         // If the field is 'reserve_date', use date comparison
         if ($field == 'reserve_date') {
-            $filter_clauses[] = "$field like :$field";
+            $filter_clauses[] = "$field = :$field";
         } else {
             $value = '%' . $value . '%'; // Only for non-date fields
             $filter_clauses[] = "$field ILIKE :$field";
