@@ -104,7 +104,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='reservation-view-details?ID=" + reserve_id +
+    return "<a class='btn btn-outline-primary' href='reserve-view-details?ID=" + reserve_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
