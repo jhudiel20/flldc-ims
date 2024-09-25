@@ -112,10 +112,10 @@ var approval_status = function(cell, formatterParams, onRendered) {
             return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (reserve_status == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
+            return "<button type='button' class='btn btn-outline-danger approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(reserve_status == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
+            return "<button type='button' class='btn btn-outline-success approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>
     return reserve_status;

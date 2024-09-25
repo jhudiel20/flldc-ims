@@ -26,10 +26,73 @@ if(empty($message) || $message = ''){
 }
 
 
-$sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id");
 $sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+
+// $counter = $conn->prepare("SELECT * FROM reservations WHERE reserve_status = :status");
+// $sql->bindParam(':status', $approval_status, PDO::PARAM_STR);
+// $counter->execute();
+  
+// while ($row_counter = $counter->fetch(PDO::FETCH_ASSOC)) {
+//     if($row_counter['time'] == $row['time'] && $row_counter['room'] == $row['room'] && $row_counter['reserve_date'] == $row['reserve_date']){
+//         $response['success'] = false;
+//         $response['title'] = 'Error';
+//         $response['message'] = 'Date is already book provide message! ';
+//         echo json_encode($response);   
+//     }
+// }
+
+
+// Define time ranges for each option
+$time_slots = [
+    "7:00AM-12:00PM" => ['start' => '07:00:00', 'end' => '12:00:00'],
+    "1:00PM-6:00PM" => ['start' => '13:00:00', 'end' => '18:00:00'],
+    "7:00AM-6:00PM" => ['start' => '07:00:00', 'end' => '18:00:00']
+];
+
+// Get the start and end times for the selected time option
+$selected_start_time = $time_slots[$selected_time]['start'];
+$selected_end_time = $time_slots[$selected_time]['end'];
+
+// Prepare the SQL query to check for overlapping reservations for the selected room and date
+$counter = $conn->prepare("
+    SELECT * FROM reservations 
+    WHERE room = :room 
+    AND reserve_date = :reserve_date
+    AND reserve_status = :reserve_status
+    AND (
+        (time_start < :end_time AND time_end > :start_time)
+    )
+");
+
+$counter->bindParam(':room', $row['room'], PDO::PARAM_STR);
+$counter->bindParam(':reserve_date', $row['reserve_date'], PDO::PARAM_STR);
+$counter->bindParam(':reserve_status', $row['reserve_status'], PDO::PARAM_STR);
+$counter->bindParam(':start_time', $selected_start_time, PDO::PARAM_STR);
+$counter->bindParam(':end_time', $selected_end_time, PDO::PARAM_STR);
+
+// Execute the query
+$counter->execute();
+
+// Check if any record conflicts with the selected time slot
+if ($counter->rowCount() > 0) {
+    // If a record exists, the room is already booked for the selected time slot
+    $response['success'] = false;
+    $response['title'] = 'Error';
+    $response['message'] = 'The room is already booked for the selected date and time. Please choose another time or date.';
+    echo json_encode($response);
+    exit();  // Stop further execution
+} else {
+    // If no record exists, the room is available for booking
+    $response['success'] = true;
+    $response['title'] = 'Success';
+    $response['message'] = 'The room is available for booking!';
+    echo json_encode($response);
+}
+
 
 
 $generateReserveID  = generateReserveID();
