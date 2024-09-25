@@ -42,7 +42,7 @@ define('BARANGAY', array('Barangay 1','Barangay 2','Barangay 3','Barangay 4','Ba
 
 
 define('LD', array('Technical Operation','Technical Support','Foundational','Health and Wellness','Leadership/Managerial'));
-define('ACCESS', array('ADMIN','ENCODER','REQUESTOR'));
+define('ACCESS', array('ADMIN','ENCODER','REQUESTOR','GUARD'));
 define('STATUS_WORK', array('PERMANENT','JOB ORDER'));
 define('GOV_SERVICE', array('YES','NO'));
 define('STATUS', array('Permanent','Casual','Temporary','Contractual'));
