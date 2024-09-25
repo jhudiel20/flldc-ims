@@ -12,6 +12,10 @@ $user_id = $decrypted_array['ID'];
         $pr = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM purchase_order WHERE STATUS = 'PENDING' AND APPROVAL = 'APPROVED' ");
         $pr->execute();
         $pr_status = $pr->fetch(PDO::FETCH_ASSOC);
+
+        $reserve = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM reservations WHERE reserve_status = 'PENDING' ");
+        $reserve->execute();
+        $r_reserve = $reserve->fetch(PDO::FETCH_ASSOC);
 ?>
 <!-- Menu -->
 
@@ -89,11 +93,19 @@ $user_id = $decrypted_array['ID'];
                         <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
                             <a href="reservation-list" class="menu-link">
                                 <div class="text-truncate" data-i18n="All">All</div>
+                                <?php if($r_reserve['total'] == 0){}else{?>
+                                <span
+                                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_reserve['total']?></span>
+                                <?php }?>
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-pending')? 'active' : 'collapsed' ?>">
                             <a href="reservation-approved-list" class="menu-link">
                                 <div class="text-truncate" data-i18n="Pending">Pending</div>
+                                <?php if($r_reserve['total'] == 0){}else{?>
+                                <span
+                                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_reserve['total']?></span>
+                                <?php }?>
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-approved')? 'active' : 'collapsed' ?>">
