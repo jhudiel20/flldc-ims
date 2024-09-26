@@ -127,7 +127,7 @@ var table = new Tabulator("#example-table", {
             title: "Date created",
             field: "date_created",
             sorter: "date",
-            headerFilter: "input",
+            headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
