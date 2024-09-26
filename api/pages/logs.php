@@ -190,7 +190,8 @@ var table = new Tabulator("#example-table", {
         return {
                 last_page: response.last_page,
                 total: response.total_record,
-                data: response.data // This should be an array
+                data: response.data,
+                query: response.query // This should be an array
             }; //response.data; //return the tableData property of a response json object
     },
 

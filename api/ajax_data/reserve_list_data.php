@@ -56,10 +56,7 @@ $data_query = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:
                 FROM reservations $filter_sql ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
-                // Store the query for debugging/logging
-$query_debug = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
-FROM reservations $filter_sql ORDER BY $sort_field $sort_dir
-LIMIT $query_limit OFFSET $start";
+
 
 $data_stmt = $conn->prepare($data_query);
 $data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
