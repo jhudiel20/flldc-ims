@@ -46,7 +46,7 @@ $user_id = $decrypted_array['ID'];
         <?php if($decrypted_array['ACCESS'] == 'GUARD'){?>
             <li class="menu-item <?php echo ($geturl == 'reserve-view')? 'active' : 'collapsed' ?>">
                 <a href="reserve-view" class="menu-link">
-                    <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
+                    <i class="menu-icon fa-solid fa-book-bookmark"></i>
                     <div> Reservation List</div>
                 </a>
             </li>
@@ -55,7 +55,7 @@ $user_id = $decrypted_array['ID'];
             <li
                 class="menu-item <?php echo ($geturl == 'dashboard-lnd' ||$geturl == 'dashboard-mrs' ||$geturl == 'dashboard-lms'||$geturl == 'dashboard-eval' )? 'active open' : 'collapsed' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon fa-solid fa-book-bookmark"></i>
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
                     <!-- <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span> -->
                 </a>
