@@ -103,7 +103,7 @@
         "dest": "/api/pages/reservation-details.php"
       },
       {
-        "src": "/reserve-view.php",
+        "src": "/reserve-view",
         "dest": "/api/pages/reserve-view.php"
       },
       {

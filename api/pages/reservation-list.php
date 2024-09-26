@@ -224,9 +224,8 @@ var table = new Tabulator("#reserve-list-table", {
         return {
                 last_page: response.last_page,
                 total: response.total_record,
-                data: response.data,
-                query: response.query // This should be an array
-            }; //response.data; //return the tableData property of a response json object
+                data: response.data
+                }; //response.data; //return the tableData property of a response json object
     },
 });
 
