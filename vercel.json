@@ -228,7 +228,7 @@
         "dest": "/api/action/user_clear_attempts.php"
       },
       {
-        "src": "/user_list_data.php",
+        "src": "/user_list_data",
         "dest": "/api/ajax_data/user_list_data.php"  
       },
       {

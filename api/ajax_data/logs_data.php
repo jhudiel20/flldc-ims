@@ -62,12 +62,12 @@ $data_query = "SELECT $select_fields, TO_CHAR(logs.date_created, 'YYYY-MM-DD HH1
                 ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
-                // Store the query for debugging/logging
-                $query_debug = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
-                FROM logs 
-                JOIN user_account ON logs.user_id = user_account.ID $filter_sql 
-                ORDER BY $sort_field $sort_dir
-                LIMIT $query_limit OFFSET $start";
+                // // Store the query for debugging/logging
+                // $query_debug = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
+                // FROM logs 
+                // JOIN user_account ON logs.user_id = user_account.ID $filter_sql 
+                // ORDER BY $sort_field $sort_dir
+                // LIMIT $query_limit OFFSET $start";
 
 $data_stmt = $conn->prepare($data_query);
 $data_stmt->bindValue(':limit', $query_limit, PDO::PARAM_INT);
@@ -83,8 +83,7 @@ $rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 $response = [
     "last_page" => $pages,
     "total_record" => $total_query,
-    "data" => $rows,
-    "query" => $query_debug
+    "data" => $rows
 ];
 
 echo json_encode($response);
