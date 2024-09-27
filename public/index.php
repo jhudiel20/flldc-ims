@@ -183,7 +183,7 @@ include 'config/config.php';
                 e.preventDefault(); // Prevent the default form submission
 
                 $.ajax({
-                    url: '/userlogin.php', // Ensure this path is correct
+                    url: '/userlogin', // Ensure this path is correct
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'json',

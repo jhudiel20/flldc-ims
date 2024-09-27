@@ -59,7 +59,7 @@
         "dest": "/api/action/delete_user_photo.php"
       },
       {
-        "src": "/userlogin.php",
+        "src": "/userlogin",
         "dest": "/api/action/userlogin.php"
       },
       {
