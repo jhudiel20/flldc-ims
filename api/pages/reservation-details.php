@@ -91,8 +91,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <label class="form-label">Date of Reservation</label>
                                                                 <input type="date" class="form-control" 
                                                                     name="reserve_date" id="reserve_date"
-                                                                    value="<?php echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"
-                                                                    >
+                                                                    value="<?php echo $row['reserve_date'];?>" >
+                                                                    <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
