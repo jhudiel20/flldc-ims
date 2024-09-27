@@ -298,7 +298,7 @@ if ($counter->rowCount() > 0) {
                 SELECT EMAIL FROM reservations 
                 WHERE room = :room 
                 AND reserve_date = :reserve_date
-                AND reserve_status = 'PENDING'
+                AND reserve_status = 'DECLINED'
                 AND ID != :ID
                 AND time IN ($inClause)
             ");
