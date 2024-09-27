@@ -247,7 +247,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     Empty!</h1>
                                                                 <?php }else{ ?>
                                                                     <iframe
-                                                                    src="/fetch_pdf.php?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                    src="/fetch_pdf?file=<?php echo urlencode($row['attachments']); ?>"
                                                                     width="auto"
                                                                     height="700px"
                                                                     style="border: none;">
@@ -385,7 +385,7 @@ $(document).ready(function() {
         var formdata = new FormData(purchase_details_form);
 
         $.ajax({
-            url: "../action/edit_purchase_details_info.php",
+            url: "/edit_purchase_details_info",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -422,7 +422,7 @@ $(document).ready(function() {
         var formdata = new FormData(dropzone_basic);
 
         $.ajax({
-            url: "../action/upload_po_attachment.php",
+            url: "/upload_po_attachment",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -459,7 +459,7 @@ $(document).ready(function() {
         var formdata = new FormData(delete_po_attachments_form);
 
         $.ajax({
-            url: "../action/delete_po_attachments.php",
+            url: "/delete_po_attachments",
             method: "POST",
             data: formdata,
             dataType: "json",

@@ -173,7 +173,7 @@ var table = new Tabulator("#request-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/request_list_data.php",
+    ajaxURL: "/request_list_data",
     columns: [
         {
             title: "Details",
@@ -354,7 +354,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "/add_request.php",
+                url: "/add_request",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -400,7 +400,7 @@ $(document).ready(function() {
             var formdata = new FormData(document.getElementById('request_approval_form'));
             e.preventDefault();  
         $.ajax({
-            url: "/update_request_status.php",
+            url: "/update_request_status",
             method: "POST",
             data: formdata,
             dataType: "json",

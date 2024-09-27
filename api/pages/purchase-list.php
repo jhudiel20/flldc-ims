@@ -139,7 +139,7 @@ var table = new Tabulator("#purchase-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/purchase_list_data.php",
+    ajaxURL: "/purchase_list_data",
     columns: [{
             title: "Details",
             field: "",

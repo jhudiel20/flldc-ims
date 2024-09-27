@@ -224,7 +224,7 @@ var table = new Tabulator("#rca-list-table", {
     paginationSize: 40,
     filterMode: "remote",
     sortMode: "remote",
-    ajaxURL: "/rca_list_data.php",
+    ajaxURL: "/rca_list_data",
     ajaxLoaderLoading: 'Fetching data from Database..',
     columns: [{
             title: "Details",

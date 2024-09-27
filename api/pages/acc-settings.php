@@ -425,7 +425,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 $('#user_edit_form').on('submit', function(e) {
                     e.preventDefault();            
                     $.ajax({
-                        url: "/user_edit_info.php",
+                        url: "/user_edit_info",
                         method: "POST",
                         data: $(this).serialize(),
                         dataType: "json",
@@ -468,7 +468,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     var formdata = new FormData(document.getElementById('user_password_form'));
                     e.preventDefault();  
                     $.ajax({
-                        url: "/user_change_pass.php",
+                        url: "/user_change_pass",
                         method: "POST",
                         data: formdata,
                         dataType: "json",
@@ -508,7 +508,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     e.preventDefault();  
 
                     $.ajax({
-                        url: "/user_change_username.php",
+                        url: "/user_change_username",
                         method: "POST",
                         data: formdata,
                         dataType: "json",
@@ -550,7 +550,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     var formData = new FormData(this);
 
                     $.ajax({
-                        url: "/upload_user_photo.php",
+                        url: "/upload_user_photo",
                         method: "POST",
                         data: formData,
                         dataType: "json",
@@ -586,7 +586,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
             $('#photo_delete_btn').on('click', function() {
                 var formdata = new FormData(document.getElementById('delete_photo_form'));
                 $.ajax({
-                    url:"/delete_user_photo.php",
+                    url:"/delete_user_photo",
                     method: "POST",
                     data: formdata,
                     dataType: "json",

@@ -526,7 +526,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "/add_user.php",
+                url: "/add_user",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
@@ -574,7 +574,7 @@ $(document).ready(function() {
         var formdata = new FormData(edit_user_form);
 
         $.ajax({
-            url: "/edit_userlist_info.php",
+            url: "/edit_userlist_info",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -611,7 +611,7 @@ $(document).ready(function() {
         var formdata = new FormData(delete_user_form);
 
         $.ajax({
-            url: "/delete_userlist_info.php",
+            url: "/delete_userlist_info",
             method: "POST",
             data: formdata,
             dataType: "json",
@@ -725,7 +725,7 @@ $(document).ready(function() {
         var formdata = new FormData(clear_attempts_form);
         // console.log(formdata);
         $.ajax({
-            url: "/user_clear_attempts.php",
+            url: "/user_clear_attempts",
             method: "POST",
             data: formdata,
             dataType: "json",

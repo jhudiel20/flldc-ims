@@ -39,23 +39,23 @@
         "dest": "/api/pages/acc-settings.php"
       },
       {
-        "src": "/user_edit_info.php",
+        "src": "/user_edit_info",
         "dest": "/api/action/user_edit_info.php"
       },      
       {
-        "src": "/user_change_pass.php",
+        "src": "/user_change_pass",
         "dest": "/api/action/user_change_pass.php"
       },
       {
-        "src": "/user_change_username.php",
+        "src": "/user_change_username",
         "dest": "/api/action/user_change_username.php"
       },
       {
-        "src": "/upload_user_photo.php",
+        "src": "/upload_user_photo",
         "dest": "/api/action/upload_user_photo.php"
       },
       {
-        "src": "/delete_user_photo.php",
+        "src": "/delete_user_photo",
         "dest": "/api/action/delete_user_photo.php"
       },
       {
@@ -144,7 +144,7 @@
         "dest": "/api/pages/rca-list.php"
       },
       {
-        "src": "/rca_list_data.php",
+        "src": "/rca_list_data",
         "dest": "/api/ajax_data/rca_list_data.php"
       },
       {
@@ -156,15 +156,15 @@
         "dest": "/api/pages/request-list.php"
       },
       {
-        "src": "/request_list_data.php",
+        "src": "/request_list_data",
         "dest": "/api/ajax_data/request_list_data.php"
       },
       {
-        "src": "/add_request.php",
+        "src": "/add_request",
         "dest": "/api/action/add_request.php"
       },
       {
-        "src": "/update_request_status.php",
+        "src": "/update_request_status",
         "dest": "/api/action/update_request_status.php"
       },
       {
@@ -176,7 +176,7 @@
         "dest": "/api/pages/purchase-list.php"
       },
       {
-        "src": "/purchase_list_data.php",
+        "src": "/purchase_list_data",
         "dest": "/api/ajax_data/purchase_list_data.php"
       },
       {
@@ -184,19 +184,19 @@
         "dest": "/api/pages/purchase-details.php"
       },
       {
-        "src": "/edit_purchase_details_info.php",
+        "src": "/edit_purchase_details_info",
         "dest": "/api/action/edit_purchase_details_info.php"
       },
       {
-        "src": "/upload_po_attachment.php",
+        "src": "/upload_po_attachment",
         "dest": "/api/action/upload_po_attachment.php"
       },
       {
-        "src": "/delete_po_attachments.php",
+        "src": "/delete_po_attachments",
         "dest": "/api/action/delete_po_attachments.php"
       },
       {
-        "src": "/fetch_pdf.php",
+        "src": "/fetch_pdf",
         "dest": "/api/action/fetch_pdf.php"
       },
       {
@@ -204,7 +204,7 @@
         "dest": "/api/pages/logs.php"
       },
       {
-        "src": "/logs_data.php",
+        "src": "/logs_data",
         "dest": "/api/ajax_data/logs_data.php"
       },
       {
@@ -212,19 +212,19 @@
         "dest": "/api/pages/user_list.php"
       },
       {
-        "src": "/add_user.php",
+        "src": "/add_user",
         "dest": "/api/action/add_user.php"
       },
       {
-        "src": "/edit_userlist_info.php",
+        "src": "/edit_userlist_info",
         "dest": "/api/action/edit_userlist_info.php"
       },
       {
-        "src": "/delete_userlist_info.php",
+        "src": "/delete_userlist_info",
         "dest": "/api/action/delete_userlist_info.php"
       },
       {
-        "src": "/user_clear_attempts.php",
+        "src": "/user_clear_attempts",
         "dest": "/api/action/user_clear_attempts.php"
       },
       {

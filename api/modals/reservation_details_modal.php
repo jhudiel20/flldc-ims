@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_reserve_details" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_reserve_details_modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
