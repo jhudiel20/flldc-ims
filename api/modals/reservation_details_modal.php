@@ -10,20 +10,20 @@
                     <div class="row">
                         <div class="col mb-3">
                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                            <input type="hidden" id="bookingID" name="ID" value="<?php echo $row['booking_id'];?>">
-                            <input type="hidden" id="reservationID" name="ID" value="<?php echo $row['reservation_id'];?>">
-                            <input type="hidden" id="reserve_status" name="ID" value="<?php echo $row['reserve_status'];?> ">
-                            <input type="hidden" id="reserve_date" name="ID" value="<?php echo $row['reserve_date'];?>">
-                            <input type="hidden" id="fname" name="ID" value="<?php echo $row['fname']; ?>">
-                            <input type="hidden" id="lname" name="ID" value="<?php echo $row['lname']; ?>">
-                            <input type="hidden" id="time" name="ID" value="<?php echo $row['time']; ?>">
-                            <input type="hidden" id="room" name="ID" value="<?php echo $row['room']; ?>">
-                            <input type="hidden" id="setup" name="ID" value="<?php echo $row['setup']; ?>">
-                            <input type="hidden" id="businessunit" name="ID" value="<?php echo $row['business_unit']; ?>">
-                            <input type="hidden" id="guest" name="ID" value="<?php echo $row['guest']; ?>">
-                            <input type="hidden" id="contact" name="ID" value="<?php echo $row['contact']; ?>">
-                            <input type="hidden" id="email" name="ID" value="<?php echo $row['email']; ?>">
-                            <input type="hidden" id="message" name="ID" value="<?php echo $row['message']; ?>">
+                            <input type="hidden" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
+                            <input type="hidden" id="reservationID" name="reservationID" value="<?php echo $row['reservation_id'];?>">
+                            <input type="hidden" id="reserve_status" name="reserve_status" value="<?php echo $row['reserve_status'];?> ">
+                            <input type="hidden" id="reserve_date" name="reserve_date" value="<?php echo $row['reserve_date'];?>">
+                            <input type="hidden" id="fname" name="fname" value="<?php echo $row['fname']; ?>">
+                            <input type="hidden" id="lname" name="lname" value="<?php echo $row['lname']; ?>">
+                            <input type="hidden" id="time" name="time" value="<?php echo $row['time']; ?>">
+                            <input type="hidden" id="room" name="room" value="<?php echo $row['room']; ?>">
+                            <input type="hidden" id="setup" name="setup" value="<?php echo $row['setup']; ?>">
+                            <input type="hidden" id="businessunit" name="businessunit" value="<?php echo $row['business_unit']; ?>">
+                            <input type="hidden" id="guest" name="guest" value="<?php echo $row['guest']; ?>">
+                            <input type="hidden" id="contact" name="contact" value="<?php echo $row['contact']; ?>">
+                            <input type="hidden" id="email" name="email" value="<?php echo $row['email']; ?>">
+                            <input type="hidden" id="message" name="message" value="<?php echo $row['message']; ?>">
                             <textarea class="form-control" id="reason_message" name="reason_message" rows="5" placeholder="Please provide message"></textarea>
                         </div>
                     </div>
