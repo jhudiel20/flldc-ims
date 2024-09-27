@@ -62,7 +62,6 @@ $counter = $conn->prepare("
     AND time IN ($inClause)
 ");
 
-$approval_status = 'APPROVED';  // Assuming you are checking for approved reservations
 $counter->bindParam(':room', $room, PDO::PARAM_STR);
 $counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
 $counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
