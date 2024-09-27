@@ -108,13 +108,13 @@ if ($counter->rowCount() > 0) {
         //Recipients
         $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
         $mail->addAddress($EMAIL);     //Add a recipient
-        $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
+        $mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png', 'logo_cid');
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
   
         if($approval_status == 'APPROVED'){
             $mail->Subject = 'Reservation Status Update: '.$approval_status;
-            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/action/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
+            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
             $mail->Body    = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
