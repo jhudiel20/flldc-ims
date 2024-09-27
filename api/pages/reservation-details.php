@@ -72,7 +72,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body">
-                                            <form class="row g-3" method="post" id="reserve_details_form">
+                                            <form class="row g-3" method="post" id="">
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                             <input type="hidden" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
                                                             <div class="col-md-6">

@@ -5,7 +5,7 @@
                 <h5 class="modal-title" id="modalCenterTitle">Are you sure you want to edit the request ? <br>NOTE: This message will be sent to client</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" id="reserve_approval_form">
+            <form method="POST" id="reserve_details_form">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
