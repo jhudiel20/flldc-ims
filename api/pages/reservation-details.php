@@ -89,10 +89,10 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Date of Reservation</label>
-                                                                <input type="text" class="form-control"
+                                                                <input type="date" class="form-control" 
                                                                     name="reserve_date" id="reserve_date"
                                                                     value="<?php echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"
-                                                                    disabled>
+                                                                    >
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
@@ -104,15 +104,27 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <input type="text" class="form-control" name="lname" id="lname"
                                                                     value="<?php echo $row['lname']; ?>" disabled>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                            <label class="form-label">Time</label>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Room</label>
+                                                                    <select name="room" id="room" class="form-control" required>
+                                                                        <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
+                                                                        <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
+                                                                        <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Romm 303</option>
+                                                                        <option value="Room-304" <?php if($row['room'] == "Room-304") echo 'selected'; ?>>Room 304</option>    
+                                                                        <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
+                                                                        <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
+                                                                        <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Time</label>
                                                                     <select name="time" id="time" class="form-control" required>
                                                                         <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
                                                                         <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
                                                                         <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Seating Arrangement</label>
                                                                     <select name="setup" id="setup" class="form-control">
                                                                         <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
@@ -162,15 +174,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <button type="button" data-bs-toggle="modal"
                                                             data-bs-target="#edit_reserve_details_modal"
                                                             class="btn btn-label-primary ">Update</button>
-
-                                                            <button type="button" class="btn btn-label-primary"
-                                                        id="submit_edit_reserve_details"
-                                                        name="submit_edit_reserve_details">Save</button>
-
-                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
-                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                            Loading...
-                                                        </button>
                                             </form>
                                         </div>
                                     </div>

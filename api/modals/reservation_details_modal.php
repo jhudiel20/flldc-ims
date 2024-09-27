@@ -11,11 +11,13 @@
                         <div class="col mb-3">
                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                             <input type="hidden" id="bookingID" name="ID" value="<?php echo $row['booking_id'];?>">
+                            <input type="hidden" id="reservationID" name="ID" value="<?php echo $row['reservation_id'];?>">
                             <input type="hidden" id="reserve_status" name="ID" value="<?php echo $row['reserve_status'];?> ">
                             <input type="hidden" id="reserve_date" name="ID" value="<?php echo $row['reserve_date'];?>">
                             <input type="hidden" id="fname" name="ID" value="<?php echo $row['fname']; ?>">
                             <input type="hidden" id="lname" name="ID" value="<?php echo $row['lname']; ?>">
                             <input type="hidden" id="time" name="ID" value="<?php echo $row['time']; ?>">
+                            <input type="hidden" id="room" name="ID" value="<?php echo $row['room']; ?>">
                             <input type="hidden" id="setup" name="ID" value="<?php echo $row['setup']; ?>">
                             <input type="hidden" id="businessunit" name="ID" value="<?php echo $row['business_unit']; ?>">
                             <input type="hidden" id="guest" name="ID" value="<?php echo $row['guest']; ?>">
@@ -30,11 +32,11 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-label-primary" id="submit_approval_btn">Save changes</button>
+                    <button type="button" class="btn btn-label-primary" id="submit_edit_reserve_details">Proceed</button>
 
                     <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
                         <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                        Loading...
+                            Loading...
                     </button>
                 </div>
             </form>

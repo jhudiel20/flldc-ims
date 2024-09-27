@@ -252,6 +252,7 @@ if ($counter->rowCount() > 0) {
                                                                 <p style="text-align:justify">Your reservation request has been declined. Below are the details of your request.</p>
                                                                 
                                                                 <p><strong>Reservation Details:</strong><br>
+                                                                '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
                                                                 <b>Business Unit:</b> '.$row['business_unit'].'<br>
                                                                 <b>Room:</b> '.$row['room'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
@@ -426,6 +427,7 @@ if ($counter->rowCount() > 0) {
                                                                     <p style="text-align:justify">Your reservation request has been declined. Below are the details of your request.</p>
                                                                     
                                                                     <p><strong>Reservation Details:</strong><br>
+                                                                    '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
                                                                     <b>Business Unit:</b> '.$row['business_unit'].'<br>
                                                                     <b>Room:</b> '.$row['room'].'<br>
                                                                     <b>Contact:</b> '.$row['contact'].'<br>
