@@ -114,7 +114,7 @@ if ($counter->rowCount() > 0) {
   
         if($approval_status == 'APPROVED'){
             $mail->Subject = 'Reservation Status Update: '.$approval_status;
-            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/action/Reservation-Terms-and-Agreement.pdf.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
+            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/action/Reservation-Terms-and-Agreement.pdf.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
             $mail->Body    = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
