@@ -159,9 +159,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
+                                                            <button type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#edit_reserve_details_modal"
+                                                            class="btn btn-label-primary ">Update</button>
+
                                                             <button type="button" class="btn btn-label-primary"
                                                         id="submit_edit_reserve_details"
                                                         name="submit_edit_reserve_details">Save</button>
+
                                                         <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
                                                             <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                             Loading...
@@ -179,6 +184,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
             </div>
         
             <!-- Footer -->
+            <?php include __DIR__ . "/../modals/reservation_details_modal.php"; ?>
             <?php include __DIR__ . "/../action/global/footer.php"; ?>
             <!-- / Footer -->
 
