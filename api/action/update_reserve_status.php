@@ -469,7 +469,7 @@ if ($counter->rowCount() > 0) {
         
                 $mail->send();
             } catch (Exception $e) {
-                error_log("Message could not be sent to $declined_email. Mailer Error: {$mail->ErrorInfo}");
+                error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
             }
         }
 
