@@ -294,33 +294,7 @@ if ($counter->rowCount() > 0) {
         }
         $mail->send();
 
-
-            // Now, decline all overlapping pending reservations for the same room, date, and overlapping time slots
-        $decline_pending = $conn->prepare("
-            UPDATE reservations 
-            SET reserve_status = 'DECLINED', 
-            reservation_id = 'DECLINED'
-            WHERE room = :room 
-            AND reserve_date = :reserve_date
-            AND reserve_status = 'PENDING'
-            AND ID != :ID
-            AND time IN ($inClause)
-        ");
-        $decline_pending->bindParam(':ID', $ID, PDO::PARAM_INT);
-        $decline_pending->bindParam(':room', $room, PDO::PARAM_STR);
-        $decline_pending->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
-
-        // Bind the overlapping time slots for the pending reservations
-        foreach ($overlapping_times as $index => $time) {
-            $decline_pending->bindValue(':time' . $index, $time, PDO::PARAM_STR);
-        }
-
-        // Execute the decline query
-        $decline_pending->execute();
-        $reservation_count = $decline_pending->fetchAll(PDO::FETCH_COLUMN);
-        if ($reservation_count > 0) {
-            // Prepare to send email notifications for declined reservations
-            $decline_counter = $conn->prepare("
+        $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
                 WHERE room = :room 
                 AND reserve_date = :reserve_date
@@ -339,7 +313,53 @@ if ($counter->rowCount() > 0) {
 
             // Execute the query to get declined reservation emails
             $decline_counter->execute();
-            $declined_emails = $decline_counter->fetchAll(PDO::FETCH_COLUMN);
+            $reservation_count = $decline_counter->fetchAll(PDO::FETCH_COLUMN);
+
+            if ($reservation_count > 0) {
+
+            // Now, decline all overlapping pending reservations for the same room, date, and overlapping time slots
+            $decline_pending = $conn->prepare("
+                UPDATE reservations 
+                SET reserve_status = 'DECLINED', 
+                reservation_id = 'DECLINED'
+                WHERE room = :room 
+                AND reserve_date = :reserve_date
+                AND reserve_status = 'PENDING'
+                AND ID != :ID
+                AND time IN ($inClause)
+            ");
+            $decline_pending->bindParam(':ID', $ID, PDO::PARAM_INT);
+            $decline_pending->bindParam(':room', $room, PDO::PARAM_STR);
+            $decline_pending->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+
+            // Bind the overlapping time slots for the pending reservations
+            foreach ($overlapping_times as $index => $time) {
+                $decline_pending->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+            }
+            // Execute the decline query
+            $decline_pending->execute();
+        
+            // Prepare to send email notifications for declined reservations
+            $decline_email = $conn->prepare("
+                SELECT EMAIL FROM reservations 
+                WHERE room = :room 
+                AND reserve_date = :reserve_date
+                AND reserve_status = 'DECLINED'
+                 AND ID != :ID
+                AND time IN ($inClause)
+            ");
+            $decline_email->bindParam(':ID', $ID, PDO::PARAM_INT);
+            $decline_email->bindParam(':room', $room, PDO::PARAM_STR);
+            $decline_email->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+
+            // Bind the overlapping time slots for the declined email notifications
+            foreach ($overlapping_times as $index => $time) {
+                $decline_email->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+            }
+
+            // Execute the query to get declined reservation emails
+            $decline_email->execute();
+            $declined_emails = $decline_email->fetchAll(PDO::FETCH_COLUMN);
 
             $mail = new PHPMailer(true);
             try {
