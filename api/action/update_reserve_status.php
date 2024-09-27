@@ -347,7 +347,6 @@ if ($counter->rowCount() > 0) {
                 AND reserve_status = 'DECLINED'
                 AND time IN ($inClause)
             ");
-            $decline_email->bindParam(':ID', $ID, PDO::PARAM_INT);
             $decline_email->bindParam(':room', $room, PDO::PARAM_STR);
             $decline_email->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
 
