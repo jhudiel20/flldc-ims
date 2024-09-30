@@ -56,8 +56,12 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body"> 
                                             <div class="text-center">
-                                            <img src="<?php echo empty($row['setup']) ? 'default.png' : "../assets/img/".$row['setup'].''.".png"; ?>"  style="height:220px;" />
-                                            <h5>Seating Arrangement</h5>
+                                                <?php if($row['setup'] == 'OTHER'){?>
+                                                    <h2 class="mb-2" >Please ask Mr. James Solis for the custom setup</h2>
+                                                <?php }else{?>
+                                                    <img src="<?php echo empty($row['setup']) ? '' : "../assets/img/".$row['setup'].''.".png"; ?>"  style="height:220px;" class="mb-3"  />
+                                                    <h5>Seating Arrangement</h5>
+                                                <?php } ?>
                                         </div>
                                         </div> 
                                     </div>
