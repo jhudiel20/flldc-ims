@@ -109,7 +109,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
 
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label class="form-label">Room</label>
                                                                     <select name="room" id="room" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
@@ -121,7 +121,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label class="form-label">Time</label>
                                                                     <select name="time" id="time" class="form-control" required>
                                                                         <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
@@ -129,7 +129,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label class="form-label">Seating Arrangement</label>
                                                                     <select name="setup" id="setup" class="form-control">
                                                                         <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
@@ -140,7 +140,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="OTHER" <?php if($row['setup'] == "OTHER") echo 'selected'; ?>>OTHER</option>
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-3">
                                                                 <label class="form-label">Guest</label>
                                                                 <input type="text" class="form-control" name="guest"
                                                                     id="guest"
@@ -283,47 +283,48 @@ $(document).ready(function() {
                 }
             }
         });
-    })
-
-});
-
+    });
     $(document).on("click", ".update-details", function() {
         $('#edit_reserve_details_modal').modal('show');
 
-        // Get the values from the form inputs
-        var ID = $("#ID").val();
-        var bookingID = $("#bookingID").val();
-        var reservationID = $("#reservationID").val();
-        var reserveStatus = $("#reserve_status").val();
-        var reserveDate = $("#reserve_date").val();
-        var fname = $("#fname").val();
-        var lname = $("#lname").val();
-        var time = $("#time").val();
-        var room = $("#room").val();
-        var setup = $("#setup").val();
-        var businessUnit = $("#businessunit").val();
-        var guest = $("#guest").val();
-        var contact = $("#contact").val();
-        var email = $("#email").val();
-        var message = $("#message").val();
+            // Get the values from the form inputs
+            var ID = $("#ID").val();
+            var bookingID = $("#bookingID").val();
+            var reservationID = $("#reservationID").val();
+            var reserveStatus = $("#reserve_status").val();
+            var reserveDate = $("#reserve_date").val();
+            var fname = $("#fname").val();
+            var lname = $("#lname").val();
+            var time = $("#time").val();
+            var room = $("#room").val();
+            var setup = $("#setup").val();
+            var businessUnit = $("#businessunit").val();
+            var guest = $("#guest").val();
+            var contact = $("#contact").val();
+            var email = $("#email").val();
+            var message = $("#message").val();
 
-        // Pass the values to the modal's input fields
-        $('#ID').val(ID);
-        $('#bookingID').val(bookingID);
-        $('#reservationID').val(reservationID);
-        $('#reserve_status').val(reserveStatus);
-        $('#reserve_date').val(reserveDate);
-        $('#fname').val(fname);
-        $('#lname').val(lname);
-        $('#time').val(time);
-        $('#room').val(room);
-        $('#setup').val(setup);
-        $('#businessunit').val(businessUnit);
-        $('#guest').val(guest);
-        $('#contact').val(contact);
-        $('#email').val(email);
-        $('#message').val(message);
+            // Pass the values to the modal's input fields
+            $('#ID').val(ID);
+            $('#bookingID').val(bookingID);
+            $('#reservationID').val(reservationID);
+            $('#reserve_status').val(reserveStatus);
+            $('#reserve_date').val(reserveDate);
+            $('#fname').val(fname);
+            $('#lname').val(lname);
+            $('#time').val(time);
+            $('#room').val(room);
+            $('#setup').val(setup);
+            $('#businessunit').val(businessUnit);
+            $('#guest').val(guest);
+            $('#contact').val(contact);
+            $('#email').val(email);
+            $('#message').val(message);
     });
+
+});
+
+
 
 </script>
 
