@@ -305,21 +305,21 @@ $(document).ready(function() {
             var message = $("#message").val();
 
             // Pass the values to the modal's input fields
-            $('#ID').val(ID);
-            $('#bookingID').val(bookingID);
-            $('#reservationID').val(reservationID);
-            $('#reserve_status').val(reserveStatus);
-            $('#reserve_date').val(reserveDate);
-            $('#fname').val(fname);
-            $('#lname').val(lname);
-            $('#time').val(time);
-            $('#room').val(room);
-            $('#setup').val(setup);
-            $('#businessunit').val(businessUnit);
-            $('#guest').val(guest);
-            $('#contact').val(contact);
-            $('#email').val(email);
-            $('#message').val(message);
+            $('#edit_reserve_details_modal #ID').val(ID);
+            $('#edit_reserve_details_modal #bookingID').val(bookingID);
+            $('#edit_reserve_details_modal #reservationID').val(reservationID);
+            $('#edit_reserve_details_modal #reserve_status').val(reserveStatus);
+            $('#edit_reserve_details_modal #reserve_date').val(reserveDate);
+            $('#edit_reserve_details_modal #fname').val(fname);
+            $('#edit_reserve_details_modal #lname').val(lname);
+            $('#edit_reserve_details_modal #time').val(time);
+            $('#edit_reserve_details_modal #room').val(room);
+            $('#edit_reserve_details_modal #setup').val(setup);
+            $('#edit_reserve_details_modal #businessunit').val(businessUnit);
+            $('#edit_reserve_details_modalv #guest').val(guest);
+            $('#edit_reserve_details_modal #contact').val(contact);
+            $('#edit_reserve_details_modal #email').val(email);
+            $('#edit_reserve_details_modal #message').val(message);
     });
 
 });
