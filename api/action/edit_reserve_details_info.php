@@ -113,11 +113,7 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
 
     if($reserve_status == 'APPROVED'){
-        if($reservationID == 'PENDING'){
-            $mail->Subject = 'Updates in your Reservation ID : '.$reservationID;
-        }else{
-            $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
-        }
+        $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
         $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
         $mail->Body    = '
             <div style="background:#f3f3f3">
@@ -204,11 +200,8 @@ try {
             </div>
         ';
     }else{
-        if($reservationID == 'PENDING'){
-            $mail->Subject = 'Updates in your Reservation ID : '.$reservationID;
-        }else{
+
             $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
-        }
         $mail->Body    = '
             <div style="background:#f3f3f3">
                 <div style="margin:0px auto;max-width:640px;background:transparent">
@@ -302,12 +295,13 @@ try {
     $mail->send();
 
     $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
-    LNAME = :lname, TIME = :time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+    LNAME = :lname, ROOM = :room, TIME = :time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
     $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
     $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
     $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
     $sql->bindParam(':lname', $lname, PDO::PARAM_STR);
     $sql->bindParam(':time', $time, PDO::PARAM_STR);
+    $sql->bindParam(':room', $room, PDO::PARAM_STR);
     $sql->bindParam(':setup', $setup, PDO::PARAM_STR);
     $sql->bindParam(':businessunit', $businessunit, PDO::PARAM_STR);
     $sql->bindParam(':guest', $guest, PDO::PARAM_STR);
