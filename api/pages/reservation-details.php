@@ -122,7 +122,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <select name="ROOM" id="ROOM" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
                                                                         <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
-                                                                        <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Romm 303</option>
+                                                                        <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Room 303</option>
                                                                         <option value="Room-304" <?php if($row['room'] == "Room-304") echo 'selected'; ?>>Room 304</option>    
                                                                         <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
                                                                         <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
