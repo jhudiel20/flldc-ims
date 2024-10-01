@@ -9,22 +9,22 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <input type="text" id="ID" name="ID" value="">
-                            <input type="text" id="bookingID" name="bookingID" value="">
-                            <input type="text" id="reservationID" name="reservationID" value="">
-                            <input type="text" id="reserve_status" name="reserve_status" value="">
-                            <input type="text" id="reserve_date" name="reserve_date" value="">
-                            <input type="text" id="fname" name="fname" value="">
-                            <input type="text" id="lname" name="lname" value="">
-                            <input type="text" id="time" name="time" value="">
-                            <input type="text" id="room" name="room" value="">
-                            <input type="text" id="setup" name="setup" value="">
-                            <input type="text" id="businessunit" name="businessunit" value="">
-                            <input type="text" id="guest" name="guest" value="">
-                            <input type="text" id="contact" name="contact" value="">
-                            <input type="text" id="email" name="email" value="">
-                            <input type="text" id="message" name="message" value="">
-                            <textarea class="form-control" id="reason_message" name="reason_message" rows="5" placeholder="Please provide message"></textarea>
+                            <input type="hidden" id="ID" name="ID" value="">
+                            <input type="hidden" id="bookingID" name="bookingID" value="">
+                            <input type="hidden" id="reservationID" name="reservationID" value="">
+                            <input type="hidden" id="reserve_status" name="reserve_status" value="">
+                            <input type="hidden" id="reserve_date" name="reserve_date" value="">
+                            <input type="hidden" id="fname" name="fname" value="">
+                            <input type="hidden" id="lname" name="lname" value="">
+                            <input type="hidden" id="time" name="time" value="">
+                            <input type="hidden" id="room" name="room" value="">
+                            <input type="hidden" id="setup" name="setup" value="">
+                            <input type="hidden" id="businessunit" name="businessunit" value="">
+                            <input type="hidden" id="guest" name="guest" value="">
+                            <input type="hidden" id="contact" name="contact" value="">
+                            <input type="hidden" id="email" name="email" value="">
+                            <input type="hidden" id="message" name="message" value="">
+                            <textarea class="form-control" id="reason_message" name="reason_message" rows="5" placeholder="Please provide message" required></textarea>
                         </div>
                     </div>
                 </div>
