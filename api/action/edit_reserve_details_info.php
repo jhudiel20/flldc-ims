@@ -164,7 +164,7 @@ try {
                                                             <p style="text-align:justify">We would like to inform you of a change in your reservation details. We apologize for any inconvenience caused by this adjustment. Below are the updated details of your reservation. Please present the reservation ID at the security desk when you arrive at the center.</p>
                                                             
                                                             <p><strong>Updated Reservation Details:</strong><br>
-                                                            '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
+                                                            '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$generateReserveID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
                                                             <b>Room:</b> '.$room.'<br>
                                                             <b>Setup:</b> '.$setup.'<br>                               
                                                             <b>Time:</b> '.$time.'<br>
@@ -294,9 +294,12 @@ try {
 
     $mail->send();
 
-    $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
+    if($reserve_status == 'APPROVED'){
+        $sql = $conn->prepare("UPDATE reservations SET reservation_id = :reservation_id, RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
     LNAME = :lname, ROOM = :room, TIME = :time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
     $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
+    $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
+
     $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
     $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
     $sql->bindParam(':lname', $lname, PDO::PARAM_STR);
@@ -324,6 +327,41 @@ try {
     $response['message'] = 'Successfully Updated!';
     echo json_encode($response);
     exit();
+
+    }else{
+        $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
+        LNAME = :lname, ROOM = :room, TIME = :time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+        $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
+        $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+        $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
+        $sql->bindParam(':lname', $lname, PDO::PARAM_STR);
+        $sql->bindParam(':time', $time, PDO::PARAM_STR);
+        $sql->bindParam(':room', $room, PDO::PARAM_STR);
+        $sql->bindParam(':setup', $setup, PDO::PARAM_STR);
+        $sql->bindParam(':businessunit', $businessunit, PDO::PARAM_STR);
+        $sql->bindParam(':guest', $guest, PDO::PARAM_STR);
+        $sql->bindParam(':contact', $contact, PDO::PARAM_STR);
+        $sql->bindParam(':email', $email, PDO::PARAM_STR);
+        $sql->bindParam(':message', $message, PDO::PARAM_STR);
+        $sql->bindParam(':id', $id, PDO::PARAM_STR);
+        $sql->execute();
+    
+        $user_id = $decrypted_array['ID'];
+        $action = "Updated Booking Details | Booking ID : ".$bookingID;
+    
+        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $logs->bindParam(':action', $action, PDO::PARAM_STR);
+        $logs->execute();
+    
+        $response['success'] = true;
+        $response['title'] = 'Success';
+        $response['message'] = 'Successfully Updated!';
+        echo json_encode($response);
+        exit();
+    }
+
+    
 
 
 
