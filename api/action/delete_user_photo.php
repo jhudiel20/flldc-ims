@@ -70,7 +70,8 @@ if (isset($_POST['photo_to_delete']) && isset($_POST['ID'])) {
             $stmt->execute();
 
             $action = "Deleted picture for User ID: " . $id;
-            $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+            $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+
             $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $logs->bindParam(':action', $action, PDO::PARAM_STR);
             $logs->execute();

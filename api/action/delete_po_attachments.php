@@ -72,7 +72,8 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
 
             $user_id = $decrypted_array['ID'];
             $action = "Deleted Attachmet in Item Name : " . $DELETE_ITEM_NAME;
-            $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+            $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+
             $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $logs->bindParam(':action', $action, PDO::PARAM_STR);
             $logs->execute();

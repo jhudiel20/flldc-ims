@@ -98,7 +98,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 $user_id = $decrypted_array['ID'];
 $action = "Updated User information  of user :  " . $row['fname'].' '.$row['mname'].' '.$row['lname'].' '.$row['ext_name'];
 
-$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+
 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 $logs->bindParam(':action', $action, PDO::PARAM_STR);
 $logs->execute();

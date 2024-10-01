@@ -60,7 +60,8 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $stmt->execute();
 
         $action = "Updated picture in User : " . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'];
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $logs->bindParam(':action', $action, PDO::PARAM_STR);
         $logs->execute();

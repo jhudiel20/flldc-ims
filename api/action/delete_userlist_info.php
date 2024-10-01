@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $decrypted_array['ID'];
     $action = "Deleted User Account ID : " . $id . " | Full Name : " . $DELETE_FNAME . ' ' . $DELETE_LNAME;
 
-    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+
     $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $logs->bindParam(':action', $action, PDO::PARAM_STR);
     $logs->execute();
