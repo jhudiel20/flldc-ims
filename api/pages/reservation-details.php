@@ -80,6 +80,16 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                             <input type="hidden" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
                                                             <div class="col-md-6">
+                                                                <label class="form-label">Booking ID</label>
+                                                                <input type="text" class="form-control" name="" id=""
+                                                                    value="<?php echo $row['booking_id']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Reservation ID</label>
+                                                                <input type="text" class="form-control" name="" id=""
+                                                                    value="<?php echo $row['reservation_id']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Reservation Status</label>
                                                                 <select name="reserve_status" id="reserve_status" class="form-select"
                                                                     <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
@@ -98,16 +108,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     value="<?php echo $row['reserve_date'];?>" >
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <label class="form-label">First Name</label>
-                                                                <input type="text" class="form-control" name="fname" id="fname"
-                                                                    value="<?php echo $row['fname']; ?>" disabled>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label class="form-label">Last Name</label>
-                                                                <input type="text" class="form-control" name="lname" id="lname"
-                                                                    value="<?php echo $row['lname']; ?>" disabled>
-                                                            </div>
+
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Room</label>
                                                                     <select name="room" id="room" class="form-control" required>
@@ -140,6 +141,22 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     </select>
                                                             </div>
                                                             <div class="col-md-6">
+                                                                <label class="form-label">Guest</label>
+                                                                <input type="text" class="form-control" name="guest"
+                                                                    id="guest"
+                                                                    value="<?php echo $row['guest']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">First Name</label>
+                                                                <input type="text" class="form-control" name="fname" id="fname"
+                                                                    value="<?php echo $row['fname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Last Name</label>
+                                                                <input type="text" class="form-control" name="lname" id="lname"
+                                                                    value="<?php echo $row['lname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Bussiness Unit</label>
                                                                 <select name="businessunit" id="businessunit" class="form-control">
                                                                     <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
@@ -151,19 +168,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <option value="other" <?php if($row['business_unit'] == "other") echo 'selected'; ?>>OTHER</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <label class="form-label">Guest</label>
-                                                                <input type="text" class="form-control" name="guest"
-                                                                    id="guest"
-                                                                    value="<?php echo $row['guest']; ?>" disabled>
-                                                            </div>
-                                                            <div class="col-md-6">
+                                                         
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Contact No.<span
                                                                         class="require asterisk">*</span></label>
                                                                 <input type="text" class="form-control" name="contact"
                                                                     id="contact" value="<?php echo $row['contact']; ?>">
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Email<span
                                                                         class="require asterisk">*</span></label>
                                                                 <input type="text" class="form-control" name="email"
@@ -272,9 +284,11 @@ $(document).ready(function() {
             }
         });
     })
-    
+
+});
+
     $(document).on("click", ".update-details", function() {
-    $('#edit_reserve_details_modal').modal('show');
+        $('#edit_reserve_details_modal').modal('show');
 
         // Get the values from the form inputs
         var ID = $("#ID").val();
@@ -294,25 +308,22 @@ $(document).ready(function() {
         var message = $("#message").val();
 
         // Pass the values to the modal's input fields
-        $('#edit_reserve_details_modal #ID').val(ID);
-        $('#edit_reserve_details_modal #bookingID').val(bookingID);
-        $('#edit_reserve_details_modal #reservationID').val(reservationID);
-        $('#edit_reserve_details_modal #reserve_status').val(reserveStatus);
-        $('#edit_reserve_details_modal #reserve_date').val(reserveDate);
-        $('#edit_reserve_details_modal #fname').val(fname);
-        $('#edit_reserve_details_modal #lname').val(lname);
-        $('#edit_reserve_details_modal #time').val(time);
-        $('#edit_reserve_details_modal #room').val(room);
-        $('#edit_reserve_details_modal #setup').val(setup);
-        $('#edit_reserve_details_modal #businessunit').val(businessUnit);
-        $('#edit_reserve_details_modal #guest').val(guest);
-        $('#edit_reserve_details_modal #contact').val(contact);
-        $('#edit_reserve_details_modal #email').val(email);
-        $('#edit_reserve_details_modal #message').val(message);
+        $('#ID').val(ID);
+        $('#bookingID').val(bookingID);
+        $('#reservationID').val(reservationID);
+        $('#reserve_status').val(reserveStatus);
+        $('#reserve_date').val(reserveDate);
+        $('#fname').val(fname);
+        $('#lname').val(lname);
+        $('#time').val(time);
+        $('#room').val(room);
+        $('#setup').val(setup);
+        $('#businessunit').val(businessUnit);
+        $('#guest').val(guest);
+        $('#contact').val(contact);
+        $('#email').val(email);
+        $('#message').val(message);
     });
-
-
-});
 
 </script>
 
