@@ -187,7 +187,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
-                                                            <button class="btn btn-label-primary update-details">Update</button>
+                                                            <button type="button" class="btn btn-label-primary update-details">Update</button>
                                             </form>
                                         </div>
                                     </div>
