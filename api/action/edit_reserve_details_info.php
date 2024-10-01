@@ -62,10 +62,12 @@ $counter = $conn->prepare("
     SELECT * FROM reservations 
     WHERE room = :room 
     AND reserve_date = :reserve_date
-    AND reserve_status = 'APPROVED'
+    AND reserve_status = 'APPROVED',
+    AND ID != :tableID
     AND time IN ($inClause)
 ");
 
+$counter->bindParam(':tableID', $id, PDO::PARAM_STR);
 $counter->bindParam(':room', $room, PDO::PARAM_STR);
 $counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
 
