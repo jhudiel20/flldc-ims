@@ -168,7 +168,7 @@ try {
                                                             <p style="text-align:justify">We would like to inform you of a change in your reservation details. We apologize for any inconvenience caused by this adjustment. Below are the updated details of your reservation. Please present the reservation ID at the security desk when you arrive at the center.</p>
                                                             
                                                             <p><strong>Updated Reservation Details:</strong><br>
-                                                            '.($reservation_id == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
+                                                            '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
                                                             <b>Room:</b> '.$room.'<br>
                                                             <b>Setup:</b> '.$setup.'<br>                               
                                                             <b>Time:</b> '.$time.'<br>
@@ -258,14 +258,14 @@ try {
                                                             <p style="text-align:justify">We regret to inform you that your reservation has been declined. We sincerely apologize for any inconvenience this may have caused. Below are the details of your declined reservation:</p>
                                                             
                                                             <p><strong>Reservation Details:</strong><br>
-                                                           '.($reservation_id == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
-                                                            <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                            <b>Room:</b> '.$row['room'].'<br>
-                                                            <b>Contact:</b> '.$row['contact'].'<br>
-                                                            <b>Email:</b> '.$row['email'].'<br>
-                                                            <b>Time:</b> '.$row['time'].'<br>
-                                                            <b>Setup:</b> '.$row['setup'].'<br>
-                                                            <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
+                                                           '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
+                                                            <b>Business Unit:</b> '.$businessunit.'<br>
+                                                            <b>Room:</b> '.$room.'<br>
+                                                            <b>Contact:</b> '.$contact.'<br>
+                                                            <b>Email:</b> '.$email.'<br>
+                                                            <b>Time:</b> '.$time.'<br>
+                                                            <b>Setup:</b> '.$setup.'<br>
+                                                            <b>Reserved By:</b> '.$fname.' '.$lname.'<br>
                                                             <b>Message :</b> '.$message.'<br>
                                                             </p>
 
