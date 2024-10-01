@@ -68,7 +68,7 @@ $counter = $conn->prepare("
 
 $counter->bindParam(':room', $room, PDO::PARAM_STR);
 $counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
-$counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+$counter->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
 
 // Bind the overlapping time slots dynamically
 foreach ($overlapping_times as $index => $time) {

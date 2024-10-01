@@ -259,8 +259,14 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
+            beforeSend: function() {
+                $('#submit_edit_reserve_details').hide();
+                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+            },
 
             success: function(response) {
+                $('#submit_icon').addClass('d-none').prop('disabled', false);
+                $('#submit_edit_reserve_details').show();
                 console.log(response);
                 if (response.success) {
                     swal({
