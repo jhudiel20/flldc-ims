@@ -9,21 +9,21 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <input type="text" id="ID" name="ID" value="<?php echo $id;?>">
-                            <input type="text" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
-                            <input type="text" id="reservationID" name="reservationID" value="<?php echo $row['reservation_id'];?>">
-                            <input type="text" id="reserve_status" name="reserve_status" value="<?php echo $row['reserve_status'];?> ">
-                            <input type="text" id="reserve_date" name="reserve_date" value="<?php echo $row['reserve_date'];?>">
-                            <input type="text" id="fname" name="fname" value="<?php echo $row['fname']; ?>">
-                            <input type="text" id="lname" name="lname" value="<?php echo $row['lname']; ?>">
-                            <input type="text" id="time" name="time" value="<?php echo $row['time']; ?>">
-                            <input type="text" id="room" name="room" value="<?php echo $row['room']; ?>">
-                            <input type="text" id="setup" name="setup" value="<?php echo $row['setup']; ?>">
-                            <input type="text" id="businessunit" name="businessunit" value="<?php echo $row['business_unit']; ?>">
-                            <input type="text" id="guest" name="guest" value="<?php echo $row['guest']; ?>">
-                            <input type="text" id="contact" name="contact" value="<?php echo $row['contact']; ?>">
-                            <input type="text" id="email" name="email" value="<?php echo $row['email']; ?>">
-                            <input type="text" id="message" name="message" value="<?php echo $row['message']; ?>">
+                            <input type="text" id="ID" name="ID" value="">
+                            <input type="text" id="bookingID" name="bookingID" value="">
+                            <input type="text" id="reservationID" name="reservationID" value="">
+                            <input type="text" id="reserve_status" name="reserve_status" value="">
+                            <input type="text" id="reserve_date" name="reserve_date" value="">
+                            <input type="text" id="fname" name="fname" value="">
+                            <input type="text" id="lname" name="lname" value="">
+                            <input type="text" id="time" name="time" value="">
+                            <input type="text" id="room" name="room" value="">
+                            <input type="text" id="setup" name="setup" value="">
+                            <input type="text" id="businessunit" name="businessunit" value="">
+                            <input type="text" id="guest" name="guest" value="">
+                            <input type="text" id="contact" name="contact" value="">
+                            <input type="text" id="email" name="email" value="">
+                            <input type="text" id="message" name="message" value="">
                             <textarea class="form-control" id="reason_message" name="reason_message" rows="5" placeholder="Please provide message"></textarea>
                         </div>
                     </div>

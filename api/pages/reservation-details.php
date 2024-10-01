@@ -175,9 +175,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
-                                                            <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#edit_reserve_details_modal"
-                                                            class="btn btn-label-primary ">Update</button>
+                                                            <button class="btn btn-label-primary update-details">Update</button>
                                             </form>
                                         </div>
                                     </div>
@@ -274,6 +272,45 @@ $(document).ready(function() {
             }
         });
     })
+    
+    $(document).on("click", ".update-details", function() {
+    $('#edit_reserve_details_modal').modal('show');
+
+        // Get the values from the form inputs
+        var ID = $("#ID").val();
+        var bookingID = $("#bookingID").val();
+        var reservationID = $("#reservationID").val();
+        var reserveStatus = $("#reserve_status").val();
+        var reserveDate = $("#reserve_date").val();
+        var fname = $("#fname").val();
+        var lname = $("#lname").val();
+        var time = $("#time").val();
+        var room = $("#room").val();
+        var setup = $("#setup").val();
+        var businessUnit = $("#businessunit").val();
+        var guest = $("#guest").val();
+        var contact = $("#contact").val();
+        var email = $("#email").val();
+        var message = $("#message").val();
+
+        // Pass the values to the modal's input fields
+        $('#edit_reserve_details_modal #ID').val(ID);
+        $('#edit_reserve_details_modal #bookingID').val(bookingID);
+        $('#edit_reserve_details_modal #reservationID').val(reservationID);
+        $('#edit_reserve_details_modal #reserve_status').val(reserveStatus);
+        $('#edit_reserve_details_modal #reserve_date').val(reserveDate);
+        $('#edit_reserve_details_modal #fname').val(fname);
+        $('#edit_reserve_details_modal #lname').val(lname);
+        $('#edit_reserve_details_modal #time').val(time);
+        $('#edit_reserve_details_modal #room').val(room);
+        $('#edit_reserve_details_modal #setup').val(setup);
+        $('#edit_reserve_details_modal #businessunit').val(businessUnit);
+        $('#edit_reserve_details_modal #guest').val(guest);
+        $('#edit_reserve_details_modal #contact').val(contact);
+        $('#edit_reserve_details_modal #email').val(email);
+        $('#edit_reserve_details_modal #message').val(message);
+    });
+
 
 });
 
