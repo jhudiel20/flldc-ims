@@ -295,7 +295,7 @@ try {
 
     if($reserve_status == 'APPROVED'){
         $sql = $conn->prepare("UPDATE reservations SET reservation_id = :reservation_id, RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
-    LNAME = :lname, ROOM = :room, `time` = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+    LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
     $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
     $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
 
@@ -330,7 +330,7 @@ try {
 
     }else{
         $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
-        LNAME = :lname, ROOM = :room, `time` = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+        LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
         $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
         $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
         $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
