@@ -107,7 +107,7 @@ try {
 
     //Recipients
     $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
-    $mail->addAddress($EMAIL);     //Add a recipient
+    $mail->addAddress($email);     //Add a recipient
     $mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png', 'logo_cid');
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
