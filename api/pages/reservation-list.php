@@ -207,6 +207,13 @@ var table = new Tabulator("#reserve-list-table", {
             headerFilterLiveFilter: false
         },
         {
+            title: "Guest",
+            field: "guest",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
             title: "Reservation Status",
             field: "reserve_status",
             formatter: approval_status,
@@ -218,6 +225,60 @@ var table = new Tabulator("#reserve-list-table", {
             },
             // width: 300,
             headerFilterLiveFilter: false
+        },
+        {
+            title: "First Name",
+            field: "fname",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Last Name",
+            field: "lname",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Bussiness Unit",
+            field: "business_unit",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Email",
+            field: "email",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Contact",
+            field: "contact",
+            visible: false,
+            download: true
+        },
+        {
+            title: "HDMI Cable",
+            field: "hdmi",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Externsion Cord",
+            field: "extension",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Additional Chairs",
+            field: "chair",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Additional Table",
+            field: "table",
+            visible: false,
+            download: true
         },
     ],
     ajaxResponse: function(url, params, response) {
