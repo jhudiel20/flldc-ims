@@ -76,6 +76,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body">
+                                            <div class="row">
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Booking ID</label>
@@ -163,7 +164,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <option value="FCSI" <?php if($row['business_unit'] == "FCSI") echo 'selected'; ?>>FAST COLDCHAIN SOLUTION INC.</option>
                                                                     <option value="FDC" <?php if($row['business_unit'] == "FDC") echo 'selected'; ?>>FAST DISTRIBUTION CORPORATION</option>
                                                                     <option value="FUI" <?php if($row['business_unit'] == "FUI") echo 'selected'; ?>>FAST UNIMERCHANT INC.</option>
-                                                                    <option value="other" <?php if($row['business_unit'] == "other") echo 'selected'; ?>>OTHER</option>
+                                                                    <option value="EXTERNAL" <?php if($row['business_unit'] == "EXTERNAL") echo 'selected'; ?>>External Clients</option>
                                                                 </select>
                                                             </div>
                                                          
@@ -186,6 +187,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
                                                             <button type="button" class="btn btn-label-primary update-details">Update</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +315,7 @@ $(document).ready(function() {
             $('#edit_reserve_details_modal #room').val(room);
             $('#edit_reserve_details_modal #setup').val(setup);
             $('#edit_reserve_details_modal #businessunit').val(businessUnit);
-            $('#edit_reserve_details_modalv #guest').val(guest);
+            $('#edit_reserve_details_modal #guest').val(guest);
             $('#edit_reserve_details_modal #contact').val(contact);
             $('#edit_reserve_details_modal #email').val(email);
             $('#edit_reserve_details_modal #message').val(message);
