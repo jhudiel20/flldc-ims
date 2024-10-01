@@ -76,22 +76,20 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body">
-                                            <form class="row g-3" method="post" id="">
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                                                            <input type="hidden" id="bookingID" name="bookingID" value="<?php echo $row['booking_id'];?>">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Booking ID</label>
-                                                                <input type="text" class="form-control" name="" id=""
+                                                                <input type="text" class="form-control" name="BOOKINGID" id="BOOKINGID"
                                                                     value="<?php echo $row['booking_id']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Reservation ID</label>
-                                                                <input type="text" class="form-control" name="" id=""
+                                                                <input type="text" class="form-control" name="RESERVATIONID" id="RESERVATIONID"
                                                                     value="<?php echo $row['reservation_id']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Reservation Status</label>
-                                                                <select name="reserve_status" id="reserve_status" class="form-select"
+                                                                <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
                                                                     <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
                                                                     <?php foreach (RESERVE_STATUS as $value) { ?>
                                                                     <option value="<?= $value; ?>"
@@ -104,14 +102,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Date of Reservation</label>
                                                                 <input type="date" class="form-control" 
-                                                                    name="reserve_date" id="reserve_date"
+                                                                    name="RESERVE_DATE" id="RESERVE_DATE"
                                                                     value="<?php echo $row['reserve_date'];?>" >
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
 
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Room</label>
-                                                                    <select name="room" id="room" class="form-control" required>
+                                                                    <select name="ROOM" id="ROOM" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
                                                                         <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
                                                                         <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Romm 303</option>
@@ -123,7 +121,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Time</label>
-                                                                    <select name="time" id="time" class="form-control" required>
+                                                                    <select name="TIME" id="TIME" class="form-control" required>
                                                                         <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
                                                                         <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
                                                                         <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
@@ -131,7 +129,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Seating Arrangement</label>
-                                                                    <select name="setup" id="setup" class="form-control">
+                                                                    <select name="SETUP" id="SETUP" class="form-control">
                                                                         <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
                                                                         <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>
                                                                         <option value="THEATER" <?php if($row['setup'] == "THEATER") echo 'selected'; ?>>THEATER</option>
@@ -142,23 +140,23 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Guest</label>
-                                                                <input type="text" class="form-control" name="guest"
-                                                                    id="guest"
+                                                                <input type="text" class="form-control" name="GUEST"
+                                                                    id="GUEST"
                                                                     value="<?php echo $row['guest']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
-                                                                <input type="text" class="form-control" name="fname" id="fname"
+                                                                <input type="text" class="form-control" name="FNAME" id="FNAME"
                                                                     value="<?php echo $row['fname']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Last Name</label>
-                                                                <input type="text" class="form-control" name="lname" id="lname"
+                                                                <input type="text" class="form-control" name="LNAME" id="LNAME"
                                                                     value="<?php echo $row['lname']; ?>" disabled>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Bussiness Unit</label>
-                                                                <select name="businessunit" id="businessunit" class="form-control">
+                                                                <select name="BUSINESSUNIT" id="BUSINESSUNIT" class="form-control">
                                                                     <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
                                                                     <option value="FSC" <?php if($row['business_unit'] == "FSC") echo 'selected'; ?>>FAST SERVICES CORPORATION</option>
                                                                     <option value="FTMC" <?php if($row['business_unit'] == "FTMC") echo 'selected'; ?>>FAST TOLL MANUFACTURING CORPORATION</option>
@@ -172,23 +170,22 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Contact No.<span
                                                                         class="require asterisk">*</span></label>
-                                                                <input type="text" class="form-control" name="contact"
-                                                                    id="contact" value="<?php echo $row['contact']; ?>">
+                                                                <input type="text" class="form-control" name="CONTACT"
+                                                                    id="CONTACT" value="<?php echo $row['contact']; ?>">
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Email<span
                                                                         class="require asterisk">*</span></label>
-                                                                <input type="text" class="form-control" name="email"
-                                                                    id="email" value="<?php echo $row['email']; ?>">
+                                                                <input type="text" class="form-control" name="EMAIL"
+                                                                    id="EMAIL" value="<?php echo $row['email']; ?>">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label class="form-label py-1">Purpose / Message </label>
-                                                                <textarea class="form-control" name="message" id="message"
+                                                                <textarea class="form-control" name="MESSAGE" id="MESSAGE"
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
                                                             <button type="button" class="btn btn-label-primary update-details">Update</button>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -289,20 +286,20 @@ $(document).ready(function() {
 
             // Get the values from the form inputs
             var ID = $("#ID").val();
-            var bookingID = $("#bookingID").val();
-            var reservationID = $("#reservationID").val();
-            var reserveStatus = $("#reserve_status").val();
-            var reserveDate = $("#reserve_date").val();
-            var fname = $("#fname").val();
-            var lname = $("#lname").val();
-            var time = $("#time").val();
-            var room = $("#room").val();
-            var setup = $("#setup").val();
-            var businessUnit = $("#businessunit").val();
-            var guest = $("#guest").val();
-            var contact = $("#contact").val();
-            var email = $("#email").val();
-            var message = $("#message").val();
+            var bookingID = $("#BOOKINGID").val();
+            var reservationID = $("#RESERVATIONID").val();
+            var reserveStatus = $("#RESERVE_STATUS").val();
+            var reserveDate = $("#RESERVE_DATE").val();
+            var fname = $("#FNAME").val();
+            var lname = $("#LNAME").val();
+            var time = $("#TIME").val();
+            var room = $("#ROOM").val();
+            var setup = $("#SETUP").val();
+            var businessUnit = $("#BUSINESSUNIT").val();
+            var guest = $("#GUEST").val();
+            var contact = $("#CONTACT").val();
+            var email = $("#EMAIL").val();
+            var message = $("#MESSAGE").val();
 
             // Pass the values to the modal's input fields
             $('#edit_reserve_details_modal #ID').val(ID);
