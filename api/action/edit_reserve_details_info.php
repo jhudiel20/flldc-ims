@@ -38,7 +38,7 @@ if (empty($reason_message) || $reason_message == '') {
     echo json_encode($response);
     exit();
 }
-
+$updated_time = $time;
 $selected_time = $time;
 $room = $room;
 $reserve_date = $reserve_date;
@@ -199,8 +199,7 @@ try {
             </div>
         ';
     }else{
-
-            $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
+        $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
         $mail->Body    = '
             <div style="background:#f3f3f3">
                 <div style="margin:0px auto;max-width:640px;background:transparent">
@@ -302,7 +301,7 @@ try {
     $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
     $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
     $sql->bindParam(':lname', $lname, PDO::PARAM_STR);
-    $sql->bindParam(':selected_time', $time, PDO::PARAM_STR);
+    $sql->bindParam(':selected_time', $updated_time, PDO::PARAM_STR);
     $sql->bindParam(':room', $room, PDO::PARAM_STR);
     $sql->bindParam(':setup', $setup, PDO::PARAM_STR);
     $sql->bindParam(':businessunit', $businessunit, PDO::PARAM_STR);
@@ -335,7 +334,7 @@ try {
         $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
         $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
         $sql->bindParam(':lname', $lname, PDO::PARAM_STR);
-        $sql->bindParam(':selected_time', $time, PDO::PARAM_STR);
+        $sql->bindParam(':selected_time', $updated_time, PDO::PARAM_STR);
         $sql->bindParam(':room', $room, PDO::PARAM_STR);
         $sql->bindParam(':setup', $setup, PDO::PARAM_STR);
         $sql->bindParam(':businessunit', $businessunit, PDO::PARAM_STR);
