@@ -108,7 +108,16 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
 
-                                                            <div class="col-md-3">
+
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Time</label>
+                                                                    <select name="TIME" id="TIME" class="form-control" required>
+                                                                        <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
+                                                                        <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
+                                                                        <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 <label class="form-label">Room</label>
                                                                     <select name="ROOM" id="ROOM" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
@@ -118,14 +127,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
                                                                         <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
                                                                         <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
-                                                                    </select>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label">Time</label>
-                                                                    <select name="TIME" id="TIME" class="form-control" required>
-                                                                        <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
-                                                                        <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
-                                                                        <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
                                                                     </select>
                                                             </div>
                                                             <div class="col-md-3">

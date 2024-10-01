@@ -39,7 +39,7 @@ if (empty($reason_message) || $reason_message == '') {
     exit();
 }
 
-$time = $time;
+$selected_time = $time;
 $room = $room;
 $reserve_date = $reserve_date;
 
