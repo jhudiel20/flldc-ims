@@ -132,7 +132,7 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 // Initialize the Tabulator table with fetched data
 //function initializeTable(data) {
 var table = new Tabulator("#reserve-list-table", {
-    layout: "fitColumns",
+    layout: "fitDataFill",
     movableColumns: true,
     placeholder: "No Data Found",
     pagination: true, //enable pagination
