@@ -17,12 +17,13 @@
                                 <label class="form-label">NAME<span class="require asterisk">*</span></label>
                                 <select name="employee" id="employee" class="form-select">
                                     <option value="" disabled hidden selected>Select Employee</option>
-                                    <?php   $full_names = mysqli_query($conn_acc,"SELECT * FROM `user_account` ");
-                                            while ($r_full_names = mysqli_fetch_assoc($full_names)) {
+                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account");
+                                            $full_names->execute();
+                                            while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
-                                        value="<?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>">
-                                        <?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>
+                                        value="<?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>">
+                                        <?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>
                                     </option>
                                     <?php } ?>
                                 </select>
@@ -72,8 +73,9 @@
                                 <label class="form-label">Payee Name<span class="require asterisk">*</span></label>
                                 <select name="payee" id="payee" class="form-select">
                                     <option value="" disabled hidden selected>Please select</option>
-                                    <?php   $full_names = mysqli_query($conn_acc,"SELECT * FROM `user_account` ");
-                                            while ($r_full_names = mysqli_fetch_assoc($full_names)) {
+                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account");
+                                            $full_names->execute();
+                                            while ($r_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
                                         value="<?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>">
@@ -229,8 +231,9 @@
                                 <label class="form-label">NAME<span class="require asterisk">*</span></label>
                                 <select name="employee" id="employee" class="form-select">
                                     <option value="" disabled hidden selected>Select Employee</option>
-                                    <?php   $full_names = mysqli_query($conn_acc,"SELECT * FROM `user_account` ");
-                                            while ($r_full_names = mysqli_fetch_assoc($full_names)) {
+                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account");
+                                            $full_names->execute();
+                                            while ($r_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
                                         value="<?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>">
