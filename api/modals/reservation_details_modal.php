@@ -16,7 +16,7 @@
                             <input type="hidden" id="reserve_date" name="reserve_date" value="">
                             <input type="hidden" id="fname" name="fname" value="">
                             <input type="hidden" id="lname" name="lname" value="">
-                            <input type="text" id="time" name="time" value="">
+                            <input type="hidden" id="time" name="time" value="">
                             <input type="hidden" id="room" name="room" value="">
                             <input type="hidden" id="setup" name="setup" value="">
                             <input type="hidden" id="businessunit" name="businessunit" value="">
