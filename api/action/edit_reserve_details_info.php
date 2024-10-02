@@ -62,7 +62,7 @@ $counter = $conn->prepare("
     SELECT * FROM reservations 
     WHERE room = :room 
     AND reserve_date = :reserve_date
-    AND reserve_status = 'APPROVED',
+    AND reserve_status = 'APPROVED'
     AND ID != :tableID
     AND time IN ($inClause)
 ");
