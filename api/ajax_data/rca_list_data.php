@@ -38,7 +38,7 @@ foreach ($filters as $filter) {
 $filter_sql = !empty($filter_clauses) ? 'WHERE ' . implode(' AND ', $filter_clauses) : '';
 
 $count_query = "SELECT COUNT(DISTINCT id) as count
-                FROM rca_history
+                FROM rca
                 $filter_sql";
 
 $count_stmt = $conn->prepare($count_query);
@@ -48,7 +48,7 @@ $total_query = (int) $count_stmt->fetchColumn();
 $pages = $total_query > 0 ? ceil($total_query / $query_limit) : 1;
 $select_fields = implode(', ', $query_fields);
 $data_query = "SELECT $select_fields, TO_CHAR(date_created, 'YYYY-MM-DD HH12:MI:SS AM') as date_created
-                FROM rca_history $filter_sql ORDER BY $sort_field $sort_dir
+                FROM rca $filter_sql ORDER BY $sort_field $sort_dir
                 LIMIT :limit OFFSET :offset";
 
 $data_stmt = $conn->prepare($data_query);
