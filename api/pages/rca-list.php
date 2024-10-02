@@ -226,7 +226,8 @@ var table = new Tabulator("#rca-list-table", {
     sortMode: "remote",
     ajaxURL: "/rca_list_data",
     ajaxLoaderLoading: 'Fetching data from Database..',
-    columns: [{
+    columns: [
+        {
             title: "Details",
             field: "",
             formatter: detail_btn,
