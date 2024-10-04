@@ -485,7 +485,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "../action/add_rca_detail.php",
+                url: "../action/add_rca.php",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
