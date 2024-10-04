@@ -22,8 +22,8 @@
                                             while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
-                                        value="<?php echo $row_full_names['fname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>">
-                                        <?php echo $row_full_names['fname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>
+                                        value="<?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>">
+                                        <?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>
                                     </option>
                                     <?php } ?>
                                 </select>
@@ -233,11 +233,11 @@
                                     <option value="" disabled hidden selected>Select Employee</option>
                                     <?php   $full_names = $conn->prepare("SELECT * FROM user_account");
                                             $full_names->execute();
-                                            while ($r_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
+                                            while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
-                                        value="<?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>">
-                                        <?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>
+                                        value="<?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>">
+                                        <?php echo $row_full_names['FNAME'].' '.$row_full_names['MNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>
                                     </option>
                                     <?php } ?>
                                 </select>
