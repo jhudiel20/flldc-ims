@@ -22,8 +22,8 @@
                                             while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
                                     <option
-                                        value="<?php echo $row_full_names['FNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>">
-                                        <?php echo $row_full_names['FNAME'].' '.$row_full_names['LNAME'].' '.$row_full_names['EXT_NAME'];?>
+                                        value="<?php echo $row_full_names['fname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>">
+                                        <?php echo $row_full_names['fname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>
                                     </option>
                                     <?php } ?>
                                 </select>
