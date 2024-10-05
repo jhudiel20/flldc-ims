@@ -244,11 +244,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             exit();
         }
 
-        $sql = $conn-prepare("INSERT INTO rca_history (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH, 
+        $sql = $conn->prepare("INSERT INTO rca_history (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH, 
         AMOUNT,PAYEE_NAME,ACCOUNT_NO,PURPOSE_RCA,DATE_NEEDED,DATE_EVENT,PURPOSE_TRAVEL,DATE_DEPART, 
         DATE_RETURN,ATTACHMENTS)
-        VALUES
-        (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,
+        VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,
         :date_needed,:date_event,:purpose_travel,:date_depart,:date_return,:img)");
 
                 // Bind the parameters to the prepared statement
