@@ -274,7 +274,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Please Insert PCV<span
                                         class="require asterisk">*</span></label>
-                                <input type="file" class="form-control" name="pcv" id="pcv">
+                                <input type="file" class="form-control" name="pcv_file" id="pcv_file">
 
                             </div>
                         </div>
@@ -284,7 +284,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="button" name="submit" class="btn btn-label-primary" id="add_pcv">Submit</button>
+                <button type="submit" name="submit" class="btn btn-label-primary" id="add_pcv" name="add_pcv">Submit</button>
                 <button class="btn btn-label-primary d-none" type="button" id="pcv_icon" disabled>
                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                     Loading...

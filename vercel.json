@@ -156,6 +156,10 @@
         "dest": "/api/action/add_rca.php"
       },
       {
+        "src": "/add_pcv",
+        "dest": "/api/action/add_pcv.php"
+      },
+      {
         "src": "/request-list",
         "dest": "/api/pages/request-list.php"
       },

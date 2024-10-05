@@ -14,29 +14,29 @@ use PHPMailer\PHPMailer\Exception;
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $employee =  isset($_POST['employee']) ? trim($_POST['employee']) : '';
-    $employee_no =  isset($_POST['employee_no']) ? trim($_POST['employee_no']) : '';
-    $paygroup =  isset($_POST['paygroup']) ? trim($_POST['paygroup']) : '';
-    $sbu =  isset($_POST['sbu']) ? trim($_POST['sbu']) : '';
-    $branch =  isset($_POST['branch']) ? trim($_POST['branch']) : '';
-    $amount =  isset($_POST['amount']) ? trim($_POST['amount']) : '';
-    $payee =  isset($_POST['payee']) ? trim($_POST['payee']) : '';
-    $account_no =  isset($_POST['account_no']) ? trim($_POST['account_no']) : '';
-    $purpose_rca =  isset($_POST['purpose_rca']) ? trim($_POST['purpose_rca']) : '';
-    $date_needed =  isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
-    $date_event =  isset($_POST['date_event']) ? trim($_POST['date_event']) : '';
-    $purpose_travel =  isset($_POST['purpose_travel']) ? trim($_POST['purpose_travel']) : '';
-    $date_depart =  isset($_POST['date_depart']) ? trim($_POST['date_depart']) : '';
-    $date_return =  isset($_POST['date_return']) ? trim($_POST['date_return']) : '';
+    $sbu = isset($_POST['sbu']) ? trim($_POST['sbu']) : '';
+    $pcv_no = isset($_POST['pcv_no']) ? trim($_POST['pcv_no']) : '';
+    $employee = isset($_POST['employee']) ? trim($_POST['employee']) : '';
+    $department = isset($_POST['department']) ? trim($_POST['department']) : '';
+    $expenses = isset($_POST['expenses']) ? trim($_POST['expenses']) : '';
+    $sdcc = isset($_POST['sdcc']) ? trim($_POST['sdcc']) : '';
+    $remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
+    $pcv_date = isset($_POST['pcv_date']) ? trim($_POST['pcv_date']) : '';
 
-    $generate_RCA_ID = generate_RCA_ID();
+    $generate_PCV_ID = generate_PCV_ID();
 
-    if (
-        $employee == '' || $employee_no == '' || $paygroup == '' || $sbu == '' || $branch == ''
-        || $amount == '' || $payee == '' || $account_no == ''
-    ) {
-        
+    if ($sbu == '' || $pcv_no == '' || $employee == '' || $department == '' || $expenses == ''|| $sdcc == '' || $remarks == '' || $pcv_date == '') {
         $response['message'] = 'Please fill up all fields with (*) asterisk!';
+        echo json_encode($response);
+        exit();
+    }
+
+    $sql_check = $conn->prepare("SELECT PCV_NO FROM rca_history WHERE PCV_NO = :pcv_no");
+    $sql_check->bindParam(':pcv_no', $pcv_no, PDO::PARAM_STR);
+    $sql_check->execute();
+    $row_check = $sql_check->rowCount();
+    if ($row_check >= 1) {
+        $response['message'] = 'PCV No is already taken!';
         echo json_encode($response);
         exit();
     }
@@ -45,17 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $githubOwner = getenv('GITHUB_OWNER');
     $githubImages = getenv('GITHUB_IMAGES');
 
-    if ($_FILES['receipt']['name'] == '') {
+    if ($_FILES['pcv_file']['name'] == '') {
         $response['message'] = 'Please select a photo';
         $response['title'] = 'Warning!';
         echo json_encode($response);
     }
 
-    if (isset($_FILES['receipt']) && $_FILES['receipt']['error'] == UPLOAD_ERR_OK) {
+    if (isset($_FILES['pcv_file']) && $_FILES['pcv_file']['error'] == UPLOAD_ERR_OK) {
         $owner = $githubOwner;
         $repo = $githubImages;
 
-        $img = $_FILES['receipt'];
+        $img = $_FILES['pcv_file'];
         $img_temp_loc = $img['tmp_name'];
         $fileName = $img['name'];
         
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $base64Content = base64_encode($fileContent);
 
         // Check if the file exists on GitHub and get its sha if it does
-        $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/RCA_ATTACHMENTS/$fileName";
+        $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/PCV_ATTACHMENTS/$fileName";
         $data = json_encode([
             'message' => 'Upload image: ' . $fileName,
             'content' => $base64Content,
@@ -131,12 +131,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         try {
             $support_emails = [];
-            $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
-            $admins->execute();
+            // $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
+            // $admins->execute();
 
-            while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
-                $support_emails[] = $row_admins['email'];
-            }
+            // while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
+            //     $support_emails[] = $row_admins['email'];
+            // }
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
@@ -146,14 +146,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $mail->Port = 465;
 
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
-            foreach ($support_emails as $email) {
-                $mail->addAddress($email);
-            }
+            // foreach ($support_emails as $email) {
+            //     $mail->addAddress($email);
+            // }
+            $mail->addAddress($decrypted_array['EMAIL']);
             $code = $generate_RCA_ID;
 
             $mail->isHTML(true);
             $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
-            $mail->Subject = 'New RCA Added';
+            $mail->Subject = 'New PCV Added';
             $mail->Body = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
@@ -199,16 +200,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                                                 <div style="color:#737f8d;font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-size:16px;line-height:24px;text-align:left">
                                                                     <h2 style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:500;font-size:20px;color:#4f545c;letter-spacing:0.27px">Hi good day,</h2>
                                                                     <p style="text-align:justify">I hope this message finds you well.</p>
-                                                                    <p style="text-align:justify">We would like to inform you that a new Request for Cash Advance has been added. Please find the details below:</p>
+                                                                    <p style="text-align:justify">We would like to inform you that a new Petty Cash Voucher has been added. Please find the details below:</p>
                                                                     <p>
                                                                         Submitted by : <b>' . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'] . '</b>  
-                                                                        <br> RCA ID : <b>' . $code . '</b> 
+                                                                        <br> PCV ID : <b>' . $code . '</b> 
+                                                                        <br> PCV NO. : <b>' . $pcv_no . '</b> 
                                                                         <br> Employee Name : <b>' . $employee . '</b> 
-                                                                        <br> Amount : ₱ <b>' . $amount . '</b> 
-                                                                        <br>' . (empty($purpose_rca) ? 'Purpose of Travel : <b>' . $purpose_travel : 'Purpose of RCA : <b>' . $purpose_rca) . '</b>
-                                                                        <br>' . (empty($date_needed) ? 'Date of Departure : <b>' . $date_depart : 'Date Needed : <b>' . $date_needed) . '</b>
-                                                                        <br>' . (empty($date_event) ? 'Date of Return : <b>' . $date_return : 'Date Event : <b>' . $date_event) . '</b>
-                                                                        <br> Attachments <a href="' . $img_url . '">here</a> to view or download the file.
+                                                                        <br> Total Expenses : ₱ <b>' . $expenses . '</b> 
+                                                                        <br> Attachments : Please see the attached file.
                                                                     </p>
                                                                     <p style="text-align:justify">Thank you for choosing FAST Learning and Development Inventory Management System. We look forward to serving you.</p>
                                                                 </div>
@@ -234,8 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     </tr>
                                 </table>
                     </div>
-                </div>
-                ';
+                </div>';
                 $mail->send();
         }catch (Exception $e) {
             $response['success'] = false;
@@ -249,31 +247,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $date_depart = !empty($date_depart) ? $date_depart : null;
         $date_return = !empty($date_return) ? $date_return : null;
 
-        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH,AMOUNT,PAYEE_NAME,ACCOUNT_NO,PURPOSE_RCA,DATE_NEEDED,DATE_EVENT,PURPOSE_TRAVEL,DATE_DEPART,DATE_RETURN,ATTACHMENTS)
-        VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,:date_needed,:date_event,:purpose_travel,:date_depart,:date_return,:img)");
+        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,PCV_NO, NAME,SBU, DEPARTMENT, AMOUNT, PCV_DATE, SDCCC, REMARKS,ATTACHMENTS)
+        VALUES (:generate_PCV_ID,:employee,:sbu,:department,:amount,:pcv_date,:sdccc,:remarks,:img)");
 
                 // Bind the parameters to the prepared statement
-                $sql->bindParam(':generate_RCA_ID', $generate_REQUEST_ID, PDO::PARAM_STR);
+                $sql->bindParam(':generate_PCV_ID', $generate_PCV_ID, PDO::PARAM_STR);
                 $sql->bindParam(':employee', $employee, PDO::PARAM_STR);
-                $sql->bindParam(':employee_no', $employee_no, PDO::PARAM_STR);
-                $sql->bindParam(':paygroup', $paygroup, PDO::PARAM_STR);
                 $sql->bindParam(':sbu', $sbu, PDO::PARAM_STR);
-                $sql->bindParam(':branch', $branch, PDO::PARAM_STR);
+                $sql->bindParam(':department', $department, PDO::PARAM_STR);
                 $sql->bindParam(':amount', $amount, PDO::PARAM_STR);
-                $sql->bindParam(':payee', $payee, PDO::PARAM_STR);
-                $sql->bindParam(':account_no', $account_no, PDO::PARAM_STR);
-                $sql->bindParam(':purpose_rca', $purpose_rca, PDO::PARAM_STR);
-                $sql->bindParam(':date_needed', $date_needed, PDO::PARAM_STR);
-                $sql->bindParam(':date_event', $date_event, PDO::PARAM_STR);
-                $sql->bindParam(':purpose_travel', $purpose_travel, PDO::PARAM_STR);
-                $sql->bindParam(':date_depart', $date_depart, PDO::PARAM_STR);
-                $sql->bindParam(':date_return', $date_return, PDO::PARAM_STR);
+                $sql->bindParam(':pcv_date', $pcv_date, PDO::PARAM_STR);
+                $sql->bindParam(':sdccc', $sdcc, PDO::PARAM_STR);
+                $sql->bindParam(':remarks', $remarks, PDO::PARAM_STR);
                 $sql->bindParam(':img', $fileName, PDO::PARAM_STR);
                 // Execute the prepared statement
                 $sql->execute();
 
                 $user_id = $decrypted_array['ID'];
-                $action = "Added New RCA | RCA ID : " . $generate_RCA_ID . " | Amount : " . $amount;
+                $action = "Added New PCV | PCV ID : " . $generate_PCV_ID . " | PCV NO. : " . $pcv_no;
 
                 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
@@ -312,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             curl_close($ch);
     }else{
         // Handle the case where no file is uploaded or an error occurred
-        $errorMessage = $_FILES['receipt']['error'] ?? 'No file uploaded';
+        $errorMessage = $_FILES['pcv_file']['error'] ?? 'No file uploaded';
         echo json_encode([
             'success' => false,
             'title' => 'Upload Error',

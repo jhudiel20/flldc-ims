@@ -527,8 +527,9 @@ $(document).ready(function() {
             });
         })
 
-        $('#add_pcv').on('click', function() {
-            var formdata = new FormData(add_pcv_form);
+        $('#add_pcv_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault(); 
 
             if ($('#pcv_no').val() == "") {
                 $("#pcv_no").css({
@@ -604,9 +605,9 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "../action/add_pcv_detail.php",
+                url: "/add_pcv",
                 method: "POST",
-                data: formdata,
+                data: formData,
                 dataType: "json",
                 contentType: false,
                 cache: false,
