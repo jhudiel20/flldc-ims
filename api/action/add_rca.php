@@ -14,20 +14,20 @@ use PHPMailer\PHPMailer\Exception;
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $employee = mysqli_real_escape_string($conn, isset($_POST['employee']) ? trim($_POST['employee']) : '');
-    $employee_no = mysqli_real_escape_string($conn, isset($_POST['employee_no']) ? trim($_POST['employee_no']) : '');
-    $paygroup = mysqli_real_escape_string($conn, isset($_POST['paygroup']) ? trim($_POST['paygroup']) : '');
-    $sbu = mysqli_real_escape_string($conn, isset($_POST['sbu']) ? trim($_POST['sbu']) : '');
-    $branch = mysqli_real_escape_string($conn, isset($_POST['branch']) ? trim($_POST['branch']) : '');
-    $amount = mysqli_real_escape_string($conn, isset($_POST['amount']) ? trim($_POST['amount']) : '');
-    $payee = mysqli_real_escape_string($conn, isset($_POST['payee']) ? trim($_POST['payee']) : '');
-    $account_no = mysqli_real_escape_string($conn, isset($_POST['account_no']) ? trim($_POST['account_no']) : '');
-    $purpose_rca = mysqli_real_escape_string($conn, isset($_POST['purpose_rca']) ? trim($_POST['purpose_rca']) : '');
-    $date_needed = mysqli_real_escape_string($conn, isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '');
-    $date_event = mysqli_real_escape_string($conn, isset($_POST['date_event']) ? trim($_POST['date_event']) : '');
-    $purpose_travel = mysqli_real_escape_string($conn, isset($_POST['purpose_travel']) ? trim($_POST['purpose_travel']) : '');
-    $date_depart = mysqli_real_escape_string($conn, isset($_POST['date_depart']) ? trim($_POST['date_depart']) : '');
-    $date_return = mysqli_real_escape_string($conn, isset($_POST['date_return']) ? trim($_POST['date_return']) : '');
+    $employee =  isset($_POST['employee']) ? trim($_POST['employee']) : '';
+    $employee_no =  isset($_POST['employee_no']) ? trim($_POST['employee_no']) : '';
+    $paygroup =  isset($_POST['paygroup']) ? trim($_POST['paygroup']) : '';
+    $sbu =  isset($_POST['sbu']) ? trim($_POST['sbu']) : '';
+    $branch =  isset($_POST['branch']) ? trim($_POST['branch']) : '';
+    $amount =  isset($_POST['amount']) ? trim($_POST['amount']) : '';
+    $payee =  isset($_POST['payee']) ? trim($_POST['payee']) : '';
+    $account_no =  isset($_POST['account_no']) ? trim($_POST['account_no']) : '';
+    $purpose_rca =  isset($_POST['purpose_rca']) ? trim($_POST['purpose_rca']) : '';
+    $date_needed =  isset($_POST['date_needed']) ? trim($_POST['date_needed']) : '';
+    $date_event =  isset($_POST['date_event']) ? trim($_POST['date_event']) : '';
+    $purpose_travel =  isset($_POST['purpose_travel']) ? trim($_POST['purpose_travel']) : '';
+    $date_depart =  isset($_POST['date_depart']) ? trim($_POST['date_depart']) : '';
+    $date_return =  isset($_POST['date_return']) ? trim($_POST['date_return']) : '';
 
     $generate_RCA_ID = generate_RCA_ID();
 
