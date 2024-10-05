@@ -52,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if (isset($_FILES['receipt']) && $_FILES['receipt']['error'] == UPLOAD_ERR_OK) {
-        $owner = $githubOwner;// GitHub username or organization
-        $repo = $githubImages;
+        $owner = 'jhudiel20';
+        $repo = 'flldc-user-image';
 
         $img = $_FILES['receipt'];
         $img_temp_loc = $img['tmp_name'];
@@ -131,9 +131,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         try {
             $support_emails = [];
-            // $admins = mysqli_query($conn_acc, "SELECT EMAIL FROM user_account WHERE ACCESS = 'ADMIN' ");
-            // while ($row_admins = mysqli_fetch_assoc($admins)) {
-            //     $support_emails[] = $row_admins['EMAIL'];
+            // $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
+            // $admins->execute();
+
+            // while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
+            //     $support_emails[] = $row_admins['email'];
             // }
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
