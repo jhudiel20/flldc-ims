@@ -13,11 +13,11 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'rca_id', 'name', 'employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments'];
+$query_fields = ['id', 'rca_id', 'name','employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments','department','pcv_date','sdccc','remarks'];
 
 if (!empty($sorters)) {
 
-    $valid_sorts = ['id', 'rca_id', 'name', 'employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments','date_created'];
+    $valid_sorts = ['id', 'rca_id', 'name', 'employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments','date_created','department','pcv_date','sdccc','remarks'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
