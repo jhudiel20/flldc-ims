@@ -253,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,:date_needed,:date_event,:purpose_travel,:date_depart,:date_return,:img)");
 
                 // Bind the parameters to the prepared statement
-                $sql->bindParam(':generate_RCA_ID', $generate_REQUEST_ID, PDO::PARAM_STR);
+                $sql->bindParam(':generate_RCA_ID', $generate_RCA_ID, PDO::PARAM_STR);
                 $sql->bindParam(':employee', $employee, PDO::PARAM_STR);
                 $sql->bindParam(':employee_no', $employee_no, PDO::PARAM_STR);
                 $sql->bindParam(':paygroup', $paygroup, PDO::PARAM_STR);

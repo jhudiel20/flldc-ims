@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         exit();
     }
 
-    $sql_check = $conn->prepare("SELECT PCV_NO FROM rca_history WHERE PCV_NO = :pcv_no");
+    $sql_check = $conn->prepare("SELECT PCV_NO FROM rca WHERE PCV_NO = :pcv_no");
     $sql_check->bindParam(':pcv_no', $pcv_no, PDO::PARAM_STR);
     $sql_check->execute();
     $row_check = $sql_check->rowCount();
