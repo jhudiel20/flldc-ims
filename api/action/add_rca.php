@@ -131,10 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         try {
             $support_emails = [];
-            $admins = mysqli_query($conn_acc, "SELECT EMAIL FROM user_account WHERE ACCESS = 'ADMIN' ");
-            while ($row_admins = mysqli_fetch_assoc($admins)) {
-                $support_emails[] = $row_admins['EMAIL'];
-            }
+            // $admins = mysqli_query($conn_acc, "SELECT EMAIL FROM user_account WHERE ACCESS = 'ADMIN' ");
+            // while ($row_admins = mysqli_fetch_assoc($admins)) {
+            //     $support_emails[] = $row_admins['EMAIL'];
+            // }
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
