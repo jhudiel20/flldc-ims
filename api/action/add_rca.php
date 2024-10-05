@@ -202,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                                                     <p style="text-align:justify">I hope this message finds you well.</p>
                                                                     <p style="text-align:justify">We would like to inform you that a new Request for Cash Advance has been added. Please find the details below:</p>
                                                                     <p>
-                                                                        Submitted by : <b>' . $_SESSION['FNAME'] . ' ' . $_SESSION['MNAME'] . ' ' . $_SESSION['LNAME'] . '</b>  
+                                                                        Submitted by : <b>' . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'] . '</b>  
                                                                         <br> RCA ID : <b>' . $code . '</b> 
                                                                         <br> Employee Name : <b>' . $employee . '</b> 
                                                                         <br> Amount : ₱ <b>' . $amount . '</b> 
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             exit();
         }
 
-        $sql = $conn->prepare("INSERT INTO rca_history (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH, 
+        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH, 
         AMOUNT,PAYEE_NAME,ACCOUNT_NO,PURPOSE_RCA,DATE_NEEDED,DATE_EVENT,PURPOSE_TRAVEL,DATE_DEPART, 
         DATE_RETURN,ATTACHMENTS)
         VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,
