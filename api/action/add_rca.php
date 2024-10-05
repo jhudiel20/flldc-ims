@@ -245,12 +245,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             echo json_encode($response);
             exit();
         }
+        $date_needed = !empty($date_needed) ? $date_needed : null;
+        $date_event = !empty($date_event) ? $date_event : null;
+        $date_depart = !empty($date_depart) ? $date_depart : null;
+        $date_return = !empty($date_return) ? $date_return : null;
 
-        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH, 
-        AMOUNT,PAYEE_NAME,ACCOUNT_NO,PURPOSE_RCA,DATE_NEEDED,DATE_EVENT,PURPOSE_TRAVEL,DATE_DEPART, 
-        DATE_RETURN,ATTACHMENTS)
-        VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,
-        :date_needed,:date_event,:purpose_travel,:date_depart,:date_return,:img)");
+        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,NAME,EMPLOYEE_NO,PAYGROUP,SBU,BRANCH,AMOUNT,PAYEE_NAME,ACCOUNT_NO,PURPOSE_RCA,DATE_NEEDED,DATE_EVENT,PURPOSE_TRAVEL,DATE_DEPART,DATE_RETURN,ATTACHMENTS)
+        VALUES (:generate_RCA_ID,:employee,:employee_no,:paygroup,:sbu,:branch,:amount,:payee,:account_no,:purpose_rca,:date_needed,:date_event,:purpose_travel,:date_depart,:date_return,:img)");
 
                 // Bind the parameters to the prepared statement
                 $sql->bindParam(':generate_RCA_ID', $generate_REQUEST_ID, PDO::PARAM_STR);
