@@ -143,9 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $mail->Port = 465;
 
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
-            foreach ($support_emails as $email) {
-                $mail->addAddress($email);
-            }
+            // foreach ($support_emails as $email) {
+            //     $mail->addAddress($email);
+            // }
+            $mail->$decrypted_array['EMAIL'];
             $code = $generate_RCA_ID;
 
             $mail->isHTML(true);
