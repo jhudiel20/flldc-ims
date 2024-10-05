@@ -228,8 +228,8 @@ $generate_PR_ID  = generate_PR_ID();
         $history_title = "Updated Request Status";
         $history_remarks = "Status Request : " . $approval_status;
 
-        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS,DATE_CREATED) 
-        VALUES (:request_id,:title,:remarks,NOW() AT TIME ZONE 'Asia/Manila')");
+        $sql_history = $conn->prepare("INSERT INTO po_history (REQUEST_ID,TITLE,REMARKS) 
+        VALUES (:request_id,:title,:remarks)");
         $sql_history->bindParam(':request_id', $REQUEST_ID, PDO::PARAM_STR);
         $sql_history->bindParam(':title', $history_title, PDO::PARAM_STR);
         $sql_history->bindParam(':remarks', $history_remarks, PDO::PARAM_STR);
@@ -244,7 +244,7 @@ $generate_PR_ID  = generate_PR_ID();
         }
                 // Log the action
                 $user_id = $decrypted_array['ID'];
-                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
                 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                 $logs->bindParam(':action', $action, PDO::PARAM_STR);

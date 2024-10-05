@@ -31,12 +31,13 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
 
+
         // Check if the file size exceeds the limit
         if ($fileSize > 100 * 1024 * 1024) { // 100 MB limit for GitHub API
             echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'File size too large.']);
             exit();
         }
-
+        $fileName = str_replace(' ', '-', $fileName);
         // Read and encode the file content to base64
         $fileContent = file_get_contents($filePath);
         $base64Content = base64_encode($fileContent);
@@ -73,7 +74,7 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
 
                 $user_id = $decrypted_array['ID'];
                 $action = "Uploaded Purchase Order Attachments in Item Name: " . $uploaded_item_name;
-                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
                 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                 $logs->bindParam(':action', $action, PDO::PARAM_STR);

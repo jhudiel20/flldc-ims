@@ -317,7 +317,7 @@ try {
     $user_id = $decrypted_array['ID'];
     $action = "Updated Booking Details | Booking ID : ".$bookingID;
 
-    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+    $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
     $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $logs->bindParam(':action', $action, PDO::PARAM_STR);
@@ -350,7 +350,7 @@ try {
         $user_id = $decrypted_array['ID'];
         $action = "Updated Booking Details | Booking ID : ".$bookingID;
     
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $logs->bindParam(':action', $action, PDO::PARAM_STR);

@@ -97,7 +97,7 @@ $stmt->execute();
 
 $action = "Change Password : User # " . $user_id . " | Full Name : ".$decrypted_array['FNAME'] .' '.$decrypted_array['MNAME'] .' '.$decrypted_array['LNAME'];
 $user_id = $decrypted_array['ID'];
-$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE,DATE_CREATED) VALUES (:user_id, :action,NOW() AT TIME ZONE 'Asia/Manila')");
+$logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
 $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $logs->bindParam(':action', $action, PDO::PARAM_STR);
