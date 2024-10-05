@@ -344,9 +344,9 @@ function handlePdfDownload() {
 $(document).ready(function() {
     
 
-        $('#add_rca').on('click', function() {
-            if (validateForm()) {
-            var formdata = new FormData(add_rca_form);
+        $('#add_rca_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
             if ($('#employee').val() == undefined) {
                 $("#employee").css({
@@ -525,15 +525,6 @@ $(document).ready(function() {
                     }
                 }
             });
-            } else {
-                swal({
-                    icon: 'warning',
-                    title: 'Form Incomplete',
-                    text: 'Please fill in all required fields.',
-                    buttons: false,
-                    timer: 2000,
-                });
-            }
         })
 
         $('#add_pcv').on('click', function() {
