@@ -121,9 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
 
-            require '../mail/Exception.php';
-            require '../mail/PHPMailer.php';
-            require '../mail/SMTP.php';
+        // Mailer setup
+        require __DIR__ . '/../../public/mail/Exception.php';
+        require __DIR__ . '/../../public/mail/PHPMailer.php';
+        require __DIR__ . '/../../public/mail/SMTP.php';
 
         $mail = new PHPMailer(true);
 
