@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $employee == '' || $employee_no == '' || $paygroup == '' || $sbu == '' || $branch == ''
         || $amount == '' || $payee == '' || $account_no == ''
     ) {
+        
         $response['message'] = 'Please fill up all fields with (*) asterisk!';
         echo json_encode($response);
         exit();
@@ -129,7 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $mail = new PHPMailer(true);
 
         try {
-            $rawGitHubUrl = "https://raw.githubusercontent.com/$owner/$repo/main/RCA_ATTACHMENTS/" . $fileName;
             $support_emails = [];
             $admins = mysqli_query($conn_acc, "SELECT EMAIL FROM user_account WHERE ACCESS = 'ADMIN' ");
             while ($row_admins = mysqli_fetch_assoc($admins)) {
@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             // foreach ($support_emails as $email) {
             //     $mail->addAddress($email);
             // }
-            $mail->$decrypted_array['EMAIL'];
+            $mail->addAddress($decrypted_array['EMAIL']);
             $code = $generate_RCA_ID;
 
             $mail->isHTML(true);
@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                                                         <br>' . (empty($purpose_rca) ? 'Purpose of Travel : <b>' . $purpose_travel : 'Purpose of RCA : <b>' . $purpose_rca) . '</b>
                                                                         <br>' . (empty($date_needed) ? 'Date of Departure : <b>' . $date_depart : 'Date Needed : <b>' . $date_needed) . '</b>
                                                                         <br>' . (empty($date_event) ? 'Date of Return : <b>' . $date_return : 'Date Event : <b>' . $date_event) . '</b>
-                                                                        <br> Attachments <a href="' . $rawGitHubUrl . '">here</a> to view or download the file.
+                                                                        <br> Attachments <a href="' . $img_url . '">here</a> to view or download the file.
                                                                     </p>
                                                                     <p style="text-align:justify">Thank you for choosing FAST Learning and Development Inventory Management System. We look forward to serving you.</p>
                                                                 </div>
@@ -311,7 +311,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             curl_close($ch);
     }else{
         // Handle the case where no file is uploaded or an error occurred
-        $errorMessage = $_FILES['item_photo']['error'] ?? 'No file uploaded';
+        $errorMessage = $_FILES['receipt']['error'] ?? 'No file uploaded';
         echo json_encode([
             'success' => false,
             'title' => 'Upload Error',
