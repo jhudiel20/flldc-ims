@@ -150,6 +150,10 @@
       {
         "src": "/rca-details",
         "dest": "/api/pages/rca-details.php"
+      },  
+      {
+        "src": "/add_rca",
+        "dest": "/api/action/add_rca.php"
       },
       {
         "src": "/request-list",
