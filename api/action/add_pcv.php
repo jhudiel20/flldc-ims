@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             //     $mail->addAddress($email);
             // }
             $mail->addAddress($decrypted_array['EMAIL']);
-            $code = $generate_RCA_ID;
+            $code = $generate_PCV_ID;
 
             $mail->isHTML(true);
             $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                                                         <br> PCV NO. : <b>' . $pcv_no . '</b> 
                                                                         <br> Employee Name : <b>' . $employee . '</b> 
                                                                         <br> Total Expenses : ₱ <b>' . $expenses . '</b> 
-                                                                        <br> Attachments : Please see the attached file.
+                                                                        <br> Attachments <a href="' . $img_url . '">here</a> to view or download the file.
                                                                     </p>
                                                                     <p style="text-align:justify">Thank you for choosing FAST Learning and Development Inventory Management System. We look forward to serving you.</p>
                                                                 </div>
@@ -247,11 +247,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $date_depart = !empty($date_depart) ? $date_depart : null;
         $date_return = !empty($date_return) ? $date_return : null;
 
-        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,PCV_NO, NAME,SBU, DEPARTMENT, AMOUNT, PCV_DATE, SDCCC, REMARKS,ATTACHMENTS)
-        VALUES (:generate_PCV_ID,:employee,:sbu,:department,:amount,:pcv_date,:sdccc,:remarks,:img)");
+        $sql = $conn->prepare("INSERT INTO rca (RCA_ID,PCV_NO, NAME, SBU, DEPARTMENT, AMOUNT, PCV_DATE, SDCCC, REMARKS, ATTACHMENTS)
+        VALUES (:generate_PCV_ID,:pcv_no,:employee,:sbu,:department,:amount,:pcv_date,:sdccc,:remarks,:img)");
 
                 // Bind the parameters to the prepared statement
                 $sql->bindParam(':generate_PCV_ID', $generate_PCV_ID, PDO::PARAM_STR);
+                $sql->bindParam(':pcv_no', $pcv_no, PDO::PARAM_STR);
                 $sql->bindParam(':employee', $employee, PDO::PARAM_STR);
                 $sql->bindParam(':sbu', $sbu, PDO::PARAM_STR);
                 $sql->bindParam(':department', $department, PDO::PARAM_STR);
