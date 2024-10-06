@@ -510,7 +510,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Footer -->
                 <?php 
-                    include FOOTER_PATH;
+                    include __DIR__ . "/../action/global/footer.php";
                     ?>
                 <!-- / Footer -->
               
@@ -535,7 +535,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 
     <?php
-        include DOMAIN_PATH . "/action/global/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
 </body>
