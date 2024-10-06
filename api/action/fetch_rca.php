@@ -3,6 +3,8 @@
 $owner = getenv('GITHUB_OWNER');
 $repo = getenv('GITHUB_IMAGES');
 
+$db = $_GET['db'];
+
 // URL of the PDF on GitHub
 $fileUrl = "https://raw.githubusercontent.com/$owner/$repo/main/$db/" . $_GET['file'];
 
