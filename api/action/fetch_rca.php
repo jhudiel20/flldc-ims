@@ -9,7 +9,7 @@ $fileName = $_GET['file'];
 $db = $_GET['db'];
 
 // GitHub API URL to fetch the file metadata
-$apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$db/" . $fileName;
+$apiUrl = "https://api.github.com/repos/$owner/$repo/main/$db/" . $fileName;
 
 // Initialize cURL
 $ch = curl_init($apiUrl);
