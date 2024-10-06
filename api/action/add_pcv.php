@@ -256,7 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 $sql->bindParam(':employee', $employee, PDO::PARAM_STR);
                 $sql->bindParam(':sbu', $sbu, PDO::PARAM_STR);
                 $sql->bindParam(':department', $department, PDO::PARAM_STR);
-                $sql->bindParam(':amount', $amount, PDO::PARAM_STR);
+                $sql->bindParam(':amount', $expenses, PDO::PARAM_STR);
                 $sql->bindParam(':pcv_date', $pcv_date, PDO::PARAM_STR);
                 $sql->bindParam(':sdccc', $sdcc, PDO::PARAM_STR);
                 $sql->bindParam(':remarks', $remarks, PDO::PARAM_STR);

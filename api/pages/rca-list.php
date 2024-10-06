@@ -186,28 +186,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-function validateForm() {
-        let isValid = true;
-        document.querySelectorAll('#add_rca_form input[required], #add_rca_form select[required]').forEach((field) => {
-            if (!field.value) {
-                field.style.borderColor = 'red';
-                isValid = false;
-            } else {
-                field.style.borderColor = '';
-            }
-        });
-        return isValid;
-    }
 
 var detail_btn = function(cell, formatterParams, onRendered) {
-    var rca_id = cell.getData().xid;
+    var id = cell.getData().xid;
 
     <?php 
         // $geturl = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
         // $_SESSION['PAGE_CLICK'] = "";
         // $_SESSION['PAGE_CLICK'] = $geturl;
     ?>
-    return "<a class='btn btn-outline-primary' href='rca-details.php?ID=" + rca_id +
+    return "<a class='btn btn-outline-primary' href='rca-details?ID=" + id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 

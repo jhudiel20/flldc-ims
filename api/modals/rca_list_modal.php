@@ -231,7 +231,7 @@
                                 <label class="form-label">NAME<span class="require asterisk">*</span></label>
                                 <select name="employee" id="employee" class="form-select">
                                     <option value="" disabled hidden selected>Select Employee</option>
-                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account");
+                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account WHERE ACCESS != 'GUARD' ");
                                             $full_names->execute();
                                             while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
                                     ?>

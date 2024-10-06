@@ -160,6 +160,10 @@
         "dest": "/api/action/add_pcv.php"
       },
       {
+        "src": "/fetch_rca",
+        "dest": "/api/action/fetch_rca.php"
+      },
+      {
         "src": "/request-list",
         "dest": "/api/pages/request-list.php"
       },

@@ -140,7 +140,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                             <!-- <div class="card"> -->
                             <?php if (substr($row['rca_id'], 0, 3) === 'RCA') { ?>
-                                <h4><span class="text-muted fw-light">RCA List /</span> RCA Details</h4>
+                                <h4><span class="text-muted fw-light"><a href="rca-list">RCA List</a>/</span> RCA Details</h4>
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body" style="overflow-x:auto;">
@@ -187,14 +187,15 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-6">
                                                                 <label class="form-label">NAME</label>
                                                                     <select name="employee" id="employee" class="form-select" value="<?php echo $row['name'];?>">
-                                                                        <?php   $supplier_call = mysqli_query($conn_acc,"SELECT FNAME,MNAME,LNAME,EXT_NAME FROM `user_account` ");
-                                                                                while ($r_full_names = mysqli_fetch_assoc($supplier_call)) {
-                                                                        ?>
-                                                                        <option
-                                                                            value="<?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>">
-                                                                            <?php echo $r_full_names['FNAME'].' '.$r_full_names['MNAME'].' '.$r_full_names['LNAME'].' '.$r_full_names['EXT_NAME'];?>
-                                                                        </option>
-                                                                        <?php } ?>
+                                                                    <?php   $full_names = $conn->prepare("SELECT * FROM user_account WHERE ACCESS != 'GUARD' ");
+                                                                                    $full_names->execute();
+                                                                                    while ($row_full_names = $full_names->fetch(PDO::FETCH_ASSOC)) {
+                                                                            ?>
+                                                                            <option
+                                                                                value="<?php echo $row_full_names['fname'].' '.$row_full_names['mname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>">
+                                                                                <?php echo $row_full_names['fname'].' '.$row_full_names['mname'].' '.$row_full_names['lname'].' '.$row_full_names['ext_name'];?>
+                                                                            </option>
+                                                                            <?php } ?>
                                                                     </select>
                                                             </div>
                                                             <div class="col-md-6">
@@ -205,7 +206,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <label class="form-label">Paygroup</label>
                                                                 <select name="paygroup" id="paygroup" class="form-select">
                                                                     <?php foreach (PAYGROUP as $value) { ?>
-                                                                        <option value="<?= $value; ?>" <?php echo ($value == $row['PAYGROUP']) ? 'selected' : ''; ?>>
+                                                                        <option value="<?= $value; ?>" <?php echo ($value == $row['paygroup']) ? 'selected' : ''; ?>>
                                                                             <?= $value; ?>
                                                                         </option>
                                                                     <?php } ?>
@@ -215,7 +216,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <label class="form-label">SBU</label>                                                            
                                                                 <select name="sbu" id="sbu" class="form-select">
                                                                     <?php foreach (SBU as $value) { ?>
-                                                                        <option value="<?= $value; ?>" <?php echo ($value == $row['SBU']) ? 'selected' : ''; ?>>
+                                                                        <option value="<?= $value; ?>" <?php echo ($value == $row['sbu']) ? 'selected' : ''; ?>>
                                                                             <?= $value; ?>
                                                                         </option>
                                                                     <?php } ?>
@@ -223,27 +224,27 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label class="form-label">BRANCH</label>
-                                                                <input type="text" class="form-control" name="branch" id="branch" value="<?php echo $row['BRANCH']; ?>" >
+                                                                <input type="text" class="form-control" name="branch" id="branch" value="<?php echo $row['branch']; ?>" >
                                                             </div>
                                                             <hr>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Amount</label>
-                                                                <input type="text" class="form-control" name="amount" id="amount" value="<?php echo $row['AMOUNT']; ?>" >
+                                                                <input type="text" class="form-control" name="amount" id="amount" value="<?php echo $row['amount']; ?>" >
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">PAYEE NAME</label>
-                                                                <input type="text" class="form-control" name="payee" id="payee" value="<?php echo $row['PAYEE_NAME']; ?>" >
+                                                                <input type="text" class="form-control" name="payee" id="payee" value="<?php echo $row['payee_name']; ?>" >
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Account No.</label>
-                                                                <input type="text" class="form-control" name="account_no" id="account_no" value="<?php echo $row['ACCOUNT_NO']; ?>" >
+                                                                <input type="text" class="form-control" name="account_no" id="account_no" value="<?php echo $row['account_no']; ?>" >
                                                             </div>
                                                             <div class="form-check col-md-3 pt-4">
-                                                                <input class="form-check-input" type="checkbox" value="" id="non_travel" <?php if(!empty($row['PURPOSE_RCA'])) { echo 'checked '; } ?> disabled/>
+                                                                <input class="form-check-input" type="checkbox" value="" id="non_travel" <?php if(!empty($row['purpose_rca'])) { echo 'checked '; } ?> disabled/>
                                                                 <label class="form-check-label" for=""> NON-TRAVEL </label>
                                                             </div>
                                                             <div class="form-check col-md-3 pt-4">
-                                                                <input class="form-check-input" type="checkbox" value="" id="travel" <?php if(!empty($row['PURPOSE_TRAVEL'])) { echo 'checked '; } ?> disabled/>
+                                                                <input class="form-check-input" type="checkbox" value="" id="travel" <?php if(!empty($row['purpose_travel'])) { echo 'checked '; } ?> disabled/>
                                                                 <label class="form-check-label" for=""> TRAVEL </label>
                                                             </div>
                                                             <hr>
@@ -253,32 +254,32 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-12">
                                                                 <label class="form-label">Purpose of RCA<span
                                                                         class="require asterisk">*</span></label>
-                                                                <input type="text" class="form-control" name="purpose_rca" id="purpose_rca" value="<?php echo $row['PURPOSE_RCA']; ?>">
+                                                                <input type="text" class="form-control" name="purpose_rca" id="purpose_rca" value="<?php echo $row['purpose_rca']; ?>">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label class="form-label">Date Needed<span class="require asterisk">*</span></label>
-                                                                <input type="date" class="form-control" name="date_needed" id="date_needed" value="<?php echo $row['DATE_NEEDED']; ?>">
+                                                                <input type="date" class="form-control" name="date_needed" id="date_needed" value="<?php echo $row['date_needed']; ?>">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label class="form-label">Date Event<span class="require asterisk">*</span></label>
-                                                                <input type="date" class="form-control" name="date_event" id="date_event" value="<?php echo $row['DATE_EVENT']; ?>">
+                                                                <input type="date" class="form-control" name="date_event" id="date_event" value="<?php echo $row['date_event']; ?>">
                                                             </div>
 
                                                             <?php }else{?>
                                                                 <div class="col-md-12">
                                                                     <label class="form-label">Purpose of Travel<span
                                                                             class="require asterisk">*</span></label>
-                                                                    <input type="text" class="form-control" name="purpose_travel" id="purpose_travel" value="<?php echo $row['PURPOSE_TRAVEL']; ?>">
+                                                                    <input type="text" class="form-control" name="purpose_travel" id="purpose_travel" value="<?php echo $row['purpose_travel']; ?>">
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <label class="form-label">Date of Departure<span
                                                                             class="require asterisk">*</span></label>
-                                                                    <input type="date" class="form-control" name="date_depart" id="date_depart" value="<?php echo $row['DATE_DEPART']; ?>">
+                                                                    <input type="date" class="form-control" name="date_depart" id="date_depart" value="<?php echo $row['date_depart']; ?>">
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <label class="form-label">Date of Return<span
                                                                             class="require asterisk">*</span></label>
-                                                                    <input type="date" class="form-control" name="date_return" id="date_return" value="<?php echo $row['DATE_RETURN']; ?>">
+                                                                    <input type="date" class="form-control" name="date_return" id="date_return" value="<?php echo $row['date_return']; ?>">
                                                                 </div>
                                                             <?php } ?>
 
@@ -286,7 +287,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <label class="form-label py-1">Remarks </label>
                                                                 <textarea class="form-control" name="remarks" id="remarks"
                                                                     type="text" cols="30"
-                                                                    rows="3"><?php echo $row['REMARKS']; ?></textarea>
+                                                                    rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
                                                         
                                                                 <button type="button" class="btn btn-label-primary"
@@ -299,14 +300,17 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <div class="card-body">
                                                             <div class="col-xl-12">
                                                                 <div class="card">
-                                                                    <?php $sql="SELECT ATTACHMENTS FROM rca_history Where ID = '".$row['ID']."' ";
-                                                                        $query = mysqli_query($conn,$sql);
-                                                                        While ($info = mysqli_fetch_array($query)){?>
-                                                                        <?php if(empty($info['ATTACHMENTS'])){ ?>
-                                                                            <h1 style="width: auto;height:500px;text-align:center;padding-top:200px"> Empty!</h1>
-                                                                        <?php }else{ ?>
-                                                                            <embed type="application/pdf" src="../RCA_ATTACHMENTS/<?php echo $info['ATTACHMENTS'];?>" width="auto" height="700px">
-                                                                        <?php }?>
+                                                                <?php if(empty($row['attachments'])){ ?>
+                                                                    <h1
+                                                                        style="width: auto;height:500px;text-align:center;padding-top:200px">
+                                                                        Empty!</h1>
+                                                                    <?php }else{ ?>
+                                                                        <iframe
+                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                            width="auto"
+                                                                            height="700px"
+                                                                            style="border: none;">
+                                                                        </iframe>
                                                                     <?php } ?>
                                                                 </div>
                                                             </div>
