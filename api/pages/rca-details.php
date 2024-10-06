@@ -14,7 +14,7 @@ if(empty($id)){
     header("Location:404.php");
 }
 
-$sql = $conn->prepare("SELECT * FROM rca_history WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM rca WHERE ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
