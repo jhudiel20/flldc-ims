@@ -1,12 +1,15 @@
 <?php
 // Your GitHub personal access token
 $githubToken = getenv('GITHUB_TOKEN'); // Make sure your GitHub token is set securely
+$owner = getenv('GITHUB_OWNER');
+$repo = getenv('GITHUB_IMAGES');
 
 // Get the file name from the query string
 $fileName = $_GET['file'];
+$db = $_GET['db'];
 
 // GitHub API URL to fetch the file metadata
-$apiUrl = 'https://api.github.com/repos/jhudiel20/flldc-user-image/contents/PO_ATTACHMENTS/' . $fileName;
+$apiUrl = "https://api.github.com/repos/$owner/$repo/contents/$db/" . $fileName;
 
 // Initialize cURL
 $ch = curl_init($apiUrl);

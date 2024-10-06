@@ -306,7 +306,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         Empty!</h1>
                                                                     <?php }else{ ?>
                                                                         <iframe
-                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>&db=RCA_ATTACHMENTS"
                                                                             width="auto"
                                                                             height="700px"
                                                                             style="border: none;">
@@ -462,7 +462,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         Empty!</h1>
                                                                     <?php }else{ ?>
                                                                         <iframe
-                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>&db=PCV_ATTACHMENTS"
                                                                             width="auto"
                                                                             height="700px"
                                                                             style="border: none;">
