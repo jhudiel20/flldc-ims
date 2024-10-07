@@ -429,7 +429,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Footer -->
                 <?php
-                    include __DIR__ . "/../modal/rca_details_modal.php"; 
+                    include __DIR__ . "/../modals/rca_details_modal.php"; 
                     include __DIR__ . "/../action/global/footer.php";
                     ?>
                 <!-- / Footer -->
