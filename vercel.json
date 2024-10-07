@@ -160,6 +160,14 @@
         "dest": "/api/action/edit_rca.php"
       },
       {
+        "src": "/upload_pcv_attachments",
+        "dest": "/api/action/upload_pcv_attachments.php"
+      },
+      {
+        "src": "/delete_pcv_attachments",
+        "dest": "/api/action/delete_pcv_attachments.php"
+      },
+      {
         "src": "/add_pcv",
         "dest": "/api/action/add_pcv.php"
       },

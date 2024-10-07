@@ -109,7 +109,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <form method="post" id="delete_pcv_attachments_form" style="display: inline-block;">
                     <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
                     <input type="hidden" name="pcv_id" id="pcv_id" value="<?php echo $row['rca_id'] ?>">
-                    <input type="hidden" name="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
+                    <input type="hidden" name="attachment_to_delete" id="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" name="delete_pcv_attachments" id="delete_pcv_attachments" class="btn btn-label-danger" >Delete</button>
                 </form>
@@ -610,7 +610,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "/edit_pcv.php",
+                url: "/edit_pcv",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
@@ -647,7 +647,7 @@ $(document).ready(function() {
             var formdata = new FormData(delete_pcv_attachments_form);
 
             $.ajax({
-                url: "../action/delete_pcv_attachments.php",
+                url: "/delete_pcv_attachments",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
@@ -685,7 +685,7 @@ $(document).ready(function() {
             var formdata = new FormData(add_pcv_attachments_form);
 
             $.ajax({
-                url: "../action/upload_pcv_attachments.php",
+                url: "/upload_pcv_attachments",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
