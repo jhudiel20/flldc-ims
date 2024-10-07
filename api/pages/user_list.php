@@ -81,7 +81,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             </div>
 
                                             <!-- Add Modal -->
-                                            <?php include __DIR__ . "/../modals/add_modal.php"; ?>
+                                            <?php include __DIR__ . "/../modals/user_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
                                             <div class="tabulator-table" id="user-table" style="font-size:13px">
                                             </div>

@@ -67,7 +67,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <form method="post" id="delete_rca_attachments_form" style="display: inline-block;">
                     <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
                     <input type="hidden" name="rca_id" id="rca_id" value="<?php echo $row['rca_id'] ?>">
-                    <input type="hidden" name="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
+                    <input type="hidden" id="attachment_to_delete" name="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" name="delete_rca_attachments" id="delete_rca_attachments" class="btn btn-label-danger" >Delete</button>
                 </form>
@@ -251,19 +251,19 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                             <?php if(!empty($row['purpose_rca'])) {  ?>
 
-                                                            <div class="col-md-12">
-                                                                <label class="form-label">Purpose of RCA<span
-                                                                        class="require asterisk">*</span></label>
-                                                                <input type="text" class="form-control" name="purpose_rca" id="purpose_rca" value="<?php echo $row['purpose_rca']; ?>">
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <label class="form-label">Date Needed<span class="require asterisk">*</span></label>
-                                                                <input type="date" class="form-control" name="date_needed" id="date_needed" value="<?php echo $row['date_needed']; ?>">
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <label class="form-label">Date Event<span class="require asterisk">*</span></label>
-                                                                <input type="date" class="form-control" name="date_event" id="date_event" value="<?php echo $row['date_event']; ?>">
-                                                            </div>
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Purpose of RCA<span
+                                                                            class="require asterisk">*</span></label>
+                                                                    <input type="text" class="form-control" name="purpose_rca" id="purpose_rca" value="<?php echo $row['purpose_rca']; ?>">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Date Needed<span class="require asterisk">*</span></label>
+                                                                    <input type="date" class="form-control" name="date_needed" id="date_needed" value="<?php echo $row['date_needed']; ?>">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Date Event<span class="require asterisk">*</span></label>
+                                                                    <input type="date" class="form-control" name="date_event" id="date_event" value="<?php echo $row['date_event']; ?>">
+                                                                </div>
 
                                                             <?php }else{?>
                                                                 <div class="col-md-12">
@@ -289,10 +289,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
-                                                        
-                                                                <button type="button" class="btn btn-label-primary"
-                                                                    id="edit_rca"
-                                                                    name="edit_rca">Save</button>
+                                                                <button type="button" class="btn btn-label-primary" id="edit_rca" name="edit_rca">Save</button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -300,33 +297,34 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <div class="card-body">
                                                             <div class="col-xl-12">
                                                                 <div class="card">
-                                                                <?php if(empty($row['attachments'])){ ?>
-                                                                    <h1
-                                                                        style="width: auto;height:500px;text-align:center;padding-top:200px">
-                                                                        Empty!</h1>
+                                                                    <?php if(empty($row['attachments'])){ ?>
+                                                                        <h1
+                                                                            style="width: auto;height:500px;text-align:center;padding-top:200px">
+                                                                            Empty!</h1>
                                                                     <?php }else{ ?>
-                                                                        <iframe
-                                                                            src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>&db=RCA_ATTACHMENTS"
-                                                                            width="auto"
-                                                                            height="700px"
-                                                                            style="border: none;">
-                                                                        </iframe>
+                                                                            <iframe
+                                                                                src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>&db=RCA_ATTACHMENTS"
+                                                                                width="auto"
+                                                                                height="700px"
+                                                                                style="border: none;">
+                                                                            </iframe>
                                                                     <?php } ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6 py-3" style="float: left; display: inline-block;">
-
                                                                 <button type="button" data-bs-toggle="modal"
                                                                     data-bs-target="#upload-RCA_ATTACHMENT-modal"
                                                                     class="btn btn-label-primary"
-                                                                    style="width:95%">Upload</button>
+                                                                    style="width:95%">Upload
+                                                                </button>
                                                             </div>
 
                                                             <div class="col-6 py-3" style="display:inline-block;">
                                                                 <button type="button" data-bs-toggle="modal"
                                                                     data-bs-target="#delete-RCA_ATTACHMENT-modal"
                                                                     class="btn btn-label-danger"
-                                                                    style="width:95%">Delete</button>
+                                                                    style="width:95%">Delete
+                                                                </button>
                                                             </div>
 
                                                         </div>
@@ -419,7 +417,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <hr>
                                                             <div class="col-md-6">
-                                                            <label class="form-label">Total Expenses<span class="require asterisk">*</span></label>
+                                                                <label class="form-label">Total Expenses<span class="require asterisk">*</span></label>
                                                                 <!-- <input type="text" class="form-control" name="amount" id="amount"> -->
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">₱</span>
@@ -445,10 +443,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
-                                                        
-                                                                <button type="button" class="btn btn-label-primary"
-                                                                    id="edit_pcv"
-                                                                    name="edit_pcv">Save</button>
+                                                                <button type="button" class="btn btn-label-primary" id="edit_pcv" name="edit_pcv">Save</button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -460,7 +455,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <h1
                                                                         style="width: auto;height:500px;text-align:center;padding-top:200px">
                                                                         Empty!</h1>
-                                                                    <?php }else{ ?>
+                                                                <?php }else{ ?>
                                                                         <iframe
                                                                             src="/fetch_rca?file=<?php echo urlencode($row['attachments']); ?>&db=PCV_ATTACHMENTS"
                                                                             width="auto"
@@ -509,7 +504,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                 </div>
                 <!-- Footer -->
-                <?php 
+                <?php
+                    include __DIR__ . "/../modal/footer.php"; 
                     include __DIR__ . "/../action/global/footer.php";
                     ?>
                 <!-- / Footer -->

@@ -35,7 +35,7 @@ $remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
     
 $sql = $conn->prepare("UPDATE rca SET NAME = :employee,
 SBU = :sbu, AMOUNT = :expenses, STATUS = :status, REMARKS = :remarks, PCV_NO = :pcv_no,
-DEPARTMENT = :department, PCV_DATE = :pcv_date, TOTAL_EXPENSES = :expenses, SDCCC = :sdccc WHERE ID = :id ");
+DEPARTMENT = :department, PCV_DATE = :pcv_date, amount = :expenses, SDCCC = :sdccc WHERE ID = :id ");
 $sql->bindParam(':employee', $employee, PDO::PARAM_STR);
 $sql->bindParam(':sbu', $sbu, PDO::PARAM_STR);
 $sql->bindParam(':expenses', $expenses, PDO::PARAM_STR);
