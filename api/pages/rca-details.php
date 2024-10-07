@@ -570,9 +570,8 @@ $(document).ready(function() {
                 }
             });
         })
-        $('#delete_pcv_attachments_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault();  
+        $('#delete_pvc_btn').on('click', function(e) {
+            var formData = new FormData(document.getElementById('delete_pcv_attachments_form'));
 
             $.ajax({
                 url: "/delete_pcv_attachments",
