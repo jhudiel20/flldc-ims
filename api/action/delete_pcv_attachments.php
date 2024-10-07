@@ -14,35 +14,27 @@ $owner = getenv('GITHUB_OWNER'); // GitHub username or organization
 $repo = getenv('GITHUB_IMAGES'); 
 $fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'];
 
-if (empty($_FILES['attachment_to_delete']['name'])) {
-    echo json_encode(['success' => false, 'title' => 'Warning!', 'message' => 'Please select an image.']);
+if(empty($_POST['attachment_to_delete'])){
+    echo json_encode([
+        'success' => false,
+        'title' => 'Warning!',
+        'message' => 'File does not exist',
+    ]);
     exit();
 }
 
 // Check if file is uploaded
-if (isset($_FILES['attachment_to_delete']) && $_FILES['attachment_to_delete']['error'] == UPLOAD_ERR_OK) {
+if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
         $id = $_POST['ID'];
         $pcv_id = $_POST['pcv_id'];
-        
         $file = $_FILES['attachment_to_delete'];
-        $filePath = $file['tmp_name'];
-        $fileName = $file['name'];
+
     if (in_array($_FILES['attachment_to_delete']['type'], $fileMimes)) {
         
-
-        // Read the file content
         $fileName = str_replace(' ', '-', $fileName);
-        $fileContent = file_get_contents($filePath);
-
-        // Encode the content to base64
-        $base64Content = base64_encode($fileContent);
 
         // Prepare the API request
         $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PCV_ATTACHMENTS/' . $fileName;
-        $data = json_encode([
-            'message' => 'Upload ' . $fileName,
-            'content' => $base64Content,
-        ]);
 
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -51,50 +43,67 @@ if (isset($_FILES['attachment_to_delete']) && $_FILES['attachment_to_delete']['e
             'User-Agent: PHP Script',
             'Content-Type: application/json',
         ]);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
         $response = curl_exec($ch);
-        $sql = "UPDATE rca SET attachments = '' WHERE id = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-
-        $user_id = $decrypted_array['ID'];
-        $action = "Deleted attachment in PCV ID : " . $pcv_id;
-        $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
-
-        $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-        $logs->bindParam(':action', $action, PDO::PARAM_STR);
-        $logs->execute();
-
-        if (curl_errno($ch)) {
-            // Output curl errors for debugging
-            echo json_encode([
-                'success' => false,
-                'title' => 'Curl Error',
-                'message' => curl_error($ch),
+        $responseArray = json_decode($response, true);
+    
+        if (isset($responseArray['sha'])) {
+            $fileSha = $responseArray['sha'];
+    
+            // Prepare the API request for deletion
+            $deleteData = json_encode([
+                'message' => 'Delete ' . $fileName,
+                'sha' => $fileSha,
             ]);
-        } else {
+    
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $deleteData);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: token ' . $githubToken,
+                'User-Agent: PHP Script',
+                'Content-Type: application/json',
+            ]);
+    
+            $deleteResponse = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if ($httpCode == 201) {
-                // Successful upload
+    
+            // Update database and log the action if successful
+            if ($httpCode == 200) {
+                $sql = "UPDATE rca SET attachments = '' WHERE id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':user_id', $id);
+                $stmt->execute();
+    
+                $user_id = $decrypted_array['ID'];
+                $action = "Deleted attachment in PCV ID : " . $pcv_id;
+                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+        
+                $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                $logs->bindParam(':action', $action, PDO::PARAM_STR);
+                $logs->execute();
+    
                 echo json_encode([
                     'success' => true,
                     'title' => 'Success',
-                    'message' => 'File uploaded successfully.',
+                    'message' => 'File deleted successfully.',
                 ]);
             } else {
                 // Output response for debugging
                 echo json_encode([
                     'success' => false,
                     'title' => 'GitHub API Error',
-                    'message' => 'Failed to upload file. HTTP Code: ' . $httpCode . ' Response: ' . $response,
+                    'message' => 'Failed to delete file. HTTP Code: ' . $httpCode . ' Response: ' . $deleteResponse,
                 ]);
             }
+        } else {
+            // Handle the case where file SHA is not found
+            echo json_encode([
+                'success' => false,
+                'title' => 'GitHub API Error',
+                'message' => 'File not found or unable to retrieve SHA.',
+            ]);
         }
-
+    
         curl_close($ch);
     }else{
         echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif, pdf)']);
