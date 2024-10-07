@@ -34,90 +34,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
-<div class="modal fade" id="upload-RCA_ATTACHMENT-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Please upload attachment in PDF/JPG/JPEG/PNG format!!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="add_rca_attachments_form">
-                    <input type="file" id="rca_attach" name="rca_attach" class="form-control">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="rca_id" id="rca_id" value="<?php echo $row['rca_id'] ?>">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="submit_rca_attachments" class="btn btn-label-primary">Upload</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="delete-RCA_ATTACHMENT-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to
-                        delete the attachment?</i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <form method="post" id="delete_rca_attachments_form" style="display: inline-block;">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="rca_id" id="rca_id" value="<?php echo $row['rca_id'] ?>">
-                    <input type="hidden" id="attachment_to_delete" name="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" name="delete_rca_attachments" id="delete_rca_attachments" class="btn btn-label-danger" >Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="upload-PCV_ATTACHMENT-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Please upload attachment in PDF/JPG/JPEG/PNG format!!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="add_pcv_attachments_form">
-                    <input type="file" id="pcv_attach" name="pcv_attach" class="form-control">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="pcv_id" id="pcv_id" value="<?php echo $row['rca_id'] ?>">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="submit_pcv_attachments" class="btn btn-label-primary">Upload</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="delete-PCV_ATTACHMENT-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to
-                        delete the attachment?</i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <form method="post" id="delete_pcv_attachments_form" style="display: inline-block;">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="pcv_id" id="pcv_id" value="<?php echo $row['rca_id'] ?>">
-                    <input type="hidden" name="attachment_to_delete" id="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" name="delete_pcv_attachments" id="delete_pcv_attachments" class="btn btn-label-danger" >Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -289,7 +205,11 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
-                                                                <button type="button" class="btn btn-label-primary" id="edit_rca" name="edit_rca">Save</button>
+                                                                <button type="submit" class="btn btn-label-primary" id="save">Save</button>
+                                                                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                                                                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                    Loading...
+                                                                </button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -313,7 +233,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-6 py-3" style="float: left; display: inline-block;">
                                                                 <button type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#upload-RCA_ATTACHMENT-modal"
+                                                                    data-bs-target="#upload_rca_modal"
                                                                     class="btn btn-label-primary"
                                                                     style="width:95%">Upload
                                                                 </button>
@@ -321,7 +241,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                             <div class="col-6 py-3" style="display:inline-block;">
                                                                 <button type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#delete-RCA_ATTACHMENT-modal"
+                                                                    data-bs-target="#delete_rca_modal"
                                                                     class="btn btn-label-danger"
                                                                     style="width:95%">Delete
                                                                 </button>
@@ -443,7 +363,11 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
-                                                                <button type="button" class="btn btn-label-primary" id="edit_pcv" name="edit_pcv">Save</button>
+                                                                <button type="submit" class="btn btn-label-primary" id="save" >Save</button>
+                                                                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                                                                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                    Loading...
+                                                                </button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -468,14 +392,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-6 py-3" style="float: left; display: inline-block;">
 
                                                                 <button type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#upload-PCV_ATTACHMENT-modal"
+                                                                    data-bs-target="#upload_pcv_modal"
                                                                     class="btn btn-label-primary"
                                                                     style="width:95%">Upload</button>
                                                             </div>
 
                                                             <div class="col-6 py-3" style="display:inline-block;">
                                                                 <button type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#delete-PCV_ATTACHMENT-modal"
+                                                                    data-bs-target="#delete_pcv_modal"
                                                                     class="btn btn-label-danger"
                                                                     style="width:95%">Delete</button>
                                                             </div>
@@ -505,7 +429,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Footer -->
                 <?php
-                    include __DIR__ . "/../modal/footer.php"; 
+                    include __DIR__ . "/../modal/rca_details_modal.php"; 
                     include __DIR__ . "/../action/global/footer.php";
                     ?>
                 <!-- / Footer -->
@@ -538,8 +462,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 <script>
 $(document).ready(function() {
-        $('#edit_pcv').on('click', function() {
-            var formdata = new FormData(pcv_details_form);
+        $('#pcv_details_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
             if ($('#pcv_no').val() == "") {
                 $("#pcv_no").css({
@@ -608,12 +533,18 @@ $(document).ready(function() {
             $.ajax({
                 url: "/edit_pcv",
                 method: "POST",
-                data: formdata,
+                data: formData,
                 dataType: "json",
                 contentType: false,
                 cache: false,
                 processData: false,
+                beforeSend: function() {
+                    $('#save').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
                 success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#save').show();
                     console.log(response);
                     if (response.success) {
                         swal({
@@ -639,22 +570,28 @@ $(document).ready(function() {
                 }
             });
         })
-        $('#delete_pcv_attachments').on('click', function() {
-            var formdata = new FormData(delete_pcv_attachments_form);
+        $('#delete_pcv_attachments_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
             $.ajax({
                 url: "/delete_pcv_attachments",
                 method: "POST",
-                data: formdata,
+                data: formData,
                 dataType: "json",
                 contentType: false,
                 cache: false,
                 processData: false,
-
+                beforeSend: function() {
+                    $('#delete_pvc_btn').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
                 success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_pvc_btn').show();
                     console.log(response);
                     if (response.success) {
-                        $('#delete-PCV_ATTACHMENT-modal').modal('hide');
+                        $('#delete_pcv_modal').modal('hide');
                         swal({
                             icon: 'success',
                             title: response.title,
@@ -677,22 +614,28 @@ $(document).ready(function() {
                 }
             });
         })
-        $('#submit_pcv_attachments').on('click', function() {
-            var formdata = new FormData(add_pcv_attachments_form);
+        $('#add_pcv_attachments_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
             $.ajax({
                 url: "/upload_pcv_attachments",
                 method: "POST",
-                data: formdata,
+                data: formData,
                 dataType: "json",
                 contentType: false,
                 cache: false,
                 processData: false,
-
+                beforeSend: function() {
+                    $('#upload_pvc_btn').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
                 success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#upload_pvc_btn').show();
                     console.log(response);
                     if (response.success) {
-                        $('#upload-PCV_ATTACHMENT-modal').modal('hide');
+                        $('#upload_pcv_modal').modal('hide');
                         swal({
                             icon: 'success',
                             title: response.title,
@@ -716,19 +659,25 @@ $(document).ready(function() {
             });
         })
 
-    $('#edit_rca').on('click', function() {
-        var formdata = new FormData(rca_details_form);
+    $('#rca_details_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault();  
 
         $.ajax({
             url: "/edit_rca",
             method: "POST",
-            data: formdata,
+            data: formData,
             dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
-
-            success: function(response) {
+            beforeSend: function() {
+                    $('#save').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#save').show();
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -752,22 +701,27 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_rca_attachments').on('click', function() {
-        var formdata = new FormData(delete_rca_attachments_form);
-
+    $('#delete_rca_attachments_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault(); 
         $.ajax({
-            url: "../action/delete_rca_attachments.php",
+            url: "/delete_rca_attachments",
             method: "POST",
-            data: formdata,
+            data: formData,
             dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
-
-            success: function(response) {
+            beforeSend: function() {
+                    $('#delete_rca_btn').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_rca_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#delete-RCA_ATTACHMENT-modal').modal('hide');
+                    $('#delete_rca_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -790,21 +744,27 @@ $(document).ready(function() {
             }
         });
     })
-    $('#submit_rca_attachments').on('click', function() {
-        var formdata = new FormData(add_rca_attachments_form);
-
+    $('#add_rca_attachments_form').on('submit', function(e) {
+            var formData = new FormData(this);
+            e.preventDefault(); 
         $.ajax({
-            url: "../action/upload_rca_attachments.php",
+            url: "/upload_rca_attachments",
             method: "POST",
             data: formdata,
             dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
-            success: function(response) {
+            beforeSend: function() {
+                    $('#upload_rca_btn').hide();
+                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#upload_rca_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#upload-RCA_ATTACHMENT-modal').modal('hide');
+                    $('#upload_rca_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
