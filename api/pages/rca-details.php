@@ -291,8 +291,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                         
                                                                 <button type="button" class="btn btn-label-primary"
-                                                                    id="submit_edit_rca_details"
-                                                                    name="submit_edit_rca_details">Save</button>
+                                                                    id="edit_rca"
+                                                                    name="edit_rca">Save</button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -447,8 +447,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                         
                                                                 <button type="button" class="btn btn-label-primary"
-                                                                    id="submit_edit_pcv_details"
-                                                                    name="submit_edit_pcv_details">Save</button>
+                                                                    id="edit_pcv"
+                                                                    name="edit_pcv">Save</button>
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="attachments" role="tabpanel">
@@ -542,7 +542,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 <script>
 $(document).ready(function() {
-        $('#submit_edit_pcv_details').on('click', function() {
+        $('#edit_pcv').on('click', function() {
             var formdata = new FormData(pcv_details_form);
 
             if ($('#pcv_no').val() == "") {
@@ -610,7 +610,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "../action/edit_pcv_details_info.php",
+                url: "/edit_pcv.php",
                 method: "POST",
                 data: formdata,
                 dataType: "json",
@@ -719,11 +719,12 @@ $(document).ready(function() {
                 }
             });
         })
-    $('#submit_edit_rca_details').on('click', function() {
+
+    $('#edit_rca').on('click', function() {
         var formdata = new FormData(rca_details_form);
 
         $.ajax({
-            url: "../action/edit_rca_details_info.php",
+            url: "/edit_rca",
             method: "POST",
             data: formdata,
             dataType: "json",
