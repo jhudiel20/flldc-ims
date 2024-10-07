@@ -570,7 +570,7 @@ $(document).ready(function() {
                 }
             });
         })
-        $('#delete_pvc_btn').on('click', function(e) {
+        $('#delete_pvc_btn').on('click', function() {
             var formData = new FormData(document.getElementById('delete_pcv_attachments_form'));
 
             $.ajax({
@@ -613,9 +613,8 @@ $(document).ready(function() {
                 }
             });
         })
-        $('#add_pcv_attachments_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault();  
+        $('#upload_pvc_btn').on('click', function() {
+            var formData = new FormData(document.getElementById('add_pcv_attachments_form'));
 
             $.ajax({
                 url: "/upload_pcv_attachments",
@@ -700,9 +699,9 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_rca_attachments_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault(); 
+    $('#delete_rca_btn').on('click', function() {
+        var formData = new FormData(document.getElementById('delete_rca_attachments_form'));
+
         $.ajax({
             url: "/delete_rca_attachments",
             method: "POST",
@@ -743,13 +742,13 @@ $(document).ready(function() {
             }
         });
     })
-    $('#add_rca_attachments_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault(); 
+    $('#upload_rca_btn').on('click', function() {
+        var formData = new FormData(document.getElementById('delete_rca_attachments_form'));
+
         $.ajax({
             url: "/upload_rca_attachments",
             method: "POST",
-            data: formdata,
+            data: formData,
             dataType: "json",
             contentType: false,
             cache: false,
