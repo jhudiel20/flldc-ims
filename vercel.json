@@ -173,7 +173,7 @@
       },
       {
         "src": "/fetch",
-        "dest": "/api/action/fetch_docu/fetch.php"
+        "dest": "/api/action/fetch.php"
       },
       {
         "src": "/request-list",
