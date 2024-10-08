@@ -27,10 +27,7 @@ if(empty($_POST['attachment_to_delete'])){
 if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
         $id = $_POST['ID'];
         $pcv_id = $_POST['pcv_id'];
-        $file = $_FILES['attachment_to_delete'];
-
-    if (in_array($_FILES['attachment_to_delete']['type'], $fileMimes)) {
-        
+        $fileName = $_POST['attachment_to_delete'];        
         $fileName = str_replace(' ', '-', $fileName);
 
         // Prepare the API request
@@ -105,10 +102,6 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
         }
     
         curl_close($ch);
-    }else{
-        echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif, pdf)']);
-        exit();
-    }
 } else {
     // Handle the case where no file is uploaded or an error occurred
     $errorMessage = $_FILES['attachment_to_delete']['error'] ?? 'No file uploaded';
