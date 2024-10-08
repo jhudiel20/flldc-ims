@@ -583,10 +583,10 @@ $(document).ready(function() {
                 processData: false,
                 beforeSend: function() {
                     $('#delete_pvc_btn').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    $('#delete_pvc_icon').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_pvc_icon').addClass('d-none').prop('disabled', false);
                     $('#delete_pvc_btn').show();
                     console.log(response);
                     if (response.success) {

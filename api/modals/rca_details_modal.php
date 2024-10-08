@@ -90,10 +90,9 @@
                     <input type="hidden" name="attachment_to_delete" id="attachment_to_delete" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-label-danger" id="delete_pvc_btn" >Delete</button>
-                    <button class="btn btn-label-danger d-none" type="button" id="loading_icon" disabled>
-                                                                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                    Loading...
-                                                                </button>
+                    <button class="btn btn-label-primary d-none" type="button" id="delete_pvc_icon" disabled>
+                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>Loading...
+                    </button>
                 </form>
             </div>
         </div>
