@@ -87,7 +87,7 @@
                 <form method="post" id="delete_pcv_attachments_form" style="display: inline-block;">
                     <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
                     <input type="hidden" name="pcv_id" id="pcv_id" value="<?php echo $row['rca_id'] ?>">
-                    <input type="hidden" name="attachment_to_delete" id="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
+                    <input type="hidden" name="attachment_to_delete" id="attachment_to_delete" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-label-danger" id="delete_pvc_btn" >Delete</button>
                     <button class="btn btn-label-danger d-none" type="button" id="loading_icon" disabled>

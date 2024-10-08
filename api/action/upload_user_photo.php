@@ -25,7 +25,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $file = $_FILES['image'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
-    if (in_array($_FILES['attach']['type'], $fileMimes)) {
+    if (in_array($_FILES['image']['type'], $fileMimes)) {
         
 
         // Read the file content
