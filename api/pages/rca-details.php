@@ -116,7 +116,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Employee No.</label>
-                                                                <input type="text" class="form-control" name="employee_no" id="employee_no" value="<?php echo $row['EMPLOYEE_NO']; ?>" >
+                                                                <input type="text" class="form-control" name="employee_no" id="employee_no" value="<?php echo $row['employee_no']; ?>" >
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Paygroup</label>
