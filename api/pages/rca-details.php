@@ -626,10 +626,10 @@ $(document).ready(function() {
                 processData: false,
                 beforeSend: function() {
                     $('#upload_pvc_btn').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    $('#upload_pvc_icon').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#upload_pvc_icon').addClass('d-none').prop('disabled', false);
                     $('#upload_pvc_btn').show();
                     console.log(response);
                     if (response.success) {
@@ -712,10 +712,10 @@ $(document).ready(function() {
             processData: false,
             beforeSend: function() {
                     $('#delete_rca_btn').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    $('#delete_rca_icon').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_rca_icon').addClass('d-none').prop('disabled', false);
                     $('#delete_rca_btn').show();
                 console.log(response);
                 if (response.success) {
@@ -755,10 +755,10 @@ $(document).ready(function() {
             processData: false,
             beforeSend: function() {
                     $('#upload_rca_btn').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    $('#upload_rca_icon').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
+                    $('#upload_rca_icon').addClass('d-none').prop('disabled', false);
                     $('#upload_rca_btn').show();
                 console.log(response);
                 if (response.success) {

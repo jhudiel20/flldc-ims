@@ -12,8 +12,8 @@ $uploaded_item_name = isset($_POST['uploaded_item_name']) ? trim($_POST['uploade
 $githubToken = getenv('GITHUB_TOKEN');
 
 // GitHub repository and token details
-$owner = 'jhudiel20';
-$repo = 'flldc-user-image';
+$owner = getenv('GITHUB_OWNER'); // GitHub username or organization
+$repo = getenv('GITHUB_IMAGES');
 
 $fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'application/pdf', 'image/png'];
 

@@ -10,8 +10,8 @@ require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for c
 $githubToken = getenv('GITHUB_TOKEN');
 
 // Define your GitHub repository and token
-$owner = 'jhudiel20'; // GitHub username or organization
-$repo = 'flldc-user-image';
+$owner = getenv('GITHUB_OWNER'); // GitHub username or organization
+$repo = getenv('GITHUB_IMAGES');
 
 if(empty($_POST['photo_to_delete'])){
     echo json_encode([

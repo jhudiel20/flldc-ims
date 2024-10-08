@@ -12,20 +12,21 @@ $githubToken = getenv('GITHUB_TOKEN');
 // Define your GitHub repository and token
 $owner = getenv('GITHUB_OWNER'); // GitHub username or organization
 $repo = getenv('GITHUB_IMAGES');
-$fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'];
+$fileMimes = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
 
-if (empty($_FILES['image']['name'])) {
+if (empty($_FILES['rca_attach']['name'])) {
     echo json_encode(['success' => false, 'title' => 'Warning!', 'message' => 'Please select an image.']);
     exit();
 }
 
 // Check if file is uploaded
-if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+if (isset($_FILES['rca_attach']) && $_FILES['rca_attach']['error'] == UPLOAD_ERR_OK) {
         $id = $_POST['ID'];
-        $file = $_FILES['image'];
+        $pcv_id = $_POST['ID'];
+        $file = $_FILES['rca_attach'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
-    if (in_array($_FILES['image']['type'], $fileMimes)) {
+    if (in_array($_FILES['rca_attach']['type'], $fileMimes)) {
         
 
         // Read the file content
@@ -36,7 +37,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $base64Content = base64_encode($fileContent);
 
         // Prepare the API request
-        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/images/' . $fileName;
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RCA_ATTACHMENTS/' . $fileName;
         $data = json_encode([
             'message' => 'Upload ' . $fileName,
             'content' => $base64Content,
@@ -53,14 +54,15 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
         $response = curl_exec($ch);
-        $user_id = $decrypted_array['ID'];
-        $sql = "UPDATE user_account SET image = :img WHERE id = :user_id";
+        
+        $sql = "UPDATE rca SET attachments = :img WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':img', $fileName);
-        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        $action = "Updated picture in User : " . $decrypted_array['FNAME'] . ' ' . $decrypted_array['MNAME'] . ' ' . $decrypted_array['LNAME'];
+        $user_id = $decrypted_array['ID'];
+        $action = "Uploaded PCV Attachments in PCV ID. : " . $pcv_id;
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
@@ -96,12 +98,12 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
 
         curl_close($ch);
     }else{
-        echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif)']);
+        echo json_encode(['success' => false, 'title' => 'Error', 'message' => 'Please insert a valid format! (jpg, png, jpeg, gif, pdf)']);
         exit();
     }
 } else {
     // Handle the case where no file is uploaded or an error occurred
-    $errorMessage = $_FILES['image']['error'] ?? 'No file uploaded';
+    $errorMessage = $_FILES['rca_attach']['error'] ?? 'No file uploaded';
     echo json_encode([
     'success' => false,
     'title' => 'Upload Error',

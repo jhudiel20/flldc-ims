@@ -15,7 +15,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-label-primary" id="upload_rca_btn">Upload</button>
-                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                <button class="btn btn-label-primary d-none" type="button" id="upload_rca_icon" disabled>
                                                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
@@ -39,7 +39,7 @@
                     <input type="hidden" id="attachment_to_delete" name="attachment_to_delete" class="form-control" style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-label-danger" id="delete_rca_btn">Delete</button>
-                    <button class="btn btn-label-danger d-none" type="button" id="loading_icon" disabled>
+                    <button class="btn btn-label-danger d-none" type="button" id="delete_rca_icon" disabled>
                                                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
@@ -66,7 +66,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-label-primary" id="upload_pvc_btn">Upload</button>
-                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                <button class="btn btn-label-primary d-none" type="button" id="upload_pvc_icon" disabled>
                                                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
