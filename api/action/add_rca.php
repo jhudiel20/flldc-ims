@@ -131,12 +131,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         try {
             $support_emails = [];
-            $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
-            $admins->execute();
+            // $admins = $conn->prepare("SELECT email FROM user_account WHERE access = 'ADMIN'");
+            // $admins->execute();
 
-            while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
-                $support_emails[] = $row_admins['email'];
-            }
+            // while ($row_admins = $admins->fetch(PDO::FETCH_ASSOC)) {
+            //     $support_emails[] = $row_admins['email'];
+            // }
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
@@ -146,9 +146,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $mail->Port = 465;
 
             $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
-            foreach ($support_emails as $email) {
-                $mail->addAddress($email);
-            }
+            // foreach ($support_emails as $email) {
+            //     $mail->addAddress($email);
+            // }
+            $mail->addAddress($decrypted_array['EMAIL']);
             $code = $generate_RCA_ID;
 
             $mail->isHTML(true);

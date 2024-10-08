@@ -22,7 +22,7 @@ if (empty($_FILES['rca_attach']['name'])) {
 // Check if file is uploaded
 if (isset($_FILES['rca_attach']) && $_FILES['rca_attach']['error'] == UPLOAD_ERR_OK) {
         $id = $_POST['ID'];
-        $pcv_id = $_POST['ID'];
+        $rca_id = $_POST['rca_id'];
         $file = $_FILES['rca_attach'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
@@ -62,7 +62,7 @@ if (isset($_FILES['rca_attach']) && $_FILES['rca_attach']['error'] == UPLOAD_ERR
         $stmt->execute();
 
         $user_id = $decrypted_array['ID'];
-        $action = "Uploaded PCV Attachments in PCV ID. : " . $pcv_id;
+        $action = "Uploaded RCA Attachments in RCA ID. : " . $rca_id;
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);

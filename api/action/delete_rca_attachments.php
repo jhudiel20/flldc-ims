@@ -26,7 +26,7 @@ if(empty($_POST['attachment_to_delete'])){
 // Check if file is uploaded
 if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
         $id = $_POST['ID'];
-        $pcv_id = $_POST['pcv_id'];
+        $rca_id = $_POST['rca_id'];
         $fileName = $_POST['attachment_to_delete'];        
         $fileName = str_replace(' ', '-', $fileName);
 
@@ -72,7 +72,7 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
                 $stmt->execute();
     
                 $user_id = $decrypted_array['ID'];
-                $action = "Deleted attachment in RCA ID : " . $pcv_id;
+                $action = "Deleted attachment in RCA ID : " . $rca_id;
                 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
         
                 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);

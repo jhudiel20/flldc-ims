@@ -22,7 +22,7 @@ if (empty($_FILES['pcv_attach']['name'])) {
 // Check if file is uploaded
 if (isset($_FILES['pcv_attach']) && $_FILES['pcv_attach']['error'] == UPLOAD_ERR_OK) {
         $id = $_POST['ID'];
-        $pcv_id = $_POST['ID'];
+        $pcv_id = $_POST['pcv_id'];
         $file = $_FILES['pcv_attach'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
