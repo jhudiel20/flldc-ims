@@ -105,7 +105,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body"> 
                                             <div class="text-center">
-                                            <img src="https://raw.githubusercontent.com/jhudiel20/flldc-user-image/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
+                                            <img src="/fetch?file=<?php echo urlencode($row['item_photo']); ?>&db=requested-items" style="height:220px;" />
                                             </div>
                                         </div> 
                                     </div>
