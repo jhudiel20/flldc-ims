@@ -27,10 +27,6 @@
         "dest": "/public/user_image/$1"
       },
       {
-        "src": "/image_proxy.php",
-        "dest": "/api/action/image_proxy.php"
-      },
-      {
         "src": "/LOGO.png",
         "dest": "/public/assets/img/LOGO.png"
       },
@@ -176,8 +172,8 @@
         "dest": "/api/action/edit_pcv.php"
       },
       {
-        "src": "/fetch_rca",
-        "dest": "/api/action/fetch_rca.php"
+        "src": "/fetch",
+        "dest": "/api/action/fetch_docu/fetch.php"
       },
       {
         "src": "/request-list",
@@ -225,7 +221,7 @@
       },
       {
         "src": "/fetch_pdf",
-        "dest": "/api/action/fetch_pdf.php"
+        "dest": "/api/action/fetch_docu/fetch_pdf.php"
       },
       {
         "src": "/logs",

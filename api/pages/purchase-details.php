@@ -56,7 +56,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
-                                            <img src="https://raw.githubusercontent.com/jhudiel20/$owner/main/requested-items/<?php echo empty($row['item_photo']) ? 'default.png' : $row['item_photo']; ?>"  style="height:220px;" />
+                                            <img src="/fetch?file=<?php echo urlencode($row['item_photo']); ?>&db=PO_ATTACHMENTS" style="height:220px;" />
                                                 <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
                                                     <form class="row g-3" method="post" id="upload_item_photo_form"
@@ -237,7 +237,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 Empty!</h1>
                                                             <?php }else{ ?>
                                                                 <iframe
-                                                                    src="/fetch_pdf?file=<?php echo urlencode($row['attachments']); ?>"
+                                                                    src="/fetch?file=<?php echo urlencode($row['attachments']); ?>&db=PO_ATTACHMENTS"
                                                                     width="auto"
                                                                     height="700px"
                                                                     style="border: none;">
