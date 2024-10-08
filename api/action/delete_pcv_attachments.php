@@ -68,7 +68,7 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
             if ($httpCode == 200) {
                 $sql = "UPDATE rca SET attachments = '' WHERE id = :id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':user_id', $id);
+                $stmt->bindParam(':id', $id);
                 $stmt->execute();
     
                 $user_id = $decrypted_array['ID'];
