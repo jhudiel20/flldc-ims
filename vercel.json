@@ -55,6 +55,10 @@
         "dest": "/api/pages/dashboard-lnd.php"
       },
       {
+        "src": "/index",
+        "dest": "/api/index.php"
+      },
+      {
         "src": "/dashboard-eval",
         "dest": "/api/pages/dashboard-eval.php"
       },
