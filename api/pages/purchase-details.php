@@ -260,7 +260,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                     <div class="col-6 py-3" style="display:inline-block;">
                                                         <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#delete-po-attchment-modal"
+                                                            data-bs-target="#delete-po-attachment-modal"
                                                             class="btn btn-label-danger"
                                                             style="width:95%">Delete</button>
                                                     </div>
@@ -459,7 +459,6 @@ $(document).ready(function() {
                 $('#upload_po_attachments_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -526,7 +525,6 @@ $(document).ready(function() {
                 $('#delete_po_attachments_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#delete-po-attachment-modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -611,7 +609,6 @@ $(document).ready(function() {
                     $('#delete_purchase_photo_btn').show();
                 console.log(response);
                 if (response.success) {
-                    // $('#delete_purchase_photo_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
