@@ -253,13 +253,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <div class="col-6 py-3" style="float: left; display: inline-block;">
 
                                                         <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#upload-PO_ATTACHMENT-modal"
+                                                            data-bs-target="#upload-po-attachment-modal"
                                                             class="btn btn-label-primary"
                                                             style="width:95%">Upload</button>
-                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
-                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                            Loading...
-                                                        </button>
                                                     </div>
 
                                                     <div class="col-6 py-3" style="display:inline-block;">
@@ -443,8 +439,8 @@ $(document).ready(function() {
             }
         });
     })
-    $('#submit_po_attachments').on('click', function() {
-        var formdata = new FormData(dropzone_basic);
+    $('#upload_po_attachments_btn').on('click', function() {
+        var formdata = new FormData(document.getElementById('upload_po_attachments_form'));
 
         $.ajax({
             url: "/upload_po_attachment",
@@ -455,12 +451,12 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#submit_po_attachments').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+                $('#upload_po_attachments_btn').hide();
+                $('#upload_po_attachments_icon').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_po_attachments').show();
+                $('#upload_po_attachments_icon').addClass('d-none').prop('disabled', false);
+                $('#upload_po_attachments_btn').show();
                 console.log(response);
                 if (response.success) {
                     $('#upload-PO_ATTACHMENT-modal').modal('hide');
@@ -510,8 +506,8 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_po_attachments').on('click', function() {
-        var formdata = new FormData(delete_po_attachments_form);
+    $('#delete_po_attachments_btn').on('click', function() {
+        var formdata = new FormData(document.getElementById('delete_po_attachments_form'));
 
         $.ajax({
             url: "/delete_po_attachments",
@@ -522,15 +518,15 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#delete_po_attachments').hide();
-                $('#delete_po_icon').removeClass('d-none').prop('disabled', true);
+                $('#delete_po_attachments_btn').hide();
+                $('#delete_po_attachments_icon').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#delete_po_icon').addClass('d-none').prop('disabled', false);
-                $('#delete_po_attachments').show();
+                $('#delete_po_attachments_icon').addClass('d-none').prop('disabled', false);
+                $('#delete_po_attachments_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
+                    $('#delete-po-attachment-modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,

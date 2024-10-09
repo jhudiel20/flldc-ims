@@ -6,12 +6,9 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; 
 require_once __DIR__ . '/../../public/config/config.php';
 
-$uploaded_item_name = isset($_POST['uploaded_item_name']) ? trim($_POST['uploaded_item_name']) : '';
 
 // Load the GitHub token from environment variables
 $githubToken = getenv('GITHUB_TOKEN');
-
-// GitHub repository and token details
 $owner = getenv('GITHUB_OWNER'); // GitHub username or organization
 $repo = getenv('GITHUB_IMAGES');
 
@@ -26,6 +23,8 @@ if (empty($_FILES['attach']['name'])) {
 if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
     if (in_array($_FILES['attach']['type'], $fileMimes)) {
         $id = $_POST['ID'];
+        $pr_id = $_POST['pr_id'];
+        $item_name = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
         $file = $_FILES['attach'];
         $fileSize = $file['size'];
         $filePath = $file['tmp_name'];
@@ -43,7 +42,7 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
         $base64Content = base64_encode($fileContent);
 
         // Prepare the API request
-        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . urlencode($fileName);
+        $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . $fileName;
         $data = json_encode(['message' => 'Upload ' . $fileName, 'content' => $base64Content]);
 
         $ch = curl_init($apiUrl);
@@ -64,7 +63,6 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if ($httpCode == 201) {
-                $fileName = urlencode($fileName);
                 // Successful upload
                 $sql = "UPDATE purchase_order SET attachments = :file WHERE id = :id";
                 $stmt = $conn->prepare($sql);
@@ -73,7 +71,7 @@ if (isset($_FILES['attach']) && $_FILES['attach']['error'] == UPLOAD_ERR_OK) {
                 $stmt->execute();
 
                 $user_id = $decrypted_array['ID'];
-                $action = "Uploaded Purchase Order Attachments in Item Name: " . $uploaded_item_name;
+                $action = "Uploaded Purchase Order Attachments in PR ID: " . $pr_id;
                 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
                 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);

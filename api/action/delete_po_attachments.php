@@ -25,9 +25,9 @@ if(empty($_POST['attachment_to_delete'])){
 // Check if the file to delete is specified
 if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
     $fileName = $_POST['attachment_to_delete'];
-
     $id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
-    $DELETE_ITEM_NAME = isset($_POST['DELETE_ITEM_NAME']) ? trim($_POST['DELETE_ITEM_NAME']) : '';
+    $pr_id = isset($_POST['pr_id']) ? trim($_POST['pr_id']) : '';
+    $item_name = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
 
     // Prepare the API request URL
     $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/PO_ATTACHMENTS/' . $fileName;
@@ -65,13 +65,13 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
 
                 // Update database and log the action if successful
         if ($httpCode == 200) {
-            $sql = "UPDATE purchase_order SET attachments = '' WHERE id = :id";
+            $sql = "UPDATE purchase_order SET attachemtns = '' WHERE id = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
             $user_id = $decrypted_array['ID'];
-            $action = "Deleted Attachment in Item Name : " . $DELETE_ITEM_NAME;
+            $action = "Deleted Attachment in PR ID : " . $pr_id;
             $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
             $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);

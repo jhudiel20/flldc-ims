@@ -71,7 +71,7 @@ if (isset($_POST['item_to_delete']) && isset($_POST['ID'])) {
             $stmt->execute();
 
             $user_id = $decrypted_array['ID'];
-            $action = "Deleted Item photot in PR ID : " . $pr_id;
+            $action = "Deleted Item photo in PR ID : " . $pr_id;
             $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
             $logs->bindParam(':user_id', $user_id, PDO::PARAM_INT);
