@@ -216,13 +216,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //trigger download of data.xlsx file
 function handleXslDownload() {
-    table.download("xlsx", "Reservation List as of Year " + currentYear + ".xlsx", {
+    table.download("xlsx", "Pending Booking as of Year " + currentYear + ".xlsx", {
         sheetName: "Request List"
     });
 };
 //trigger download of PDF file
 function handlePdfDownload() {
-    table.download("pdf", "Reservation List as of " + formattedDateWithHyphens + ".pdf", {
+    table.download("pdf", "Pending Booking as of " + formattedDateWithHyphens + ".pdf", {
         orientation: "landscape", //set page orientation to portrait
         autoTable: {
             theme: 'grid', //'plain' or 'striped'
