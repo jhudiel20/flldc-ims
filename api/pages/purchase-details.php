@@ -49,7 +49,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
                         <!-- Details -->
-                        <h4><span class="text-muted fw-light">Purchase List /</span> Purchase Details</h4>
+                        <h4><span class="text-muted fw-light"><a href="purchase-list">Purchase List</a> /</span> Purchase Details</h4>
                         <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
                             <div class="card">
                                 <div class="row row-bordered g-0">
@@ -81,7 +81,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#delete_item_photo_modal"><i
+                                                        data-bs-target="#delete_purchase_photo_modal"><i
                                                             class="fa-solid fa-trash-can"></i></button>
 
                                                 </div>
@@ -375,6 +375,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 
     <?php
+        include __DIR__ . "/../modals/purchase_details_modal.php"; 
         include __DIR__ . "/../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
@@ -585,22 +586,27 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_item_photo').on('click', function() {
-        var formdata = new FormData(delete_item_photo_form);
+    $('#delete_purchase_photo_btn').on('click', function() {
+        var formdata = new FormData(document.getElementById('delete_purchase_photo_form'));
 
         $.ajax({
-            url: "../action/delete_item_photo.php",
+            url: "/delete_purchase_photo",
             method: "POST",
             data: formdata,
             dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
-
-            success: function(response) {
+            beforeSend: function() {
+                    $('#delete_purchase_photo_btn').hide();
+                    $('#delete_purchase_icon').removeClass('d-none').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#delete_purchase_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_purchase_photo_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#delete-PO_ATTACHMENT-modal').modal('hide');
+                    $('#delete_purchase_photo_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -648,28 +654,3 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 </html>
-
-<div class="modal fade" id="delete_item_photo_modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to
-                        delete a photo?</i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <form method="post" id="delete_item_photo_form" style="display: inline-block;">
-                    <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="photo_pr_id" id="photo_pr_id" value="<?php echo $row['pr_id'] ?>">
-                    <input type="hidden" name="photo_item_name" id="photo_item_name"
-                        value="<?php echo $row['item_name'] ?>">
-                    <input style="width:auto" type="hidden" name="item_image_to_delete" class="form-control"
-                        value="<?php echo $row['item_photo']; ?>">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="delete_item_photo" class="btn btn-danger"
-                        data-bs-dismiss="modal">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div><!-- End delete employee photo Modal-->

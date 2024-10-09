@@ -98,7 +98,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
                         <!-- Details -->
-                        <h4><span class="text-muted fw-light">Request List /</span> Request Details</h4>
+                        <h4><span class="text-muted fw-light"><a href="request-list">Request List</a> /</span> Request Details</h4>
                         <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
                             <div class="card">
                                 <div class="row row-bordered g-0">

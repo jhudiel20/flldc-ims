@@ -15,18 +15,6 @@
     },
     "routes": [
       {
-        "src": "/ITEM_PHOTO/(.*)",
-        "dest": "/public/ITEM_PHOTO/$1"
-      },      
-      {
-        "src": "/PO_ATTACHMENTS/(.*)",
-        "dest": "/public/PO_ATTACHMENTS/$1"
-      },      
-      {
-        "src": "/user_image/(.*)",
-        "dest": "/public/user_image/$1"
-      },
-      {
         "src": "/LOGO.png",
         "dest": "/public/assets/img/LOGO.png"
       },
@@ -164,6 +152,14 @@
         "dest": "/api/action/delete_pcv_attachments.php"
       },
       {
+        "src": "/upload_rca_attachments",
+        "dest": "/api/action/upload_rca_attachments.php"
+      },
+      {
+        "src": "/delete_rca_attachments",
+        "dest": "/api/action/delete_rca_attachments.php"
+      },
+      {
         "src": "/add_pcv",
         "dest": "/api/action/add_pcv.php"
       },
@@ -210,6 +206,10 @@
       {
         "src": "/edit_purchase_details_info",
         "dest": "/api/action/edit_purchase_details_info.php"
+      },
+      {
+        "src": "/delete_purchase_photo",
+        "dest": "/api/action/delete_purchase_photo.php"
       },
       {
         "src": "/upload_po_attachment",

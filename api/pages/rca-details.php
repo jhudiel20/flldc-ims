@@ -259,7 +259,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
                             <?php } else { ?>
-                                <h4><span class="text-muted fw-light">PCV List /</span> PCV Details</h4>
+                                <h4><span class="text-muted fw-light"><a href="rca-list">PCV List</a> /</span> PCV Details</h4>
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body" style="overflow-x:auto;">
