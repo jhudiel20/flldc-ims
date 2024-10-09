@@ -289,7 +289,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-6">
                                                                 <label class="form-label">PCV ID</label>
                                                                 <input type="text" class="form-control" id="pcv_id" name="pcv_id"
-                                                                    value="<?php echo $row['rca_id']; ?>" disabled>
+                                                                    value="<?php echo $row['rca_id']; ?>">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Status</label>

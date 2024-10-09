@@ -65,7 +65,7 @@ if (isset($_POST['attachment_to_delete']) && isset($_POST['ID'])) {
 
                 // Update database and log the action if successful
         if ($httpCode == 200) {
-            $sql = "UPDATE purchase_order SET attachemtns = '' WHERE id = :id";
+            $sql = "UPDATE purchase_order SET attachments = '' WHERE id = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
