@@ -28,9 +28,15 @@ $filter_params = [];
 foreach ($filters as $filter) {
     if (isset($filter['field']) && isset($filter['value'])) {
         $field = $filter['field'];
-        $value = '%' . $filter['value'] . '%';
-        $filter_clauses[] = "$field ILIKE :$field";
-        $filter_params[$field] = $value;
+        $value = $filter['value'];
+
+        if ($filter['field'] == 'request_date_created') {
+            $filter_clauses[] = "$field = '" . $value . "'";
+        } else {
+            $value = '%' . $filter['value'] . '%';
+            $filter_clauses[] = "$field ILIKE :$field";
+            $filter_params[$field] = $value;
+        }
     }
 }
 
