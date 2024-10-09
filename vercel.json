@@ -208,6 +208,10 @@
         "dest": "/api/action/edit_purchase_details_info.php"
       },
       {
+        "src": "/upload_item_photo",
+        "dest": "/api/action/upload_item_photo.php"
+      },
+      {
         "src": "/delete_purchase_photo",
         "dest": "/api/action/delete_purchase_photo.php"
       },

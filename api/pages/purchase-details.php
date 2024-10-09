@@ -67,17 +67,21 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 class="form-control w-100">
                                                             <input type="hidden" name="ID" id="ID"
                                                                 value="<?php echo $id ?>">
-                                                            <input type="hidden" name="photo_item_name"
-                                                                id="photo_item_name"
+                                                            <input type="hidden" name="item_name"
+                                                                id="item_name"
                                                                 value="<?php echo $row['item_name'] ?>">
-                                                            <input type="hidden" name="photo_pr_id" id="photo_pr_id"
+                                                            <input type="hidden" name="pr_id" id="pr_id"
                                                                 value="<?php echo $row['pr_id'] ?>">
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="button" id="submit_upload_item_photo"
+                                                            <button type="button" id="upload_item_photo_btn"
                                                                 value="Upload" class="btn btn-label-primary"><i
                                                                     class="fa-solid fa-upload"></i></button>
+                                                                    <button class="btn btn-label-primary d-none" type="button" id="upload_item_photo_icon" disabled>
+                                                                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                    Loading...
+                                                                </button>
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
@@ -549,21 +553,26 @@ $(document).ready(function() {
             }
         });
     })
-    $('#submit_upload_item_photo').on('click', function() {
-        var formdata = new FormData(upload_item_photo_form);
+    $('#upload_item_photo_btn').on('click', function() {
+        var formdata = new FormData(document.getElementById('upload_item_photo_form'));
 
         $.ajax({
-            url: "../action/upload_item_photo.php",
+            url: "/upload_item_photo",
             method: "POST",
             data: formdata,
             dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
-            success: function(response) {
+            beforeSend: function() {
+                    $('#upload_item_photo_btn').hide();
+                    $('#upload_item_photo_icon').removeClass('d-none').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('#upload_item_photo_icon').addClass('d-none').prop('disabled', false);
+                    $('#upload_item_photo_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#upload-PO_ATTACHMENT-modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
