@@ -13,6 +13,10 @@ $user_id = $decrypted_array['ID'];
         $pr->execute();
         $pr_status = $pr->fetch(PDO::FETCH_ASSOC);
 
+        $count_rca = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM rca WHERE status = 'PENDING' ");
+        $count_rca->execute();
+        $r_rca = $count_rca->fetch(PDO::FETCH_ASSOC);
+
         $reserve = $conn->prepare("SELECT COUNT(ID) as TOTAL FROM reservations WHERE reserve_status = 'PENDING' ");
         $reserve->execute();
         $r_reserve = $reserve->fetch(PDO::FETCH_ASSOC);
@@ -125,10 +129,10 @@ $user_id = $decrypted_array['ID'];
                     <a href="rca-list" class="menu-link">
                         <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                         <div> RCA/PCV List</div>
-                        <!-- <?php if($count_pending['total'] == 0){}else{?>
+                        <?php if($r_rca['total'] == 0){}else{?>
                         <span
-                            class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $count_pending['total']?></span>
-                        <?php }?> -->
+                            class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_rca['total']?></span>
+                        <?php }?>
                     </a>
                 </li>
             <?php } ?>
