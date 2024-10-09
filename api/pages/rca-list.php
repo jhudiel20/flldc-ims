@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //trigger download of data.xlsx file
 function handleXslDownload() {
     table.download("xlsx", "RCA/PCV List as of Year " + currentYear + ".xlsx", {
-        sheetName: "RCA/PCV List"
+        sheetName: "RCA-PCV List"
     });
 };
 //trigger download of PDF file
