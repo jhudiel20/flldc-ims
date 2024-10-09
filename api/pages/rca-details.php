@@ -743,7 +743,7 @@ $(document).ready(function() {
         });
     })
     $('#upload_rca_btn').on('click', function() {
-        var formData = new FormData(document.getElementById('delete_rca_attachments_form'));
+        var formData = new FormData(document.getElementById('add_rca_attachments_form'));
 
         $.ajax({
             url: "/upload_rca_attachments",
