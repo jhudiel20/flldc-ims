@@ -260,7 +260,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                     <div class="col-6 py-3" style="display:inline-block;">
                                                         <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#delete-PO_ATTACHMENT-modal"
+                                                            data-bs-target="#delete-po-attchment-modal"
                                                             class="btn btn-label-danger"
                                                             style="width:95%">Delete</button>
                                                     </div>
