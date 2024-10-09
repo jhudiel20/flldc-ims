@@ -611,7 +611,7 @@ $(document).ready(function() {
                     $('#delete_purchase_photo_btn').show();
                 console.log(response);
                 if (response.success) {
-                    $('#delete_purchase_photo_modal').modal('hide');
+                    // $('#delete_purchase_photo_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
