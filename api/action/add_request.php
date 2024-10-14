@@ -39,23 +39,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $current_access = $decrypted_array['ACCESS'];
 
     // Check if email is provided for admins
-    if ($current_access === 'ADMIN') {
-        if ($EMAIL == '') {
-            $response['title'] = 'Warning!';
-            $response['message'] = 'Please enter the email of requestor!';
-            echo json_encode($response);
-            exit();
-        }
-    } else {
-        if ($EMAIL == '') {
+    if ($current_access === 'ADMIN' && empty($EMAIL)) {
+        $response['title'] = 'Warning!';
+        $response['message'] = 'Please enter the email of requestor!';
+        echo json_encode($response);
+        exit();
+    }
+    
+    if ($current_access === 'REQUESTOR') {
+        if (empty($decrypted_array['EMAIL'])) {
             $response['title'] = 'Warning!';
             $response['message'] = 'Please enter the email of requestor!';
             echo json_encode($response);
             exit();
         } else {
-            $EMAIL = $current_access;
+            $EMAIL = $decrypted_array['EMAIL'];
         }
     }
+    
 
     $githubToken = getenv('GITHUB_TOKEN');
     $githubOwner= getenv('GITHUB_OWNER');
