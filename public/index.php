@@ -39,7 +39,7 @@ include 'config/config.php';
 
     <!-- Helpers -->
     <script src="<?php BASE_URL; ?>assets/vendor/js/helpers.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/js/template-customizer.js"></script>
+    <!-- <script src="<?php //BASE_URL; ?>assets/vendor/js/template-customizer.js"></script> -->
     <script src="<?php BASE_URL; ?>assets/js/config.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/sweetalert.min.js"></script>
 
