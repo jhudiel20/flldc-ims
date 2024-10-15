@@ -48,3 +48,28 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="delete-profile-photo" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to remove profile photo?</i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <form method="post" id="delete_photo_form" class="nav-link ">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button name="" type="button" id="photo_delete_btn" class="btn btn-label-danger">Delete</button>
+                    <button class="btn btn-label-primary d-none" type="button" id="photo_delete_icon" disabled>
+                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
+                    <input type="hidden" name="photo_to_delete" value="<?php echo $user['image']; ?>">
+                    <input  type="hidden" name="ID" id="ID" value="<?php echo $user_id?>">
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- End delete profile photo Modal-->

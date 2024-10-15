@@ -83,7 +83,11 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                         <input type="file" name="image" id="" class="form-control mb-1">
                                                                         <input type="hidden" name="user_submit_name" id="user_submit_name" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
                                                                         <input type="hidden" name="ID" id="ID" value="<?php echo $user_id ?>">  
-                                                                        <button type="submit" id="submit_photo" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
+                                                                        <button type="submit" id="submit_photo_btn" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
+                                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_photo_icon" disabled>
+                                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                            Loading...
+                                                                        </button>
                                                                 </form>
                                                                 <form style="display: inline-block;" class="mt-1">          
                                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#delete-profile-photo" class="btn btn-label-danger"><i class="fas fa-fw fa-trash"></i> Delete</button>
@@ -308,7 +312,10 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                         </div>
                                                         <div class="col-12 mt-1">
                                                             <button type="submit" class="btn btn-primary me-2" id="user_change_username">Save changes</button>
-                                                            <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
+                                                            <button class="btn btn-label-primary d-none" type="button" id="change_user_icon" disabled>
+                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                Loading...
+                                                            </button>
                                                         </div>
                                                         </div>
                                                     </form>
@@ -371,6 +378,10 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                         </div>
                                                         <div class="col-12 mt-1">
                                                             <button type="submit" class="btn btn-primary me-2" id="user_change_pass">Save changes</button>
+                                                            <button class="btn btn-label-primary d-none" type="button" id="change_pass_icon" disabled>
+                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                Loading...
+                                                            </button>
                                                             <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
                                                         </div>
                                                         </div>
@@ -388,8 +399,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 <!-- Footer -->
                 <?php 
-                    include __DIR__ . "/../modals/user_edit_password_modal.php";
-                    include __DIR__ . "/../modals/user_edit_modal.php";
+                    include __DIR__ . "/../modals/acc-settings_modal.php";
                     include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
@@ -463,7 +473,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         }
                     });
                 });
-
                 $('#user_password_form').on('submit', function(e) {
                     var formdata = new FormData(document.getElementById('user_password_form'));
                     e.preventDefault();  
@@ -475,8 +484,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         contentType: false,
                         cache: false,
                         processData: false,
-
+                        beforeSend: function() {
+                            $('#user_change_pass').hide();
+                            $('#change_pass_icon').removeClass('d-none').prop('disabled', true);
+                        },
                         success: function(response) {
+                            $('#change_pass_icon').addClass('d-none').prop('disabled', false);
+                            $('#user_change_pass').show();
                             console.log(response);
                             if (response.success) {
                                 $('#user_password_form')[0].reset();
@@ -515,8 +529,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         contentType: false,
                         cache: false,
                         processData: false,
-
+                        beforeSend: function() {
+                            $('#user_change_username').hide();
+                            $('#change_user_icon').removeClass('d-none').prop('disabled', true);
+                        },
                         success: function(response) {
+                            $('#change_user_icon').addClass('d-none').prop('disabled', false);
+                            $('#user_change_username').show();
                             console.log(response);
                             if (response.success) {
                                 $('#change_username_form')[0].reset();
@@ -557,7 +576,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         contentType: false,
                         cache: false,
                         processData: false,
-                        success: function(response) {
+                        beforeSend: function() {
+                                $('#submit_photo_btn').hide();
+                                $('#submit_photo_icon').removeClass('d-none').prop('disabled', true);
+                            },
+                            success: function(response) {
+                                $('#submit_photo_icon').addClass('d-none').prop('disabled', false);
+                                $('#submit_photo_btn').show();
                             console.log(response);
                             if (response.success) {
                                 swal({
@@ -583,46 +608,51 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     });
                 });
 
-            $('#photo_delete_btn').on('click', function() {
-                var formdata = new FormData(document.getElementById('delete_photo_form'));
-                $.ajax({
-                    url:"/delete_user_photo",
-                    method: "POST",
-                    data: formdata,
-                    dataType: "json",
-                    contentType: false,
-                    cache: false,
-                    processData: false,
+                $('#photo_delete_btn').on('click', function() {
+                    var formdata = new FormData(document.getElementById('delete_photo_form'));
+                    $.ajax({
+                        url:"/delete_user_photo",
+                        method: "POST",
+                        data: formdata,
+                        dataType: "json",
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function() {
+                                $('#photo_delete_btn').hide();
+                                $('#photo_delete_icon').removeClass('d-none').prop('disabled', true);
+                            },
+                            success: function(response) {
+                                $('#photo_delete_icon').addClass('d-none').prop('disabled', false);
+                                $('#photo_delete_btn').show();
+                            console.log(response);
+                            if (response.success) {
+                                $('#delete-profile-photo').modal('hide');
+                                swal({
+                                    icon: 'success',
+                                    title: response.title,
+                                    text: response.message,
+                                    buttons: false,
+                                    timer: 2000,
+                                }).then(function() {
+                                    location.reload();
+                                });
 
-                    success: function(response) {
-                        console.log(response);
-                        if (response.success) {
-                            $('#delete-profile-photo').modal('hide');
-                            swal({
-                                icon: 'success',
-                                title: response.title,
-                                text: response.message,
-                                buttons: false,
-                                timer: 2000,
-                            }).then(function() {
-                                location.reload();
-                            });
-
-                        } else {
-                            $('#delete-profile-photo').modal('hide');
-                            swal({
-                                icon: 'warning',
-                                title: response.title,
-                                text: response.message,
-                                buttons: false,
-                                timer: 2000,
-                            }).then(function() {
-                                location.reload();
-                            });
+                            } else {
+                                $('#delete-profile-photo').modal('hide');
+                                swal({
+                                    icon: 'warning',
+                                    title: response.title,
+                                    text: response.message,
+                                    buttons: false,
+                                    timer: 2000,
+                                }).then(function() {
+                                    location.reload();
+                                });
+                            }
                         }
-                    }
-                });
-            })
+                    });
+                })
 
         }); 
 
@@ -658,22 +688,3 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 </script>
 
 </html>
-<div class="modal fade" id="delete-profile-photo" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Are you sure you want to remove profile photo?</i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <form method="post" id="delete_photo_form" class="nav-link ">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="photo_delete_btn" class="btn btn-label-danger">Delete</button>
-                    <input type="hidden" name="user_photo_fname" id="user_photo_fname" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
-                    <input type="hidden" name="photo_to_delete" value="<?php echo $user['image']; ?>">
-                    <input  type="hidden" name="ID" id="ID" value="<?php echo $user_id?>">
-                </form>
-            </div>
-        </div>
-    </div>
-</div><!-- End delete profile photo Modal-->
