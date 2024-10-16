@@ -94,6 +94,11 @@ $user_id = $decrypted_array['ID'];
                         <!-- <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span> -->
                     </a>
                     <ul class="menu-sub">
+                        <li class="menu-item <?php echo ($geturl == 'room-list')? 'active' : 'collapsed' ?>">
+                            <a href="room-list" class="menu-link">
+                                <div class="text-truncate" data-i18n="Rooms">Rooms</div>
+                            </a>
+                        </li>
                         <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
                             <a href="reservation-list" class="menu-link">
                                 <div class="text-truncate" data-i18n="All">All</div>

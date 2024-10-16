@@ -71,6 +71,18 @@
         "dest": "/api/pages/dashboard-mrs.php"
       },
       {
+        "src": "/room-list",
+        "dest": "/api/pages/room-list.php"
+      },
+      {
+        "src": "/room_list_data",
+        "dest": "/api/ajax_data/room_list_data.php"
+      },
+      {
+        "src": "/add_room",
+        "dest": "/api/action/add_room.php"
+      },
+      {
         "src": "/reservation-list",
         "dest": "/api/pages/reservation-list.php"
       },
