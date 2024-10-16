@@ -490,3 +490,15 @@ function generateReserveID($length = 10) {
   $generateReserveID = 'RES-'.$year.'-'.$randomString;
   return $generateReserveID;
 }
+
+function generateRoomID($length = 10) {
+  // Characters to be used in the ID
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  // Generate a random string of the specified length
+  $randomString = substr(str_shuffle($characters), 0, $length);
+
+  $year = date("Ymd");
+  $generateRoomID = 'ROOM-'.$year.'-'.$randomString;
+  return $generateRoomID;
+}
