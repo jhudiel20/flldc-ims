@@ -87,7 +87,7 @@ $user_id = $decrypted_array['ID'];
                 </ul>
             </li>
             <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY' || $decrypted_array['ACCESS'] == 'GUARD'){?>
-                <li class="menu-item <?php echo ($geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
+                <li class="menu-item <?php echo ($geturl == 'room-list' || $geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon fa-solid fa-book-bookmark"></i>
                         <div class="text-truncate" data-i18n="Reservation">Reservation</div>
