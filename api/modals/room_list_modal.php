@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Room Type<span class="require asterisk">*</span></label>
-                                <select name="roomtype" id="roomtype">
+                                <select name="roomtype" id="roomtype" class="form-control">
                                     <option value="Meeting-Room"></option>
                                     <option value="Training-Room"></option>
                                     <option value="Both"></option>
@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Status<span class="require asterisk">*</span></label>
-                                <select name="status" id="status">
+                                <select name="status" id="status" class="form-control">
                                     <option value="Not-Available">Not Available</option>
                                     <option value="Available">Available</option>
                                 </select>
