@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
-                <form method="post" id="delete_purchase_photo_form" style="display: inline-block;">
+                <form method="post" id="delete_room_photo_form" style="display: inline-block;">
                     <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
                     <input type="hidden" name="room_id" id="room_id" value="<?php echo $row['room_id'] ?>">
                     <input type="hidden" name="room_name" id="room_name" value="<?php echo $row['room_name'] ?>">

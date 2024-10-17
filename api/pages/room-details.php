@@ -590,10 +590,10 @@ $(document).ready(function() {
         });
     })
     $('#delete_room_photo_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('delete_purchase_photo_form'));
+        var formdata = new FormData(document.getElementById('delete_room_photo_form'));
 
         $.ajax({
-            url: "/delete_purchase_photo",
+            url: "/delete_room_photo",
             method: "POST",
             data: formdata,
             dataType: "json",
