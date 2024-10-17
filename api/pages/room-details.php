@@ -589,7 +589,7 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_purchase_photo_btn').on('click', function() {
+    $('#delete_room_photo_btn').on('click', function() {
         var formdata = new FormData(document.getElementById('delete_purchase_photo_form'));
 
         $.ajax({
@@ -601,12 +601,12 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#delete_purchase_photo_btn').hide();
-                    $('#delete_purchase_icon').removeClass('d-none').prop('disabled', true);
+                    $('#delete_room_photo_btn').hide();
+                    $('#delete_room_icon').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#delete_purchase_icon').addClass('d-none').prop('disabled', false);
-                    $('#delete_purchase_photo_btn').show();
+                    $('#delete_room_icon').addClass('d-none').prop('disabled', false);
+                    $('#delete_room_photo_btn').show();
                 console.log(response);
                 if (response.success) {
                     swal({

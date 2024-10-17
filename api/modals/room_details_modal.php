@@ -1,4 +1,4 @@
-<div class="modal fade" id="delete_purchase_photo_modal" tabindex="-1">
+<div class="modal fade" id="delete_room_photo_modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,13 +9,13 @@
             <div class="modal-footer">
                 <form method="post" id="delete_purchase_photo_form" style="display: inline-block;">
                     <input type="hidden" name="ID" id="ID" value="<?php echo $id ?>">
-                    <input type="hidden" name="pr_id" id="pr_id" value="<?php echo $row['pr_id'] ?>">
-                    <input type="hidden" name="item_name" id="item_name" value="<?php echo $row['item_name'] ?>">
-                    <input type="hidden" name="item_to_delete" id="item_to_delete" class="form-control" value="<?php echo $row['item_photo']; ?>">
+                    <input type="hidden" name="room_id" id="room_id" value="<?php echo $row['room_id'] ?>">
+                    <input type="hidden" name="room_name" id="room_name" value="<?php echo $row['room_name'] ?>">
+                    <input type="hidden" name="item_to_delete" id="item_to_delete" class="form-control" value="<?php echo $row['room_photo']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="delete_purchase_photo_btn" class="btn btn-danger"
+                    <button type="button" id="delete_room_photo_btn" class="btn btn-danger"
                         data-bs-dismiss="modal">Delete</button>
-                        <button class="btn btn-label-primary d-none" type="button" id="delete_purchase_icon" disabled>
+                        <button class="btn btn-label-primary d-none" type="button" id="delete_room_icon" disabled>
                             <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
