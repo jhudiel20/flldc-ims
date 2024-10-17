@@ -23,7 +23,7 @@ if (empty($_FILES['room_photo']['name'])) {
 if (isset($_FILES['room_photo']) && $_FILES['room_photo']['error'] == UPLOAD_ERR_OK) {
         $id = $_POST['ID'];
         $room_id = $_POST['room_id'];
-        $item_name = $_POST['item_name'];
+        $room_name = $_POST['room_name'];
         $file = $_FILES['room_photo'];
         $filePath = $file['tmp_name'];
         $fileName = $file['name'];
