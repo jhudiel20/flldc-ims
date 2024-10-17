@@ -20,6 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize item name
     $roomname = str_replace("'", "", $roomname);
 
+    if($capacity == 0){
+        $response['message'] = 'Room capacity cannot be Zero!';
+        echo json_encode($response);
+        exit();
+    }
     // Generate a unique request ID
     $generateRoomID = generateRoomID();
 

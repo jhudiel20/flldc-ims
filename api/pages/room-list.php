@@ -151,9 +151,9 @@ var approval_status = function(cell, formatterParams, onRendered) {
 };
 
 var detail_btn = function(cell, formatterParams, onRendered) {
-    var request_id = cell.getData().xid;
+    var room_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='request-details?ID=" + request_id +
+    return "<a class='btn btn-outline-primary' href='room-details?ID=" + room_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 

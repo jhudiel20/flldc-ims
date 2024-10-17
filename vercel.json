@@ -83,8 +83,16 @@
         "dest": "/api/action/add_room.php"
       },
       {
+        "src": "/room-details",
+        "dest": "/api/pages/room-details.php"
+      },
+      {
         "src": "/reservation-list",
         "dest": "/api/pages/reservation-list.php"
+      },
+      {
+        "src": "/upload_room_photo",
+        "dest": "/api/action/upload_room_photo.php"
       },
       {
         "src": "/reserve_list_data",

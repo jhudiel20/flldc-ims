@@ -20,9 +20,9 @@
                             <div class="col-md-6">
                                 <label class="form-label">Room Type<span class="require asterisk">*</span></label>
                                 <select name="roomtype" id="roomtype" class="form-control">
-                                    <option value="Meeting-Room"></option>
-                                    <option value="Training-Room"></option>
-                                    <option value="Both"></option>
+                                    <option value="Meeting-Room">Meeting Room</option>
+                                    <option value="Training-Room">Training Room</option>
+                                    <option value="Both">Both</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
