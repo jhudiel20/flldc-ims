@@ -547,13 +547,13 @@ $(document).ready(function() {
             }
         });
     })
-    $('#upload_room_photo_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('upload_room_photo_form'));
-
+    $('#delete_room_photo_form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
         $.ajax({
             url: "/upload_room_photo",
             method: "POST",
-            data: formdata,
+            data: formData,
             dataType: "json",
             contentType: false,
             cache: false,
@@ -567,6 +567,7 @@ $(document).ready(function() {
                     $('#upload_room_photo_btn').show();
                 console.log(response);
                 if (response.success) {
+                    $('#delete_room_photo_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
@@ -578,6 +579,7 @@ $(document).ready(function() {
                     });
 
                 } else {
+                    $('#delete_room_photo_modal').modal('hide');
                     swal({
                         icon: 'warning',
                         title: response.title,
