@@ -547,7 +547,7 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_room_photo_form').on('submit', function(e) {
+    $('#').on('submit', function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -591,8 +591,9 @@ $(document).ready(function() {
             }
         });
     })
-    $('#delete_room_photo_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('delete_room_photo_form'));
+    $('#delete_room_photo_form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
 
         $.ajax({
             url: "/delete_room_photo",
