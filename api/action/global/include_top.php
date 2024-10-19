@@ -46,9 +46,7 @@
     <!-- <script src="<?php BASE_URL; ?>assets/js/sec.js?v=<?php echo FILE_VERSION; ?>"></script> -->
 
     <!-- TABULATOR -->
-    <link id="themeStylesheet"
-        href="<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>"
-        rel="stylesheet"/>
+    <link id="themeStylesheet" href="<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet"/>
     <script src="<?php BASE_URL; ?>../tabulator/dist/js/tabulator.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <!-- XLSX Script Includes -->

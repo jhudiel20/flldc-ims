@@ -48,7 +48,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <!-- Content -->
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
-
                         <!-- Details -->
                         <h4><span class="text-muted fw-light"><a href="room-list">Room List</a> /</span> Room Details</h4>
                         <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
@@ -153,20 +152,12 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- / Content -->
             </div>
 
-
-
-
-        </div>
-        <!-- Footer -->
-        <?php 
-                    include __DIR__ . "/../action/global/footer.php";
-                    ?>
+        <?php include __DIR__ . "/../action/global/footer.php"; ?>
         <!-- / Footer -->
 
         <div class="content-backdrop fade"></div>
@@ -174,8 +165,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     </div>
     <!-- Content wrapper -->
     </div>
-    <!-- / Layout page -->
-    </div>
+    
 
 
 

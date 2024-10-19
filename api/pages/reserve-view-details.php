@@ -58,7 +58,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                             <div class="text-center">
                                             <img src="<?php echo empty($row['setup']) ? 'default.png' : "../assets/img/".$row['setup'].''.".png"; ?>"  style="height:220px;" />
                                             <h5>Seating Arrangement</h5>
-                                        </div>
+                                            </div>
                                         </div> 
                                     </div>
                                 </div>
