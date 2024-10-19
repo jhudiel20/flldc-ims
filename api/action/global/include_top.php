@@ -69,6 +69,17 @@
 
 
     <script>
+        // Utility functions for loading buttons
+        function showLoading(btnId, loadingBtnClass = '.loading-btn') {
+            $(btnId).hide(); // Hide the original button
+            $(loadingBtnClass).removeClass('d-none').prop('disabled', true); // Show the loading button
+        }
+
+        function hideLoading(btnId, loadingBtnClass = '.loading-btn') {
+            $(loadingBtnClass).addClass('d-none').prop('disabled', false); // Hide the loading button
+            $(btnId).show(); // Show the original button
+        }
+
         const currentYear = new Date().getFullYear();
         const currentDate = new Date().toLocaleDateString();
         const formattedDateWithHyphens = currentDate.replace(/\//g, "-");

@@ -14,17 +14,18 @@
                     <input type="hidden" name="item_to_delete" id="item_to_delete" class="form-control" value="<?php echo $row['room_photo']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" id="delete_room_photo_btn" class="btn btn-danger"data-bs-dismiss="modal">Delete</button>
-                        <button class="btn btn-label-primary d-none" type="button" id="delete_room_icon" disabled>
-                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                    Loading...
-                                                                </button>
+                    <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
+                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
+<!-- 
 <div class="modal fade" id="upload-po-attachment-modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -78,4 +79,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

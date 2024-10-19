@@ -291,6 +291,7 @@ function response(){
 }
 
 
+
 $cipher_method = 'AES-256-CBC';
 $encryption_key = 'qwertyuiopasdfghjklzxcvbnm1234567890johnjhudieljoycediannemnbvcxzlkjhgfdsapoiuytrewq0987654321diannejoycejohnjhudiel1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0pp0lo9ki8mju7nhy6bgt5vfr4cde3xsw2zaq1'; // Use a strong key
 

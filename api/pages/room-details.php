@@ -227,199 +227,199 @@ $(document).ready(function() {
             textarea.disabled = true;
         });
     }
-    $('#submit_edit_purchase_details').on('click', function() {
-        var formdata = new FormData(purchase_details_form);
+    // $('#submit_edit_purchase_details').on('click', function() {
+    //     var formdata = new FormData(purchase_details_form);
 
-        $.ajax({
-            url: "/edit_purchase_details_info",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                $('#submit_edit_purchase_details').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
-            },
-            success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_edit_purchase_details').show();
-                console.log(response);
-                if (response.success) {
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
-    $('#upload_po_attachments_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('upload_po_attachments_form'));
+    //     $.ajax({
+    //         url: "/edit_purchase_details_info",
+    //         method: "POST",
+    //         data: formdata,
+    //         dataType: "json",
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //         beforeSend: function() {
+    //             $('#submit_edit_purchase_details').hide();
+    //             $('#submit_icon').removeClass('d-none').prop('disabled', true);
+    //         },
+    //         success: function(response) {
+    //             $('#submit_icon').addClass('d-none').prop('disabled', false);
+    //             $('#submit_edit_purchase_details').show();
+    //             console.log(response);
+    //             if (response.success) {
+    //                 swal({
+    //                     icon: 'success',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 }).then(function() {
+    //                     location.reload();
+    //                 });
+    //             } else {
+    //                 swal({
+    //                     icon: 'warning',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 })
+    //             }
+    //         }
+    //     });
+    // })
+    // $('#upload_po_attachments_btn').on('click', function() {
+    //     var formdata = new FormData(document.getElementById('upload_po_attachments_form'));
 
-        $.ajax({
-            url: "/upload_po_attachment",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                $('#upload_po_attachments_btn').hide();
-                $('#upload_po_attachments_icon').removeClass('d-none').prop('disabled', true);
-            },
-            success: function(response) {
-                $('#upload_po_attachments_icon').addClass('d-none').prop('disabled', false);
-                $('#upload_po_attachments_btn').show();
-                console.log(response);
-                if (response.success) {
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
+    //     $.ajax({
+    //         url: "/upload_po_attachment",
+    //         method: "POST",
+    //         data: formdata,
+    //         dataType: "json",
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //         beforeSend: function() {
+    //             $('#upload_po_attachments_btn').hide();
+    //             $('#upload_po_attachments_icon').removeClass('d-none').prop('disabled', true);
+    //         },
+    //         success: function(response) {
+    //             $('#upload_po_attachments_icon').addClass('d-none').prop('disabled', false);
+    //             $('#upload_po_attachments_btn').show();
+    //             console.log(response);
+    //             if (response.success) {
+    //                 swal({
+    //                     icon: 'success',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 }).then(function() {
+    //                     location.reload();
+    //                 });
 
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText); // For debugging
-                var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
+    //             } else {
+    //                 swal({
+    //                     icon: 'warning',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 })
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(xhr.responseText); // For debugging
+    //             var errorMessage = 'An error occurred: ' + (xhr.status ? xhr.status + ' ' + xhr.statusText : 'Unknown error');
 
-                if (xhr.status === 413) {
-                    swal({
-                        icon: 'error',
-                        title: 'Upload Error',
-                        text: 'File size too large.',
-                        buttons: false,
-                        timer: 2000,
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        icon: 'error',
-                        title: 'Upload Error',
-                        text: errorMessage,
-                        buttons: false,
-                        timer: 2000,
-                    });
-                }
-            }
-        });
-    })
-    $('#delete_po_attachments_btn').on('click', function() {
-        var formdata = new FormData(document.getElementById('delete_po_attachments_form'));
+    //             if (xhr.status === 413) {
+    //                 swal({
+    //                     icon: 'error',
+    //                     title: 'Upload Error',
+    //                     text: 'File size too large.',
+    //                     buttons: false,
+    //                     timer: 2000,
+    //                 }).then(function() {
+    //                     location.reload();
+    //                 });
+    //             } else {
+    //                 swal({
+    //                     icon: 'error',
+    //                     title: 'Upload Error',
+    //                     text: errorMessage,
+    //                     buttons: false,
+    //                     timer: 2000,
+    //                 });
+    //             }
+    //         }
+    //     });
+    // })
+    // $('#delete_po_attachments_btn').on('click', function() {
+    //     var formdata = new FormData(document.getElementById('delete_po_attachments_form'));
 
-        $.ajax({
-            url: "/delete_po_attachments",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                $('#delete_po_attachments_btn').hide();
-                $('#delete_po_attachments_icon').removeClass('d-none').prop('disabled', true);
-            },
-            success: function(response) {
-                $('#delete_po_attachments_icon').addClass('d-none').prop('disabled', false);
-                $('#delete_po_attachments_btn').show();
-                console.log(response);
-                if (response.success) {
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
+    //     $.ajax({
+    //         url: "/delete_po_attachments",
+    //         method: "POST",
+    //         data: formdata,
+    //         dataType: "json",
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //         beforeSend: function() {
+    //             $('#delete_po_attachments_btn').hide();
+    //             $('#delete_po_attachments_icon').removeClass('d-none').prop('disabled', true);
+    //         },
+    //         success: function(response) {
+    //             $('#delete_po_attachments_icon').addClass('d-none').prop('disabled', false);
+    //             $('#delete_po_attachments_btn').show();
+    //             console.log(response);
+    //             if (response.success) {
+    //                 swal({
+    //                     icon: 'success',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 }).then(function() {
+    //                     location.reload();
+    //                 });
 
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
-    $('#').on('submit', function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: "/upload_room_photo",
-            method: "POST",
-            data: formData,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                    $('#upload_room_photo_btn').hide();
-                    $('#upload_room_photo_icon').removeClass('d-none').prop('disabled', true);
-                },
-                success: function(response) {
-                    $('#upload_room_photo_icon').addClass('d-none').prop('disabled', false);
-                    $('#upload_room_photo_btn').show();
-                console.log(response);
-                if (response.success) {
-                    $('#delete_room_photo_modal').modal('hide');
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    }).then(function() {
-                        location.reload();
-                    });
+    //             } else {
+    //                 swal({
+    //                     icon: 'warning',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 })
+    //             }
+    //         }
+    //     });
+    // })
+    // $('#').on('submit', function(e) {
+    //     e.preventDefault();
+    //     var formData = new FormData(this);
+    //     $.ajax({
+    //         url: "/upload_room_photo",
+    //         method: "POST",
+    //         data: formData,
+    //         dataType: "json",
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //         beforeSend: function() {
+    //                 $('#upload_room_photo_btn').hide();
+    //                 $('#upload_room_photo_icon').removeClass('d-none').prop('disabled', true);
+    //             },
+    //             success: function(response) {
+    //                 $('#upload_room_photo_icon').addClass('d-none').prop('disabled', false);
+    //                 $('#upload_room_photo_btn').show();
+    //             console.log(response);
+    //             if (response.success) {
+    //                 $('#delete_room_photo_modal').modal('hide');
+    //                 swal({
+    //                     icon: 'success',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 }).then(function() {
+    //                     location.reload();
+    //                 });
 
-                } else {
-                    $('#delete_room_photo_modal').modal('hide');
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: '2000',
-                    })
-                }
-            }
-        });
-    })
+    //             } else {
+    //                 $('#delete_room_photo_modal').modal('hide');
+    //                 swal({
+    //                     icon: 'warning',
+    //                     title: response.title,
+    //                     text: response.message,
+    //                     buttons: false,
+    //                     timer: '2000',
+    //                 })
+    //             }
+    //         }
+    //     });
+    // })
     $('#delete_room_photo_form').on('submit', function(e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -433,12 +433,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#delete_room_photo_btn').hide();
-                    $('#delete_room_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#delete_room_photo_btn');
                 },
                 success: function(response) {
-                    $('#delete_room_icon').addClass('d-none').prop('disabled', false);
-                    $('#delete_room_photo_btn').show();
+                    hideLoading('#delete_room_photo_btn');
                 console.log(response);
                 if (response.success) {
                     swal({
