@@ -99,63 +99,60 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                     </div>
 
                     <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
+                        <div class="card">
+                            <!-- <div class="card"> -->
+                            <div class="row row-bordered g-0">
+                                <div class="col-md-12">
+                                    <div class="card-body" style="overflow-x:auto;">
+                                                    <form class="row g-3" method="post" id="purchase_details_form">
+                                                        <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Room Name<span class="require asterisk">*</span></label>
+                                                            <input type="text" class="form-control" name="roomname" id="roomname" value="<?php echo $row['room_name']?>">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Room Type<span class="require asterisk">*</span></label>
+                                                            <select name="roomtype" id="roomtype" class="form-control">
+                                                                <option value="Meeting-Room" <?php if($row['room_type'] == "Meeting-Room") echo 'selected'; ?>>Meeting Room</option>
+                                                                <option value="Training-Room" <?php if($row['room_type'] == "Training-Room") echo 'selected'; ?>>Training Room</option>
+                                                                <option value="Both" <?php if($row['room_type'] == "Both") echo 'selected'; ?>>Both</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Capacity<span class="require asterisk">*</span></label>
+                                                            <input type="number" class="form-control" name="capacity" id="capacity" min="1" value="<?php echo $row['capacity']?>">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Floor Number<span class="require asterisk">*</span></label>
+                                                            <input type="number" class="form-control" name="floornumber" id="floornumber" value="<?php echo $row['floor_number']?>">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Status<span class="require asterisk">*</span></label>
+                                                            <select name="status" id="status" class="form-control">
+                                                                <option value="Not-Available">Not Available</option>
+                                                                <option value="Available">Available</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="form-label">Remarks</label>
+                                                            <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
+                                                                rows="3"><?php echo $row['remarks']?></textarea>
+                                                        </div>
 
-                        <!-- <div class="card"> -->
-                        <div class="row row-bordered g-0">
-                            <div class="col-md-12">
-                                <div class="card-body" style="overflow-x:auto;">
-
-                                    
-                                                <form class="row g-3" method="post" id="purchase_details_form">
-                                                    <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Room Name<span class="require asterisk">*</span></label>
-                                                        <input type="text" class="form-control" name="roomname" id="roomname" value="<?php echo $row['room_name']?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Room Type<span class="require asterisk">*</span></label>
-                                                        <select name="roomtype" id="roomtype" class="form-control">
-                                                            <option value="Meeting-Room" <?php if($row['room_type'] == "Meeting-Room") echo 'selected'; ?>>Meeting Room</option>
-                                                            <option value="Training-Room" <?php if($row['room_type'] == "Training-Room") echo 'selected'; ?>>Training Room</option>
-                                                            <option value="Both" <?php if($row['room_type'] == "Both") echo 'selected'; ?>>Both</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label">Capacity<span class="require asterisk">*</span></label>
-                                                        <input type="number" class="form-control" name="capacity" id="capacity" min="1" value="<?php echo $row['capacity']?>">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label">Floor Number<span class="require asterisk">*</span></label>
-                                                        <input type="number" class="form-control" name="floornumber" id="floornumber" value="<?php echo $row['floor_number']?>">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label">Status<span class="require asterisk">*</span></label>
-                                                        <select name="status" id="status" class="form-control">
-                                                            <option value="Not-Available">Not Available</option>
-                                                            <option value="Available">Available</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label class="form-label">Remarks</label>
-                                                        <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
-                                                            rows="3"><?php echo $row['remarks']?></textarea>
-                                                    </div>
-
-                                                    <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                    <button type="button" class="btn btn-label-primary"
-                                                        id="edit_room_details"
-                                                        name="edit_room_details">Save</button>
-                                                        <button class="btn btn-label-primary d-none" type="button" id="edit_room_details_icon" disabled>
-                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                            Loading...
-                                                        </button>
-                                                    <?php }?>
-                                                </form>
-
+                                                        <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
+                                                        <button type="button" class="btn btn-label-primary"
+                                                            id="edit_room_details"
+                                                            name="edit_room_details">Save</button>
+                                                            <button class="btn btn-label-primary d-none" type="button" id="edit_room_details_icon" disabled>
+                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                                Loading...
+                                                            </button>
+                                                        <?php }?>
+                                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- </div> -->
 
                     </div>
                 </div>
