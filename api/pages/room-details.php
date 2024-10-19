@@ -48,7 +48,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                 <!-- Content -->
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
-                        
+
                         <!-- Details -->
                         <h4><span class="text-muted fw-light"><a href="room-list">Room List</a> /</span> Room Details</h4>
                         <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
@@ -102,7 +102,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             <div class="card">
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
-                                        <div class="card-body" style="overflow-x:auto;">
+                                        <div class="card-body">
                                                     <form class="row g-3" method="post" id="purchase_details_form">
                                                         <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                         <div class="col-md-6">
@@ -200,7 +200,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 $(document).ready(function() {
     if ("<?php echo $decrypted_array['ACCESS']; ?>" === "REQUESTOR") {
         // Get all input elements with type "text"
-        var form = document.getElementById('edit_room_form');
+        var form = document.getElementById('purchase_details_form');
 
         // Get all input elements with type "text" within the form
         var textInputs = form.querySelectorAll('input[type="text"]');
