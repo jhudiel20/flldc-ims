@@ -75,13 +75,12 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="button" id="upload_room_photo_btn"
-                                                                value="Upload" class="btn btn-label-primary"><i
+                                                            <button type="button" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary"><i
                                                                     class="fa-solid fa-upload"></i></button>
-                                                                    <button class="btn btn-label-primary d-none" type="button" id="upload_room_photo_icon" disabled>
+                                                                    <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
                                                                         <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                    Loading...
-                                                                </button>
+                                                                        Loading...
+                                                                    </button>
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
@@ -362,50 +361,45 @@ $(document).ready(function() {
     //         }
     //     });
     // })
-    // $('#').on('submit', function(e) {
-    //     e.preventDefault();
-    //     var formData = new FormData(this);
-    //     $.ajax({
-    //         url: "/upload_room_photo",
-    //         method: "POST",
-    //         data: formData,
-    //         dataType: "json",
-    //         contentType: false,
-    //         cache: false,
-    //         processData: false,
-    //         beforeSend: function() {
-    //                 $('#upload_room_photo_btn').hide();
-    //                 $('#upload_room_photo_icon').removeClass('d-none').prop('disabled', true);
-    //             },
-    //             success: function(response) {
-    //                 $('#upload_room_photo_icon').addClass('d-none').prop('disabled', false);
-    //                 $('#upload_room_photo_btn').show();
-    //             console.log(response);
-    //             if (response.success) {
-    //                 $('#delete_room_photo_modal').modal('hide');
-    //                 swal({
-    //                     icon: 'success',
-    //                     title: response.title,
-    //                     text: response.message,
-    //                     buttons: false,
-    //                     timer: '2000',
-    //                 }).then(function() {
-    //                     location.reload();
-    //                 });
-
-    //             } else {
-    //                 $('#delete_room_photo_modal').modal('hide');
-    //                 swal({
-    //                     icon: 'warning',
-    //                     title: response.title,
-    //                     text: response.message,
-    //                     buttons: false,
-    //                     timer: '2000',
-    //                 })
-    //             }
-    //         }
-    //     });
-    // })
+    $('#upload_room_photo_form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: "/upload_room_photo",
+            method: "POST",
+            data: formData,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                    showLoading('#upload_room_photo_btn');
+                },
+                success: function(response) {
+                    hideLoading('#upload_room_photo_btn');
+                console.log(response);
+                if (response.success) {
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
     $('#delete_room_photo_form').on('submit', function(e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -425,6 +419,7 @@ $(document).ready(function() {
                     hideLoading('#delete_room_photo_btn');
                 console.log(response);
                 if (response.success) {
+                    $('#delete_room_photo_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
