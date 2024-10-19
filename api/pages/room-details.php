@@ -75,7 +75,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="button" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary"><i
+                                                            <button type="submit" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary"><i
                                                                     class="fa-solid fa-upload"></i></button>
                                                                     <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
                                                                         <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
