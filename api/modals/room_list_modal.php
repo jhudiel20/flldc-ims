@@ -41,6 +41,16 @@
                                 </select>
                             </div>
                             <div class="col-md-12">
+                                <label class="form-label">Features</label>
+                                <textarea type="text" class="form-control" name="features" id="features" cols="20" placeholder="Please enter the features of the room"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Usage</label>
+                                <textarea type="text" class="form-control" name="usage" id="usage" cols="20" placeholder="Please enter the usage of the room"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12">
                                 <label class="form-label">Remarks</label>
                                 <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
                                     rows="3"></textarea>
@@ -58,10 +68,10 @@
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
                 <button type="submit" name="add_room" class="btn btn-label-primary" id="add_room">Submit</button>
-                <button class="btn btn-label-primary d-none" type="button" id="room_icon" disabled>
-                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
+                <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
+                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->

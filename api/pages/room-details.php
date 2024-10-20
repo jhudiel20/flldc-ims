@@ -128,8 +128,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         <div class="col-md-4">
                                                             <label class="form-label">Status<span class="require asterisk">*</span></label>
                                                             <select name="status" id="status" class="form-control">
-                                                                <option value="Not-Available">Not Available</option>
-                                                                <option value="Available">Available</option>
+                                                                <option value="Not-Available" <?php if($row['status'] == "Not-Available") echo 'selected'; ?>>Not Available</option>
+                                                                <option value="Available" <?php if($row['status'] == "Available") echo 'selected'; ?>>Available</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-12">

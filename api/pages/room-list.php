@@ -340,12 +340,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
                 beforeSend: function() {
-                    $('#add_room').hide();
-                    $('#room_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#add_room');
                 },
                 success: function(response) {
-                    $('#room_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_room').show();
+                    hideLoading('#add_room');
                     console.log(response);
                     if (response.success) {
                         $('#add_room_modal').modal('hide');
