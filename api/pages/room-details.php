@@ -145,7 +145,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         </div>
 
                                                         <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                        <button type="button" class="btn btn-label-primary"
+                                                        <button type="submit" class="btn btn-label-primary"
                                                             id="edit_room_details_btn"
                                                             name="edit_room_details_btn">Save</button>
                                                             <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
