@@ -218,13 +218,69 @@ $(document).ready(function() {
             textarea.disabled = true;
         });
     }
-    $('#room_details_form').on('click', function() {
-        var formdata = new FormData(purchase_details_form);
+    $('#room_details_form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        if ($('#roomname').val() == "") {
+                $("#roomname").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#roomname").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#roomtype').val() == "") {
+                $("#roomtype").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#roomtype").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#capacity').val() == "") {
+                $("#capacity").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#capacity").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#floornumber').val() == "") {
+                $("#floornumber").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#floornumber").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#features').val() == "") {
+                $("#features").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#features").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#usage').val() == "") {
+                $("#usage").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#usage").css({
+                    "border-color": ''
+                });
+            }
 
         $.ajax({
             url: "/edit_room_details",
             method: "POST",
-            data: formdata,
+            data: formData,
             dataType: "json",
             contentType: false,
             cache: false,
