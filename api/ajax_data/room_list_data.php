@@ -13,10 +13,10 @@ $start = $page * $query_limit;
 $sort_field = 'date_created';
 $sort_dir = 'DESC';
 
-$query_fields = ['id', 'room_name', 'room_id', 'room_type','capacity','floor_number','status','remarks'];
+$query_fields = ['id', 'room_name', 'room_id', 'room_type','capacity','floor_number','status'];
 
 if (!empty($sorters)) {
-    $valid_sorts = ['id', 'room_name', 'room_id', 'room_type','capacity','floor_number','status','remarks','date_created'];
+    $valid_sorts = ['id', 'room_name', 'room_id', 'room_type','capacity','floor_number','status','date_created'];
     $sort_field = in_array($sorters[0]['field'], $valid_sorts) ? $sorters[0]['field'] : $sort_field;
     $sort_dir = in_array($sorters[0]['dir'], ['asc', 'desc']) ? $sorters[0]['dir'] : $sort_dir;
 }
