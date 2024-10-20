@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = isset($_POST['status']) ? trim($_POST['status']) : '';
     $features = isset($_POST['features']) ? trim($_POST['features']) : '';
     $usage = isset($_POST['usage']) ? trim($_POST['usage']) : '';
-    $remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
+    // $remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : '';
 
     // Sanitize item name
     $roomname = str_replace("'", "", $roomname);
@@ -119,8 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare the INSERT statement for purchase_order
         $sql_add_room = $conn->prepare("
-            INSERT INTO room_details(ROOM_ID, ROOM_NAME, ROOM_TYPE, CAPACITY, FLOOR_NUMBER, STATUS, REMARKS, FEATURES, USAGE, ROOM_PHOTO) 
-            VALUES(:room_id, :roomname, :roomtype, :capacity, :floornumber, :status, :remarks, :features, :usage, :img)
+            INSERT INTO room_details(ROOM_ID, ROOM_NAME, ROOM_TYPE, CAPACITY, FLOOR_NUMBER, STATUS, FEATURES, USAGE, ROOM_PHOTO) 
+            VALUES(:room_id, :roomname, :roomtype, :capacity, :floornumber, :status, :features, :usage, :img)
         ");
 
         // Bind the parameters to the prepared statement
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_add_room->bindParam(':capacity', $capacity, PDO::PARAM_STR);
         $sql_add_room->bindParam(':floornumber', $floornumber, PDO::PARAM_STR);
         $sql_add_room->bindParam(':status', $status, PDO::PARAM_STR);
-        $sql_add_room->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+        // $sql_add_room->bindParam(':remarks', $remarks, PDO::PARAM_STR);
         $sql_add_room->bindParam(':features', $features, PDO::PARAM_STR);
         $sql_add_room->bindParam(':usage', $usage, PDO::PARAM_STR);
         $sql_add_room->bindParam(':img', $fileName, PDO::PARAM_STR);

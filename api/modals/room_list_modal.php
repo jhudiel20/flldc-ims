@@ -41,20 +41,20 @@
                                 </select>
                             </div>
                             <div class="col-md-12">
-                                <label class="form-label">Features</label>
+                                <label class="form-label">Features<span class="require asterisk">*</span></label>
                                 <textarea type="text" class="form-control" name="features" id="features" cols="20" placeholder="Please enter the features of the room"
                                     rows="3"></textarea>
                             </div>
                             <div class="col-md-12">
-                                <label class="form-label">Usage</label>
+                                <label class="form-label">Usage<span class="require asterisk">*</span></label>
                                 <textarea type="text" class="form-control" name="usage" id="usage" cols="20" placeholder="Please enter the usage of the room"
                                     rows="3"></textarea>
                             </div>
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <label class="form-label">Remarks</label>
                                 <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
                                     rows="3"></textarea>
-                            </div>
+                            </div> -->
                             <div class="col-md-12">
                                 <label class="form-label">Room Photo<span
                                         class="require asterisk">*</span></label>

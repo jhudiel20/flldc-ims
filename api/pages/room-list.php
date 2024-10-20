@@ -200,7 +200,7 @@ var table = new Tabulator("#room-list-table", {
             headerFilterLiveFilter: false
         },
         {
-            title: "Status",
+            title: "Room Availability",
             field: "status",
             hozAlign: "center",
             headerFilter: "list",
@@ -321,6 +321,24 @@ $(document).ready(function() {
                     "border-color": ''
                 });
             }
+            if ($('#features').val() == "") {
+                $("#features").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#features").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#usage').val() == "") {
+                $("#usage").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#usage").css({
+                    "border-color": ''
+                });
+            }
             if ($('#roomphoto').val() == "") {
                 $("#roomphoto").css({
                     "border-color": 'red'
@@ -370,69 +388,6 @@ $(document).ready(function() {
                 }
             });
         })
-
-        $('#submit_approval_btn').on('click', function(e) {
-                var formdata = new FormData(document.getElementById('request_approval_form'));
-                e.preventDefault();  
-            $.ajax({
-                url: "/update_request_status",
-                method: "POST",
-                data: formdata,
-                dataType: "json",
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function() {
-                    $('#submit_approval_btn').hide();
-                    $('#submit_icon').removeClass('d-none').prop('disabled', true);
-                },
-
-                success: function(response) {
-                    $('#submit_icon').addClass('d-none').prop('disabled', false);
-                    $('#submit_approval_btn').show();
-                    console.log(response);
-                    if (response.success) {
-                        $('#approval_modal').modal('hide');
-                        $('#request_approval_form')[0].reset();
-                        swal({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                            buttons: false,
-                            timer: 2000,
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else {
-                        swal({
-                            icon: 'warning',
-                            title: response.title,
-                            text: response.message,
-                            buttons: false,
-                        })
-                        $(".form-message").html(response.message);
-                        $(".form-message").css("display", "block");
-                    }
-                }
-            });
-        });
-
-        $(document).on("click", ".approval-status", function() {
-            var ID = $(this).data("id");
-            var APPROVAL = $(this).data("approved");
-            var ITEM_NAME = $(this).data("item");
-            var EMAIL = $(this).data("email");
-            var REQUEST_ID = $(this).data("request_id");
-
-            $('#ID').val(ID);
-            $('#APPROVAL').val(APPROVAL);
-            $('#ITEM_NAME').val(ITEM_NAME);
-            $('#EMAIL').val(EMAIL);
-            $('#REQUEST_ID').val(REQUEST_ID);
-
-            // Show the edit modal
-            $('#approval_modal').modal('show');
-        });
 });
 </script>
 
