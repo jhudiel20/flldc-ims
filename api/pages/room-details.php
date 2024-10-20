@@ -103,8 +103,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             <div class="row row-bordered g-0">
                                 <div class="col-md-12">
                                     <div class="card-body" style="overflow-x:auto;">
-                                                    <form class="row g-3" method="post" id="purchase_details_form">
+                                                    <form class="row g-3" method="post" id="room_details_form">
                                                         <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+                                                        <input type="hidden" id="roomid" name="roomid" value="<?php echo $row['room_id'];?>">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Room Name<span class="require asterisk">*</span></label>
                                                             <input type="text" class="form-control" name="roomname" id="roomname" value="<?php echo $row['room_name']?>">
@@ -133,16 +134,21 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </select>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <label class="form-label">Remarks</label>
-                                                            <textarea type="text" class="form-control" name="remarks" id="remarks" cols="20"
-                                                                rows="3"><?php echo $row['remarks']?></textarea>
+                                                            <label class="form-label">Features</label>
+                                                            <textarea type="text" class="form-control" name="features" id="features" cols="20"
+                                                                rows="3"><?php echo $row['features']?></textarea>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="form-label">Usage</label>
+                                                            <textarea type="text" class="form-control" name="usage" id="usage" cols="20"
+                                                                rows="3"><?php echo $row['usage']?></textarea>
                                                         </div>
 
                                                         <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
                                                         <button type="button" class="btn btn-label-primary"
-                                                            id="edit_room_details"
-                                                            name="edit_room_details">Save</button>
-                                                            <button class="btn btn-label-primary d-none" type="button" id="edit_room_details_icon" disabled>
+                                                            id="edit_room_details_btn"
+                                                            name="edit_room_details_btn">Save</button>
+                                                            <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
                                                                 <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                 Loading...
                                                             </button>
@@ -212,47 +218,45 @@ $(document).ready(function() {
             textarea.disabled = true;
         });
     }
-    // $('#submit_edit_purchase_details').on('click', function() {
-    //     var formdata = new FormData(purchase_details_form);
+    $('#room_details_form').on('click', function() {
+        var formdata = new FormData(purchase_details_form);
 
-    //     $.ajax({
-    //         url: "/edit_purchase_details_info",
-    //         method: "POST",
-    //         data: formdata,
-    //         dataType: "json",
-    //         contentType: false,
-    //         cache: false,
-    //         processData: false,
-    //         beforeSend: function() {
-    //             $('#submit_edit_purchase_details').hide();
-    //             $('#submit_icon').removeClass('d-none').prop('disabled', true);
-    //         },
-    //         success: function(response) {
-    //             $('#submit_icon').addClass('d-none').prop('disabled', false);
-    //             $('#submit_edit_purchase_details').show();
-    //             console.log(response);
-    //             if (response.success) {
-    //                 swal({
-    //                     icon: 'success',
-    //                     title: response.title,
-    //                     text: response.message,
-    //                     buttons: false,
-    //                     timer: '2000',
-    //                 }).then(function() {
-    //                     location.reload();
-    //                 });
-    //             } else {
-    //                 swal({
-    //                     icon: 'warning',
-    //                     title: response.title,
-    //                     text: response.message,
-    //                     buttons: false,
-    //                     timer: '2000',
-    //                 })
-    //             }
-    //         }
-    //     });
-    // })
+        $.ajax({
+            url: "/edit_room_details",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                showLoading('#edit_room_details_btn');
+            },
+            success: function(response) {
+                hideLoading('#edit_room_details_btn');
+                console.log(response);
+                if (response.success) {
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    })
     // $('#upload_po_attachments_btn').on('click', function() {
     //     var formdata = new FormData(document.getElementById('upload_po_attachments_form'));
 
