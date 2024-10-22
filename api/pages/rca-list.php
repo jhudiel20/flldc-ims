@@ -481,13 +481,11 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#add_rca').hide();
-                    $('#request_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#add_rca');
                 },
 
                 success: function(response) {
-                    $('#request_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_rca').show();
+                    hideLoading('#add_rca');
                     console.log(response);
                     if (response.success) {
                         $('#add_rca_modal').modal('hide');
@@ -601,13 +599,11 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#add_pcv').hide();
-                    $('#pcv_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#add_pcv');
                 },
 
                 success: function(response) {
-                    $('#pcv_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_pcv').show();
+                    hideLoading('#add_pcv')
                     console.log(response);
                     if (response.success) {
                         $('#add_pcv_modal').modal('hide');

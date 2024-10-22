@@ -206,7 +206,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
                                                                 <button type="submit" class="btn btn-label-primary" id="save">Save</button>
-                                                                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                                                                <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
                                                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
@@ -364,7 +364,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     rows="3"><?php echo $row['remarks']; ?></textarea>
                                                             </div>
                                                                 <button type="submit" class="btn btn-label-primary" id="save" >Save</button>
-                                                                <button class="btn btn-label-primary d-none" type="button" id="loading_icon" disabled>
+                                                                <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
                                                                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                                     Loading...
                                                                 </button>
@@ -539,12 +539,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#save').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#save');
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
-                    $('#save').show();
+                    hideLoading('#save');
                     console.log(response);
                     if (response.success) {
                         swal({
@@ -582,12 +580,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#delete_pvc_btn').hide();
-                    $('#delete_pvc_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#delete_pvc_btn');
                 },
                 success: function(response) {
-                    $('#delete_pvc_icon').addClass('d-none').prop('disabled', false);
-                    $('#delete_pvc_btn').show();
+                    hideLoading('#delete_pvc_btn');
                     console.log(response);
                     if (response.success) {
                         $('#delete_pcv_modal').modal('hide');
@@ -625,12 +621,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#upload_pvc_btn').hide();
-                    $('#upload_pvc_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#upload_pvc_btn');
                 },
                 success: function(response) {
-                    $('#upload_pvc_icon').addClass('d-none').prop('disabled', false);
-                    $('#upload_pvc_btn').show();
+                    hideLoading('#upload_pvc_btn');
                     console.log(response);
                     if (response.success) {
                         $('#upload_pcv_modal').modal('hide');
@@ -670,12 +664,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#save').hide();
-                    $('#loading_icon').removeClass('d-none').prop('disabled', true);
+                    showLoading('#save');
                 },
                 success: function(response) {
-                    $('#loading_icon').addClass('d-none').prop('disabled', false);
-                    $('#save').show();
+                    hideLoading('#save');
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -711,12 +703,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#delete_rca_btn').hide();
-                    $('#delete_rca_icon').removeClass('d-none').prop('disabled', true);
+                showLoading('#delete_rca_btn');
                 },
                 success: function(response) {
-                    $('#delete_rca_icon').addClass('d-none').prop('disabled', false);
-                    $('#delete_rca_btn').show();
+                    hideLoading('#delete_rca_btn');
                 console.log(response);
                 if (response.success) {
                     $('#delete_rca_modal').modal('hide');
@@ -754,12 +744,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#upload_rca_btn').hide();
-                    $('#upload_rca_icon').removeClass('d-none').prop('disabled', true);
+                showLoading('#upload_rca_btn');
                 },
                 success: function(response) {
-                    $('#upload_rca_icon').addClass('d-none').prop('disabled', false);
-                    $('#upload_rca_btn').show();
+                    hideLoading('#upload_rca_btn');
                 console.log(response);
                 if (response.success) {
                     $('#upload_rca_modal').modal('hide');
