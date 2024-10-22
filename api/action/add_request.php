@@ -158,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'lndreports2024@gmail.com';
-            $mail->Password   = 'yzmxbjcntuwkfdpe';
+            $mail->Password   = $_ENV['EMAIL_PASS'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
 
