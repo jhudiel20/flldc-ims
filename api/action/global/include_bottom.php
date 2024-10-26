@@ -28,3 +28,7 @@
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert.min.js?v=<?php echo FILE_VERSION; ?>"></script>
     <!-- dropify -->
     <!-- <script src="<?php //BASE_URL; ?>../js/dropify.min.js?v=<?php //echo FILE_VERSION; ?>"></script> -->
+
+    <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
+      inject();
+    </script>
