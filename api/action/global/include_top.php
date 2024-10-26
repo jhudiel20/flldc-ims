@@ -63,6 +63,9 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
+    <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
+      inject();
+    </script>
     <!-- sweetalert@ colored toast js -->
 
 

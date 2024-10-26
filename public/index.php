@@ -155,6 +155,10 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
+
+    <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
+      inject();
+    </script>
     <!-- Main JS -->
     <script src="<?php BASE_URL; ?>assets/js/main.js"></script>
 
