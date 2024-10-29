@@ -313,6 +313,10 @@
         "dest": "/public/mail/$1"
       },
       {
+        "src": "/forgot-password",
+        "dest": "/public/forgot-password.php"
+      },
+      {
         "src": "/(.*)",
         "dest": "/api/index"
       }

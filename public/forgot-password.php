@@ -86,36 +86,33 @@ include 'config/config.php';
                         <div class="authentication-inner">
                             <div class="card card-authentication">
                                 <div class="card-body">
-                                    <p class="label-shadow mb-2">SIGN-IN</p>
-                                    <form id="user_login_form" class="mb-3" method="post">
+                                    <p class="label-shadow mb-2">Forgot Password</p>
+                                    <form id="user_forgot_form" class="mb-3" method="post">
+                                        <h4 class="mb-2">Forgot Password? 🔒</h4>
+                                        <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+                                        <form id="forgot_password_form" class="mb-3" action="" method="post">
                                         <div class="mb-3">
-                                            <label for="username" class="form-label label-shadow">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                placeholder="Enter your email or username" />
+                                            <label for="email" class="form-label">Email</label>
+                                            <input
+                                            type="text"
+                                            class="form-control"
+                                            id="email"
+                                            name="email"
+                                            placeholder="Enter your email"
+                                            autofocus />
                                         </div>
-                                        <div class="mb-3 form-password-toggle">
-                                            <div class="d-flex justify-content-between">
-                                                <label class="form-label label-shadow" for="password">Password</label>
-                                                <a href="<?php BASE_URL; ?>forgot-password">
-                                                    <small>Forgot Password?</small>
-                                                </a>
-                                            </div>
-                                            <div class="input-group input-group-merge">
-                                                <input type="password" id="password" class="form-control"
-                                                    name="password"
-                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                    aria-describedby="password" />
-                                                <span class="input-group-text cursor-pointer"><i
-                                                        class="bx bx-hide"></i></span>
-                                            </div>
+                                        <button type="button" class="btn btn-primary d-grid w-100" id="send_link">Send Reset Link</button>
+                                        <button class="btn btn-label-primary d-none w-100" type="button" id="request_emailed_icon" disabled>
+                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                                </button>
+                                        </form>
+                                        <div class="text-center">
+                                            <a href="index" class="d-flex align-items-center justify-content-center">
+                                                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                                Back to login
+                                            </a>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign
-                                            in</button>
-                                        <button class="btn btn-label-primary d-none w-100" type="button"
-                                            id="request_icon" disabled>
-                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                            Loading...
-                                        </button>
                                     </form>
                                 </div>
                             </div>
