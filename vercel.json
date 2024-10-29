@@ -314,7 +314,7 @@
       },
       {
         "src": "/forgot-password",
-        "dest": "/api/forgot-password.php"
+        "dest": "/api/pages/forgot-password.php"
       },
       {
         "src": "/(.*)",
