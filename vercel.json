@@ -102,7 +102,10 @@
         "src": "/reservation-list",
         "dest": "/api/pages/reservation-list.php"
       },
-     
+      {
+        "src": "/calendar.php",
+        "dest": "/api/pages/calendar.php"
+      },
       {
         "src": "/reserve_list_data",
         "dest": "/api/ajax_data/reserve_list_data.php"
