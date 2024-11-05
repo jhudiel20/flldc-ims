@@ -4,19 +4,21 @@ require_once __DIR__ . '/../../public/config/config.php';
 
 header('Content-Type: application/json');
 
-
+try {
     // Query to fetch reservations
     $stmt = $conn->prepare("SELECT room_name, reserve_date, time FROM reservations");
     $stmt->execute();
 
     $reservations = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Convert the time slot to a start and end time
+        // Split the time slot into start and end times
         $times = explode('-', $row['time']);
+        
+        // Convert time to 24-hour format for FullCalendar
         $start_time = date("H:i:s", strtotime($times[0]));
         $end_time = date("H:i:s", strtotime($times[1]));
 
-        // Format the event for FullCalendar
+        // Format the event data for FullCalendar
         $reservations[] = [
             'title' => $row['room_name'],
             'start' => $row['reserve_date'] . 'T' . $start_time,
@@ -27,4 +29,7 @@ header('Content-Type: application/json');
     // Output the reservations as JSON
     echo json_encode($reservations);
 
+} catch (PDOException $e) {
+    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+}
 ?>
