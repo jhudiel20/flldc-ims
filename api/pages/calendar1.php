@@ -34,7 +34,10 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <!-- Content -->
                 <div class="container flex-grow-1 container-p-y">
                     <!-- Calendar Container -->
-                    <div id="calendar"></div>
+                     <div class="card">
+                        <div id="calendar"></div>
+                     </div>
+                    
                 </div>
                 <!-- / Content -->
 
@@ -61,27 +64,22 @@ if (!isset($decrypted_array['ACCESS'])) {
     include __DIR__ . "/../action/global/include_bottom.php";
     ?>
 
-    <!-- FullCalendar Initialization Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: [
-                    {
-                        title: 'Event 1',
-                        start: '2024-11-04'
-                    },
-                    {
-                        title: 'Event 2',
-                        start: '2024-11-06',
-                        end: '2024-11-08'
+                events: {
+                    url: '/calendar_data', // Path to the API endpoint
+                    method: 'GET',
+                    failure: function() {
+                        alert('There was an error fetching calendar data.');
                     }
-                    // Add more events or load them from a database
-                ]
+                }
             });
             calendar.render();
         });
     </script>
+
 </body>
 </html>
