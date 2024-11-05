@@ -17,6 +17,10 @@ if (!isset($decrypted_array['ACCESS'])) {
     include __DIR__ . "/../action/global/metadata.php";
     include __DIR__ . "/../action/global/include_top.php";
     ?>
+    <script>
+        <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/fullcalendar/fullcalendar.css" />
+        <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/css/pages/app-calendar.css" />
+    </script>
 </head>
 
 <body>
@@ -239,7 +243,9 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 <script>
-
+    <script src="<?php BASE_URL; ?>../assets/vendor/libs/fullcalendar/fullcalendar.js"></script>
+    <script src="<?php BASE_URL; ?>../assets/js/app-calendar-events.js"></script>
+    <script src="<?php BASE_URL; ?>../assets/js/app-calendar.js"></script>
 </script>
 
 </html>
