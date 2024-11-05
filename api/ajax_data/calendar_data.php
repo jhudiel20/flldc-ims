@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../public/config/config.php';
 
 header('Content-Type: application/json');
 
-try {
 
     // Query to fetch reservations
     $stmt = $conn->prepare("SELECT room_name, reserve_date, time FROM reservations");
@@ -28,7 +27,4 @@ try {
     // Output the reservations as JSON
     echo json_encode($reservations);
 
-} catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-}
 ?>

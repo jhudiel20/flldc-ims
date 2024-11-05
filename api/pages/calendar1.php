@@ -35,7 +35,11 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <div class="container flex-grow-1 container-p-y">
                     <!-- Calendar Container -->
                      <div class="card">
-                        <div id="calendar"></div>
+                        <div class="col-sm-12">
+                            <div class="card-body">
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
                      </div>
                     
                 </div>
