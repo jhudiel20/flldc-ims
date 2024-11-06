@@ -128,25 +128,6 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <script>
 
-function toggleView() {
-    var tableView = document.getElementById('table-view');
-    var calendarView = document.getElementById('calendar-view');
-    var button1 = document.getElementById('download-xlsx');
-    var button2 = document.getElementById('download-pdf');
-
-    if (tableView.style.display === "none") {
-        tableView.style.display = "block";
-        calendarView.style.display = "none";
-        button1.style.display = "block";
-        button2.style.display = "block";
-    } else {
-        tableView.style.display = "none";
-        calendarView.style.display = "block";
-        button1.style.display = "none";
-        button2.style.display = "none";
-    }
-}
-
 
 var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
@@ -390,70 +371,9 @@ function handlePdfDownload() {
     });
 };
 
-window.onload = function() {
-    initializeCalendar();
-};
-    function initializeCalendar() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                views: {
-                    dayGridMonth: { // Month view configuration
-                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
-                    },
-                    timeGridWeek: { // Week view configuration
-                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
-                        // You can also set options like `slotDuration` or `allDaySlot`
-                    }
-                },
-                headerToolbar: { // Toolbar configuration for navigation
-                    left: 'prev,next today', // Navigation buttons
-                    center: 'title', // Title in the center
-                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
-                },
-                events: {
-                    url: '/calendar_all_reserved_data', // Path to the API endpoint
-                    method: 'GET',
-                    failure: function(error) {
-                        console.error('Error fetching calendar data:', error);
-                        alert('There was an error fetching calendar data.');
-                    }
-                },
-                eventDidMount: function(info) {
-                    // Add Bootstrap 'primary' class to style the event
-                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
-                },
-                eventClick: function (info) {
-                    // Get event data
-                    var event = info.event;
-                    
-                    // Populate modal fields
-                    document.getElementById('modalRoomName').value = event.title;
-                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
-                    document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
-                    document.getElementById('modalName').value = event.extendedProps.name;
-                    document.getElementById('modalBU').value = event.extendedProps.bu;
-                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
-                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
-                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
-                    document.getElementById('modalExtension').value = event.extendedProps.extension;
-                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
-                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
-                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
-                    document.getElementById('modalTable').value = event.extendedProps.table_no;
-                    document.getElementById('modalMessage').value = event.extendedProps.message;
-
-                    // Show the modal
-                    var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
-                    eventModal.show();
-                }
-            });
-            calendar.render();
-        };
-
 
 $(document).ready(function() {
-
+        initializeCalendar();
         $('#add_request_form').on('submit', function(e) {
             var formData = new FormData(this);
             e.preventDefault();  
@@ -606,6 +526,84 @@ $(document).ready(function() {
         $('#approval_modal').modal('show');
     });
 });
+
+        function initializeCalendar() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                views: {
+                    dayGridMonth: { // Month view configuration
+                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
+                    },
+                    timeGridWeek: { // Week view configuration
+                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
+                        // You can also set options like `slotDuration` or `allDaySlot`
+                    }
+                },
+                headerToolbar: { // Toolbar configuration for navigation
+                    left: 'prev,next today', // Navigation buttons
+                    center: 'title', // Title in the center
+                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
+                },
+                events: {
+                    url: '/calendar_all_reserved_data', // Path to the API endpoint
+                    method: 'GET',
+                    failure: function(error) {
+                        console.error('Error fetching calendar data:', error);
+                        alert('There was an error fetching calendar data.');
+                    }
+                },
+                eventDidMount: function(info) {
+                    // Add Bootstrap 'primary' class to style the event
+                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
+                },
+                eventClick: function (info) {
+                    // Get event data
+                    var event = info.event;
+                    
+                    // Populate modal fields
+                    document.getElementById('modalRoomName').value = event.title;
+                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
+                    document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalName').value = event.extendedProps.name;
+                    document.getElementById('modalBU').value = event.extendedProps.bu;
+                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
+                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
+                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+                    document.getElementById('modalExtension').value = event.extendedProps.extension;
+                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
+                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+                    document.getElementById('modalTable').value = event.extendedProps.table_no;
+                    document.getElementById('modalMessage').value = event.extendedProps.message;
+
+                    // Show the modal
+                    var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+                    eventModal.show();
+                }
+            });
+            calendar.render();
+        };
+
+    function toggleView() {
+        var tableView = document.getElementById('table-view');
+        var calendarView = document.getElementById('calendar-view');
+        var button1 = document.getElementById('download-xlsx');
+        var button2 = document.getElementById('download-pdf');
+
+        if (tableView.style.display === "none") {
+            tableView.style.display = "block";
+            calendarView.style.display = "none";
+            button1.style.display = "block";
+            button2.style.display = "block";
+        } else {
+            tableView.style.display = "none";
+            calendarView.style.display = "block";
+            button1.style.display = "none";
+            button2.style.display = "none";
+        }
+    }
+
 </script>
 
 </html>
