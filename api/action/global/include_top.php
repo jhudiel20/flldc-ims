@@ -32,8 +32,6 @@
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/fullcalendar/fullcalendar.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/animate-css/animate.css" />
 
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-
     <!-- Helpers -->
     <script src="<?php BASE_URL; ?>../assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
