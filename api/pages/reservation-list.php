@@ -62,7 +62,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div id="table-view" style="display: block;">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
-                                            <div id="calendar-view" style="display: none;">
+                                            <div id="calendar-view" style="display: block;">
                                                 <div id="calendar"></div>
                                             </div>
 
@@ -374,9 +374,9 @@ function handlePdfDownload() {
     });
 };
 
-$(window).on("load", function() {
+window.onload = function() {
     initializeCalendar();
-});
+};
     function initializeCalendar() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
