@@ -95,6 +95,17 @@ if (!isset($decrypted_array['ACCESS'])) {
                     document.getElementById('modalRoomName').value = event.title;
                     document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
                     document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalName').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalBU').value = event.extendedProps.bu;
+                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
+                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
+                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+                    document.getElementById('modalExtension').value = event.extendedProps.extension;
+                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
+                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+                    document.getElementById('modalTable').value = event.extendedProps.table_no;
+                    document.getElementById('modalMessage').value = event.extendedProps.message;
 
                     // Show the modal
                     var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
