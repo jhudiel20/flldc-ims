@@ -50,7 +50,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     </button>
                                                     <!-- New Button for Calendar View aligned to the right -->
                                                     <button class="btn btn-label-primary ms-auto"onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar"></i> Calendar View
+                                                        <i class="fa-solid fa-calendar"></i> Approved Events
                                                     </button>
                                                 </div>
                                             </div>
