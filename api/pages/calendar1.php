@@ -15,6 +15,14 @@ if (!isset($decrypted_array['ACCESS'])) {
     include __DIR__ . "/../action/global/metadata.php";
     include __DIR__ . "/../action/global/include_top.php";
     ?>
+    <style>
+        /* Add this CSS to style events with the green background */
+        .fc-event.event-green {
+            background-color: green !important;
+            border-color: green !important;
+            color: white; /* Optional: to ensure text is visible on the green background */
+        }
+    </style>
     <!-- FullCalendar CSS and JS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
@@ -79,6 +87,20 @@ if (!isset($decrypted_array['ACCESS'])) {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                views: {
+                    dayGridMonth: { // Month view configuration
+                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
+                    },
+                    timeGridWeek: { // Week view configuration
+                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
+                        // You can also set options like `slotDuration` or `allDaySlot`
+                    }
+                },
+                headerToolbar: { // Toolbar configuration for navigation
+                    left: 'prev,next today', // Navigation buttons
+                    center: 'title', // Title in the center
+                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
+                },
                 events: {
                     url: '/calendar_data', // Path to the API endpoint
                     method: 'GET',
@@ -88,10 +110,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                     }
                 },
                 eventRender: function(info) {
-                    // Apply a green background color to the event
-                    info.el.style.backgroundColor = 'green';
-                    info.el.style.borderColor = 'green';
-                    info.el.style.color = 'white'; // Ensure text is visible on the green background
+                    // Add the 'event-green' class to the event element
+                    info.el.classList.add('event-green');
                 },
                 eventClick: function (info) {
                     // Get event data
