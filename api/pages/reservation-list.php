@@ -527,93 +527,183 @@ $(document).ready(function() {
     });
 });
 
-        function initializeCalendar() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                views: {
-                    dayGridMonth: { // Month view configuration
-                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
-                    },
-                    timeGridWeek: { // Week view configuration
-                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
-                        // You can also set options like `slotDuration` or `allDaySlot`
-                    }
-                },
-                headerToolbar: { // Toolbar configuration for navigation
-                    left: 'prev,next today', // Navigation buttons
-                    center: 'title', // Title in the center
-                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
-                },
-                events: {
-                    url: '/calendar_all_reserved_data', // Path to the API endpoint
-                    method: 'GET',
-                    failure: function(error) {
-                        console.error('Error fetching calendar data:', error);
-                        alert('There was an error fetching calendar data.');
-                    }
-                },
-                eventDidMount: function(info) {
-                    // Add Bootstrap 'primary' class to style the event
-                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
-                },
-                eventClick: function (info) {
-                    // Get event data
-                    var event = info.event;
+    //     function initializeCalendar() {
+    //         var calendarEl = document.getElementById('calendar');
+    //         var calendar = new FullCalendar.Calendar(calendarEl, {
+    //             initialView: 'dayGridMonth',
+    //             views: {
+    //                 dayGridMonth: { // Month view configuration
+    //                     titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
+    //                 },
+    //                 timeGridWeek: { // Week view configuration
+    //                     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
+    //                     // You can also set options like `slotDuration` or `allDaySlot`
+    //                 }
+    //             },
+    //             headerToolbar: { // Toolbar configuration for navigation
+    //                 left: 'prev,next today', // Navigation buttons
+    //                 center: 'title', // Title in the center
+    //                 right: 'dayGridMonth,timeGridWeek' // Options for month and week views
+    //             },
+    //             events: {
+    //                 url: '/calendar_all_reserved_data', // Path to the API endpoint
+    //                 method: 'GET',
+    //                 failure: function(error) {
+    //                     console.error('Error fetching calendar data:', error);
+    //                     alert('There was an error fetching calendar data.');
+    //                 }
+    //             },
+    //             eventDidMount: function(info) {
+    //                 // Add Bootstrap 'primary' class to style the event
+    //                 info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
+    //             },
+    //             eventClick: function (info) {
+    //                 // Get event data
+    //                 var event = info.event;
                     
-                    // Populate modal fields
-                    document.getElementById('modalRoomName').value = event.title;
-                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
-                    document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
-                    document.getElementById('modalName').value = event.extendedProps.name;
-                    document.getElementById('modalBU').value = event.extendedProps.bu;
-                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
-                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
-                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
-                    document.getElementById('modalExtension').value = event.extendedProps.extension;
-                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
-                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
-                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
-                    document.getElementById('modalTable').value = event.extendedProps.table_no;
-                    document.getElementById('modalMessage').value = event.extendedProps.message;
+    //                 // Populate modal fields
+    //                 document.getElementById('modalRoomName').value = event.title;
+    //                 document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
+    //                 document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+    //                 document.getElementById('modalName').value = event.extendedProps.name;
+    //                 document.getElementById('modalBU').value = event.extendedProps.bu;
+    //                 document.getElementById('modalContact').value = event.extendedProps.contact_no;
+    //                 document.getElementById('modalEmail').value = event.extendedProps.email_add;
+    //                 document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+    //                 document.getElementById('modalExtension').value = event.extendedProps.extension;
+    //                 document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+    //                 document.getElementById('modalChair').value = event.extendedProps.chair_no;
+    //                 document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+    //                 document.getElementById('modalTable').value = event.extendedProps.table_no;
+    //                 document.getElementById('modalMessage').value = event.extendedProps.message;
 
-                    // Show the modal
-                    var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
-                    eventModal.show();
-                }
-            });
-            calendar.render();
-        };
+    //                 // Show the modal
+    //                 var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+    //                 eventModal.show();
+    //             }
+    //         });
+    //         calendar.render();
+    //     };
 
-    function toggleView() {
-        var tableView = document.getElementById('table-view');
-        var calendarView = document.getElementById('calendar-view');
-        const toggleButton = document.querySelector("button[onclick='toggleView()']")
-        var button1 = document.getElementById('download-xlsx');
-        var button2 = document.getElementById('download-pdf');
+    // function toggleView() {
+    //     var tableView = document.getElementById('table-view');
+    //     var calendarView = document.getElementById('calendar-view');
+    //     const toggleButton = document.querySelector("button[onclick='toggleView()']")
+    //     var button1 = document.getElementById('download-xlsx');
+    //     var button2 = document.getElementById('download-pdf');
 
-        if (tableView.classList.contains("d-none")) {
-        // Show table view and hide calendar view
-            button1.classList.remove("d-none");
-            button2.classList.remove("d-none");
-            tableView.classList.remove("d-none");
-            calendarView.classList.add("d-none");
-            toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
-        } else {
-            // Show calendar view and hide table view
-            tableView.classList.add("d-none");
-            button1.classList.add("d-none");
-            button2.classList.add("d-none");
-            calendarView.classList.remove("d-none");
+    //     if (tableView.classList.contains("d-none")) {
+    //     // Show table view and hide calendar view
+    //         button1.classList.remove("d-none");
+    //         button2.classList.remove("d-none");
+    //         tableView.classList.remove("d-none");
+    //         calendarView.classList.add("d-none");
+    //         toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
+    //     } else {
+    //         // Show calendar view and hide table view
+    //         tableView.classList.add("d-none");
+    //         button1.classList.add("d-none");
+    //         button2.classList.add("d-none");
+    //         calendarView.classList.remove("d-none");
+    //         toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
 
-            setTimeout(() => {
-                $('#calendar').fullCalendar('render');  // For FullCalendar v3 and below
-                $('#calendar').fullCalendar('refetchEvents'); // Optional, to reload events
-            }, 0); // Set to 0 to render immediately
+    //         $('#calendar').fullCalendar({
 
-            toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
+    //         });
+    //     }
+    // }
+    // Initialize FullCalendar instance globally
+var calendar; // Declare globally to access it within the toggle function
+
+function initializeCalendar() {
+    var calendarEl = document.getElementById('calendar');
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        views: {
+            dayGridMonth: {
+                titleFormat: { year: 'numeric', month: 'long' }
+            },
+            timeGridWeek: {
+                titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }
+            }
+        },
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek'
+        },
+        events: {
+            url: '/calendar_all_reserved_data',
+            method: 'GET',
+            failure: function(error) {
+                console.error('Error fetching calendar data:', error);
+                alert('There was an error fetching calendar data.');
+            }
+        },
+        eventDidMount: function(info) {
+            info.el.classList.add('bg-primary', 'text-white');
+        },
+        eventClick: function(info) {
+            var event = info.event;
+            document.getElementById('modalRoomName').value = event.title;
+            document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
+            document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+            document.getElementById('modalName').value = event.extendedProps.name;
+            document.getElementById('modalBU').value = event.extendedProps.bu;
+            document.getElementById('modalContact').value = event.extendedProps.contact_no;
+            document.getElementById('modalEmail').value = event.extendedProps.email_add;
+            document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+            document.getElementById('modalExtension').value = event.extendedProps.extension;
+            document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+            document.getElementById('modalChair').value = event.extendedProps.chair_no;
+            document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+            document.getElementById('modalTable').value = event.extendedProps.table_no;
+            document.getElementById('modalMessage').value = event.extendedProps.message;
+            
+            var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+            eventModal.show();
         }
+    });
+}
+
+function toggleView() {
+    var tableView = document.getElementById('table-view');
+    var calendarView = document.getElementById('calendar-view');
+    const toggleButton = document.querySelector("button[onclick='toggleView()']");
+    var button1 = document.getElementById('download-xlsx');
+    var button2 = document.getElementById('download-pdf');
+
+    if (tableView.classList.contains("d-none")) {
+        // Show table view and hide calendar view
+        button1.classList.remove("d-none");
+        button2.classList.remove("d-none");
+        tableView.classList.remove("d-none");
+        calendarView.classList.add("d-none");
+        toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
+    } else {
+        // Show calendar view and hide table view
+        tableView.classList.add("d-none");
+        button1.classList.add("d-none");
+        button2.classList.add("d-none");
+        calendarView.classList.remove("d-none");
+
+        // Check if calendar is already initialized
+        if (!calendar) {
+            initializeCalendar();
+            calendar.render();  // Render the calendar the first time
+        } else {
+            calendar.render();  // Refresh the calendar if it already exists
+        }
+
+        toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
     }
+}
+
+// Initialize calendar only once when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCalendar();
+});
+
 
 </script>
 
