@@ -59,10 +59,6 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
-                                            <div class="tabulator-table" id="reserve-list-table"
-                                                style="font-size:14px;">
-                                            </div>
-
                                             <div id="table-view" style="display: block;">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
