@@ -76,7 +76,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                 events: {
                     url: '/calendar_data', // Path to the API endpoint
                     method: 'GET',
-                    failure: function() {
+                    failure: function(error) {
+                        console.error('Error fetching calendar data:', error);
                         alert('There was an error fetching calendar data.');
                     }
                 }

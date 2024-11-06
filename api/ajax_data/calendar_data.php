@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 try {
     // Query to fetch reservations
-    $stmt = $conn->prepare("SELECT room_name, reserve_date, time FROM reservations");
+    $stmt = $conn->prepare("SELECT room, reserve_date, time FROM reservations");
     $stmt->execute();
 
     $reservations = [];
@@ -26,10 +26,13 @@ try {
         ];
     }
 
-    // Output the reservations as JSON
-    echo json_encode($reservations);
-
-} catch (PDOException $e) {
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
-}
+      // Output the reservations array as JSON
+      echo json_encode($reservations ?: []); // Returns an empty array if no reservations found
+      exit();
+  
+  } catch (PDOException $e) {
+      // Return an error message as JSON if something goes wrong
+      echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+      exit();
+  }
 ?>
