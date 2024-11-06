@@ -52,6 +52,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
+                include __DIR__. "/../modals/calendar_modal.php";
                 include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
@@ -85,6 +86,19 @@ if (!isset($decrypted_array['ACCESS'])) {
                         console.error('Error fetching calendar data:', error);
                         alert('There was an error fetching calendar data.');
                     }
+                },
+                eventClick: function (info) {
+                    // Get event data
+                    var event = info.event;
+                    
+                    // Populate modal fields
+                    document.getElementById('modalRoomName').innerText = event.title;
+                    document.getElementById('modalDate').innerText = event.start.toLocaleDateString();
+                    document.getElementById('modalTime').innerText = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+
+                    // Show the modal
+                    var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+                    eventModal.show();
                 }
             });
             calendar.render();

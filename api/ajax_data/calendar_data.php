@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 try {
     // Query to fetch reservations
-    $stmt = $conn->prepare("SELECT room, reserve_date, time FROM reservations");
+    $stmt = $conn->prepare("SELECT room_name, reserve_date, time FROM reservations join room_details on room = room_id");
     $stmt->execute();
 
     $reservations = [];
@@ -20,7 +20,7 @@ try {
 
         // Format the event data for FullCalendar
         $reservations[] = [
-            'title' => $row['room'],
+            'title' => $row['room_name'],
             'start' => $row['reserve_date'] . 'T' . $start_time,
             'end' => $row['reserve_date'] . 'T' . $end_time
         ];
