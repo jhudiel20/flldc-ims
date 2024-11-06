@@ -42,7 +42,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                         <div class="card-body">
                                             <div class="py-1 mb-2">
                                                 <div class="additional-buttons d-flex">
-                                                    <button class="btn btn-label-primary" id="download-xlsx">
+                                                    <button class="btn btn-label-primary me-2" id="download-xlsx">
                                                         <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
                                                     <button class="btn btn-label-primary" id="download-pdf">
@@ -577,7 +577,7 @@ function toggleView() {
         button2.classList.remove("d-none");
         tableView.classList.remove("d-none");
         calendarView.classList.add("d-none");
-        toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
+        toggleButton.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
     } else {
         // Show calendar view and hide table view
         tableView.classList.add("d-none");
@@ -593,7 +593,7 @@ function toggleView() {
             calendar.render();  // Refresh the calendar if it already exists
         }
 
-        toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
+        toggleButton.innerHTML = '<i class="fa-solid fa-table me-1"></i> List View (All Events)';
     }
 }
 
