@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Chair No.<label>
-                                <input type="text" class="form-control" name="modalExtension" id="modalExtension" disabled>
+                                <input type="text" class="form-control" name="modalChair" id="modalChair" disabled>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Table No.<label>
