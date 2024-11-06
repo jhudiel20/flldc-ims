@@ -372,141 +372,167 @@ function handlePdfDownload() {
     });
 };
 
-$(document).ready(function() {
-    initializeCalendar();
-});
+    var calendar; // Global variable to store the calendar instance
+    var calendarInitialized = false; // Track if the calendar has been initialized
 
-        function initializeCalendar() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+    function toggleView() {
+        var calendarEl = document.getElementById('calendar');
+
+        if (!calendarInitialized) {
+            // Initialize the calendar if it hasn't been created yet
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                views: {
-                    dayGridMonth: { // Month view configuration
-                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
-                    },
-                    timeGridWeek: { // Week view configuration
-                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
-                        // You can also set options like `slotDuration` or `allDaySlot`
-                    }
-                },
-                headerToolbar: { // Toolbar configuration for navigation
-                    left: 'prev,next today', // Navigation buttons
-                    center: 'title', // Title in the center
-                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
-                },
                 events: {
-                    url: '/calendar_all_reserved_data', // Path to the API endpoint
+                    url: '/calendar_data',
                     method: 'GET',
                     failure: function(error) {
                         console.error('Error fetching calendar data:', error);
                         alert('There was an error fetching calendar data.');
                     }
                 },
-                eventDidMount: function(info) {
-                    // Add Bootstrap 'primary' class to style the event
-                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
-                },
-                eventClick: function (info) {
-                    // Get event data
+                eventClick: function(info) {
+                    // Example event click handler
                     var event = info.event;
-                    
-                    // Populate modal fields
                     document.getElementById('modalRoomName').value = event.title;
-                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
+                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
                     document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
-                    document.getElementById('modalName').value = event.extendedProps.name;
-                    document.getElementById('modalBU').value = event.extendedProps.bu;
-                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
-                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
-                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
-                    document.getElementById('modalExtension').value = event.extendedProps.extension;
-                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
-                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
-                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
-                    document.getElementById('modalTable').value = event.extendedProps.table_no;
-                    document.getElementById('modalMessage').value = event.extendedProps.message;
-
-                    // Show the modal
+                    
+                    // Show your modal (example)
                     var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
                     eventModal.show();
-                }
+                },
+                // Additional options...
             });
             calendar.render();
-        };
+            calendarInitialized = true; // Mark calendar as initialized
+        }
 
+        // Toggle calendar display
+        if (calendarEl.style.display === 'none') {
+            calendarEl.style.display = 'block'; // Show calendar
+        } else {
+            calendarEl.style.display = 'none'; // Hide calendar
+        }
+    }
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
-        $('#add_request_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault();  
+            $('#add_request_form').on('submit', function(e) {
+                var formData = new FormData(this);
+                e.preventDefault();  
 
-            if ($('#item_name').val() == "") {
-                $("#item_name").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#item_name").css({
-                    "border-color": ''
-                });
-            }
-            if ($('#quantity').val() == "") {
-                $("#quantity").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#quantity").css({
-                    "border-color": ''
-                });
-            }
-            if ($('#purpose').val() == "") {
-                $("#purpose").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#purpose").css({
-                    "border-color": ''
-                });
-            }
-            if ($('#date_needed').val() == "") {
-                $("#date_needed").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#date_needed").css({
-                    "border-color": ''
-                });
-            }
-            if ($('#item_photo').val() == "") {
-                $("#item_photo").css({
-                    "border-color": 'red'
-                });
-            } else {
-                $("#item_photo").css({
-                    "border-color": ''
-                });
-            }
+                if ($('#item_name').val() == "") {
+                    $("#item_name").css({
+                        "border-color": 'red'
+                    });
+                } else {
+                    $("#item_name").css({
+                        "border-color": ''
+                    });
+                }
+                if ($('#quantity').val() == "") {
+                    $("#quantity").css({
+                        "border-color": 'red'
+                    });
+                } else {
+                    $("#quantity").css({
+                        "border-color": ''
+                    });
+                }
+                if ($('#purpose').val() == "") {
+                    $("#purpose").css({
+                        "border-color": 'red'
+                    });
+                } else {
+                    $("#purpose").css({
+                        "border-color": ''
+                    });
+                }
+                if ($('#date_needed').val() == "") {
+                    $("#date_needed").css({
+                        "border-color": 'red'
+                    });
+                } else {
+                    $("#date_needed").css({
+                        "border-color": ''
+                    });
+                }
+                if ($('#item_photo').val() == "") {
+                    $("#item_photo").css({
+                        "border-color": 'red'
+                    });
+                } else {
+                    $("#item_photo").css({
+                        "border-color": ''
+                    });
+                }
 
+                $.ajax({
+                    url: "/add_request",
+                    method: "POST",
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,   // Important: prevents jQuery from setting the content type header
+                    cache: false,
+                    processData: false,   // Important: prevents jQuery from processing the FormD
+                    beforeSend: function() {
+                        $('#add_request').hide();
+                        $('#request_icon').removeClass('d-none').prop('disabled', true);
+                    },
+
+                    success: function(response) {
+                        $('#request_icon').addClass('d-none').prop('disabled', false);
+                        $('#add_request').show();
+                        console.log(response);
+                        if (response.success) {
+                            $('#add_request_modal').modal('hide');
+                            $('#add_request_form')[0].reset();
+                            swal({
+                                icon: 'success',
+                                title: response.title,
+                                text: response.message,
+                                buttons: false,
+                                timer: 2000,
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            swal({
+                                icon: 'warning',
+                                title: response.title,
+                                text: response.message,
+                                buttons: false,
+                            })
+                            $(".form-message").html(response.message);
+                            $(".form-message").css("display", "block");
+                        }
+                    }
+                });
+            })
+
+        $('#submit_approval_btn').on('click', function(e) {
+                var formdata = new FormData(document.getElementById('reserve_approval_form'));
+                e.preventDefault();  
             $.ajax({
-                url: "/add_request",
+                url: "/update_reserve_status",
                 method: "POST",
-                data: formData,
+                data: formdata,
                 dataType: "json",
-                contentType: false,   // Important: prevents jQuery from setting the content type header
+                contentType: false,
                 cache: false,
-                processData: false,   // Important: prevents jQuery from processing the FormD
+                processData: false,
                 beforeSend: function() {
-                    $('#add_request').hide();
-                    $('#request_icon').removeClass('d-none').prop('disabled', true);
+                    $('#submit_approval_btn').hide();
+                    $('#submit_icon').removeClass('d-none').prop('disabled', true);
                 },
 
                 success: function(response) {
-                    $('#request_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_request').show();
+                    $('#submit_icon').addClass('d-none').prop('disabled', false);
+                    $('#submit_approval_btn').show();
                     console.log(response);
                     if (response.success) {
-                        $('#add_request_modal').modal('hide');
-                        $('#add_request_form')[0].reset();
+                        $('#approval_modal').modal('hide');
+                        $('#reserve_approval_form')[0].reset();
                         swal({
                             icon: 'success',
                             title: response.title,
@@ -528,67 +554,21 @@ $(document).ready(function() {
                     }
                 }
             });
-        })
+        });
 
-    $('#submit_approval_btn').on('click', function(e) {
-            var formdata = new FormData(document.getElementById('reserve_approval_form'));
-            e.preventDefault();  
-        $.ajax({
-            url: "/update_reserve_status",
-            method: "POST",
-            data: formdata,
-            dataType: "json",
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                $('#submit_approval_btn').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
-            },
+        $(document).on("click", ".approval-status", function() {
+            var ID = $(this).data("id");
+            var APPROVAL = $(this).data("approved");
+            var EMAIL = $(this).data("email");
 
-            success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_approval_btn').show();
-                console.log(response);
-                if (response.success) {
-                    $('#approval_modal').modal('hide');
-                    $('#reserve_approval_form')[0].reset();
-                    swal({
-                        icon: 'success',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                        timer: 2000,
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        icon: 'warning',
-                        title: response.title,
-                        text: response.message,
-                        buttons: false,
-                    })
-                    $(".form-message").html(response.message);
-                    $(".form-message").css("display", "block");
-                }
-            }
+            $('#ID').val(ID);
+            $('#APPROVAL').val(APPROVAL);
+            $('#EMAIL').val(EMAIL);
+
+            // Show the edit modal
+            $('#approval_modal').modal('show');
         });
     });
-
-    $(document).on("click", ".approval-status", function() {
-        var ID = $(this).data("id");
-        var APPROVAL = $(this).data("approved");
-        var EMAIL = $(this).data("email");
-
-        $('#ID').val(ID);
-        $('#APPROVAL').val(APPROVAL);
-        $('#EMAIL').val(EMAIL);
-
-        // Show the edit modal
-        $('#approval_modal').modal('show');
-    });
-});
 </script>
 
 </html>
