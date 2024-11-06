@@ -40,33 +40,17 @@ if (!isset($decrypted_array['ACCESS'])) {
                                 <div class="d-flex align-items-end row">
                                     <div class="col-sm-12">
                                         <div class="card-body">
-                                            <!-- <ul class="nav nav-tabs nav-fill" role="tablist">
-                                                <li class="nav-item">
-                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                        data-bs-target="#list-format" aria-controls="navs-justified-home"
-                                                        aria-selected="true">
-                                                        <i class="fa-solid fa-clipboard-list"></i> List
-                                                    </button>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                        data-bs-target="#calendar-format" aria-controls="navs-justified-profile"
-                                                        aria-selected="false">
-                                                        <i class="fa-solid fa-calendar"></i> Calendar
-                                                    </button>
-                                                </li>
-                                            </ul> -->
                                             <div class="py-1 mb-2">
                                                 <div class="additional-buttons d-flex">
                                                     <button class="btn btn-label-primary" id="download-xlsx">
-                                                        <i class="fa-solid fa-download"></i> XLSX
+                                                        <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
                                                     <button class="btn btn-label-primary" id="download-pdf">
-                                                        <i class="fa-solid fa-download"></i> PDF
+                                                        <i class="fa-solid fa-download me-1"></i> PDF
                                                     </button>
                                                     <!-- New Button for Calendar View aligned to the right -->
                                                     <button class="btn btn-label-primary ms-auto" onclick="toggleView()"> 
-                                                        <i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)
+                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
                                                     </button>
                                                 </div>
                                             </div>
@@ -527,92 +511,6 @@ $(document).ready(function() {
     });
 });
 
-    //     function initializeCalendar() {
-    //         var calendarEl = document.getElementById('calendar');
-    //         var calendar = new FullCalendar.Calendar(calendarEl, {
-    //             initialView: 'dayGridMonth',
-    //             views: {
-    //                 dayGridMonth: { // Month view configuration
-    //                     titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
-    //                 },
-    //                 timeGridWeek: { // Week view configuration
-    //                     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
-    //                     // You can also set options like `slotDuration` or `allDaySlot`
-    //                 }
-    //             },
-    //             headerToolbar: { // Toolbar configuration for navigation
-    //                 left: 'prev,next today', // Navigation buttons
-    //                 center: 'title', // Title in the center
-    //                 right: 'dayGridMonth,timeGridWeek' // Options for month and week views
-    //             },
-    //             events: {
-    //                 url: '/calendar_all_reserved_data', // Path to the API endpoint
-    //                 method: 'GET',
-    //                 failure: function(error) {
-    //                     console.error('Error fetching calendar data:', error);
-    //                     alert('There was an error fetching calendar data.');
-    //                 }
-    //             },
-    //             eventDidMount: function(info) {
-    //                 // Add Bootstrap 'primary' class to style the event
-    //                 info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
-    //             },
-    //             eventClick: function (info) {
-    //                 // Get event data
-    //                 var event = info.event;
-                    
-    //                 // Populate modal fields
-    //                 document.getElementById('modalRoomName').value = event.title;
-    //                 document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
-    //                 document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
-    //                 document.getElementById('modalName').value = event.extendedProps.name;
-    //                 document.getElementById('modalBU').value = event.extendedProps.bu;
-    //                 document.getElementById('modalContact').value = event.extendedProps.contact_no;
-    //                 document.getElementById('modalEmail').value = event.extendedProps.email_add;
-    //                 document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
-    //                 document.getElementById('modalExtension').value = event.extendedProps.extension;
-    //                 document.getElementById('modalGuest').value = event.extendedProps.guest_no;
-    //                 document.getElementById('modalChair').value = event.extendedProps.chair_no;
-    //                 document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
-    //                 document.getElementById('modalTable').value = event.extendedProps.table_no;
-    //                 document.getElementById('modalMessage').value = event.extendedProps.message;
-
-    //                 // Show the modal
-    //                 var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
-    //                 eventModal.show();
-    //             }
-    //         });
-    //         calendar.render();
-    //     };
-
-    // function toggleView() {
-    //     var tableView = document.getElementById('table-view');
-    //     var calendarView = document.getElementById('calendar-view');
-    //     const toggleButton = document.querySelector("button[onclick='toggleView()']")
-    //     var button1 = document.getElementById('download-xlsx');
-    //     var button2 = document.getElementById('download-pdf');
-
-    //     if (tableView.classList.contains("d-none")) {
-    //     // Show table view and hide calendar view
-    //         button1.classList.remove("d-none");
-    //         button2.classList.remove("d-none");
-    //         tableView.classList.remove("d-none");
-    //         calendarView.classList.add("d-none");
-    //         toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
-    //     } else {
-    //         // Show calendar view and hide table view
-    //         tableView.classList.add("d-none");
-    //         button1.classList.add("d-none");
-    //         button2.classList.add("d-none");
-    //         calendarView.classList.remove("d-none");
-    //         toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
-
-    //         $('#calendar').fullCalendar({
-
-    //         });
-    //     }
-    // }
-    // Initialize FullCalendar instance globally
 var calendar; // Declare globally to access it within the toggle function
 
 function initializeCalendar() {
@@ -641,7 +539,7 @@ function initializeCalendar() {
             }
         },
         eventDidMount: function(info) {
-            info.el.classList.add('bg-primary', 'text-white');
+            info.el.classList.add('bg-success', 'text-white');
         },
         eventClick: function(info) {
             var event = info.event;
