@@ -50,7 +50,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     </button>
                                                     <!-- New Button for Calendar View aligned to the right -->
                                                     <button class="btn btn-label-primary ms-auto"onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar"> </i> Calendar View
+                                                        <i class="fa-solid fa-calendar"></i> Calendar View
                                                     </button>
                                                 </div>
                                             </div>
@@ -115,6 +115,8 @@ if (!isset($decrypted_array['ACCESS'])) {
 function toggleView() {
     var tableView = document.getElementById('table-view');
     var calendarView = document.getElementById('calendar-view');
+    var button1 = document.getElementById('download-xlsx');
+    var button2 = document.getElementById('download-pdf');
 
     if (tableView.style.display === "none") {
         tableView.style.display = "block";
@@ -122,6 +124,8 @@ function toggleView() {
     } else {
         tableView.style.display = "none";
         calendarView.style.display = "block";
+        button1.style.display = "none";
+        button2.style.display = "none";
     }
 }
 
@@ -368,7 +372,11 @@ function handlePdfDownload() {
     });
 };
 
-        document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
+    initializeCalendar();
+});
+
+        function initializeCalendar() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -424,7 +432,7 @@ function handlePdfDownload() {
                 }
             });
             calendar.render();
-        });
+        };
 
 
 $(document).ready(function() {
