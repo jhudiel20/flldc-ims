@@ -109,9 +109,9 @@ if (!isset($decrypted_array['ACCESS'])) {
                         alert('There was an error fetching calendar data.');
                     }
                 },
-                eventRender: function(info) {
-                    // Add the 'event-green' class to the event element
-                    info.el.classList.add('event-green');
+                eventDidMount: function(info) {
+                    // Add Bootstrap 'primary' class to style the event
+                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
                 },
                 eventClick: function (info) {
                     // Get event data
