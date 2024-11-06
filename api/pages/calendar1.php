@@ -93,7 +93,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                     
                     // Populate modal fields
                     document.getElementById('modalRoomName').value = event.title;
-                    document.getElementById('modalDate').value = event.start.toLocaleDateString();
+                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
                     document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
 
                     // Show the modal
