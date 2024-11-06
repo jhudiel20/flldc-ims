@@ -49,8 +49,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                         <i class="fa-solid fa-download"></i> PDF
                                                     </button>
                                                     <!-- New Button for Calendar View aligned to the right -->
-                                                    <button class="btn btn-label-primary ms-auto" id="switch-to-calendar">
-                                                        <i class="fa-solid fa-calendar"></i> Calendar View
+                                                    <button class="btn btn-label-primary ms-auto"onclick="toggleView()">
+                                                        <i class="fa-solid fa-calendar"> </i> Calendar View
                                                     </button>
                                                 </div>
                                             </div>
