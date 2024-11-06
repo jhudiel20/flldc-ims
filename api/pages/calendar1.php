@@ -87,6 +87,12 @@ if (!isset($decrypted_array['ACCESS'])) {
                         alert('There was an error fetching calendar data.');
                     }
                 },
+                eventRender: function(info) {
+                    // Apply a green background color to the event
+                    info.el.style.backgroundColor = 'green';
+                    info.el.style.borderColor = 'green';
+                    info.el.style.color = 'white'; // Ensure text is visible on the green background
+                },
                 eventClick: function (info) {
                     // Get event data
                     var event = info.event;
@@ -95,7 +101,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                     document.getElementById('modalRoomName').value = event.title;
                     document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
                     document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
-                    document.getElementById('modalName').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalName').value = event.extendedProps.name;
                     document.getElementById('modalBU').value = event.extendedProps.bu;
                     document.getElementById('modalContact').value = event.extendedProps.contact_no;
                     document.getElementById('modalEmail').value = event.extendedProps.email_add;
