@@ -65,8 +65,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                         <i class="fa-solid fa-download"></i> PDF
                                                     </button>
                                                     <!-- New Button for Calendar View aligned to the right -->
-                                                    <button class="btn btn-label-primary ms-auto"onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar"></i> Approved Events
+                                                    <button class="btn btn-label-primary ms-auto" onclick="toggleView()"> 
+                                                        <i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)
                                                     </button>
                                                 </div>
                                             </div>
@@ -75,10 +75,10 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
-                                            <div id="table-view" style="display: block;">
+                                            <div id="table-view" class="mb-2">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
-                                            <div id="calendar-view" style="display: none;">
+                                            <div id="calendar-view" class="mb-2 d-none">
                                                 <div id="calendar"></div>
                                             </div>
 
@@ -588,19 +588,24 @@ $(document).ready(function() {
     function toggleView() {
         var tableView = document.getElementById('table-view');
         var calendarView = document.getElementById('calendar-view');
+        const toggleButton = document.querySelector("button[onclick='toggleView()']")
         var button1 = document.getElementById('download-xlsx');
         var button2 = document.getElementById('download-pdf');
 
-        if (tableView.style.display === "none") {
-            tableView.style.display = "block";
-            calendarView.style.display = "none";
-            button1.style.display = "block";
-            button2.style.display = "block";
+        if (tableView.classList.contains("d-none")) {
+        // Show table view and hide calendar view
+            button1.classList.remove("d-none");
+            button2.classList.remove("d-none");
+            tableView.classList.remove("d-none");
+            calendarView.classList.add("d-none");
+            toggleButton.innerHTML = '<i class="fa-solid fa-calendar"></i> Calendar View (Approved Events)';
         } else {
-            tableView.style.display = "none";
-            calendarView.style.display = "block";
-            button1.style.display = "none";
-            button2.style.display = "none";
+            // Show calendar view and hide table view
+            tableView.classList.add("d-none");
+            button1.classList.add("d-none");
+            button2.classList.add("d-none");
+            calendarView.classList.remove("d-none");
+            toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
         }
     }
 
