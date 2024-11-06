@@ -7,12 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3" method="POST" id="" enctype="multipart/form-data">
-
-                    <div class="tab-pane fade show active" id="USER" role="tabpanel">
                         <div class="row">
-
-                            <div class="form-message alert alert-danger" role="alert"></div>
                             <div class="col-md-6">
                                 <label class="form-label">Room Name</label>
                                 <input type="text" class="form-control" name="modalRoomName" id="modalRoomName" disabled>
@@ -61,11 +56,12 @@
                                 <label class="form-label">Extension Wire<label>
                                 <input type="text" class="form-control" name="modalExtension" id="modalExtension" disabled>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
                                 <label class="form-label">Chair No.<label>
                                 <input type="text" class="form-control" name="modalChair" id="modalChair" disabled>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">Table No.<label>
                                 <input type="text" class="form-control" name="modalTable" id="modalTable" disabled>
                             </div>
@@ -75,14 +71,10 @@
                                 <textarea class="form-control" name="modalMessage" id="modalMessage" type="text" cols="30" rows="3" disabled></textarea>
                             </div>
                         </div>
-                    </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
-            </form><!-- End Multi Columns Form -->
         </div>
     </div>
 </div>
