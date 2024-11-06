@@ -6,7 +6,8 @@ header('Content-Type: application/json');
 
 try {
     // Query to fetch reservations
-    $stmt = $conn->prepare("SELECT room_name, reserve_date, time FROM reservations join room_details on room = room_id");
+    $stmt = $conn->prepare("SELECT room_name, reserve_date, time, business_unit, contact, email, hdmi, extension, guest, setup, fname,
+    lname, chair, table, reason FROM reservations join room_details on room = room_id WHERE reserve_status = 'APPROVED' ");
     $stmt->execute();
 
     $reservations = [];

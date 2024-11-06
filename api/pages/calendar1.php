@@ -92,9 +92,9 @@ if (!isset($decrypted_array['ACCESS'])) {
                     var event = info.event;
                     
                     // Populate modal fields
-                    document.getElementById('modalRoomName').innerText = event.title;
-                    document.getElementById('modalDate').innerText = event.start.toLocaleDateString();
-                    document.getElementById('modalTime').innerText = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalRoomName').value = event.title;
+                    document.getElementById('modalDate').value = event.start.toLocaleDateString();
+                    document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
 
                     // Show the modal
                     var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
