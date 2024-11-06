@@ -40,6 +40,22 @@ if (!isset($decrypted_array['ACCESS'])) {
                                 <div class="d-flex align-items-end row">
                                     <div class="col-sm-12">
                                         <div class="card-body">
+                                            <!-- <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                <li class="nav-item">
+                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                        data-bs-target="#list-format" aria-controls="navs-justified-home"
+                                                        aria-selected="true">
+                                                        <i class="fa-solid fa-clipboard-list"></i> List
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                        data-bs-target="#calendar-format" aria-controls="navs-justified-profile"
+                                                        aria-selected="false">
+                                                        <i class="fa-solid fa-calendar"></i> Calendar
+                                                    </button>
+                                                </li>
+                                            </ul> -->
                                             <div class="py-1 mb-2">
                                                 <div class="additional-buttons d-flex">
                                                     <button class="btn btn-label-primary" id="download-xlsx">
@@ -62,7 +78,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div id="table-view" style="display: block;">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
-                                            <div id="calendar-view" style="display: block;">
+                                            <div id="calendar-view" style="display: none;">
                                                 <div id="calendar"></div>
                                             </div>
 
