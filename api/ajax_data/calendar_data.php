@@ -10,7 +10,7 @@ try {
     lname, chair, "table", message 
     FROM reservations 
     JOIN room_details ON room = room_id 
-    WHERE reserve_status = "APPROVED"');
+    WHERE reserve_status = "APPROVED" ');
     $stmt->execute();
 
     $reservations = [];

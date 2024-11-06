@@ -103,6 +103,10 @@
         "dest": "/api/pages/reservation-list.php"
       },
       {
+        "src": "/calendar_all_reserved_data",
+        "dest": "/api/ajax_data/app_res_calendar_data.php"
+      },
+      {
         "src": "/calendar.php",
         "dest": "/api/pages/calendar.php"
       },

@@ -8,6 +8,8 @@
     <script src="<?php BASE_URL; ?>../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
     <!-- Vendors JS -->
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/fullcalendar/fullcalendar.js"></script>
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/@form-validation/popular.js"></script>

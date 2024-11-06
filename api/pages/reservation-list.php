@@ -84,6 +84,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
+                    include __DIR__. "/../modals/calendar_modal.php";
                     include __DIR__. "/../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
@@ -390,7 +391,7 @@ function handlePdfDownload() {
                     right: 'dayGridMonth,timeGridWeek' // Options for month and week views
                 },
                 events: {
-                    url: '/calendar_data', // Path to the API endpoint
+                    url: '/calendar_all_reserved_data', // Path to the API endpoint
                     method: 'GET',
                     failure: function(error) {
                         console.error('Error fetching calendar data:', error);
