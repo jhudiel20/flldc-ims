@@ -121,6 +121,8 @@ function toggleView() {
     if (tableView.style.display === "none") {
         tableView.style.display = "block";
         calendarView.style.display = "none";
+        button1.style.display = "block";
+        button2.style.display = "block";
     } else {
         tableView.style.display = "none";
         calendarView.style.display = "block";
