@@ -110,7 +110,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                     // Show the modal
                     var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
                     eventModal.show();
-                }
+                },
+                eventColor: 'green'
             });
             calendar.render();
         });
