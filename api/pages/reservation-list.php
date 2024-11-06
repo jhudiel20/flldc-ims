@@ -40,12 +40,18 @@ if (!isset($decrypted_array['ACCESS'])) {
                                 <div class="d-flex align-items-end row">
                                     <div class="col-sm-12">
                                         <div class="card-body">
-                                            <div class="py-1 mb-2 ">
-                                                <div class="additional-buttons">
-                                                    <button class="btn btn-label-primary" id="download-xlsx"><i
-                                                            class="fa-solid fa-download"></i> XLSX</button>
-                                                    <button class="btn btn-label-primary" id="download-pdf"><i
-                                                            class="fa-solid fa-download"></i> PDF</button>
+                                            <div class="py-1 mb-2">
+                                                <div class="additional-buttons d-flex">
+                                                    <button class="btn btn-label-primary" id="download-xlsx">
+                                                        <i class="fa-solid fa-download"></i> XLSX
+                                                    </button>
+                                                    <button class="btn btn-label-primary" id="download-pdf">
+                                                        <i class="fa-solid fa-download"></i> PDF
+                                                    </button>
+                                                    <!-- New Button for Calendar View aligned to the right -->
+                                                    <button class="btn btn-label-primary ms-auto" id="switch-to-calendar">
+                                                        <i class="fa-solid fa-calendar"></i> Calendar View
+                                                    </button>
                                                 </div>
                                             </div>
 
@@ -55,6 +61,13 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                                             <div class="tabulator-table" id="reserve-list-table"
                                                 style="font-size:14px;">
+                                            </div>
+
+                                            <div id="table-view" style="display: block;">
+                                                <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
+                                            </div>
+                                            <div id="calendar-view" style="display: none;">
+                                                <div id="calendar"></div>
                                             </div>
 
 
@@ -101,6 +114,21 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 <script>
+
+function toggleView() {
+    var tableView = document.getElementById('table-view');
+    var calendarView = document.getElementById('calendar-view');
+
+    if (tableView.style.display === "none") {
+        tableView.style.display = "block";
+        calendarView.style.display = "none";
+    } else {
+        tableView.style.display = "none";
+        calendarView.style.display = "block";
+    }
+}
+
+
 var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
@@ -343,7 +371,63 @@ function handlePdfDownload() {
     });
 };
 
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                views: {
+                    dayGridMonth: { // Month view configuration
+                        titleFormat: { year: 'numeric', month: 'long' } // Customize the title format
+                    },
+                    timeGridWeek: { // Week view configuration
+                        titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }, // Customize the title format
+                        // You can also set options like `slotDuration` or `allDaySlot`
+                    }
+                },
+                headerToolbar: { // Toolbar configuration for navigation
+                    left: 'prev,next today', // Navigation buttons
+                    center: 'title', // Title in the center
+                    right: 'dayGridMonth,timeGridWeek' // Options for month and week views
+                },
+                events: {
+                    url: '/calendar_data', // Path to the API endpoint
+                    method: 'GET',
+                    failure: function(error) {
+                        console.error('Error fetching calendar data:', error);
+                        alert('There was an error fetching calendar data.');
+                    }
+                },
+                eventDidMount: function(info) {
+                    // Add Bootstrap 'primary' class to style the event
+                    info.el.classList.add('bg-primary', 'text-white'); // 'bg-primary' for background color, 'text-white' for readable text
+                },
+                eventClick: function (info) {
+                    // Get event data
+                    var event = info.event;
+                    
+                    // Populate modal fields
+                    document.getElementById('modalRoomName').value = event.title;
+                    document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];  // Format date as YYYY-MM-DD
+                    document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+                    document.getElementById('modalName').value = event.extendedProps.name;
+                    document.getElementById('modalBU').value = event.extendedProps.bu;
+                    document.getElementById('modalContact').value = event.extendedProps.contact_no;
+                    document.getElementById('modalEmail').value = event.extendedProps.email_add;
+                    document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+                    document.getElementById('modalExtension').value = event.extendedProps.extension;
+                    document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+                    document.getElementById('modalChair').value = event.extendedProps.chair_no;
+                    document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+                    document.getElementById('modalTable').value = event.extendedProps.table_no;
+                    document.getElementById('modalMessage').value = event.extendedProps.message;
 
+                    // Show the modal
+                    var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+                    eventModal.show();
+                }
+            });
+            calendar.render();
+        });
 
 
 $(document).ready(function() {
