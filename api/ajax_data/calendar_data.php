@@ -6,11 +6,11 @@ header('Content-Type: application/json');
 
 try {
     // Query to fetch reservations
-    $stmt = $conn->prepare("SELECT room_name, reserve_date, time, business_unit, contact, email, hdmi, extension, guest, setup, fname,
-    lname, chair, 'table' AS table_no, message 
+    $stmt = $conn->prepare('SELECT room_name, reserve_date, time, business_unit, contact, email, hdmi, extension, guest, setup, fname,
+    lname, chair, "table", message 
     FROM reservations 
     JOIN room_details ON room = room_id 
-    WHERE reserve_status = 'APPROVED'");
+    WHERE reserve_status = "APPROVED"');
     $stmt->execute();
 
     $reservations = [];
@@ -34,7 +34,7 @@ try {
             'guest_no' => $row['guest'],
             'chair_setup' => $row['setup'],
             'chair_no' => $row['chair'],
-            'table_no' => $row['table_no'],
+            'table_no' => $row['table'],
             'message' => $row['message'],
             'start' => $row['reserve_date'] . 'T' . $start_time,
             'end' => $row['reserve_date'] . 'T' . $end_time
