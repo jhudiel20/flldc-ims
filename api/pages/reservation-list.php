@@ -372,10 +372,8 @@ function handlePdfDownload() {
     });
 };
 
-$(document).ready(function() {
-    setTimeout(function() {
-        initializeCalendar(); // Initialize the calendar after a short delay
-    }, 100); // Adjust the delay as needed (100ms is often sufficient)
+$(window).on("load", function() {
+    initializeCalendar();
 });
 
         function initializeCalendar() {
