@@ -605,6 +605,12 @@ $(document).ready(function() {
             button1.classList.add("d-none");
             button2.classList.add("d-none");
             calendarView.classList.remove("d-none");
+
+            setTimeout(() => {
+                $('#calendar').fullCalendar('render');  // For FullCalendar v3 and below
+                $('#calendar').fullCalendar('refetchEvents'); // Optional, to reload events
+            }, 0); // Set to 0 to render immediately
+
             toggleButton.innerHTML = '<i class="fa-solid fa-table"></i> List View (All Events)';
         }
     }
