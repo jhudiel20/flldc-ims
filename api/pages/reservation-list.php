@@ -374,7 +374,10 @@ function handlePdfDownload() {
     });
 };
 
-        document.addEventListener('DOMContentLoaded', function() {
+$(window).on("load", function() {
+    initializeCalendar();
+});
+    function initializeCalendar() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -430,7 +433,7 @@ function handlePdfDownload() {
                 }
             });
             calendar.render();
-        });
+        };
 
 
 $(document).ready(function() {
