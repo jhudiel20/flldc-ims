@@ -521,7 +521,7 @@ $(document).ready(function() {
     $(document).on("click", ".approval-status", function() {
         var ID = $(this).data("id");
         var APPROVAL = $(this).data("approved");
-        var ROOM_ID = $(this).data("room_id");
+        var ROOM_ID = $(this).data("roomid");
         var EMAIL = $(this).data("email");
 
         $('#ID').val(ID);
