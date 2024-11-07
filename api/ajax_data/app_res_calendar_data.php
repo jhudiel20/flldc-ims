@@ -25,7 +25,7 @@ try {
 
         // Format the event data for FullCalendar
         $reservations[] = [
-            'title' => $row['room_name'],
+            'title' => $row['room_name'] .'-'.$row['fname'] .' '. $row['lname'],
             'name' => $row['fname'] .' '. $row['lname'],
             'bu' => $row['business_unit'],
             'contact_no' => $row['contact'],

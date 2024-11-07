@@ -61,7 +61,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     Actions</button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item" href="javascript:void(0);" onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)</a>
+                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View</a>
                                                     </li>
                                                     <li>
                                                         <hr class="dropdown-divider">
@@ -302,6 +302,7 @@ function initializeCalendar() {
                 titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }
             }
         },
+        displayEventTime: false,
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -355,8 +356,8 @@ function toggleView() {
         button2.classList.remove("d-none");
         tableView.classList.remove("d-none");
         calendarView.classList.add("d-none");
-        toggleButton.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
-        toggleButton1.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
+        toggleButton.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View';
     } else {
         // Show calendar view and hide table view
         tableView.classList.add("d-none");
@@ -372,8 +373,8 @@ function toggleView() {
             calendar.render();  // Refresh the calendar if it already exists
         }
 
-        toggleButton.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
-        toggleButton1.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
+        toggleButton.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View';
     }
 }
 

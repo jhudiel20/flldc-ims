@@ -545,6 +545,7 @@ function initializeCalendar() {
                 titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }
             }
         },
+        displayEventTime: false,
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',

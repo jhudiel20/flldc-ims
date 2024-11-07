@@ -95,11 +95,11 @@
                             </div>
             
                             <div class="col-lg-6">
-                                <label class="form-label">Chair No.</label>
+                                <label class="form-label">Extra Chair</label>
                                 <input type="text" class="form-control" name="modalChair" id="modalChair" disabled>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">Table No.</label>
+                                <label class="form-label">Extra Table</label>
                                 <input type="text" class="form-control" name="modalTable" id="modalTable" disabled>
                             </div>
                  
