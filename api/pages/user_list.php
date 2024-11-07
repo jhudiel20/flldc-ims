@@ -391,7 +391,7 @@ var table = new Tabulator("#user-table", {
                 var admin_status = cell.getRow().getData().admin_status;
                 // console.log(admin_status);
 
-                var editBtn = $("<button class='btn btn-label-primary' >").addClass("user-edit")
+                var editBtn = $("<button class='btn btn-label-primary me-2' >").addClass("user-edit")
                     .attr("data-id", ID)
                     .attr("data-fname", FNAME)
                     .attr("data-mname", MNAME)

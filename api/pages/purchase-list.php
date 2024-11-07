@@ -43,9 +43,9 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
                                                     <button class="btn btn-label-primary" id="download-xlsx"><i
-                                                            class="fa-solid fa-download"></i> XLSX</button>
+                                                            class="fa-solid fa-download me-1"></i> XLSX</button>
                                                     <button class="btn btn-label-primary" id="download-pdf"><i
-                                                            class="fa-solid fa-download"></i> PDF</button>
+                                                            class="fa-solid fa-download me-1"></i> PDF</button>
                                                 </div>
                                             </div>
 

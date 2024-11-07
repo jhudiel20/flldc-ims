@@ -43,14 +43,14 @@ if (!isset($decrypted_array['ACCESS'])) {
                                         <div class="card-body">
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
-                                                <button type="button" class="btn btn-label-primary dropdown-toggle"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">More
-                                                    Actions</button>
+                                                    <button type="button" class="btn btn-label-primary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">More
+                                                        Actions</button>
                                                         <ul class="dropdown-menu">
                                                             <li><a class="dropdown-item" href="javascript:void(0);"
                                                                     id="add-dropdown" data-bs-toggle="modal"
                                                                     data-bs-target="#add_pcv_modal "><i
-                                                                        class="fa-solid fa-plus"></i> ADD NEW PCV</a></li>
+                                                                        class="fa-solid fa-plus "></i> ADD NEW PCV</a></li>
                                                             <li>
                                                             <li><a class="dropdown-item" href="javascript:void(0);"
                                                                     id="add-dropdown" data-bs-toggle="modal"
@@ -74,12 +74,12 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     <li><a class="dropdown-item" href="javascript:void(0);"
                                                             id="add-dropdown" data-bs-toggle="modal"
                                                             data-bs-target="#add_pcv_modal "><i
-                                                                class="fa-solid fa-plus"></i> ADD NEW PCV</a></li>
+                                                                class="fa-solid fa-plus me-1"></i> ADD NEW PCV</a></li>
                                                     <li>  
                                                     <li><a class="dropdown-item" href="javascript:void(0);"
                                                             id="add-dropdown" data-bs-toggle="modal"
                                                             data-bs-target="#add_rca_modal "><i
-                                                                class="fa-solid fa-plus"></i> ADD NEW RCA</a></li>
+                                                                class="fa-solid fa-plus me-1"></i> ADD NEW RCA</a></li>
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>

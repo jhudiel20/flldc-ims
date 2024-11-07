@@ -44,12 +44,12 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                 <div class="additional-buttons">
                                                     <button type="button" id="add" class="btn btn-label-primary"
                                                         data-bs-toggle="modal" data-bs-target="#add_request_modal">
-                                                        <i class="fa-solid fa-plus"></i><span> ADD NEW REQUEST
+                                                        <i class="fa-solid fa-plus me-1"></i><span> ADD NEW REQUEST
                                                     </button>
                                                     <button class="btn btn-label-primary" id="download-xlsx"><i
-                                                            class="fa-solid fa-download"></i> XLSX</button>
+                                                            class="fa-solid fa-download me-1"></i> XLSX</button>
                                                     <button class="btn btn-label-primary" id="download-pdf"><i
-                                                            class="fa-solid fa-download"></i> PDF</button>
+                                                            class="fa-solid fa-download me-1"></i> PDF</button>
                                                 </div>
                                             </div>
 

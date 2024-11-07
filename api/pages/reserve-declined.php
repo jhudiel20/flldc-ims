@@ -43,10 +43,21 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
                                                     <button class="btn btn-label-primary" id="download-xlsx"><i
-                                                            class="fa-solid fa-download"></i> XLSX</button>
+                                                            class="fa-solid fa-download me-1"></i> XLSX</button>
                                                     <button class="btn btn-label-primary" id="download-pdf"><i
-                                                            class="fa-solid fa-download"></i> PDF</button>
+                                                            class="fa-solid fa-download me-1"></i> PDF</button>
                                                 </div>
+                                            </div>
+                                            <div class="minimize-buttons btn-group mb-2">
+                                                <button type="button" class="btn btn-label-primary dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">More
+                                                    Actions</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button class="dropdown-item" id="download-xlsx-1"><i
+                                                                class="fa-solid fa-download"></i> XLSX</button></li>
+                                                    <li><button class="dropdown-item" id="download-pdf-1"><i
+                                                                class="fa-solid fa-download"></i> PDF</button></li>
+                                                </ul>
                                             </div>
 
                                             <!-- Add Modal -->
@@ -210,6 +221,8 @@ var table = new Tabulator("#reserve-list-view-table", {
 //trigger download of data.pdf file
 document.addEventListener("DOMContentLoaded", function() {
     // Your JavaScript code here, including event listener setup
+    document.getElementById("download-pdf-1").addEventListener("click", handlePdfDownload);
+    document.getElementById("download-xlsx-1").addEventListener("click", handleXslDownload);
     document.getElementById("download-pdf").addEventListener("click", handlePdfDownload);
     document.getElementById("download-xlsx").addEventListener("click", handleXslDownload);
 });
