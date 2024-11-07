@@ -32,7 +32,7 @@
                             </div>
                       
                             <div class="col-lg-4">
-                                <label class="form-label">Email<label>
+                                <label class="form-label">Email</label>
                                 <input type="text" class="form-control" name="modalEmail" id="modalEmail" disabled>
                             </div>
                             <div class="col-lg-4">
