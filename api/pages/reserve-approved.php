@@ -40,21 +40,47 @@ if (!isset($decrypted_array['ACCESS'])) {
                                 <div class="d-flex align-items-end row">
                                     <div class="col-sm-12">
                                         <div class="card-body">
-                                            <div class="py-1 mb-2 ">
+                                        <div class="py-1 mb-2">
                                                 <div class="additional-buttons">
-                                                    <button class="btn btn-label-primary" id="download-xlsx"><i
-                                                            class="fa-solid fa-download"></i> XLSX</button>
-                                                    <button class="btn btn-label-primary" id="download-pdf"><i
-                                                            class="fa-solid fa-download"></i> PDF</button>
+                                                    <button class="btn btn-label-primary text-end" onclick="toggleView()">
+                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
+                                                    </button>
+                                                    <button class="btn btn-label-primary" id="download-xlsx">
+                                                        <i class="fa-solid fa-download me-1"></i> XLSX
+                                                    </button>
+                                                    <button class="btn btn-label-primary" id="download-pdf">
+                                                        <i class="fa-solid fa-download me-1"></i> PDF
+                                                    </button>
                                                 </div>
+                                                
+                                            </div>
+                                            <!-- BUTTONS WHEN MEDIA SCREEN IS LOWER  -->
+                                            <div class="minimize-buttons btn-group mb-2">
+                                                <button type="button" class="btn btn-label-primary dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">More
+                                                    Actions</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="toggleView()">
+                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)</a>
+                                                    </li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li><button class="dropdown-item" id="download-xlsx-1"><i
+                                                                class="fa-solid fa-download"></i> XLSX</button></li>
+                                                    <li><button class="dropdown-item" id="download-pdf-1"><i
+                                                                class="fa-solid fa-download"></i> PDF</button></li>
+                                                </ul>
                                             </div>
 
                                             <!-- Add Modal -->
                                             <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
-
-                                            <div class="tabulator-table" id="reserve-list-view-table"
-                                                style="font-size:14px;">
+                                            <div id="table-view" class="mb-2">
+                                                <div class="tabulator-table" id="reserve-list-view-table" style="font-size:14px;"></div>
+                                            </div>
+                                            <div id="calendar-view" class="mb-2 d-none">
+                                                <div class="card-body" id="calendar"></div>
                                             </div>
 
 
@@ -259,6 +285,100 @@ function handlePdfDownload() {
         },
     });
 };
+
+var calendar; // Declare globally to access it within the toggle function
+
+function initializeCalendar() {
+    var calendarEl = document.getElementById('calendar');
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        views: {
+            dayGridMonth: {
+                titleFormat: { year: 'numeric', month: 'long' }
+            },
+            timeGridWeek: {
+                titleFormat: { year: 'numeric', month: 'long', day: 'numeric' }
+            }
+        },
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek'
+        },
+        events: {
+            url: '/calendar_all_reserved_data',
+            method: 'GET',
+            failure: function(error) {
+                console.error('Error fetching calendar data:', error);
+                alert('There was an error fetching calendar data.');
+            }
+        },
+        eventDidMount: function(info) {
+            info.el.classList.add('bg-success', 'text-white');
+        },
+        eventClick: function(info) {
+            var event = info.event;
+            document.getElementById('modalRoomName').value = event.title;
+            document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
+            document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
+            document.getElementById('modalName').value = event.extendedProps.name;
+            document.getElementById('modalBU').value = event.extendedProps.bu;
+            document.getElementById('modalContact').value = event.extendedProps.contact_no;
+            document.getElementById('modalEmail').value = event.extendedProps.email_add;
+            document.getElementById('modalHdmi').value = event.extendedProps.hdmi;
+            document.getElementById('modalExtension').value = event.extendedProps.extension;
+            document.getElementById('modalGuest').value = event.extendedProps.guest_no;
+            document.getElementById('modalChair').value = event.extendedProps.chair_no;
+            document.getElementById('modalSetup').value = event.extendedProps.chair_setup;
+            document.getElementById('modalTable').value = event.extendedProps.table_no;
+            document.getElementById('modalMessage').value = event.extendedProps.message;
+            
+            var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
+            eventModal.show();
+        }
+    });
+}
+
+function toggleView() {
+    var tableView = document.getElementById('table-view');
+    var calendarView = document.getElementById('calendar-view');
+    const toggleButton = document.querySelector("button[onclick='toggleView()']");
+    const toggleButton1 = document.querySelector("a[onclick='toggleView()']");
+    var button1 = document.getElementById('download-xlsx');
+    var button2 = document.getElementById('download-pdf');
+
+    if (tableView.classList.contains("d-none")) {
+        // Show table view and hide calendar view
+        button1.classList.remove("d-none");
+        button2.classList.remove("d-none");
+        tableView.classList.remove("d-none");
+        calendarView.classList.add("d-none");
+        toggleButton.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
+    } else {
+        // Show calendar view and hide table view
+        tableView.classList.add("d-none");
+        button1.classList.add("d-none");
+        button2.classList.add("d-none");
+        calendarView.classList.remove("d-none");
+
+        // Check if calendar is already initialized
+        if (!calendar) {
+            initializeCalendar();
+            calendar.render();  // Render the calendar the first time
+        } else {
+            calendar.render();  // Refresh the calendar if it already exists
+        }
+
+        toggleButton.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
+    }
+}
+
+// Initialize calendar only once when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCalendar();
+});
 
 </script>
 

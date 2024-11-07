@@ -66,9 +66,9 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>
-                                                    <li><button class="dropdown-item" id="download-xlsx"><i
+                                                    <li><button class="dropdown-item" id="download-xlsx-1"><i
                                                                 class="fa-solid fa-download"></i> XLSX</button></li>
-                                                    <li><button class="dropdown-item" id="download-pdf"><i
+                                                    <li><button class="dropdown-item" id="download-pdf-1"><i
                                                                 class="fa-solid fa-download"></i> PDF</button></li>
                                                 </ul>
                                             </div>
@@ -324,6 +324,8 @@ var table = new Tabulator("#reserve-list-table", {
 //trigger download of data.pdf file
 document.addEventListener("DOMContentLoaded", function() {
     // Your JavaScript code here, including event listener setup
+    document.getElementById("download-pdf-1").addEventListener("click", handlePdfDownload);
+    document.getElementById("download-xlsx-1").addEventListener("click", handleXslDownload);
     document.getElementById("download-pdf").addEventListener("click", handlePdfDownload);
     document.getElementById("download-xlsx").addEventListener("click", handleXslDownload);
 });
