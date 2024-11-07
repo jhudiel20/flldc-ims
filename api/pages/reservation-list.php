@@ -587,6 +587,7 @@ function toggleView() {
     var tableView = document.getElementById('table-view');
     var calendarView = document.getElementById('calendar-view');
     const toggleButton = document.querySelector("button[onclick='toggleView()']");
+    const toggleButton1 = document.querySelector("a[onclick='toggleView()']");
     var button1 = document.getElementById('download-xlsx');
     var button2 = document.getElementById('download-pdf');
 
@@ -597,6 +598,7 @@ function toggleView() {
         tableView.classList.remove("d-none");
         calendarView.classList.add("d-none");
         toggleButton.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)';
     } else {
         // Show calendar view and hide table view
         tableView.classList.add("d-none");
@@ -613,6 +615,7 @@ function toggleView() {
         }
 
         toggleButton.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
+        toggleButton1.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
     }
 }
 
