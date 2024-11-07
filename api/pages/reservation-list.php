@@ -41,19 +41,22 @@ if (!isset($decrypted_array['ACCESS'])) {
                                     <div class="col-sm-12">
                                         <div class="card-body">
                                             <div class="py-1 mb-2">
-                                                <div class="additional-buttons d-flex">
+                                                <div class="additional-buttons">
                                                     <button class="btn btn-label-primary me-2" id="download-xlsx">
                                                         <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
                                                     <button class="btn btn-label-primary" id="download-pdf">
                                                         <i class="fa-solid fa-download me-1"></i> PDF
                                                     </button>
-                                                    <!-- New Button for Calendar View aligned to the right -->
-                                                    <button class="btn btn-label-primary ms-auto" onclick="toggleView()"> 
+                                                </div>
+                                                <!-- Right-aligned toggle button -->
+                                                <div class="text-end mt-2">
+                                                    <button class="btn btn-label-primary" onclick="toggleView()">
                                                         <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
                                                     </button>
                                                 </div>
                                             </div>
+
 
                                             <!-- Add Modal -->
                                             <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
