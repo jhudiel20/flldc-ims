@@ -9,7 +9,7 @@ try {
     $stmt = $conn->prepare('SELECT room_name, reserve_date, time, business_unit, contact, email, hdmi, extension, guest, setup, fname,
     lname, chair, "table" AS table_no, message 
     FROM reservations 
-    JOIN room_details ON room = room_id');
+    JOIN room_details ON room = room_id WHERE reserve_status = "APPROVED" ');
     $stmt->execute();
 
     $reservations = [];

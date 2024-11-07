@@ -236,6 +236,8 @@ var table = new Tabulator("#reserve-list-view-table", {
 //trigger download of data.pdf file
 document.addEventListener("DOMContentLoaded", function() {
     // Your JavaScript code here, including event listener setup
+    document.getElementById("download-pdf-1").addEventListener("click", handlePdfDownload);
+    document.getElementById("download-xlsx-1").addEventListener("click", handleXslDownload);
     document.getElementById("download-pdf").addEventListener("click", handlePdfDownload);
     document.getElementById("download-xlsx").addEventListener("click", handleXslDownload);
 });
