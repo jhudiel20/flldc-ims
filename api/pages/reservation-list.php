@@ -135,17 +135,18 @@ var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
+    var room_id = cell.getRow().getData().room;
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (reserve_status == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
+            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (reserve_status == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-danger approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
+            return "<button type='button' class='btn btn-outline-danger approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(reserve_status == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-success approval-status' data-id='" + ID + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
+            return "<button type='button' class='btn btn-outline-success approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>
     return reserve_status;
@@ -520,10 +521,12 @@ $(document).ready(function() {
     $(document).on("click", ".approval-status", function() {
         var ID = $(this).data("id");
         var APPROVAL = $(this).data("approved");
+        var ROOM_ID = $(this).data("room_id");
         var EMAIL = $(this).data("email");
 
         $('#ID').val(ID);
         $('#APPROVAL').val(APPROVAL);
+        $('#ROOMID').val(ROOM_ID);
         $('#EMAIL').val(EMAIL);
 
         // Show the edit modal

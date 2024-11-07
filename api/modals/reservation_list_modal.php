@@ -9,6 +9,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
+                            <input type="hidden" id="ROOMID" name="ROOMID">
                             <input type="hidden" id="ID" name="ID">
                             <input type="hidden" id="EMAIL" name="EMAIL">
                             <label for="nameWithTitle" class="form-label">Status</label>

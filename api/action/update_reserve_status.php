@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $approval_status = isset($_POST['approval_status']) ? trim($_POST['approval_status']) : '';
 $ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
+$ROOMID = isset($_POST['ROOMID']) ? trim($_POST['ROOMID']) : '';
 $EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';  
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';  
 
@@ -27,7 +28,8 @@ if (empty($message) || $message == '') {
 }
 
 
-$sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id");
+$sql = $conn->prepare("SELECT * FROM reservations join room_details on room_id = :roomid WHERE ID = :id ");
+$sql->bindParam(':roomid', $ROOMID, PDO::PARAM_STR);
 $sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
@@ -165,7 +167,7 @@ if ($counter->rowCount() > 0) {
                                                                 <p><strong>Reservation Details:</strong><br>
                                                                 <b>Reservation ID:</b> '.$generateReserveID.'<br>
                                                                 <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                <b>Room:</b> '.$row['room'].'<br>
+                                                                <b>Room:</b> '.$row['room_name'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
                                                                 <b>Email:</b> '.$row['email'].'<br>
                                                                 <b>Time:</b> '.$row['time'].'<br>
@@ -254,7 +256,7 @@ if ($counter->rowCount() > 0) {
                                                                 <p><strong>Reservation Details:</strong><br>
                                                                 '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
                                                                 <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                <b>Room:</b> '.$row['room'].'<br>
+                                                                <b>Room:</b> '.$row['room_name'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
                                                                 <b>Email:</b> '.$row['email'].'<br>
                                                                 <b>Time:</b> '.$row['time'].'<br>
@@ -429,7 +431,7 @@ if ($counter->rowCount() > 0) {
                                                                     <p><strong>Reservation Details:</strong><br>
                                                                     '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
                                                                     <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                    <b>Room:</b> '.$row['room'].'<br>
+                                                                    <b>Room:</b> '.$row['room_name'].'<br>
                                                                     <b>Contact:</b> '.$row['contact'].'<br>
                                                                     <b>Email:</b> '.$row['email'].'<br>
                                                                     <b>Time:</b> '.$row['time'].'<br>
