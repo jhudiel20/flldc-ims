@@ -36,7 +36,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="card ">
+                            <div class="card">
                                 <div class="d-flex align-items-end row">
                                     <div class="col-sm-12">
                                         <div class="card-body">
@@ -62,8 +62,8 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div id="table-view" class="mb-2">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
-                                            <div id="calendar-view" class="mb-2 d-none">
-                                                <div id="calendar"></div>
+                                            <div id="calendar-view" class="col-lg-8 mb-2 d-none">
+                                                <div class="card-body" id="calendar"></div>
                                             </div>
 
 
