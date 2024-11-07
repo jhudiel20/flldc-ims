@@ -42,15 +42,14 @@ if (!isset($decrypted_array['ACCESS'])) {
                                         <div class="card-body">
                                             <div class="py-1 mb-2">
                                                 <div class="additional-buttons">
-                                                    <button class="btn btn-label-primary me-2" id="download-xlsx">
+                                                    <button class="btn btn-label-primary text-end" onclick="toggleView()">
+                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
+                                                    </button>
+                                                    <button class="btn btn-label-primary" id="download-xlsx">
                                                         <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
                                                     <button class="btn btn-label-primary" id="download-pdf">
                                                         <i class="fa-solid fa-download me-1"></i> PDF
-                                                    </button>
-                                                    <!-- Right-aligned toggle button -->
-                                                    <button class="btn btn-label-primary text-end" onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
                                                     </button>
                                                 </div>
                                                 
