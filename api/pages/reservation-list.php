@@ -41,7 +41,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                     <div class="col-sm-12">
                                         <div class="card-body">
                                             <div class="py-1 mb-2">
-                                                <div class="additional-buttons">
+                                                <div class="additional-buttons d-flex">
                                                     <button class="btn btn-label-primary me-2" id="download-xlsx">
                                                         <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
@@ -62,7 +62,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             <div id="table-view" class="mb-2">
                                                 <div  class="tabulator-table" id="reserve-list-table" style="font-size:14px;"></div>
                                             </div>
-                                            <div id="calendar-view" class="col-lg-8 mb-2 d-none">
+                                            <div id="calendar-view" class="mb-2 d-none">
                                                 <div class="card-body" id="calendar"></div>
                                             </div>
 
