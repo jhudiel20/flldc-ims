@@ -596,7 +596,7 @@ function toggleView() {
             calendar.render();  // Refresh the calendar if it already exists
         }
 
-        toggleButton.innerHTML = '<i class="fa-solid fa-table me-1"></i> List View (All Events)';
+        toggleButton.innerHTML = '<i class="fa-solid fa-clipboard-list me-1"></i> List View (All Events)';
     }
 }
 
