@@ -41,7 +41,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                     <div class="col-sm-12">
                                         <div class="card-body">
                                             <div class="py-1 mb-2">
-                                                <div class="additional-buttons d-flex">
+                                                <div class="additional-buttons">
                                                     <button class="btn btn-label-primary me-2" id="download-xlsx">
                                                         <i class="fa-solid fa-download me-1"></i> XLSX
                                                     </button>
