@@ -28,7 +28,7 @@ if (empty($message) || $message == '') {
 }
 
 
-$sql = $conn->prepare("SELECT * FROM reservations join room_details on room_id = :roomid WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM reservations join room_details on room_id = :roomid WHERE reservations.ID = :id ");
 $sql->bindParam(':roomid', $ROOMID, PDO::PARAM_STR);
 $sql->bindParam(':id', $ID, PDO::PARAM_STR);
 $sql->execute();
