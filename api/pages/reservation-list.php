@@ -48,13 +48,32 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     <button class="btn btn-label-primary" id="download-pdf">
                                                         <i class="fa-solid fa-download me-1"></i> PDF
                                                     </button>
+                                                    <!-- Right-aligned toggle button -->
+                                                    <div class="text-end mt-2">
+                                                        <button class="btn btn-label-primary" onclick="toggleView()">
+                                                            <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <!-- Right-aligned toggle button -->
-                                                <div class="text-end mt-2">
-                                                    <button class="btn btn-label-primary" onclick="toggleView()">
-                                                        <i class="fa-solid fa-calendar me-1"></i> Calendar View (Approved Events)
-                                                    </button>
-                                                </div>
+                                                
+                                            </div>
+                                            <!-- BUTTONS WHEN MEDIA SCREEN IS LOWER  -->
+                                            <div class="minimize-buttons btn-group mb-2">
+                                                <button type="button" class="btn btn-label-primary dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">More
+                                                    Actions</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="toggleView()">
+                                                        <i class="fa-solid fa-plus"></i> Calendar View (Approved Events)</a>
+                                                    </li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li><button class="dropdown-item" id="download-xlsx"><i
+                                                                class="fa-solid fa-download"></i> XLSX</button></li>
+                                                    <li><button class="dropdown-item" id="download-pdf"><i
+                                                                class="fa-solid fa-download"></i> PDF</button></li>
+                                                </ul>
                                             </div>
 
 
