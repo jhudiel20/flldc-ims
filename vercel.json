@@ -333,6 +333,10 @@
         "dest": "/api/pages/forgot-password.php"
       },
       {
+        "src": "/reservation-calendar",
+        "dest": "/public/reservation-calendar.php"
+      },
+      {
         "src": "/(.*)",
         "dest": "/api/index"
       }
