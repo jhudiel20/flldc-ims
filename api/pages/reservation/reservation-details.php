@@ -201,8 +201,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
             </div>
         
             <!-- Footer -->
-            <?php include __DIR__ . "/../modals/reservation_details_modal.php"; ?>
-            <?php include __DIR__ . "/../action/global/footer.php"; ?>
+            <?php include __DIR__ . "/../../modals/reservation_details_modal.php"; ?>
+            <?php include __DIR__ . "/../../action/global/footer.php"; ?>
             <!-- / Footer -->
 
             <div class="content-backdrop fade"></div>
@@ -226,7 +226,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 
     <?php
-        include __DIR__ . "/../action/global/include_bottom.php";
+        include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
 </body>
