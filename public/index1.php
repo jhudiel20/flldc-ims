@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLLDC Applications and Website</title>
 <style>
-    /* High-Tech Dark Mode Theme */
+    /* Modern Dark Theme */
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #0e0e0e;
-        color: #d1d1d1;
+        background-color: #121212;
+        color: #E1E1E1;
         margin: 0;
         padding: 0;
+        line-height: 1.6;
     }
     .container {
         max-width: 1200px;
@@ -20,69 +21,69 @@
         text-align: center;
     }
     .logo img {
-        width: 120px;
+        width: 150px;
         height: auto;
-        margin-bottom: 20px;
-        filter: drop-shadow(0 0 8px #00e6e6);
+        margin-bottom: 30px;
+        filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
     }
     .section-title {
-        font-size: 2em;
-        color: #00e6e6;
+        font-size: 2.5em;
+        color: #00bcd4;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 40px 0 20px;
+        letter-spacing: 2px;
+        margin: 60px 0 30px;
         position: relative;
     }
     .section-title::after {
         content: "";
         display: block;
-        width: 80px;
+        width: 100px;
         height: 2px;
-        background: #00e6e6;
+        background: #00bcd4;
         margin: 8px auto 0;
     }
     .grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 30px;
+        gap: 40px;
     }
     .card {
-        width: 120px;
-        height: 120px;
+        width: 280px;
+        height: 280px;
         background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(12px);
         border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px #00e6e6;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 255, 0.5);
         text-align: center;
-        padding: 20px 10px;
+        padding: 20px;
         cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
         text-decoration: none;
-        color: #d1d1d1;
+        color: #E1E1E1;
         overflow: hidden;
         position: relative;
     }
     .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7), 0 0 20px #00e6e6;
-        background: rgba(0, 230, 230, 0.15);
+        transform: translateY(-12px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 255, 255, 0.7);
+        background: rgba(0, 188, 212, 0.2);
     }
     .card img {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 10px;
-        filter: drop-shadow(0 0 5px #00e6e6);
-        transition: transform 0.3s ease;
-        object-fit: contain; /* Ensures image maintains its aspect ratio */
+        width: 80px;
+        height: 80px;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.5));
+        transition: transform 0.4s ease;
+        object-fit: contain;
     }
     .card:hover img {
-        transform: scale(1.1);
+        transform: scale(1.2);
     }
     .card p {
-        font-size: 1em;
-        color: #d1d1d1;
-        margin-top: 10px;
+        font-size: 1.1em;
+        color: #E1E1E1;
+        margin-top: 15px;
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -93,8 +94,8 @@
         left: 50%;
         width: 300%;
         height: 300%;
-        background: radial-gradient(circle, rgba(0, 230, 230, 0.2), transparent);
-        transition: opacity 0.3s ease;
+        background: radial-gradient(circle, rgba(0, 188, 212, 0.25), transparent);
+        transition: opacity 0.4s ease;
         opacity: 0;
         transform: translate(-50%, -50%);
         z-index: 0;
@@ -108,7 +109,7 @@
             align-items: center;
         }
         .card {
-            width: 80%;
+            width: 90%;
             height: auto;
         }
     }
