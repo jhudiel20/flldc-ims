@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Landing Page</title>
+<title>FLLDC Applications and Website</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -69,10 +69,10 @@
 <body>
 
 <div class="container">
-    <div class="logo">FAST</div>
+    <div class="logo"><img src="/LOGO.png" alt="logo"></div>
 
     <!-- People Section -->
-    <div class="section-title">People</div>
+    <!-- <div class="section-title">People</div>
     <div class="grid">
         <a href="https://ontime.example.com" class="card" target="_blank">
             <img src="ontime-icon.png" alt="Ontime">
@@ -90,30 +90,22 @@
             <img src="pms-icon.png" alt="PMS">
             <p>PMS</p>
         </a>
-    </div>
+    </div> -->
 
     <!-- Tools Section -->
     <div class="section-title">Tools</div>
     <div class="grid">
         <a href="/system-login" class="card" target="_blank">
-            <img src="" alt="LDIMS">
-            <p>LDIMS</p>
+            <img src="/LOGO.png" alt="flldc-ims-app">
+            <p>Learning and Development Inventory Management System</p>
         </a>
-        <a href="https://fast.com.ph" class="card" target="_blank">
-            <img src="fast-icon.png" alt="fast.com.ph">
-            <p>fast.com.ph</p>
+        <a href="https://flldc-booking-app.vercel.app/" class="card" target="_blank">
+            <img src="/LOGO.png" alt="flldc-booking-app">
+            <p>Learning and Development Booking Application</p>
         </a>
-        <a href="https://itse.example.com" class="card" target="_blank">
-            <img src="itsek-icon.png" alt="iTSEK">
-            <p>iTSEK</p>
-        </a>
-        <a href="https://osticket.example.com" class="card" target="_blank">
-            <img src="osticket-icon.png" alt="osTicket">
-            <p>osTicket</p>
-        </a>
-        <a href="https://microsoft365.example.com" class="card" target="_blank">
-            <img src="microsoft-icon.png" alt="Microsoft 365">
-            <p>Microsoft 365</p>
+        <a href="https://flldc-ims.vercel.app/reservation" class="card" target="_blank">
+            <img src="itsek-icon.png" alt="flldc-reserved-calendar">
+            <p>Reserved Room Calendar</p>
         </a>
     </div>
 </div>
