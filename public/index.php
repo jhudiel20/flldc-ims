@@ -71,7 +71,6 @@
     .card img {
         width: 60px;
         height: 60px;
-        margin-bottom: 10px;
         filter: drop-shadow(0 0 5px #00e6e6);
         transition: transform 0.3s ease;
         object-fit: contain; /* Ensures image maintains its aspect ratio */

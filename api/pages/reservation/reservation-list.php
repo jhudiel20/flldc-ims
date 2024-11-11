@@ -135,7 +135,7 @@ var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
-    var room_id = cell.getRow().getData().room;
+    var room_id = cell.getRow().getData().roomid;
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
