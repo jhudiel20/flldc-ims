@@ -48,8 +48,8 @@
         gap: 30px;
     }
     .card {
-        width: 150px;
-        height: 170px;
+        width: 100px;
+        height: 100px;
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(8px);
         border-radius: 15px;
@@ -80,7 +80,7 @@
         transform: scale(1.1);
     }
     .card p {
-        font-size: 1em;
+        font-size: 0.5rem;
         color: #d1d1d1;
         margin-top: 10px;
         font-weight: bold;
