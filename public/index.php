@@ -48,8 +48,8 @@
         gap: 30px;
     }
     .card {
-        width: 150px;
-        height: 170px;
+        width: 120px;
+        height: 120px;
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(8px);
         border-radius: 15px;
