@@ -329,6 +329,10 @@
         "dest": "/api/pages/reservation/reserve-calendar.php"
       },
       {
+        "src": "/system-login",
+        "dest": "/api/system-login.php"
+      },
+      {
         "src": "/(.*)",
         "dest": "/api/index"
       }
