@@ -64,10 +64,6 @@
         "dest": "/api/pages/dashboard/dashboard-lnd.php"
       },
       {
-        "src": "/index",
-        "dest": "/api/index.php"
-      },
-      {
         "src": "/dashboard-eval",
         "dest": "/api/pages/dashboard/dashboard-eval.php"
       },
@@ -334,7 +330,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/api/index"
+        "dest": "/api/system-login.php"
       }
     ]
   }

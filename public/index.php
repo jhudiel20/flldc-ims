@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLLDC Applications and Website</title>
 <style>
-    /* Modern Dark Theme */
+    /* High-Tech Dark Mode Theme */
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #121212;
-        color: #E1E1E1;
+        background-color: #0e0e0e;
+        color: #d1d1d1;
         margin: 0;
         padding: 0;
-        line-height: 1.6;
     }
     .container {
         max-width: 1200px;
@@ -21,69 +20,68 @@
         text-align: center;
     }
     .logo img {
-        width: 150px;
+        width: 120px;
         height: auto;
-        margin-bottom: 30px;
-        filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        margin-bottom: 20px;
+        filter: drop-shadow(0 0 8px #00e6e6);
     }
     .section-title {
-        font-size: 2.5em;
-        color: #00bcd4;
+        font-size: 2em;
+        color: #00e6e6;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 60px 0 30px;
+        letter-spacing: 1px;
+        margin: 40px 0 20px;
         position: relative;
     }
     .section-title::after {
         content: "";
         display: block;
-        width: 100px;
+        width: 80px;
         height: 2px;
-        background: #00bcd4;
+        background: #00e6e6;
         margin: 8px auto 0;
     }
     .grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 40px;
+        gap: 30px;
     }
     .card {
-        width: 280px;
-        height: 280px;
+        width: 150px;
+        height: 170px;
         background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(8px);
         border-radius: 15px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 255, 0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px #00e6e6;
         text-align: center;
-        padding: 20px;
+        padding: 20px 10px;
         cursor: pointer;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         text-decoration: none;
-        color: #E1E1E1;
+        color: #d1d1d1;
         overflow: hidden;
         position: relative;
     }
     .card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 255, 255, 0.7);
-        background: rgba(0, 188, 212, 0.2);
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7), 0 0 20px #00e6e6;
+        background: rgba(0, 230, 230, 0.15);
     }
     .card img {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 15px;
-        filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.5));
-        transition: transform 0.4s ease;
-        object-fit: contain;
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 5px #00e6e6);
+        transition: transform 0.3s ease;
     }
     .card:hover img {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
     .card p {
-        font-size: 1.1em;
-        color: #E1E1E1;
-        margin-top: 15px;
+        font-size: 1em;
+        color: #d1d1d1;
+        margin-top: 10px;
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -94,8 +92,8 @@
         left: 50%;
         width: 300%;
         height: 300%;
-        background: radial-gradient(circle, rgba(0, 188, 212, 0.25), transparent);
-        transition: opacity 0.4s ease;
+        background: radial-gradient(circle, rgba(0, 230, 230, 0.2), transparent);
+        transition: opacity 0.3s ease;
         opacity: 0;
         transform: translate(-50%, -50%);
         z-index: 0;
@@ -109,7 +107,7 @@
             align-items: center;
         }
         .card {
-            width: 90%;
+            width: 80%;
             height: auto;
         }
     }
@@ -127,7 +125,7 @@
             <img src="../assets/img/LOGO.png" alt="FLLDC IMS App">
             <p>FLLDC IMS</p>
         </a>
-        <a href="https://flldc-booking-app.vercel.app/" class="card" target="_blank" title="Visit FLLDC Booking Website">
+        <a href="" class="card" target="_blank" title="Visit FLLDC Booking Website">
             <img src="../assets/img/LOGO.png" alt="FLLDC Booking App">
             <p>FLLDC Booking Website</p>
         </a>
