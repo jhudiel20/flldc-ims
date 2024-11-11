@@ -11,7 +11,14 @@ require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path fo
     ?>
 </head>
 <body>
-    <div class="card-body" id="calendar"></div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-body" id="calendar"></div>
+            </div>
+        </div>
+    </div>
+
     <?php
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
