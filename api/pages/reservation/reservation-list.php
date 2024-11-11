@@ -14,8 +14,8 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <head>
     <?php
-    include __DIR__ . "/../action/global/metadata.php";
-    include __DIR__ . "/../action/global/include_top.php";
+    include __DIR__ . "/../../action/global/metadata.php";
+    include __DIR__ . "/../../action/global/include_top.php";
     ?>
 </head>
 
@@ -25,8 +25,8 @@ if (!isset($decrypted_array['ACCESS'])) {
         <div class="layout-container">
 
             <?php
-        include __DIR__ . "/../action/global/sidebar.php";
-        include __DIR__ . "/../action/global/header.php"; 
+        include __DIR__ . "/../../action/global/sidebar.php";
+        include __DIR__ . "/../../action/global/header.php"; 
         ?>
 
             <!-- Content wrapper -->
@@ -75,7 +75,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
                                             <!-- Add Modal -->
-                                            <?php include __DIR__ . "/../modals/reservation_list_modal.php"; ?>
+                                            <?php include __DIR__ . "/../../modals/reservation_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
                                             <div id="table-view" class="mb-2">
@@ -99,7 +99,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <!-- Footer -->
                 <?php 
-                    include __DIR__. "/../action/global/footer.php";
+                    include __DIR__. "/../../action/global/footer.php";
                 ?>
                 <!-- / Footer -->
 
@@ -123,7 +123,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
     <?php
-        include __DIR__ . "/../action/global/include_bottom.php";
+        include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
 </body>
 

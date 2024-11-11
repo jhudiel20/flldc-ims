@@ -25,23 +25,3 @@ Class DBConnection{
 
 $db = new DBConnection();
 $conn = $db->conn;
-
-
-    // Method to check if the connection is alive
-    // public function checkConnection() {
-    //     try {
-    //         $stmt = $this->conn->query("SELECT 1");
-    //         if ($stmt) {
-    //             return "Connection is alive.";
-    //         } else {
-    //             return "Connection is not alive.";
-    //         }
-    //     } catch (PDOException $e) {
-    //         return "Connection check failed: " . $e->getMessage();
-    //     }
-    // }
-
-// Check if the connection is alive
-// echo $db->checkConnection();
-
-// If you have a second connection to another database, replicate the same structure.

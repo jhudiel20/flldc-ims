@@ -41,8 +41,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         <div class="layout-container">
 
             <?php
-            include __DIR__ . "/../action/global/sidebar.php";
-            include __DIR__ . "/../action/global/header.php"; 
+            include __DIR__ . "/../../action/global/sidebar.php";
+            include __DIR__ . "/../../action/global/header.php"; 
             ?>
 
             <!-- Content wrapper -->

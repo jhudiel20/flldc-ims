@@ -27,8 +27,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <?php
-    include __DIR__ . "/../action/global/metadata.php";
-    include __DIR__ . "/../action/global/include_top.php";
+    include __DIR__ . "/../../action/global/metadata.php";
+    include __DIR__ . "/../../action/global/include_top.php";
     ?>
 </head>
 
@@ -39,8 +39,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         <div class="layout-container">
 
             <?php
-            include __DIR__ . "/../action/global/sidebar.php";
-            include __DIR__ . "/../action/global/header.php"; 
+            include __DIR__ . "/../../action/global/sidebar.php";
+            include __DIR__ . "/../../action/global/header.php"; 
             ?>
 
             <!-- Content wrapper -->

@@ -27,8 +27,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <?php
-    include __DIR__ . "/../action/global/metadata.php";
-    include __DIR__ . "/../action/global/include_top.php";
+    include __DIR__ . "/../../action/global/metadata.php";
+    include __DIR__ . "/../../action/global/include_top.php";
     ?>
 </head>
 
@@ -39,8 +39,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         <div class="layout-container">
 
             <?php
-            include __DIR__ . "/../action/global/sidebar.php";
-            include __DIR__ . "/../action/global/header.php"; 
+            include __DIR__ . "/../../action/global/sidebar.php";
+            include __DIR__ . "/../../action/global/header.php"; 
             ?>
 
             <!-- Content wrapper -->
@@ -170,7 +170,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
         </div>
         <!-- Footer -->
         <?php 
-                    include __DIR__ . "/../action/global/footer.php";
+                    include __DIR__ . "/../../action/global/footer.php";
                     ?>
         <!-- / Footer -->
 
@@ -195,8 +195,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 
     <?php
-        include __DIR__ . "/../modals/room_details_modal.php"; 
-        include __DIR__ . "/../action/global/include_bottom.php";
+        include __DIR__ . "/../../modals/room_details_modal.php"; 
+        include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
 </body>
