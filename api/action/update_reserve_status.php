@@ -170,6 +170,7 @@ if ($counter->rowCount() > 0) {
                                                                 <b>Room:</b> '.$row['room_name'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
                                                                 <b>Email:</b> '.$row['email'].'<br>
+                                                                <b>Date:</b> '.$row['reserve_date'].'<br>
                                                                 <b>Time:</b> '.$row['time'].'<br>
                                                                 <b>Setup:</b> '.$row['setup'].'<br>
                                                                 <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
@@ -259,6 +260,7 @@ if ($counter->rowCount() > 0) {
                                                                 <b>Room:</b> '.$row['room_name'].'<br>
                                                                 <b>Contact:</b> '.$row['contact'].'<br>
                                                                 <b>Email:</b> '.$row['email'].'<br>
+                                                                <b>Date:</b> '.$row['reserve_date'].'<br>
                                                                 <b>Time:</b> '.$row['time'].'<br>
                                                                 <b>Setup:</b> '.$row['setup'].'<br>
                                                                 <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
@@ -434,6 +436,7 @@ if ($counter->rowCount() > 0) {
                                                                     <b>Room:</b> '.$row['room_name'].'<br>
                                                                     <b>Contact:</b> '.$row['contact'].'<br>
                                                                     <b>Email:</b> '.$row['email'].'<br>
+                                                                    <b>Date:</b> '.$row['reserve_date'].'<br>   
                                                                     <b>Time:</b> '.$row['time'].'<br>
                                                                     <b>Setup:</b> '.$row['setup'].'<br>
                                                                     <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>

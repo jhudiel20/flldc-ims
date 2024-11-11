@@ -167,7 +167,8 @@ try {
                                                             <p><strong>Updated Reservation Details:</strong><br>
                                                             '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$generateReserveID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
                                                             <b>Room:</b> '.$room.'<br>
-                                                            <b>Setup:</b> '.$setup.'<br>                               
+                                                            <b>Setup:</b> '.$setup.'<br>
+                                                            <b>Date:</b> '.$reserve_date.'<br>                               
                                                             <b>Time:</b> '.$time.'<br>
                                                             <b>Reply from Admin :</b> '.$reason_message.'<br>
                                                             </p>
@@ -256,6 +257,7 @@ try {
                                                             <b>Room:</b> '.$room.'<br>
                                                             <b>Contact:</b> '.$contact.'<br>
                                                             <b>Email:</b> '.$email.'<br>
+                                                            <b>Date:</b> '.$reserve_date.'<br>   
                                                             <b>Time:</b> '.$time.'<br>
                                                             <b>Setup:</b> '.$setup.'<br>
                                                             <b>Reserved By:</b> '.$fname.' '.$lname.'<br>
