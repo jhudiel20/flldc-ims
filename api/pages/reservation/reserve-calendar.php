@@ -14,12 +14,13 @@ require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path fo
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <h1 class="display-1 mb-0 text-center">Reservation Calendar</h1>
                 <div class="card-body" id="calendar"></div>
             </div>
         </div>
     </div>
-
     <?php
+        include __DIR__ . "/../../modals/reservation_list_modal.php";
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
 </body>
