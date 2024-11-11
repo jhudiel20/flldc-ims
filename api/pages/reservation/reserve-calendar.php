@@ -2,14 +2,19 @@
 require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path for config.php
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
+    data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<?php
+    include __DIR__ . "/../../action/global/metadata.php";
+    include __DIR__ . "/../../action/global/include_top.php";
+    ?>
 </head>
 <body>
     <div class="card-body" id="calendar"></div>
+    <?php
+        include __DIR__ . "/../../action/global/include_bottom.php";
+      ?>
 </body>
 <script src="<?php BASE_URL; ?>../assets/js/index.global.min.js"></script>
 <script>
@@ -66,4 +71,5 @@ require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path fo
         calendar.render(); 
     });
 </script>
+
 </html>
