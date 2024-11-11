@@ -334,7 +334,7 @@
       },
       {
         "src": "/reservation",
-        "dest": "/public/reservation.php"
+        "dest": "/api/pages/reserve-calendar.php"
       },
       {
         "src": "/(.*)",
