@@ -27,6 +27,7 @@ try {
         $reservations[] = [
             'title' => $row['room_name'] .'-'.$row['fname'] .' '. $row['lname'],
             'name' => $row['fname'] .' '. $row['lname'],
+            'reserve_id' => $row['reservation_id'],
             'bu' => $row['business_unit'],
             'contact_no' => $row['contact'],
             'email_add' => $row['email'],

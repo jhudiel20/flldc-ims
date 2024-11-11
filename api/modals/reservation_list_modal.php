@@ -46,6 +46,10 @@
             </div>
             <div class="modal-body">
                         <div class="row g-2">
+                        <div class="col-md-6">
+                                <label class="form-label">Reservation ID</label>
+                                <input type="text" class="form-control" name="modalReservedID" id="modalReservedID" disabled>
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label">Room Name</label>
                                 <input type="text" class="form-control" name="modalRoomName" id="modalRoomName" disabled>
@@ -64,7 +68,7 @@
                                 <input type="text" class="form-control" name="modalSetup" id="modalSetup" disabled>
                             </div>
                      
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label">Requestor</label>
                                 <input type="text" class="form-control" name="modalName" id="modalName" disabled>
                             </div>

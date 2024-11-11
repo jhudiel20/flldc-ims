@@ -571,6 +571,7 @@ function initializeCalendar() {
             document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
             document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
             document.getElementById('modalName').value = event.extendedProps.name;
+            document.getElementById('modalReservedID').value = event.extendedProps.reserve_id;
             document.getElementById('modalBU').value = event.extendedProps.bu;
             document.getElementById('modalContact').value = event.extendedProps.contact_no;
             document.getElementById('modalEmail').value = event.extendedProps.email_add;
