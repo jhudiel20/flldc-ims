@@ -119,7 +119,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <label class="form-label">Room</label>
-                                                                    <select name="ROOM" id="ROOM" class="form-control" required>
+                                                                    <!-- <select name="ROOM" id="ROOM" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
                                                                         <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
                                                                         <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Room 303</option>
@@ -127,6 +127,17 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
                                                                         <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
                                                                         <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
+                                                                    </select> -->
+                                                                    <select name="ROOM" id="ROOM" class="form-select" required>
+                                                                        <option value="" disabled hidden selected>Select Room</option>
+                                                                        <?php   $room = $conn->prepare("SELECT * FROM room_details");
+                                                                                $room->execute();
+                                                                                while ($row_room = $room->fetch(PDO::FETCH_ASSOC)) {
+                                                                        ?>
+                                                                        <option
+                                                                            value="<?php echo $row_room['room_name'];?>"><?php echo $row_room['room_name'];?>
+                                                                        </option>
+                                                                        <?php } ?>
                                                                     </select>
                                                             </div>
                                                             <div class="col-md-3">
