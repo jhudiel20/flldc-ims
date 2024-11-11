@@ -60,19 +60,19 @@
       },
       {
         "src": "/dashboard-eval",
-        "dest": "/api/pages/dashboard-eval.php"
+        "dest": "/api/pages/dashboard/dashboard-eval.php"
       },
       {
         "src": "/dashboard-lms",
-        "dest": "/api/pages/dashboard-lms.php"
+        "dest": "/api/pages/dashboard/dashboard-lms.php"
       },
       {
         "src": "/dashboard-mrs",
-        "dest": "/api/pages/dashboard-mrs.php"
+        "dest": "/api/pages/dashboard/dashboard-mrs.php"
       },
       {
         "src": "/room-list",
-        "dest": "/api/pages/room-list.php"
+        "dest": "/api/pages/reservation/room-list.php"
       },
       {
         "src": "/room_list_data",
@@ -84,7 +84,7 @@
       },
       {
         "src": "/room-details",
-        "dest": "/api/pages/room-details.php"
+        "dest": "/api/pages/reservation/room-details.php"
       },
       {
         "src": "/edit_room_details",
@@ -100,48 +100,31 @@
       },
       {
         "src": "/reservation-list",
-        "dest": "/api/pages/reservation-list.php"
+        "dest": "/api/pages/reservation/reservation-list.php"
       },
       {
         "src": "/calendar_all_reserved_data",
         "dest": "/api/ajax_data/app_res_calendar_data.php"
-      },
-      {
-        "src": "/calendar.php",
-        "dest": "/api/pages/calendar.php"
-      },
-      
-      {
-        "src": "/calendar_data",
-        "dest": "/api/ajax_data/calendar_data.php"
-      },
-      {
-        "src": "/calendar1",
-        "dest": "/api/pages/calendar1.php"
-      },
-      {
-        "src": "/reserve_list_data",
-        "dest": "/api/ajax_data/reserve_list_data.php"
-      },
+      },      
       {
         "src": "/update_reserve_status",
         "dest": "/api/action/update_reserve_status.php"
       },
       {
         "src": "/reservation-details",
-        "dest": "/api/pages/reservation-details.php"
+        "dest": "/api/pages/reservation/reservation-details.php"
       },
       {
         "src": "/reservation-details",
-        "dest": "/api/pages/reservation-details.php"
+        "dest": "/api/pages/reservation/reservation-details.php"
       },
       {
         "src": "/reserve-view",
-        "dest": "/api/pages/reserve-view.php"
+        "dest": "/api/pages/reservation/reserve-view.php"
       },
       {
         "src": "/reserve-approved",
-        "dest": "/api/pages/reserve-approved.php"
+        "dest": "/api/pages/reservation/reserve-approved.php"
       },
       {
         "src": "/reserve_approved_data",
@@ -149,7 +132,7 @@
       },
       {
         "src": "/reserve-declined",
-        "dest": "/api/pages/reserve-declined.php"
+        "dest": "/api/pages/reservation/reserve-declined.php"
       },
       {
         "src": "/reserve_declined_data",
@@ -157,7 +140,7 @@
       },
       {
         "src": "/reserve-pending",
-        "dest": "/api/pages/reserve-pending.php"
+        "dest": "/api/pages/reservation/reserve-pending.php"
       },
       {
         "src": "/reserve_pending_data",
@@ -166,7 +149,7 @@
 
       {
         "src": "/reserve-view-details",
-        "dest": "/api/pages/reserve-view-details.php"
+        "dest": "/api/pages/reservation/reserve-view-details.php"
       },
       {
         "src": "/edit_reserve_details_info",
@@ -174,7 +157,7 @@
       },
       {
         "src": "/rca-list",
-        "dest": "/api/pages/rca-list.php"
+        "dest": "/api/pages/pr/rca-list.php"
       },
       {
         "src": "/rca_list_data",
@@ -182,7 +165,7 @@
       },
       {
         "src": "/rca-details",
-        "dest": "/api/pages/rca-details.php"
+        "dest": "/api/pages/pr/rca-details.php"
       },  
       {
         "src": "/add_rca",
@@ -222,7 +205,7 @@
       },
       {
         "src": "/request-list",
-        "dest": "/api/pages/request-list.php"
+        "dest": "/api/pages/pr/request-list.php"
       },
       {
         "src": "/request_list_data",
@@ -238,11 +221,11 @@
       },
       {
         "src": "/request-details",
-        "dest": "/api/pages/request-details.php"
+        "dest": "/api/pages/pr/request-details.php"
       },
       {
         "src": "/purchase-list",
-        "dest": "/api/pages/purchase-list.php"
+        "dest": "/api/pages/pr/purchase-list.php"
       },
       {
         "src": "/purchase_list_data",
@@ -250,7 +233,7 @@
       },
       {
         "src": "/purchase-details",
-        "dest": "/api/pages/purchase-details.php"
+        "dest": "/api/pages/pr/purchase-details.php"
       },
       {
         "src": "/edit_purchase_details_info",
@@ -334,7 +317,7 @@
       },
       {
         "src": "/reservation",
-        "dest": "/api/pages/reserve-calendar.php"
+        "dest": "/api/pages/reservation/reserve-calendar.php"
       },
       {
         "src": "/(.*)",

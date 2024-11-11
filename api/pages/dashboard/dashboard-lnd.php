@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path for config.php
+if(!isset($_COOKIE['secure_data'])){
+    header("Location: /index");
+}
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location: /index");
 }
@@ -21,7 +24,7 @@ if (!isset($decrypted_array['ACCESS'])) {
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
 
-        <?php
+            <?php
         include __DIR__ . "/../action/global/sidebar.php";
         include __DIR__ . "/../action/global/header.php"; 
         ?>
@@ -31,13 +34,27 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <!-- Content -->
 
                 <div class="container flex-grow-1 container-p-y">
+                    
+                    <div class="row h-100">
+                        <div class="card w-100 h-100">
+                            <div class="d-flex align-items-end row h-100">
+                                <div class="col-12 h-100">
+                                    <div class="card-body h-100">
+                                        <iframe
+                                            src="https://metabase.fast.com.ph/public/dashboard/fe7bb127-7e28-4eaa-90b2-66de912b0268"
+                                            
+                                            frameborder="0"
+                                            width="100%"
+                                            height="100%"
+                                            allowtransparency="true"
+                                        ></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/c5f4c458-bd0a-4c1c-b2de-0d2298bfe6ee/page/TlJ0C" 
-                    frameborder="0" style="border:0" 
-                    allowfullscreen >
-                </iframe>
-
-
+                   
                 </div>
                 <!-- / Content -->
 
@@ -69,6 +86,8 @@ if (!isset($decrypted_array['ACCESS'])) {
     <?php
         include __DIR__ . "/../action/global/include_bottom.php";
       ?>
+    <!-- Page JS -->
+    <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
 
 </html>

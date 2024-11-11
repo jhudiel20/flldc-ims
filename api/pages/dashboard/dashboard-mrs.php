@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
-if(!isset($_COOKIE['secure_data'])){
-    header("Location: /index");
-}
+require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path for config.php
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location: /index");
 }
@@ -14,8 +11,8 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <head>
     <?php
-    include __DIR__  . "/../action/global/metadata.php";
-    include __DIR__  . "/../action/global/include_top.php";
+    include __DIR__ . "/../action/global/metadata.php";
+    include __DIR__ . "/../action/global/include_top.php";
     ?>
 </head>
 
@@ -41,8 +38,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                 <div class="col-12 h-100">
                                     <div class="card-body h-100">
                                         <iframe
-                                            src="https://metabase.fast.com.ph/public/dashboard/fe7bb127-7e28-4eaa-90b2-66de912b0268"
-                                            
+                                            src="https://metabase.fast.com.ph/public/dashboard/d274b32b-501c-4e80-8be2-5d372844e750"
                                             frameborder="0"
                                             width="100%"
                                             height="100%"
@@ -86,8 +82,6 @@ if (!isset($decrypted_array['ACCESS'])) {
     <?php
         include __DIR__ . "/../action/global/include_bottom.php";
       ?>
-    <!-- Page JS -->
-    <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
 
 </html>
