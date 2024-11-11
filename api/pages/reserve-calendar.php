@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
