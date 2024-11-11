@@ -69,7 +69,7 @@
 <body>
 
 <div class="container">
-    <div class="logo"><img src="/LOGO.png" alt="logo"></div>
+    <div class="logo"><img src="../assets/img/LOGO.png" alt="logo"></div>
 
     <!-- People Section -->
     <!-- <div class="section-title">People</div>
@@ -96,15 +96,15 @@
     <div class="section-title">Tools</div>
     <div class="grid">
         <a href="/system-login" class="card" target="_blank">
-            <img src="/LOGO.png" alt="flldc-ims-app">
+            <img src="../assets/img/LOGO.png" alt="flldc-ims-app">
             <p>Learning and Development Inventory Management System</p>
         </a>
         <a href="https://flldc-booking-app.vercel.app/" class="card" target="_blank">
-            <img src="/LOGO.png" alt="flldc-booking-app">
+            <img src="../assets/img/LOGO.png" alt="flldc-booking-app">
             <p>Learning and Development Booking Application</p>
         </a>
         <a href="https://flldc-ims.vercel.app/reservation" class="card" target="_blank">
-            <img src="itsek-icon.png" alt="flldc-reserved-calendar">
+            <img src="../assets/img/LOGO.png" alt="flldc-reserved-calendar">
             <p>Reserved Room Calendar</p>
         </a>
     </div>

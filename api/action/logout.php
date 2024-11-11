@@ -37,7 +37,7 @@ if ($logSuccess) {
     }
 
     // Redirect to the index page after successful logout and cookie unset
-    header("Location: /index");
+    header("Location: /system-login");
     exit();
 
 } else {
