@@ -333,8 +333,8 @@
         "dest": "/api/pages/reservation/reserve-calendar.php"
       },
       {
-        "src": "/system-login",
-        "dest": "/api/system-login.php"
+        "src": "/index",
+        "dest": "/api/index.php"
       },
       {
         "src": "/(.*)",
