@@ -75,12 +75,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="submit" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary"><i
+                                                            <button type="submit" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary btn-page-block"><i
                                                                     class="fa-solid fa-upload"></i></button>
-                                                                    <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
-                                                                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                        Loading...
-                                                                    </button>
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
@@ -145,13 +141,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         </div>
 
                                                         <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                        <button type="submit" class="btn btn-label-primary"
+                                                        <button type="submit" class="btn btn-label-primary btn-page-block"
                                                             id="edit_room_details_btn"
                                                             name="edit_room_details_btn">Save</button>
-                                                            <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
-                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                Loading...
-                                                            </button>
                                                         <?php }?>
                                                     </form>
                                     </div>
@@ -286,10 +278,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                showLoading('#edit_room_details_btn');
+                $('#edit_room_details_btn').addClass('d-none').prop('disabled', false);
             },
             success: function(response) {
-                hideLoading('#edit_room_details_btn');
+                $('#edit_room_details_btn').removeClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -325,10 +317,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    showLoading('#upload_room_photo_btn');
+                $('#upload_room_photo_btn').addClass('d-none').prop('disabled', false);
                 },
                 success: function(response) {
-                    hideLoading('#upload_room_photo_btn');
+                $('#upload_room_photo_btn').removeClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -365,10 +357,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    showLoading('#delete_room_photo_btn');
+                $('#delete_room_photo_btn').addClass('d-none').prop('disabled', false);
                 },
-                success: function(response) {
-                    hideLoading('#delete_room_photo_btn');
+            success: function(response) {
+                $('#delete_room_photo_btn').removeClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     $('#delete_room_photo_modal').modal('hide');

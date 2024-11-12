@@ -357,7 +357,11 @@ $(document).ready(function() {
                 contentType: false,   // Important: prevents jQuery from setting the content type header
                 cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
+                beforeSend: function() {
+                    $('#add_room').addClass('d-none').prop('disabled', false);
+                },
                 success: function(response) {
+                    $('#add_room').removeClass('d-none').prop('disabled', false);
                     console.log(response);
                     if (response.success) {
                         $('#add_room_modal').modal('hide');

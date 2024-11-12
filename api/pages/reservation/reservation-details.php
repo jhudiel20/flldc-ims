@@ -272,13 +272,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#submit_edit_reserve_details').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+                $('#submit_edit_reserve_details').removeClass('d-none').prop('disabled', true);
             },
-
             success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_edit_reserve_details').show();
+                $('#submit_edit_reserve_details').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({

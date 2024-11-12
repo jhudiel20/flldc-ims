@@ -151,6 +151,7 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
+
     <script src="<?php BASE_URL; ?>assets/vendor/libs/block-ui/block-ui.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/extended-ui-blockui.js"></script>
 
@@ -189,6 +190,9 @@ include 'config/config.php';
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'json',
+                    beforeSend: function() {
+                        $('#signin_btn').addClass('d-none').prop('disabled', false);
+                        },
                     success: function(response) {
                         if (response.success) {
                             Toast.fire({
