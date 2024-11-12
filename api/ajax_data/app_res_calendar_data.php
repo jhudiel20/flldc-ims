@@ -10,7 +10,7 @@ try {
     $stmt = $conn->prepare('SELECT reservation_id, room_name, reserve_date, time, business_unit, contact, email, hdmi, extension, guest, setup, fname,
     lname, chair, "table" AS table_no, message 
     FROM reservations 
-    JOIN room_details ON room = room_id WHERE reserve_status = :reserve_status');
+    JOIN room_details ON roomid = room_id WHERE reserve_status = :reserve_status');
     $stmt->bindParam(':reserve_status', $status);
     $stmt->execute();
 
