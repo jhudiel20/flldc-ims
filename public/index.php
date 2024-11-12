@@ -112,11 +112,6 @@ include 'config/config.php';
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100 btn-page-block" id="signin_btn">Sign
                                             in</button>
-                                        <button class="btn btn-label-primary d-none w-100" type="button"
-                                            id="request_icon" disabled>
-                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                            Loading...
-                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -156,7 +151,6 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
-
     <script src="<?php BASE_URL; ?>assets/vendor/libs/block-ui/block-ui.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/extended-ui-blockui.js"></script>
 
@@ -195,13 +189,7 @@ include 'config/config.php';
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'json',
-                    beforeSend: function() {
-                        $('#signin_btn').hide();
-                        $('#request_icon').removeClass('d-none').prop('disabled', true);
-                        },
                     success: function(response) {
-                        $('#request_icon').addClass('d-none').prop('disabled', false);
-                        $('#signin_btn').show();
                         if (response.success) {
                             Toast.fire({
                                     icon: 'success',

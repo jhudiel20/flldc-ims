@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/dropzone/dropzone.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/fullcalendar/fullcalendar.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/spinkit/spinkit.css" />
 
     <!-- Helpers -->
     <script src="<?php BASE_URL; ?>../assets/vendor/js/helpers.js"></script>

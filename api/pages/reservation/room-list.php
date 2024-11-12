@@ -357,11 +357,7 @@ $(document).ready(function() {
                 contentType: false,   // Important: prevents jQuery from setting the content type header
                 cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
-                beforeSend: function() {
-                    showLoading('#add_room');
-                },
                 success: function(response) {
-                    hideLoading('#add_room');
                     console.log(response);
                     if (response.success) {
                         $('#add_room_modal').modal('hide');
