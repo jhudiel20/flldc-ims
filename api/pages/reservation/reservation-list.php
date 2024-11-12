@@ -184,9 +184,9 @@ var table = new Tabulator("#reserve-list-table", {
             download: false
         },
         {
-            title: "Reservation Date",
-            field: "reserve_date",
-            headerFilter: "date",
+            title: "Booking ID",
+            field: "booking_id",
+            headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
@@ -198,9 +198,9 @@ var table = new Tabulator("#reserve-list-table", {
             headerFilterLiveFilter: false
         },
         {
-            title: "Booking ID",
-            field: "booking_id",
-            headerFilter: "input",
+            title: "Reservation Date",
+            field: "reserve_date",
+            headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
@@ -555,7 +555,7 @@ function initializeCalendar() {
             right: 'dayGridMonth,timeGridWeek'
         },
         events: {
-            url: '/calendar_all_reserved_data',
+            url: '/app_res_calendar_data',
             method: 'GET',
             failure: function(error) {
                 console.error('Error fetching calendar data:', error);

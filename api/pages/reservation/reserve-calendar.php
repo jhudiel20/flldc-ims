@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path fo
                 right: 'dayGridMonth,timeGridWeek'
             },
             events: {
-                url: '/calendar_all_reserved_data',
+                url: '/app_res_calendar_data',
                 method: 'GET',
                 failure: function(error) {
                     console.error('Error fetching calendar data:', error);

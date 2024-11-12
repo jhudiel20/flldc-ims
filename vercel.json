@@ -116,7 +116,7 @@
         "dest": "/api/ajax_data/reserve_list_data.php"
       },
       {
-        "src": "/calendar_all_reserved_data",
+        "src": "/app_res_calendar_data",
         "dest": "/api/ajax_data/app_res_calendar_data.php"
       },      
       {
