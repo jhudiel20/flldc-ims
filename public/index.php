@@ -33,6 +33,7 @@ include 'config/config.php';
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/form-validation.css" />
+    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/spinkit/spinkit.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/pages/page-auth.css" />
@@ -109,7 +110,7 @@ include 'config/config.php';
                                                         class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign
+                                        <button type="submit" class="btn btn-primary w-100 btn-page-block" id="signin_btn">Sign
                                             in</button>
                                         <button class="btn btn-label-primary d-none w-100" type="button"
                                             id="request_icon" disabled>
@@ -155,6 +156,9 @@ include 'config/config.php';
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
     <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
+
+    <script src="<?php BASE_URL; ?>assets/vendor/libs/block-ui/block-ui.js"></script>
+    <script src="<?php BASE_URL; ?>assets/js/extended-ui-blockui.js"></script>
 
     <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
       inject();
