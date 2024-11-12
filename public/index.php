@@ -1,6 +1,6 @@
 <?php 
-require_once __DIR__ . '/DBConnection.php';
-require_once __DIR__ . '/../public/config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../../public/config/config.php'; // Adjusted path for config.php
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
