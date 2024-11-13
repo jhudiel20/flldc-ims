@@ -1,6 +1,16 @@
 <?php 
-require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
+
+$code = $_GET['code'];
+if(empty($code)){
+  header("location:/");
+}
+
+$sql = $conn->prepare("SELECT EMAIL FROM user_account WHERE resert_token = :code ");
+$sql->bindParam(':code', $code, PDO::PARAM_STR);
+$sql->execute();
+$row = $sql->fetch(PDO::FETCH_ASSOC);
+
 ?>
 <!doctype html>
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
@@ -52,23 +62,41 @@ include 'config/config.php';
                         <div class="authentication-inner">
                             <div class="card card-authentication">
                                 <div class="card-body">
-                                    <!-- <p class="label-shadow mb-2">Forgot Password</p> -->
-                                    <form id="user_forgot_form" class="mb-3" method="post">
-                                        <h4 class="label-shadow mb-2">Forgot Password? 🔒</h4>
+                                    <h4 class="mb-2">Reset Password 🔒</h4>
+                                    <p class="mb-4">for <span class="fw-medium"><?php echo $row['EMAIL'];?></span></p>
+                                    <form id="change_password_form" class="mb-3" method="post">
+                                        <input type="hidden" value="<?php echo $code; ?>" id="code" name="code">
+
                                         <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
                                         <form id="forgot_password_form" class="mb-3" action="" method="post">
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email</label>
+                                        <div class="mb-3 form-password-toggle">
+                                            <label class="form-label" for="password">New Password</label>
+                                            <div class="input-group input-group-merge">
                                             <input
-                                            type="email"
-                                            class="form-control"
-                                            id="email"
-                                            name="email"
-                                            placeholder="Enter your email"
-                                            autofocus />
+                                                type="password"
+                                                id="password"
+                                                class="form-control"
+                                                name="password"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password" />
+                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                            </div>
                                         </div>
-                                        <button type="button" class="btn btn-primary d-grid w-100" id="send_link">Send Reset Link</button>
-                                        <button class="btn btn-label-primary d-none w-100" type="button" id="request_emailed_icon" disabled>
+                                        <div class="mb-3 form-password-toggle">
+                                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                                            <div class="input-group input-group-merge">
+                                            <input
+                                                type="password"
+                                                id="confirmpassword"
+                                                class="form-control"
+                                                name="confirmpassword"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password" />
+                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary d-grid w-100 mb-3" id="set_password">Set new password</button>
+                                        <button class="btn btn-label-primary d-none w-100" type="button" id="set_pass_icon" disabled>
                                                 <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                 Loading...
                                                 </button>
