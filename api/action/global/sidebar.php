@@ -47,15 +47,6 @@ $user_id = $decrypted_array['ID'];
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text" data-i18n="Navigation">Navigation</span>
         </li>
-        <?php if($decrypted_array['ACCESS'] == 'GUARD'){?>
-            <li class="menu-item <?php echo ($geturl == 'reserve-view')? 'active' : 'collapsed' ?>">
-                <a href="reserve-view" class="menu-link">
-                    <i class="menu-icon fa-solid fa-book-bookmark"></i>
-                    <div> Reservation List</div>
-                </a>
-            </li>
-        <?php } ?>
-        <?php if($decrypted_array['ACCESS'] != 'GUARD'){?>
             <li
                 class="menu-item <?php echo ($geturl == 'dashboard-lnd' ||$geturl == 'dashboard-mrs' ||$geturl == 'dashboard-lms'||$geturl == 'dashboard-eval' )? 'active open' : 'collapsed' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -65,42 +56,42 @@ $user_id = $decrypted_array['ID'];
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item <?php echo ($geturl == 'dashboard-lnd')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-lnd" class="menu-link">
+                        <a href="dashboard-lnd" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Training Database">Training Database</div>
                         </a>
                     </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-mrs')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-mrs" class="menu-link">
+                        <a href="dashboard-mrs" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Meeting Room System">Meeting Room System</div>
                         </a>
                     </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-lms')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-lms" class="menu-link">
+                        <a href="dashboard-lms" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="FAST LMS">FAST LMS</div>
                         </a>
                     </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-eval')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-eval" class="menu-link">
+                        <a href="dashboard-eval" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Training Evaluation">Training Evalution</div>
                         </a>
                     </li>
                 </ul>
             </li>
-            <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY' || $decrypted_array['ACCESS'] == 'GUARD'){?>
+            <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
                 <li class="menu-item <?php echo ($geturl == 'room-list' || $geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon fa-solid fa-book-bookmark"></i>
+                        <i class="menu-icon fa-solid fa-book-bookmark btn-page-block"></i>
                         <div class="text-truncate" data-i18n="Reservation">Reservation</div>
                         <!-- <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span> -->
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item <?php echo ($geturl == 'room-list')? 'active' : 'collapsed' ?>">
-                            <a href="room-list" class="menu-link">
+                            <a href="room-list" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="Rooms">Rooms</div>
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
-                            <a href="reservation-list" class="menu-link">
+                            <a href="reservation-list" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="All">All</div>
                                 <?php if($r_reserve['total'] == 0){}else{?>
                                 <span
@@ -109,7 +100,7 @@ $user_id = $decrypted_array['ID'];
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-pending')? 'active' : 'collapsed' ?>">
-                            <a href="reserve-pending" class="menu-link">
+                            <a href="reserve-pending" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="Pending">Pending</div>
                                 <?php if($r_reserve['total'] == 0){}else{?>
                                 <span
@@ -118,12 +109,12 @@ $user_id = $decrypted_array['ID'];
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-approved')? 'active' : 'collapsed' ?>">
-                            <a href="reserve-approved" class="menu-link">
+                            <a href="reserve-approved" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="Approved">Approved</div>
                             </a>
                         </li>
                         <li class="menu-item <?php echo ($geturl == 'reserve-declined')? 'active' : 'collapsed' ?>">
-                            <a href="reserve-declined" class="menu-link">
+                            <a href="reserve-declined" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="Declined">Declined</div>
                             </a>
                         </li>
@@ -167,18 +158,17 @@ $user_id = $decrypted_array['ID'];
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'user_list')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>user_list" class="menu-link">
-                        <i class='menu-icon fa-solid fa-user-gear'></i>
+                        <i class='menu-icon fa-solid fa-user-gear btn-page-block'></i>
                         <div> Manage Users</div>
                     </a>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'logs')? 'active' : 'collapsed' ?>">
                     <a href="<?php BASE_URL; ?>logs" class="menu-link">
-                        <i class='menu-icon tf-icons bx bxs-book'></i>
+                        <i class='menu-icon tf-icons bx bxs-book btn-page-block'></i>
                         <div> History List</div>
                     </a>
                 </li>
             <?php } ?>
-        <?php } ?>
     </ul>
 
 </aside>
