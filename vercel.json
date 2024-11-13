@@ -325,6 +325,18 @@
         "dest": "/api/forgot-password.php"
       },
       {
+        "src": "/email_forgot_password",
+        "dest": "/api/action/email_forgot_password.php"
+      },
+      {
+        "src": "/change-password",
+        "dest": "/api/change-password.php"
+      },
+      {
+        "src": "/change_password",
+        "dest": "/api/action/change_password.php"
+      },
+      {
         "src": "/reservation",
         "dest": "/api/pages/reservation/reserve-calendar.php"
       },
