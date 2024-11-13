@@ -66,7 +66,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             <div class="card card-authentication">
                                 <div class="card-body">
                                     <h4 class="mb-2">Reset Password 🔒</h4>
-                                    <p class="mb-4">for <span class="fw-medium"><?php echo $row['EMAIL'];?></span></p>
+                                    <p class="mb-4">for <span class="fw-medium"><?php echo $row['email'];?></span></p>
                                     <form id="change_password_form" class="mb-3" method="post">
                                         <input type="hidden" value="<?php echo $code; ?>" id="code" name="code">
 
@@ -75,27 +75,27 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                         <div class="mb-3 form-password-toggle">
                                             <label class="form-label" for="password">New Password</label>
                                             <div class="input-group input-group-merge">
-                                            <input
-                                                type="password"
-                                                id="password"
-                                                class="form-control"
-                                                name="password"
-                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" />
-                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                <input
+                                                    type="password"
+                                                    id="password"
+                                                    class="form-control"
+                                                    name="password"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                    aria-describedby="password" />
+                                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
                                         <div class="mb-3 form-password-toggle">
                                             <label class="form-label" for="confirm-password">Confirm Password</label>
                                             <div class="input-group input-group-merge">
-                                            <input
-                                                type="password"
-                                                id="confirmpassword"
-                                                class="form-control"
-                                                name="confirmpassword"
-                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" />
-                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                <input
+                                                    type="password"
+                                                    id="confirmpassword"
+                                                    class="form-control"
+                                                    name="confirmpassword"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                    aria-describedby="password" />
+                                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary d-grid w-100 mb-3" id="set_password">Set new password</button>
@@ -103,7 +103,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                 <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                 Loading...
                                                 </button>
-                                        </form>
                                         <div class="text-center">
                                             <a href="/" class="d-flex align-items-center justify-content-center">
                                                 <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
