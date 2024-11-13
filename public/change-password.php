@@ -95,7 +95,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-primary d-grid w-100 mb-3" id="set_password">Set new password</button>
+                                        <button type="submit" class="btn btn-primary d-grid w-100 mb-3" id="set_password">Set new password</button>
                                         <button class="btn btn-label-primary d-none w-100" type="button" id="set_pass_icon" disabled>
                                                 <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                 Loading...

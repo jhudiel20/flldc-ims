@@ -67,7 +67,7 @@ include 'config/config.php';
                                             placeholder="Enter your email"
                                             autofocus />
                                         </div>
-                                        <button type="button" class="btn btn-primary d-grid w-100" id="send_link">Send Reset Link</button>
+                                        <button type="submit" class="btn btn-primary d-grid w-100" id="send_link">Send Reset Link</button>
                                         <button class="btn btn-label-primary d-none w-100" type="button" id="request_emailed_icon" disabled>
                                                 <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                                                 Loading...
