@@ -7,8 +7,8 @@ include 'config/config.php';
 
 <head>
     <?php
-        include __DIR__ . "assets/index/metadata.php";
-        include __DIR__ . "assets/index/include_top.php";
+        include __DIR__ . "/assets/index/metadata.php";
+        include __DIR__ . "/assets/index/include_top.php";
     ?>
 </head>
 
@@ -101,7 +101,7 @@ include 'config/config.php';
 </body>
 
     <?php
-        include __DIR__ . "assets/index/include_bottom.php";
+        include __DIR__ . "/assets/index/include_bottom.php";
     ?>
 
 </html>
