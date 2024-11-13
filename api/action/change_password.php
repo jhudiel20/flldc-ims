@@ -19,15 +19,7 @@ if($password == ""){
     exit();
 }
 
-if($row_pass['password'] === $checkpassword){
-    $response['success'] = false;
-    $response['title'] = "Error!";
-    $response['message'] = 'Please enter new password!';
-        echo json_encode($response);
-        exit();
-}
-
-if($newpassword != $password){
+if($confirmpassword != $password){
     $response['success'] = false;
     $response['title'] = "Error!";
     $response['message'] = 'Password did not match!';
@@ -68,7 +60,7 @@ if(strlen($password) < 8){
     $sql_check_token->bindParam(':code', $code, PDO::PARAM_INT);
     $sql_check_token->execute();
 
-if(pg_num_rows($sql_check_token) == 0){
+if ($sql_check_token->rowCount() == 0) {
     $response['icon'] = "error";
     $response['success'] = false;
     $response['title'] = "Expired Token";
