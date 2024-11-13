@@ -157,14 +157,14 @@ $user_id = $decrypted_array['ID'];
                     <span class="menu-header-text" data-i18n="Admin">Admin</span>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'user_list')? 'active' : 'collapsed' ?>">
-                    <a href="<?php BASE_URL; ?>user_list" class="menu-link">
-                        <i class='menu-icon fa-solid fa-user-gear btn-page-block'></i>
+                    <a href="<?php BASE_URL; ?>user_list" class="menu-link btn-page-block">
+                        <i class='menu-icon fa-solid fa-user-gear'></i>
                         <div> Manage Users</div>
                     </a>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'logs')? 'active' : 'collapsed' ?>">
-                    <a href="<?php BASE_URL; ?>logs" class="menu-link">
-                        <i class='menu-icon tf-icons bx bxs-book btn-page-block'></i>
+                    <a href="<?php BASE_URL; ?>logs" class="menu-link btn-page-block">
+                        <i class='menu-icon tf-icons bx bxs-book'></i>
                         <div> History List</div>
                     </a>
                 </li>
