@@ -165,7 +165,7 @@ if (!$row_email) {
                     </div>
                 ';
                         
-                $codeQuery = $conn->prepare("UPDATE user_account SET reser_token = :code, reset_time = NOW() WHERE email = :email");
+                $codeQuery = $conn->prepare("UPDATE user_account SET reset_token = :code, reset_time = NOW() WHERE email = :email");
                 $codeQuery->bindParam(':code', $code, PDO::PARAM_STR);
                 $codeQuery->bindParam(':email', $email, PDO::PARAM_STR);
                 $codeQuery->execute();
