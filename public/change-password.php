@@ -3,7 +3,7 @@ require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
 
 $code = $_GET['code'];
-$code = urldecode($code);
+$code = decrypted_string($code);
 
 if(empty($code)){
   header("location:/");
