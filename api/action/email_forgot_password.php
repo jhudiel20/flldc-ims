@@ -38,7 +38,7 @@ $db_email->bindParam(':email', $email, PDO::PARAM_STR);
 $db_email->execute();
 $row_email = $db_email->fetch(PDO::FETCH_ASSOC);
 // Check if the query returned any rows
-if (pg_num_rows($db_email) == 0) {
+if (!$row_email) {
     $response['icon'] = "error";
     $response['success'] = false;
     $response['title'] = "Please enter correct email address!";
