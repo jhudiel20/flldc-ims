@@ -6,46 +6,10 @@ include 'config/config.php';
 <html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="description" content="Learning and Development IMS">
-    <meta http-equiv="refresh" content="" />
-    <title><?php echo PAGE_TITLE; ?></title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?php BASE_URL; ?>assets/img/LOGO.png" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-
-    <!-- Icons -->
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/fonts/boxicons.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/fonts/fontawesome.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/fonts/flag-icons.css" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/rtl/core.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/css/demo.css" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/form-validation.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/libs/spinkit/spinkit.css" />
-
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/vendor/css/pages/page-auth.css" />
-
-    <!-- Helpers -->
-    <script src="<?php BASE_URL; ?>assets/vendor/js/helpers.js"></script>
-    <!-- <script src="<?php //BASE_URL; ?>assets/vendor/js/template-customizer.js"></script> -->
-    <script src="<?php BASE_URL; ?>assets/js/config.js"></script>
-    <script src="<?php BASE_URL; ?>assets/js/sweetalert.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link rel="stylesheet" href="<?php BASE_URL; ?>assets/css/index.css" />
+    <?php
+        include __DIR__ . "assets/index/metadata.php";
+        include __DIR__ . "assets/index/include_top.php";
+    ?>
 </head>
 
 <body>
@@ -136,96 +100,8 @@ include 'config/config.php';
 
 </body>
 
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/popper/popper.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/js/bootstrap.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/hammer/hammer.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/i18n/i18n.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/popular.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/bootstrap5.js"></script>
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/@form-validation/auto-focus.js"></script>
-    <script src="<?php BASE_URL; ?>assets/js/sweetalert2@11.min.js"></script>
-
-    <script src="<?php BASE_URL; ?>assets/vendor/libs/block-ui/block-ui.js"></script>
-    <script src="<?php BASE_URL; ?>assets/js/extended-ui-blockui.js"></script>
-
-    <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
-      inject();
-    </script>
-    <!-- Main JS -->
-    <script src="<?php BASE_URL; ?>assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="<?php BASE_URL; ?>assets/js/pages-auth.js"></script>
-
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            iconColor: 'white',
-            customClass: {
-                popup: 'colored-toast',
-            },
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-
-        $(document).ready(function() {
-            $('#user_login_form').on('submit', function(e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                $.ajax({
-                    url: '/userlogin', // Ensure this path is correct
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('#signin_btn').addClass('d-none').prop('disabled', false);
-                        },
-                    success: function(response) {
-                        if (response.success) {
-                            Toast.fire({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                })
-                                .then(function() {
-                                    window.location.href = '/dashboard-lnd';
-                                });
-                        } else {
-                            Toast.fire({
-                                icon: response.icon,
-                                title: response.title,
-                                text: response.message,
-                            }).then(function() {
-                                location.reload();
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX Error:', status, error); // Log the error to the console
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'An error occurred',
-                            text: 'Please try again later.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    <?php
+        include __DIR__ . "assets/index/include_bottom.php";
+    ?>
 
 </html>
