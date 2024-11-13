@@ -56,7 +56,8 @@ if(strlen($password) < 8){
 }
 
     $password = set_password($password);
-    $sql_check_token = $conn->prepare("SELECT RESET_TOKEN, RESET_TIME FROM user_account WHERE RESET_TOKEN = :code AND RESET_TIME > (now() - interval '1 day')");    $sql_check_token->bindParam(':code', $code, PDO::PARAM_INT);
+    $sql_check_token = $conn->prepare("SELECT RESET_TOKEN, RESET_TIME FROM user_account WHERE RESET_TOKEN = :code AND RESET_TIME > (now() - interval '1 day')");    
+    $sql_check_token->bindParam(':code', $code, PDO::PARAM_STR);
     $sql_check_token->execute();
 
 if ($sql_check_token->rowCount() == 0) {
