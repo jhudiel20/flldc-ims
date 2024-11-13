@@ -131,7 +131,7 @@ if (!$row_email) {
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="border:none;border-radius:3px;color:white;padding:15px 19px" align="center" valign="middle" bgcolor="#358eca">
-                                                                                <a href=https://flldc-ims.vercel.app/change-password?code='.$code.'" style="text-decoration:none;line-height:100%;background:#358eca;color:white;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:15px;font-weight:normal;text-transform:none;margin:0px" target="_blank" >
+                                                                                <a href=https://flldc-ims.vercel.app/change-password?code='.urlencode($code).' style="text-decoration:none;line-height:100%;background:#358eca;color:white;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:15px;font-weight:normal;text-transform:none;margin:0px" target="_blank" >
                                                                                 Reset Password
                                                                                 </a>
                                                                             </td>

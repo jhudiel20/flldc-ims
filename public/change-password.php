@@ -1,12 +1,15 @@
 <?php 
+require_once __DIR__ . '/../api/DBConnection.php';
 include 'config/config.php'; 
 
 $code = $_GET['code'];
+$code = urldecode($code);
+
 if(empty($code)){
   header("location:/");
 }
 
-$sql = $conn->prepare("SELECT EMAIL FROM user_account WHERE resert_token = :code ");
+$sql = $conn->prepare("SELECT EMAIL FROM user_account WHERE reset_token = :code ");
 $sql->bindParam(':code', $code, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
