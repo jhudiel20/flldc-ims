@@ -87,7 +87,7 @@ if(pg_num_rows($sql_check_token) == 0){
     $query_email->execute();
     $row_email = $query_email->fetch(PDO::FETCH_ASSOC);
 
-    $user_id = 'Unknown';
+    $user_id = '0';
     $action = "Change Password : Email : " . $row_email['EMAIL'];
 
     $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");

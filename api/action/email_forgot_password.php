@@ -172,7 +172,7 @@ if (!$row_email) {
 
                 $mail->send();
 
-                $user_id = 'Unknown';
+                $user_id = '0';
                 $action = "Password reset request in email : " . $email;
 
                 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
