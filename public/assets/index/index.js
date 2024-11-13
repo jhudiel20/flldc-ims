@@ -66,7 +66,7 @@ document.addEventListener("keydown", function(event) {
     }
 });
 $(document).ready(function() {
-    $('#send_link').on('submit', function(e) {
+    $('#forgot_pass_form').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
         if ($('#email').val() == "") {
@@ -117,7 +117,7 @@ document.addEventListener("keydown", function(event) {
     }
 });
 $(document).ready(function() {
-    $('#set_password').on('submit', function(e) {
+    $('#change_pass_form').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
         if ($('#password').val() == "") {

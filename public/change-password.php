@@ -68,7 +68,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                         <input type="hidden" value="<?php echo $code; ?>" id="code" name="code">
 
                                         <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-                                        <form id="forgot_password_form" class="mb-3" action="" method="post">
+                                        <form id="change_pass_form" class="mb-3" action="" method="post">
                                         <div class="mb-3 form-password-toggle">
                                             <label class="form-label" for="password">New Password</label>
                                             <div class="input-group input-group-merge">

@@ -53,7 +53,7 @@ include 'config/config.php';
                             <div class="card card-authentication">
                                 <div class="card-body">
                                     <!-- <p class="label-shadow mb-2">Forgot Password</p> -->
-                                    <form id="user_forgot_form" class="mb-3" method="post">
+                                    <form id="forgot_pass_form" class="mb-3" method="post">
                                         <h4 class="label-shadow mb-2">Forgot Password? 🔒</h4>
                                         <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
                                         <form id="forgot_password_form" class="mb-3" action="" method="post">
