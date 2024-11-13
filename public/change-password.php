@@ -67,8 +67,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                 <div class="card-body">
                                     <h4 class="label-shadow mb-2">Reset Password 🔒</h4>
                                     <p class="mb-4">for <span class="fw-medium"><?php echo $row['email'];?></span></p>
-                                        <input type="hidden" value="<?php echo $code; ?>" id="code" name="code">
                                         <form id="change_pass_form" class="mb-3" action="" method="post">
+                                            <input type="hidden" value="<?php echo $code; ?>" id="code" name="code">
                                             <div class="mb-3 form-password-toggle">
                                                 <label class="form-label" for="password">New Password</label>
                                                 <div class="input-group input-group-merge">
