@@ -101,7 +101,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     Loading...
                                                     </button>
                                             <div class="text-center">
-                                                <a href="/" class="d-flex align-items-center justify-content-center">
+                                                <a href="/" class="d-flex align-items-center justify-content-center label-shadow">
                                                     <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                                                     Back to login
                                                 </a>

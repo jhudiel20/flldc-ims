@@ -74,7 +74,7 @@ require_once __DIR__ . '/../api/config/config.php';
                                                 </button>
                                         </form>
                                         <div class="text-center">
-                                            <a href="/" class="d-flex align-items-center justify-content-center">
+                                            <a href="/" class="d-flex align-items-center justify-content-center label-shadow">
                                                 <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                                                 Back to login
                                             </a>
