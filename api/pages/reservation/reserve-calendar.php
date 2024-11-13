@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../../config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"

@@ -1,6 +1,6 @@
 <?php 
 require_once __DIR__ . '/../api/DBConnection.php';
-include 'config/config.php'; 
+require_once __DIR__ . '/../api/config/config.php';
 
 $code = $_GET['code'];
 $code = decrypted_string($code);

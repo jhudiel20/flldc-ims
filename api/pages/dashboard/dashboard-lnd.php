@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../public/config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../../config/config.php';
 if(!isset($_COOKIE['secure_data'])){
     header("Location: /index");
 }

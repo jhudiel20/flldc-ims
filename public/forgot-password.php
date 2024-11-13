@@ -1,6 +1,6 @@
 <?php 
 require_once __DIR__ . '/../api/DBConnection.php';
-include 'config/config.php'; 
+require_once __DIR__ . '/../api/config/config.php';
 ?>
 <!doctype html>
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"

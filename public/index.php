@@ -1,6 +1,6 @@
 <?php 
 require_once __DIR__ . '/../api/DBConnection.php';
-include 'config/config.php'; 
+require_once __DIR__ . '/../api/config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
