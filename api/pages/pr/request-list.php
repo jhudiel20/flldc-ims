@@ -362,13 +362,11 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
                 beforeSend: function() {
-                    $('#add_request').hide();
-                    $('#request_icon').removeClass('d-none').prop('disabled', true);
+                    $('#add_request').removeClass('d-none').prop('disabled', true);
                 },
 
                 success: function(response) {
-                    $('#request_icon').addClass('d-none').prop('disabled', false);
-                    $('#add_request').show();
+                    $('#add_request').addClass('d-none').prop('disabled', false);
                     console.log(response);
                     if (response.success) {
                         $('#add_request_modal').modal('hide');
@@ -408,13 +406,11 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#submit_approval_btn').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+                $('#submit_approval_btn').removeClass('d-none').prop('disabled', true);
             },
 
             success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_approval_btn').show();
+                $('#submit_approval_btn').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     $('#approval_modal').modal('hide');

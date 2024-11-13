@@ -76,12 +76,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         </div>
                                                         <div class="text-center">
                                                             <button type="button" id="upload_item_photo_btn"
-                                                                value="Upload" class="btn btn-label-primary"><i
+                                                                value="Upload" class="btn btn-label-primary btn-page-block"><i
                                                                     class="fa-solid fa-upload"></i></button>
-                                                                    <button class="btn btn-label-primary d-none" type="button" id="upload_item_photo_icon" disabled>
-                                                                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                    Loading...
-                                                                </button>
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
@@ -220,13 +216,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     </div>
 
                                                     <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                    <button type="button" class="btn btn-label-primary"
+                                                    <button type="button" class="btn btn-label-primary btn-page-block"
                                                         id="submit_edit_purchase_details"
                                                         name="submit_edit_purchase_details">Save</button>
-                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
-                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                            Loading...
-                                                        </button>
                                                     <?php }?>
                                                 </form>
                                             </div>
@@ -410,12 +402,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#submit_edit_purchase_details').hide();
-                $('#submit_icon').removeClass('d-none').prop('disabled', true);
+                $('#submit_edit_purchase_details').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#submit_icon').addClass('d-none').prop('disabled', false);
-                $('#submit_edit_purchase_details').show();
+                $('#submit_edit_purchase_details').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -451,12 +441,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#upload_po_attachments_btn').hide();
-                $('#upload_po_attachments_icon').removeClass('d-none').prop('disabled', true);
+                $('#upload_po_attachments_btn').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#upload_po_attachments_icon').addClass('d-none').prop('disabled', false);
-                $('#upload_po_attachments_btn').show();
+                $('#upload_po_attachments_btn').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -517,12 +505,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                $('#delete_po_attachments_btn').hide();
-                $('#delete_po_attachments_icon').removeClass('d-none').prop('disabled', true);
+                $('#delete_po_attachments_btn').removeClass('d-none').prop('disabled', true);
             },
             success: function(response) {
-                $('#delete_po_attachments_icon').addClass('d-none').prop('disabled', false);
-                $('#delete_po_attachments_btn').show();
+                $('#delete_po_attachments_btn').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -559,12 +545,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#upload_item_photo_btn').hide();
-                    $('#upload_item_photo_icon').removeClass('d-none').prop('disabled', true);
+                    $('#upload_item_photo_btn').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#upload_item_photo_icon').addClass('d-none').prop('disabled', false);
-                    $('#upload_item_photo_btn').show();
+                    $('#upload_item_photo_btn').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({
@@ -601,12 +585,10 @@ $(document).ready(function() {
             cache: false,
             processData: false,
             beforeSend: function() {
-                    $('#delete_purchase_photo_btn').hide();
-                    $('#delete_purchase_icon').removeClass('d-none').prop('disabled', true);
+                    $('#delete_purchase_photo_btn').removeClass('d-none').prop('disabled', true);
                 },
                 success: function(response) {
-                    $('#delete_purchase_icon').addClass('d-none').prop('disabled', false);
-                    $('#delete_purchase_photo_btn').show();
+                    $('#delete_purchase_photo_btn').addClass('d-none').prop('disabled', false);
                 console.log(response);
                 if (response.success) {
                     swal({

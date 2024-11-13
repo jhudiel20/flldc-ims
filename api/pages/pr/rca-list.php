@@ -481,11 +481,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    showLoading('#add_rca');
+                    $('#add_rca').removeClass('d-none').prop('disabled', true);
                 },
-
                 success: function(response) {
-                    hideLoading('#add_rca');
+                    $('#add_rca').addClass('d-none').prop('disabled', true);
                     console.log(response);
                     if (response.success) {
                         $('#add_rca_modal').modal('hide');
@@ -599,11 +598,11 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    showLoading('#add_pcv');
+                    $('#add_pcv').removeClass('d-none').prop('disabled', true);
                 },
 
                 success: function(response) {
-                    hideLoading('#add_pcv')
+                    $('#add_pcv').removeClass('d-none').prop('disabled', true);
                     console.log(response);
                     if (response.success) {
                         $('#add_pcv_modal').modal('hide');

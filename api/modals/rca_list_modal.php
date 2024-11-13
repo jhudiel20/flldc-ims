@@ -147,11 +147,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="submit" name="add_rca" class="btn btn-label-primary" id="add_rca">Submit</button>
-                <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
-                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
+                <button type="submit" name="add_rca" class="btn btn-label-primary btn-page-block" id="add_rca">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
@@ -284,11 +280,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="submit" name="submit" class="btn btn-label-primary" id="add_pcv" name="add_pcv">Submit</button>
-                <button class="btn btn-label-primary d-none loading-btn" type="button" disabled>
-                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
+                <button type="submit" name="submit" class="btn btn-label-primary btn-page-block" id="add_pcv" name="add_pcv">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
