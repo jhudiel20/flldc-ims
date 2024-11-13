@@ -56,7 +56,7 @@ if(strlen($password) < 8){
 }
 
     $password = set_password($password);
-    $sql_check_token = $conn->prepare("SELECT RESET_TOKEN,RESET_TIME FROM user_account WHERE reset_token = :code AND RESET_TIME > (now() - interval 1 day) ");
+    $sql_check_token = $conn->prepare("SELECT RESET_TOKEN, RESET_TIME FROM user_account WHERE RESET_TOKEN = :code AND RESET_TIME > (now() - interval 1 day) ");
     $sql_check_token->bindParam(':code', $code, PDO::PARAM_INT);
     $sql_check_token->execute();
 
@@ -69,12 +69,12 @@ if ($sql_check_token->rowCount() == 0) {
     exit();
 }else{
 
-    $change_pass = $conn->prepare("UPDATE user_account SET password = :password WHERE reset_token = :code AND RESET_TIME > (now() - interval 1 day) ");
+    $change_pass = $conn->prepare("UPDATE user_account SET password = :password WHERE RESET_TOKEN = :code AND RESET_TIME > (now() - interval 1 day) ");
     $change_pass->bindParam(':password', $password, PDO::PARAM_INT);
     $change_pass->bindParam(':code', $code, PDO::PARAM_INT);
     $change_pass->execute();
 
-    $query_email = $conn->prepare("SELECT email FROM user_account WHERE reset_token = :code ");
+    $query_email = $conn->prepare("SELECT EMAIL FROM user_account WHERE RESET_TOKEN = :code ");
     $query_email->bindParam(':code', $code, PDO::PARAM_INT);
     $query_email->execute();
     $row_email = $query_email->fetch(PDO::FETCH_ASSOC);
