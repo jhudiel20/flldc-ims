@@ -131,7 +131,7 @@ $user_id = $decrypted_array['ID'];
                     </ul>
                 </li>
                 <li class="menu-item <?php echo ($geturl == 'rca-list')? 'active' : 'collapsed' ?>">
-                    <a href="rca-list" class="menu-link">
+                    <a href="rca-list" class="menu-link btn-page-block">
                         <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                         <div> RCA/PCV List</div>
                         <?php if($r_rca['total'] == 0){}else{?>
@@ -142,7 +142,7 @@ $user_id = $decrypted_array['ID'];
                 </li>
             <?php } ?>
             <li class="menu-item <?php echo ($geturl == 'request-list')? 'active' : 'collapsed' ?>">
-                <a href="request-list" class="menu-link">
+                <a href="request-list" class="menu-link btn-page-block">
                     <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                     <div> Request List</div>
                     <?php if($count_pending['total'] == 0){}else{?>
@@ -152,7 +152,7 @@ $user_id = $decrypted_array['ID'];
                 </a>
             </li>
             <li class="menu-item <?php echo ($geturl == 'purchase-list')? 'active' : 'collapsed' ?>">
-                <a href="purchase-list" class="menu-link">
+                <a href="purchase-list" class="menu-link btn-page-block">
                     <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>
                     <div> Purchase List</div>
                     <?php if($pr_status['total'] == 0){}else{?>
