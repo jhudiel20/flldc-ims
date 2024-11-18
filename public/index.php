@@ -74,8 +74,12 @@ require_once __DIR__ . '/../api/config/config.php';
                                                         class="bx bx-hide"></i></span>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100 btn-page-block" id="signin_btn">Sign
+                                        <button type="submit" class="btn btn-primary w-100" id="signin_btn">Sign
                                             in</button>
+                                            <button class="btn btn-label-primary d-none w-100" type="button" id="signin_btn_icon" disabled>
+                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                                </button>
                                     </form>
                                 </div>
                             </div>

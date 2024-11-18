@@ -496,7 +496,7 @@ $(document).ready(function() {
                             buttons: false,
                             timer: 2000,
                         }).then(function() {
-                            location.reload();
+                            table.setData();
                         });
                     } else {
                         swal({
@@ -614,7 +614,7 @@ $(document).ready(function() {
                             buttons: false,
                             timer: 2000,
                         }).then(function() {
-                            location.reload();
+                            table.setData();
                         });
                     } 
                     else {
