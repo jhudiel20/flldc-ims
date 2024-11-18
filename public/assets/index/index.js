@@ -24,12 +24,12 @@ $(document).ready(function() {
             data: $(this).serialize(),
             dataType: 'json',
             beforeSend: function() {
-                $('#signin_btn_icon').removeClass('d-none').prop('disabled', false);
+                $('#signin_btn_icon').removeClass('d-none');
                 $('#signin_btn').addClass('d-none').prop('disabled', false);
                 },
             success: function(response) {
                 $('#signin_btn').removeClass('d-none').prop('disabled', false);
-                $('#signin_btn_icon').addClass('d-none').prop('disabled', false);
+                $('#signin_btn_icon').addClass('d-none');
                 if (response.success) {
                     Toast.fire({
                             icon: 'success',
