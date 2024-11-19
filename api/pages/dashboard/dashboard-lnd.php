@@ -18,24 +18,6 @@ if (!isset($decrypted_array['ACCESS'])) {
     <?php
     include __DIR__  . "/../../action/global/metadata.php";
     include __DIR__  . "/../../action/global/include_top.php";
-    
-    if (isset($_COOKIE['Toast-message'])) {
-        ?>
-        
-            <script>
-
-                Toast.fire({
-                    title: "<?php echo $_COOKIE['Toast-title']; ?>",
-                    icon: "success",
-                    message: "<?php echo $_COOKIE['Toast-message']; ?>"
-                });
-            </script>
-        
-        <?php
-            // Clear cookies after displaying the message
-            setcookie("Toast-title", "", time() - 3600, "/");
-            setcookie("Toast-message", "", time() - 3600, "/");
-        }
     ?>
 </head>
 
@@ -110,4 +92,23 @@ if (!isset($decrypted_array['ACCESS'])) {
     <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
 
+<?php
+    if (isset($_COOKIE['Toast-message'])) {
+        ?>
+        
+            <script>
+
+                Toast.fire({
+                    title: "<?php echo $_COOKIE['Toast-title']; ?>",
+                    icon: "success",
+                    message: "<?php echo $_COOKIE['Toast-message']; ?>"
+                });
+            </script>
+        
+        <?php
+            // Clear cookies after displaying the message
+            setcookie("Toast-title", "", time() - 3600, "/");
+            setcookie("Toast-message", "", time() - 3600, "/");
+        }
+    ?>
 </html>
