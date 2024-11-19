@@ -24,30 +24,11 @@ if (!isset($decrypted_array['ACCESS'])) {
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
-        <?php
-            if (isset($_COOKIE['Toast-message'])) {
-                ?>
-                
-                    <script>
-
-                        Toast.fire({
-                            icon: "success",
-                            title: "<?php echo $_COOKIE['Toast-title']; ?>",
-                            text: "<?php echo $_COOKIE['Toast-message']; ?>"
-                        });
-                    </script>
-                
-                <?php
-                    // Clear cookies after displaying the message
-                    setcookie("Toast-title", "", time() - 3600, "/");
-                    setcookie("Toast-message", "", time() - 3600, "/");
-                }
-        ?>
         <div class="layout-container">
 
-            <?php
-        include __DIR__ . "/../../action/global/sidebar.php";
-        include __DIR__ . "/../../action/global/header.php"; 
+        <?php
+            include __DIR__ . "/../../action/global/sidebar.php";
+            include __DIR__ . "/../../action/global/header.php"; 
         ?>
 
             <!-- Content wrapper -->
@@ -88,17 +69,17 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <div class="content-backdrop fade"></div>
             </div>
             <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
-    </div>
 
 
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
 
-    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-    <div class="drag-target"></div>
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target"></div>
     </div>
     <!-- / Layout wrapper -->
 
@@ -110,6 +91,24 @@ if (!isset($decrypted_array['ACCESS'])) {
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
+<?php
+            if (isset($_COOKIE['Toast-message'])) {
+                ?>
+                    <script>
+
+                        Toast.fire({
+                            icon: "success",
+                            title: "<?php echo $_COOKIE['Toast-title']; ?>",
+                            text: "<?php echo $_COOKIE['Toast-message']; ?>"
+                        });
+                    </script>
+                
+                <?php
+                    // Clear cookies after displaying the message
+                    setcookie("Toast-title", "", time() - 3600, "/");
+                    setcookie("Toast-message", "", time() - 3600, "/");
+                }
+        ?>
 </html>
 
 <?php
