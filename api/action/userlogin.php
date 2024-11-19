@@ -121,12 +121,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bindParam(':id', $user['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                // $response = [
-                //     'success' => true,
-                //     'title' => 'Welcome!',
-                //     'message' => 'Login successful!'
-                // ];
-                // echo json_encode($response);
+                $response = [
+                    'success' => true,
+                    // 'title' => 'Welcome!',
+                    // 'message' => 'Login successful!'
+                ];
+                echo json_encode($response);
 
             } else {
                 $admin_access = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND access = 'ADMIN' ");
