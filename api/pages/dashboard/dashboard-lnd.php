@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once __DIR__ . '/../../config/config.php';
 if(!isset($_COOKIE['secure_data'])){
     header("Location: /index");
@@ -109,6 +110,8 @@ if (!isset($decrypted_array['ACCESS'])) {
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
 </body>
-
-
 </html>
+
+<?php
+ob_end_flush();
+?>
