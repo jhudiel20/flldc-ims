@@ -3,8 +3,26 @@
 <!-- Layout container -->
 <div class="layout-page">
     <!-- Navbar -->
-    <!-- navbar-detached -->
-    <nav class="layout-navbar container navbar navbar-expand-xl  align-items-center bg-navbar-theme"
+    <?php
+            if (isset($_COOKIE['Toast-message'])) {
+                ?>
+                    <script>
+
+                        Toast.fire({
+                            icon: "success",
+                            title: "<?php echo $_COOKIE['Toast-title']; ?>",
+                            text: "<?php echo $_COOKIE['Toast-message']; ?>"
+                        });
+                    </script>
+                
+                <?php
+                    // Clear cookies after displaying the message
+                    setcookie("Toast-title", "", time() - 3600, "/");
+                    setcookie("Toast-message", "", time() - 3600, "/");
+                }
+        ?>
+
+    <nav class="layout-navbar container navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
         id="layout-navbar">
         <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
             <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
