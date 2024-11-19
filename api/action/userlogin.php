@@ -106,9 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'samesite' => 'Strict'              // Restrict cookie to same-site requests
                 ]);
 
-                setcookie("success", true, time() + 10, "/"); // Set status as success
-                setcookie("title", "Welcome!", time() + 10, "/"); // Set status as success
-                setcookie("message", "Welcome!", time() + 10, "/"); // Message valid for 10 seconds
+                setcookie("Toast-title", "Welcome!", time() + 10, "/"); // Set status as success
+                setcookie("Toast-message", "Login successful!", time() + 10, "/"); // Message valid for 10 seconds
 
                 // Log the user action
                 $action = "Logged in the system.";

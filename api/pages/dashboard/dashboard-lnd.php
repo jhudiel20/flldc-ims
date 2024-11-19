@@ -6,31 +6,9 @@ if(!isset($_COOKIE['secure_data'])){
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location: /index");
 }
-if (isset($_COOKIE['message'])) {
-    ?>
-    
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-            });
-            Toast.fire({
-                icon: "<?php echo $_COOKIE['success']; ?>",
-                title: "<?php echo $_COOKIE['title']; ?>",
-                message: "<?php echo $_COOKIE['message']; ?>"
-            });
-        </script>
-    
-    <?php
-        // Clear cookies after displaying the message
-        setcookie("success", "", time() - 3600, "/");
-        setcookie("title", "", time() - 3600, "/");
-        setcookie("message", "", time() - 3600, "/");
-    }
 ?>
+
+
 <!doctype html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
@@ -40,6 +18,40 @@ if (isset($_COOKIE['message'])) {
     <?php
     include __DIR__  . "/../../action/global/metadata.php";
     include __DIR__  . "/../../action/global/include_top.php";
+    ?>
+    <?php
+    if (isset($_COOKIE['Toast-message'])) {
+        ?>
+        
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    iconColor: "white",
+                    customClass: {
+                        popup: "colored-toast",
+                    },
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+
+                Toast.fire({
+                    title: "<?php echo $_COOKIE['Toast-title']; ?>",
+                    icon: "success",
+                    message: "<?php echo $_COOKIE['Toast-message']; ?>"
+                });
+            </script>
+        
+        <?php
+            // Clear cookies after displaying the message
+            setcookie("Toast-title", "", time() - 3600, "/");
+            setcookie("Toast-message", "", time() - 3600, "/");
+        }
     ?>
 </head>
 
