@@ -6,6 +6,30 @@ if(!isset($_COOKIE['secure_data'])){
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location: /index");
 }
+if (isset($_COOKIE['message'])) {
+    ?>
+    
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+            });
+            Toast.fire({
+                icon: "<?php echo $_COOKIE['success']; ?>",
+                title: "<?php echo $_COOKIE['title']; ?>",
+                message: "<?php echo $_COOKIE['message']; ?>"
+            });
+        </script>
+    
+    <?php
+        // Clear cookies after displaying the message
+        setcookie("success", "", time() - 3600, "/");
+        setcookie("title", "", time() - 3600, "/");
+        setcookie("message", "", time() - 3600, "/");
+    }
 ?>
 <!doctype html>
 

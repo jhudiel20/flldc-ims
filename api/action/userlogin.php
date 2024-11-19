@@ -106,6 +106,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'samesite' => 'Strict'              // Restrict cookie to same-site requests
                 ]);
 
+                setcookie("success", true, time() + 10, "/"); // Set status as success
+                setcookie("title", "Welcome!", time() + 10, "/"); // Set status as success
+                setcookie("message", "Welcome!", time() + 10, "/"); // Message valid for 10 seconds
+
                 // Log the user action
                 $action = "Logged in the system.";
                 $stmt = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action_made)");
@@ -118,12 +122,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bindParam(':id', $user['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                $response = [
-                    'success' => true,
-                    'title' => 'Welcome!',
-                    'message' => 'Login successful!'
-                ];
-                echo json_encode($response);
+                // $response = [
+                //     'success' => true,
+                //     'title' => 'Welcome!',
+                //     'message' => 'Login successful!'
+                // ];
+                // echo json_encode($response);
 
             } else {
                 $admin_access = $conn->prepare("SELECT * FROM user_account WHERE username = :username AND access = 'ADMIN' ");

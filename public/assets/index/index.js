@@ -31,14 +31,14 @@ $(document).ready(function() {
                 $('#signin_btn').removeClass('d-none').prop('disabled', false);
                 $('#signin_btn_icon').addClass('d-none');
                 if (response.success) {
-                    Toast.fire({
-                            icon: 'success',
-                            title: response.title,
-                            text: response.message,
-                        })
-                        .then(function() {
+                    // Toast.fire({
+                    //         icon: 'success',
+                    //         title: response.title,
+                    //         text: response.message,
+                    //     })
+                    //     .then(function() {
                             window.location.href = '/dashboard-lnd';
-                        });
+                        // });
                 } else {
                     Toast.fire({
                         icon: response.icon,
