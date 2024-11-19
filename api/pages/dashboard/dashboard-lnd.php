@@ -19,8 +19,6 @@ if (!isset($decrypted_array['ACCESS'])) {
     <?php
     include __DIR__  . "/../../action/global/metadata.php";
     include __DIR__  . "/../../action/global/include_top.php";
-    include __DIR__ . "/../../action/global/include_bottom.php";
-
     ?>
 </head>
 <body>
@@ -107,6 +105,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
     <?php
+        include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
