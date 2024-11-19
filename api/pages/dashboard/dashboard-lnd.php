@@ -22,7 +22,9 @@ if (!isset($decrypted_array['ACCESS'])) {
     include __DIR__ . "/../../action/global/include_bottom.php";
 
     ?>
-            <?php
+</head>
+<body>
+    <?php
             if (isset($_COOKIE['Toast-message'])) {
                 ?>
                 
@@ -41,8 +43,6 @@ if (!isset($decrypted_array['ACCESS'])) {
                     setcookie("Toast-message", "", time() - 3600, "/");
                 }
         ?>
-</head>
-<body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
