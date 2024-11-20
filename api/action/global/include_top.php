@@ -153,6 +153,10 @@
         });
     </script>
     <style>
+        #layout-navbar {
+            z-index: 1050;
+            position: fixed;
+        }
         .swal2-toast {
             z-index: 1060 !important; /* Ensure Toast appears above navbar */
         }
