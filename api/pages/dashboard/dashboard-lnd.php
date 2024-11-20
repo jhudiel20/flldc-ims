@@ -22,7 +22,7 @@ if (!isset($decrypted_array['ACCESS'])) {
     ?>
 </head>
 <body>
-<?php
+        <?php
             if (isset($_COOKIE['Toast-message'])) {
                 ?>
                     <script>
@@ -40,7 +40,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                     setcookie("Toast-message", "", time() - 3600, "/");
                 }
         ?>
-        
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">

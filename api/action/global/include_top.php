@@ -138,7 +138,7 @@
 
         const Toast = Swal.mixin({
             toast: true,
-            position: "bottom-end",
+            position: "top-end",
             iconColor: 'white',
             customClass: {
                 popup: 'colored-toast',
@@ -153,6 +153,9 @@
         });
     </script>
     <style>
+        .swal2-toast {
+            z-index: 1060 !important; /* Ensure Toast appears above navbar */
+        }
         /* sweetalert2 colored toast */
         .colored-toast.swal2-icon-success {
             background-color: #27c251 !important;
