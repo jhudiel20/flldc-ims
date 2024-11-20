@@ -16,6 +16,8 @@
 
     <script src="<?php BASE_URL; ?>assets/vendor/libs/block-ui/block-ui.js"></script>
     <script src="<?php BASE_URL; ?>assets/js/extended-ui-blockui.js"></script>
+    <script src="<?php BASE_URL; ?>assets/js/ui-popover.js"></script>
+
 
     <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
       inject();

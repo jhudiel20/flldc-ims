@@ -61,7 +61,10 @@ require_once __DIR__ . '/../api/config/config.php';
                                         <div class="mb-3 form-password-toggle">
                                             <div class="d-flex justify-content-between">
                                                 <label class="form-label label-shadow" for="password">Password</label>
-                                                <a href="<?php BASE_URL; ?>forgot-password">
+                                                <a href="<?php BASE_URL; ?>forgot-password" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                                                    data-bs-placement="top"
+                                                    data-bs-html="true"
+                                                    title="<span>To reset your password, please click this link to process your reset.</span>">
                                                     <small>Forgot Password?</small>
                                                 </a>
                                             </div>

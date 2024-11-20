@@ -24,6 +24,7 @@
     <!-- <script src="<?php BASE_URL; ?>../assets/js/ui-modals.js"></script> -->
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/block-ui/block-ui.js"></script>
     <script src="<?php BASE_URL; ?>../assets/js/extended-ui-blockui.js"></script>
+    <script src="<?php BASE_URL; ?>../assets/js/ui-popover.js"></script>
 
     <!-- Main JS -->
     <script src="<?php BASE_URL; ?>../assets/js/main.js"></script>
