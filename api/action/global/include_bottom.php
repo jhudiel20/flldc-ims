@@ -34,6 +34,8 @@
     <!-- dropify -->
     <!-- <script src="<?php //BASE_URL; ?>../js/dropify.min.js?v=<?php //echo FILE_VERSION; ?>"></script> -->
 
+    <script type="module" >import { injectSpeedInsights } from '@vercel/speed-insights';
+      injectSpeedInsights();</script>
     <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
       inject();
     </script>
