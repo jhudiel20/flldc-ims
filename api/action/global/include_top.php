@@ -1,3 +1,9 @@
+    <?php 
+    if (!isset($_COOKIE['secure_data'])){
+        header("Location: /");
+    }
+    ?>
+    
     <!-- Favicon -->
     <link href="<?php BASE_URL; ?>../assets/img/LOGO.png" rel="icon" style="boder-radius:10%">
 

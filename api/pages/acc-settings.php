@@ -4,7 +4,7 @@ require_once __DIR__ . '/../DBConnection.php';
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location:index.php");
+    header("Location:/");
 }
 
 $user_id = $decrypted_array['ID'];

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../DBConnection.php';
 require_once __DIR__ . '/../../config/config.php';
 
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location:index.php");
+    header("Location:/");
 }
 
 ?>
@@ -125,6 +125,21 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 <script>
+
+// var rowPopupFormatter = function(e, row, onRendered){
+//     var data = cell.getData(),
+//     container = document.createElement("div"),
+//     contents = "<strong style='font-size:1.2em;'>Row Details</strong><br/><ul style='padding:0;  margin-top:8px; margin-bottom:0;'>";
+//     contents += "<li><strong>Name:</strong> " + data.name + "</li>";
+//     contents += "<li><strong>Gender:</strong> " + data.gender + "</li>";
+//     contents += "<li><strong>Favourite Colour:</strong> " + data.col + "</li>";
+//     contents += "</ul>";
+
+//     container.innerHTML = contents;
+
+//     return container;
+// };
+    
 var approval_status = function(cell, formatterParams, onRendered) {
     var data_approval = cell.getData().approval; // Get the approved status from the cell
     var ID = cell.getRow().getData().id; // Get the ID of the user
