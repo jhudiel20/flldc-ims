@@ -1,4 +1,8 @@
 <?php 
+if (!isset($_COOKIE['secure_data'])){
+    header("Location: /");
+}
+
 // Display errors for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

@@ -1,4 +1,7 @@
 <?php
+if (!isset($_COOKIE['secure_data'])){
+    header("Location: /");
+}
 
 $owner = getenv('GITHUB_OWNER');
 $repo = getenv('GITHUB_IMAGES');
