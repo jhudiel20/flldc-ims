@@ -25,3 +25,11 @@ Class DBConnection{
 
 $db = new DBConnection();
 $conn = $db->conn;
+
+if (!isset($_COOKIE['secure_data'])){
+    header("Location: /");
+}
+if (!isset($decrypted_array['ACCESS'])) {
+    header("Location:/");
+}
+
