@@ -23,9 +23,12 @@ try {
         $start_time = date("H:i:s", strtotime($times[0]));
         $end_time = date("H:i:s", strtotime($times[1]));
 
+        // Check if the reservation is for the whole day
+        $is_whole_day = ($start_time === "07:00:00" && $end_time === "18:00:00");
+
         // Format the event data for FullCalendar
         $reservations[] = [
-            'title' => $row['room_name'] .'-'.$row['fname'] .' '. $row['lname'],
+            'title' => $row['room_name'] .'-'. $row['lname']. ($is_whole_day ? ' - Wholeday' : 'HalfDay'),
             'name' => $row['fname'] .' '. $row['lname'],
             'reserve_id' => $row['reservation_id'],
             'bu' => $row['business_unit'],
