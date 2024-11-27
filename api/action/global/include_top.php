@@ -1,12 +1,3 @@
-    <?php 
-    if (!isset($_COOKIE['secure_data'])){
-        header("Location: /");
-    }
-    if (!isset($decrypted_array['ACCESS'])) {
-        header("Location:/");
-    }
-    ?>
-    
     <!-- Favicon -->
     <link href="<?php BASE_URL; ?>../assets/img/LOGO.png" rel="icon" style="boder-radius:10%">
 
