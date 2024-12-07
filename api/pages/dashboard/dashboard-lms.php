@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location: /#");
+    header("Location: /");
 }
 ?>
 <!doctype html>
