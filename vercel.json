@@ -349,11 +349,11 @@
       },
       {
         "src": "/404",
-        "dest": "/public/404.php"
+        "dest": "/api/404.php"
       },
       {
         "src": "/(.*)",
-        "dest": "/public/404.php"
+        "dest": "/api/404.php"
       }
     ]
   }
