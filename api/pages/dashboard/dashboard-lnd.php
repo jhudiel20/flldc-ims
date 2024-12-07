@@ -2,10 +2,10 @@
 ob_start();
 require_once __DIR__ . '/../../config/config.php';
 if(!isset($_COOKIE['secure_data'])){
-    header("Location: /");
+    header("Location: /#");
 }
 if (!isset($decrypted_array['ACCESS'])) {
-    header("Location: /");
+    header("Location: /#");
 }
 ?>
 

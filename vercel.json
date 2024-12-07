@@ -344,12 +344,16 @@
         "dest": "/api/pages/reservation/reserve-calendar.php"
       },
       {
-        "src": "/index",
+        "src": "/#",
         "dest": "/api/index.php"
       },
       {
+        "src": "/404",
+        "dest": "/public/404.php"
+      },
+      {
         "src": "/(.*)",
-        "dest": "/api/index"
+        "dest": "/public/404.php"
       }
     ]
   }

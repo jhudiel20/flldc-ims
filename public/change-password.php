@@ -6,7 +6,7 @@ $code = $_GET['code'];
 $code = decrypted_string($code);
 
 if(empty($code)){
-  header("location:/");
+  header("location:/#");
 }
 
 $sql = $conn->prepare("SELECT EMAIL FROM user_account WHERE reset_token = :code ");

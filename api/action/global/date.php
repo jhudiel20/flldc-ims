@@ -2,7 +2,7 @@
         <span style="font-size:14px;font-weight:bold;">
             <?php
             if (!isset($decrypted_array['ACCESS'])) {
-              header("Location:/");
+              header("Location:/#");
             }
                 date_default_timezone_set('Asia/Manila');
                 echo $date = date('D | F j, Y')."&nbsp;|&nbsp; ";

@@ -1,6 +1,6 @@
 <?php 
 if (!isset($_COOKIE['secure_data'])){
-    header("Location: /");
+    header("Location: /#");
 }
 
 // Display errors for debugging
@@ -41,7 +41,7 @@ if ($logSuccess) {
     }
 
     // Redirect to the index page after successful logout and cookie unset
-    header("Location: /");
+    header("Location: /#");
     exit();
 
 } else {
