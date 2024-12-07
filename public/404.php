@@ -20,7 +20,7 @@ if (!isset($decrypted_array['ACCESS'])) {
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>FAST LDIMS</title>
+    <title>404 - Page Not Found</title>
 
     <meta name="description" content="" />
 
@@ -66,19 +66,11 @@ if (!isset($decrypted_array['ACCESS'])) {
 
     <!-- Error -->
     <div class="container-xxl container-p-y">
-      <div class="misc-wrapper">
+      <div class="misc-wrapper">  
+        <h1 style="font-size: 10rem">404</h1>
         <h2 class="mb-2 mx-2">Page Not Found :(</h2>
         <p class="mb-4 mx-2">Oops! 😖 The requested URL was not found on this server.</p>
         <a href="/" class="btn btn-primary">Back to home</a>
-        <div class="mt-3">
-          <img
-            src="assets/img/illustrations/page-misc-error-light.png"
-            alt="page-misc-error-light"
-            width="500"
-            class="img-fluid"
-            data-app-dark-img="illustrations/page-misc-error-dark.png"
-            data-app-light-img="illustrations/page-misc-error-light.png" />
-        </div>
       </div>
     </div>
     <!-- /Error -->
