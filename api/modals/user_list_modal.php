@@ -94,8 +94,7 @@
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Please select the reservation access for the user (<span id="user"></span>) ?</i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
+                
                 <form method="post" id="change_room_access_form" style="display: inline-block;">
                     <input type="hidden" id="access_id" name="access_id">
                     <input type="hidden" id="user" name="user">
@@ -105,7 +104,8 @@
                         <option value="ENCODER">ENCODER</option>
                         <option value="USER">USER</option>
                     </select>
-
+            </div>
+            <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     <button name="" type="button" id="change_access_info" class="btn btn-label-primary btn-page-block">Submit</button>
                 </form>
