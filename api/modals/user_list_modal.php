@@ -104,7 +104,7 @@
                             <div class="form-message alert alert-danger" role="alert"></div>
                             <div class="col-md-12">
                                 <input type="hidden" id="access_id" name="access_id">
-                                <input type="hidden" id="user" name="user">
+                                <input type="hidden" id="fullname" name="fullname">
                                 <input type="hidden" id="old_access" name="old_access">
                                 <select name="new_access" id="new_access" class="form-select">
                                     <option value="ADMIN">ADMIN</option>

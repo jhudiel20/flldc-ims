@@ -13,7 +13,7 @@ require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
 $id = isset($_POST['access_id']) ? trim($_POST['access_id']) : '';
-$user = isset($_POST['user']) ? trim($_POST['user']) : '';
+$fullname = isset($_POST['fullname']) ? trim($_POST['fullname']) : '';
 $new_access = isset($_POST['new_access']) ? trim($_POST['new_access']) : '';
 $old_access = isset($_POST['old_access']) ? trim($_POST['old_access']) : '';
 
@@ -31,7 +31,7 @@ $sql->execute();
 
 
 $user_id = $decrypted_array['ID'];
-$action = "Updated User Room Acess | User " . $user ." | Reservation Access : ".$new_access;
+$action = "Updated User Room Acess | User : " . $fullname ." | Reservation Access : ".$new_access;
 $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 $logs->bindParam(':action', $action, PDO::PARAM_STR);

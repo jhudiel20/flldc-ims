@@ -122,16 +122,50 @@
         return menu;
         };
         // Utility functions for loading buttons
-        function showLoading(btnId, loadingBtnClass = '.loading-btn') {
-            $(btnId).hide(); // Hide the original button
-            $(loadingBtnClass).removeClass('d-none').prop('disabled', true); // Show the loading button
+        // function showLoading(btnId, loadingBtnClass = '.loading-btn') {
+        //     $(btnId).hide(); // Hide the original button
+        //     $(loadingBtnClass).removeClass('d-none').prop('disabled', true); // Show the loading button
+        // }
+
+        // function hideLoading(btnId, loadingBtnClass = '.loading-btn') {
+        //     $(loadingBtnClass).addClass('d-none').prop('disabled', false); // Hide the loading button
+        //     $(btnId).show(); // Show the original button
+        // }
+        function showLoading(btnId) {
+            const originalButton = $(btnId);
+            const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
+
+            // Hide the original button
+            originalButton.hide();
+
+            // Check if the loading button already exists
+            if (!$(loadingButtonId).length) {
+                // Create the loading button dynamically
+                const loadingButton = $(`
+                    <button id="${btnId.substring(1)}-loading" class="${originalButton.attr('class')} loading-btn" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                `);
+
+                // Insert the loading button after the original button
+                originalButton.after(loadingButton);
+            }
+
+            // Show the loading button
+            $(`${loadingButtonId}`).show();
         }
 
-        function hideLoading(btnId, loadingBtnClass = '.loading-btn') {
-            $(loadingBtnClass).addClass('d-none').prop('disabled', false); // Hide the loading button
-            $(btnId).show(); // Show the original button
-        }
+        function hideLoading(btnId) {
+            const originalButton = $(btnId);
+            const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
 
+            // Hide the loading button and remove it from the DOM
+            $(loadingButtonId).remove();
+
+            // Show the original button
+            originalButton.show();
+        }
         const currentYear = new Date().getFullYear();
         const currentDate = new Date().toLocaleDateString();
         const formattedDateWithHyphens = currentDate.replace(/\//g, "-");

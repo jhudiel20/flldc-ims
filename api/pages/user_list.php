@@ -184,7 +184,7 @@ var reserve_access = function(cell, formatterParams, onRendered) {
     var fname = cell.getData().fname;
     var lname = cell.getData().lname;
 
-    return "<button type='button' class='btn btn-outline-primary change_room_access' data-user='" + fname + " " + lname + "'  data-id='" + id + "' data-access='" + access +"' > " + access + "</button>";
+    return "<button type='button' class='btn btn-outline-primary change_room_access' data-fullname='" + fname + " " + lname + "'  data-id='" + id + "' data-access='" + access +"' > " + access + "</button>";
 
 }
 
@@ -902,11 +902,12 @@ $(document).ready(function() {
 
     $(document).on("click", ".change_room_access", function() {
         var ID = $(this).data("id");
-        var USER_NAME = $(this).data("user");
+        var FULLNAME = $(this).data("fullname");
         var ACCESS = $(this).data("access");
 
+
         $('#access_id').val(ID);
-        $('#user').text(USER_NAME);
+        $('#fullname').text(FULLNAME);
         $('#old_access').val(ACCESS);
 
         $('#change_room_access_modal').modal('show');

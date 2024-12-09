@@ -358,10 +358,12 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,   // Important: prevents jQuery from processing the FormD
                 beforeSend: function() {
-                    $('#add_room').addClass('d-none').prop('disabled', false);
+                    showLoading('#add_room');
+                    // $('#add_room').addClass('d-none').prop('disabled', false);
                 },
                 success: function(response) {
-                    $('#add_room').removeClass('d-none').prop('disabled', false);
+                    hideLoading('#add_room');
+                    // $('#add_room').removeClass('d-none').prop('disabled', false);
                     console.log(response);
                     if (response.success) {
                         $('#add_room_modal').modal('hide');
