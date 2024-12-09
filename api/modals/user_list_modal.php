@@ -71,9 +71,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                <button type="button" name="submit" class="btn btn-outline-primary" id="add_user">Submit</button>
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="reset" class="btn btn-label-secondary">Reset</button>
+                <button type="button" name="submit" class="btn btn-label-primary" id="add_user">Submit</button>
                 <button class="btn btn-label-primary d-none" type="button" id="add_user_icon" disabled>
                     <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
                     Loading...
@@ -87,29 +87,46 @@
 
 <!-- ######################################################## USER ADD MODAL ########################################################################################################## -->
 
-
-<div class="modal fade" id="change_room_access_modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="change_room_access_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Please select the reservation access for the user (<span id="user"></span>) ?</i></h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Please select the reservation access for the user (<span id="user"></span>) ?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                
-                <form method="post" id="change_room_access_form" style="display: inline-block;">
-                    <input type="hidden" id="access_id" name="access_id">
-                    <input type="hidden" id="user" name="user">
-                    <input type="hidden" id="old_access" name="old_access">
-                    <select name="new_access" id="new_access" class="form-select">
-                        <option value="ADMIN">ADMIN</option>
-                        <option value="ENCODER">ENCODER</option>
-                        <option value="USER">USER</option>
-                    </select>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" method="post" id="change_room_access_form">
+
+                    <div class="tab-pane fade show active" id="USER" role="tabpanel">
+                        <div class="row">
+
+                            <div class="form-message alert alert-danger" role="alert"></div>
+                            <div class="col-md-12">
+                                <input type="hidden" id="access_id" name="access_id">
+                                <input type="hidden" id="user" name="user">
+                                <input type="hidden" id="old_access" name="old_access">
+                                <select name="new_access" id="new_access" class="form-select">
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="ENCODER">ENCODER</option>
+                                    <option value="USER">USER</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
             </div>
             <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="change_access_info" class="btn btn-label-primary btn-page-block">Submit</button>
-                </form>
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" name="change_access_info" class="btn btn-label-primary btn-page-block" id="change_access_info">Submit</button>
+                <!-- <button class="btn btn-label-primary d-none" type="button" id="add_user_icon" disabled>
+                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button> -->
+                <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
+            </form><!-- End Multi Columns Form -->
         </div>
     </div>
 </div>

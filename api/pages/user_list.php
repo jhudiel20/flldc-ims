@@ -173,7 +173,7 @@ var btn_clear_attempts = function(cell, formatterParams, onRendered) {
         return data;
     }
     if (data >= 1) {
-        return "<button type='button' class='btn btn-label-primary clear_attempts' data-id='" + id +
+        return "<button type='button' class='btn btn-outline-primary clear_attempts' data-id='" + id +
             "' >Clear Attempts : " + data + "</button>";
     }
 }
@@ -184,7 +184,7 @@ var reserve_access = function(cell, formatterParams, onRendered) {
     var fname = cell.getData().fname;
     var lname = cell.getData().lname;
 
-    return "<button type='button' class='btn btn-label-primary change_room_access' data-user='" + fname + " " + lname + "'  data-id='" + id + "' data-access='" + access +"' > " + access + "</button>";
+    return "<button type='button' class='btn btn-outline-primary change_room_access' data-user='" + fname + " " + lname + "'  data-id='" + id + "' data-access='" + access +"' > " + access + "</button>";
 
 }
 
@@ -412,7 +412,7 @@ var table = new Tabulator("#user-table", {
                 var admin_status = cell.getRow().getData().admin_status;
                 // console.log(admin_status);
 
-                var editBtn = $("<button class='btn btn-label-primary me-2' >").addClass("user-edit")
+                var editBtn = $("<button class='btn btn-outline-primary me-2' >").addClass("user-edit")
                     .attr("data-id", ID)
                     .attr("data-fname", FNAME)
                     .attr("data-mname", MNAME)
@@ -426,7 +426,7 @@ var table = new Tabulator("#user-table", {
                     .html("<i class='fa-solid fa-pen-to-square'></i>");
 
                 if (admin_status != "PRIMARY") {
-                    var deleteBtn = $("<button>").addClass("btn btn-label-danger user-delete")
+                    var deleteBtn = $("<button>").addClass("btn btn-outline-danger user-delete")
                         .attr("data-id", ID)
                         .attr("data-fname", FNAME)
                         .attr("data-lname", LNAME)
@@ -439,6 +439,7 @@ var table = new Tabulator("#user-table", {
                 }
             },
             hozAlign: "center",
+            width: 150,
             download: false
         },
         <?php } ?>
