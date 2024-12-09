@@ -782,7 +782,7 @@ $(document).ready(function() {
         });
     });
     $('#change_access_info').on('click', function() {
-        var formdata = new FormData(clear_attempts_form);
+        var formdata = new FormData(change_room_access_form);
         // console.log(formdata);
         $.ajax({
             url: "/edit_reservation_access",
@@ -904,7 +904,7 @@ $(document).ready(function() {
         var USER_NAME = $(this).data("user");
         var ACCESS = $(this).data("access");
 
-        $('#ID').val(ID);
+        $('#access_id').val(ID);
         $('#user').text(USER_NAME);
         $('#old_access').val(ACCESS);
 

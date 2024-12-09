@@ -107,7 +107,7 @@
                     </select>
 
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="change_access_info" class="btn btn-label-danger btn-page-block">Submit</button>
+                    <button name="" type="button" id="change_access_info" class="btn btn-label-primary btn-page-block">Submit</button>
                 </form>
             </div>
         </div>

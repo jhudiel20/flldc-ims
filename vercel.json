@@ -300,6 +300,10 @@
         "dest": "/api/action/user_clear_attempts.php"
       },
       {
+        "src": "/edit_reservation_access",
+        "dest": "/api/action/edit_reservation_access.php"
+      },
+      {
         "src": "/user_list_data",
         "dest": "/api/ajax_data/user_list_data.php"  
       },
