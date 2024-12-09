@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'IMAGE' => $user['image'],
                     'LOCKED' => $user['locked'],
                     'ADMIN_STATUS' => $user['admin_status'],
-                    'RESERVATION_ACCESS' => $user['RESERVATION_ACCESS']
+                    'RESERVATION_ACCESS' => $user['reservation_access']
                 ];
 
                 $encrypted_value = encrypt_cookie($cookieData, $encryption_key, $cipher_method);
