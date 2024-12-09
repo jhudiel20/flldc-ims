@@ -289,6 +289,17 @@ var table = new Tabulator("#user-table", {
             headerFilterLiveFilter: false
         },
         {
+            title: "Reservation Access",
+            field: "reservation_access",
+            hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
+            headerFilterLiveFilter: false
+        },
+        {
             title: "",
             field: "image",
             formatter: function(cell, formatterParams) {

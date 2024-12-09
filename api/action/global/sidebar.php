@@ -77,7 +77,7 @@ $user_id = $decrypted_array['ID'];
                     </li>
                 </ul>
             </li>
-            <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
+            <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
                 <li class="menu-item <?php echo ($geturl == 'room-list' || $geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon fa-solid fa-book-bookmark btn-page-block"></i>
@@ -121,6 +121,8 @@ $user_id = $decrypted_array['ID'];
 
                     </ul>
                 </li>
+            <?php } ?>
+            <?php if($decrypted_array['ADMIN_STATUS'] == 'PRIMARY'){?>
                 <li class="menu-item <?php echo ($geturl == 'rca-list')? 'active' : 'collapsed' ?>">
                     <a href="rca-list" class="menu-link btn-page-block">
                         <i class="menu-icon fa-solid fa-solid fa-clipboard-list"></i>

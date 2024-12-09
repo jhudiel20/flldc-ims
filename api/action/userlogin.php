@@ -92,7 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'EMAIL' => $user['email'],
                     'IMAGE' => $user['image'],
                     'LOCKED' => $user['locked'],
-                    'ADMIN_STATUS' => $user['admin_status']
+                    'ADMIN_STATUS' => $user['admin_status'],
+                    'RESERVATION_ACCESS' => $user['RESERVATION_ACCESS']
                 ];
 
                 $encrypted_value = encrypt_cookie($cookieData, $encryption_key, $cipher_method);
