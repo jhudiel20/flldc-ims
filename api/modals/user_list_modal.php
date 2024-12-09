@@ -92,7 +92,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Please select the access for the user ? <span id="user"></span></i></h5>
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Please select the reservation access for the user (<span id="user"></span>) ?</i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
@@ -100,7 +100,7 @@
                     <input type="hidden" id="access_id" name="access_id">
                     <input type="hidden" id="user" name="user">
                     <input type="hidden" id="old_access" name="old_access">
-                    <select name="new_access" id="new_access">
+                    <select name="new_access" id="new_access" class="form-select">
                         <option value="ADMIN">ADMIN</option>
                         <option value="ENCODER">ENCODER</option>
                         <option value="USER">USER</option>
