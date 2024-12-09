@@ -178,6 +178,16 @@ var btn_clear_attempts = function(cell, formatterParams, onRendered) {
     }
 }
 
+var reserve_access = function(cell, formatterParams, onRendered) {
+    var access = cell.getData().reservation_access;
+    var id = cell.getData().id; // Get the ID of
+    var fname = cell.getData().fname;
+    var lname = cell.getData().lname;
+
+    return "<button type='button' class='btn btn-label-primary change_room_access' data-user='" + fname + " " + lname + "'  data-id='" + id + "' data-access='" + access +"' > " + access + "</button>";
+
+}
+
 // data-bs-toggle='modal' data-bs-target='#clear_attempts_modal' data-id='"+id+"'
 var table = new Tabulator("#user-table", {
 
@@ -290,7 +300,7 @@ var table = new Tabulator("#user-table", {
         },
         {
             title: "Reservation Access",
-            field: "reservation_access",
+            formatter: reserve_access,
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {
@@ -771,6 +781,46 @@ $(document).ready(function() {
             }
         });
     });
+    $('#change_access_info').on('click', function() {
+        var formdata = new FormData(clear_attempts_form);
+        // console.log(formdata);
+        $.ajax({
+            url: "/edit_reservation_access",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+
+
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    $('#change_room_access_modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        window.location.reload();
+                    });
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                    $('#change_room_access_modal').modal('hide');
+                }
+            }
+        });
+    });
+    
 
 
 
@@ -848,6 +898,19 @@ $(document).ready(function() {
         $('#clear_id').val(CLEAR_ID);
         $('#clear_attempts_modal').modal('show');
     });
+
+    $(document).on("click", ".change_room_access", function() {
+        var ID = $(this).data("id");
+        var USER_NAME = $(this).data("user");
+        var ACCESS = $(this).data("access");
+
+        $('#ID').val(ID);
+        $('#user').text(USER_NAME);
+        $('#old_access').val(ACCESS);
+
+        $('#change_room_access_modal').modal('show');
+    });
+    
 
 });
 </script>

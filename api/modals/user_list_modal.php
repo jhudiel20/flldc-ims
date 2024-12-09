@@ -86,3 +86,30 @@
 </div>
 
 <!-- ######################################################## USER ADD MODAL ########################################################################################################## -->
+
+
+<div class="modal fade" id="change_room_access_modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"> Please select the access for the user ? <span id="user"></span></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <form method="post" id="change_room_access_form" style="display: inline-block;">
+                    <input type="hidden" id="access_id" name="access_id">
+                    <input type="hidden" id="user" name="user">
+                    <input type="hidden" id="old_access" name="old_access">
+                    <select name="new_access" id="new_access">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="ENCODER">ENCODER</option>
+                        <option value="USER">USER</option>
+                    </select>
+
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button name="" type="button" id="change_access_info" class="btn btn-label-danger btn-page-block">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
