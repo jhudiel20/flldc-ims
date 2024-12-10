@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
 
-    <!-- dropify -->
-    <!-- <link href="<?php //BASE_URL; ?>../assets/css/dropify.min.css?v=<?php //echo FILE_VERSION; ?>" rel="stylesheet"/> -->
+    <!-- ACTIONS -->
+    <script src="<?php BASE_URL; ?>../assets/vendor/ajax-query.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
@@ -131,41 +131,41 @@
         //     $(loadingBtnClass).addClass('d-none').prop('disabled', false); // Hide the loading button
         //     $(btnId).show(); // Show the original button
         // }
-        function showLoading(btnId) {
-            const originalButton = $(btnId);
-            const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
+        // function showLoading(btnId) {
+        //     const originalButton = $(btnId);
+        //     const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
 
-            // Hide the original button
-            originalButton.hide();
+        //     // Hide the original button
+        //     originalButton.hide();
 
-            // Check if the loading button already exists
-            if (!$(loadingButtonId).length) {
-                // Create the loading button dynamically
-                const loadingButton = $(`
-                    <button id="${btnId.substring(1)}-loading" class="${originalButton.attr('class')} loading-btn" disabled>
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>
-                `);
+        //     // Check if the loading button already exists
+        //     if (!$(loadingButtonId).length) {
+        //         // Create the loading button dynamically
+        //         const loadingButton = $(`
+        //             <button id="${btnId.substring(1)}-loading" class="${originalButton.attr('class')} loading-btn" disabled>
+        //                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        //                 Loading...
+        //             </button>
+        //         `);
 
-                // Insert the loading button after the original button
-                originalButton.after(loadingButton);
-            }
+        //         // Insert the loading button after the original button
+        //         originalButton.after(loadingButton);
+        //     }
 
-            // Show the loading button
-            $(`${loadingButtonId}`).show();
-        }
+        //     // Show the loading button
+        //     $(`${loadingButtonId}`).show();
+        // }
 
-        function hideLoading(btnId) {
-            const originalButton = $(btnId);
-            const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
+        // function hideLoading(btnId) {
+        //     const originalButton = $(btnId);
+        //     const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
 
-            // Hide the loading button and remove it from the DOM
-            $(loadingButtonId).remove();
+        //     // Hide the loading button and remove it from the DOM
+        //     $(loadingButtonId).remove();
 
-            // Show the original button
-            originalButton.show();
-        }
+        //     // Show the original button
+        //     originalButton.show();
+        // }
         const currentYear = new Date().getFullYear();
         const currentDate = new Date().toLocaleDateString();
         const formattedDateWithHyphens = currentDate.replace(/\//g, "-");
