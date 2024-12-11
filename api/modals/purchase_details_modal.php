@@ -16,7 +16,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="upload_po_attachments_btn" class="btn btn-label-primary btn-page-block">Upload</button>
+                <button type="submit" id="upload_po_attachments_btn" class="btn btn-label-primary btn-page-block">Upload</button>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                     <input style="width:auto" type="hidden" name="attachment_to_delete" class="form-control"
                         style="margin-bottom:10px" value="<?php echo $row['attachments']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" name="delete_po_attachments_btn" id="delete_po_attachments_btn"
+                    <button type="submit" name="delete_po_attachments_btn" id="delete_po_attachments_btn"
                         class="btn btn-label-danger btn-page-block">Delete</button>
                 </form>
             </div>
@@ -59,7 +59,7 @@
                     <input type="hidden" name="item_name" id="item_name" value="<?php echo $row['item_name'] ?>">
                     <input type="hidden" name="item_to_delete" id="item_to_delete" class="form-control" value="<?php echo $row['item_photo']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="delete_purchase_photo_btn" class="btn btn-danger btn-page-block">Delete</button>
+                    <button type="submit" id="delete_purchase_photo_btn" class="btn btn-danger btn-page-block">Delete</button>
 
                 </form>
             </div>

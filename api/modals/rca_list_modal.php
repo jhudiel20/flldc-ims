@@ -181,12 +181,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-label-primary" id="submit_approval">Save changes</button>
-
-                    <button class="btn btn-label-primary d-none" type="button" id="submit_icon" disabled>
-                        <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>
+                    <button type="submit" class="btn btn-label-primary btn-page-block" id="submit_approval">Save changes</button>
                 </div>
             </form>
         </div>

@@ -94,7 +94,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-label-primary btn-page-block" id="submit_approval_btn">Save changes</button>
+                    <button type="submit" class="btn btn-label-primary btn-page-block" id="submit_approval_btn">Save changes</button>
                 </div>
             </form>
         </div>

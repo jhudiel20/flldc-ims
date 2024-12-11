@@ -78,7 +78,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <button type="submit" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary btn-page-block"><i
                                                                     class="fa-solid fa-upload"></i></button>
                                                     </form>
-                                                    <button type="button" class="btn btn-label-danger"
+                                                    <button type="submit" class="btn btn-label-danger"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#delete_room_photo_modal"><i
                                                             class="fa-solid fa-trash-can"></i></button>
