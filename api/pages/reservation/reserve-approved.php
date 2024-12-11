@@ -288,6 +288,10 @@ function handlePdfDownload() {
     });
 };
 
+$(document).ready(function () {
+    initializeCalendar();
+});
+
 </script>
 
 </html>

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    initializeCalendar();
     // Define configurations for each form
     const formsConfig = {
             '#add_room_form': {
@@ -150,34 +149,111 @@ $(document).ready(function () {
         }
 
     // Generalized function to handle form submission
-    function handleFormSubmit(formSelector) {
-        $(formSelector).on('submit', function (e) {
-            e.preventDefault();
-            const config = formsConfig[formSelector];
-            const formData = new FormData(this);
+    // function handleFormSubmit(formSelector) {
+    //     $(formSelector).on('submit', function (e) {
+    //         e.preventDefault();
+    //         const config = formsConfig[formSelector];
+    //         const formData = new FormData(this);
 
-            let valid = true;
+    //         let valid = true;
 
-            // Validate fields if applicable
-            if (config.fields.length > 0) {
-                config.fields.forEach(field => {
-                    if ($(field).val() === "") {
-                        $(field).css({ "border-color": 'red' });
-                        valid = false;
-                    } else {
-                        $(field).css({ "border-color": '' });
-                    }
-                });
-            }
+    //         // Validate fields if applicable
+    //         if (config.fields.length > 0) {
+    //             config.fields.forEach(field => {
+    //                 if ($(field).val() === "") {
+    //                     $(field).css({ "border-color": 'red' });
+    //                     valid = false;
+    //                 } else {
+    //                     $(field).css({ "border-color": '' });
+    //                 }
+    //             });
+    //         }
 
-            if (!valid) return;
+    //         if (!valid) return;
 
-            // AJAX submission
+    //         // AJAX submission
+    //         $.ajax({
+    //             url: config.url,
+    //             method: "POST",
+    //             data: formData,
+    //             dataType: "json",
+    //             beforeSend: function () {
+    //                 showLoading(config.button);
+    //             },
+    //             success: function (response) {
+    //                 hideLoading(config.button);
+
+    //                 if (response.success) {
+    //                     if (config.modal) $(config.modal).modal('hide');
+    //                     $(formSelector)[0].reset();
+    //                     swal({
+    //                         icon: 'success',
+    //                         title: response.title,
+    //                         text: response.message,
+    //                         buttons: false,
+    //                         timer: 2000,
+    //                     }).then(function () {
+    //                         if (config.tableRefresh) {
+    //                             table.setData();
+    //                         } else {
+    //                             location.reload();
+    //                         }
+    //                     });
+    //                 } else {
+    //                     swal({
+    //                         icon: 'warning',
+    //                         title: response.title,
+    //                         text: response.message,
+    //                         buttons: false,
+    //                         timer: 2000,
+    //                     });
+    //                     $(".form-message").html(response.message).css("display", "block");
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
+
+    // Attach the handler to each form present on the page
+    // Object.keys(formsConfig).forEach(formSelector => {
+    //     if ($(formSelector).length) {
+    //         handleFormSubmit(formSelector);
+    //     }
+    // });
+
+    for (const [formSelector, config] of Object.entries(formsConfig)) {
+        if (!config.button || !config.url) {
+            console.warn(`Skipping form ${formSelector} due to missing button or URL.`);
+            continue;
+        }
+
+        let valid = true;
+
+        // Validate fields if applicable
+        if (config.fields.length > 0) {
+            config.fields.forEach(field => {
+                if ($(field).val() === "") {
+                    $(field).css({ "border-color": 'red' });
+                    valid = false;
+                } else {
+                    $(field).css({ "border-color": '' });
+                }
+            });
+        }
+
+        if (!valid) return;
+
+        $(config.button).on('click', function () {
+            const formdata = new FormData(document.querySelector(formSelector));
+
             $.ajax({
                 url: config.url,
                 method: "POST",
-                data: formData,
+                data: formdata,
                 dataType: "json",
+                contentType: false,
+                cache: false,
+                processData: false,
                 beforeSend: function () {
                     showLoading(config.button);
                 },
@@ -210,17 +286,14 @@ $(document).ready(function () {
                         });
                         $(".form-message").html(response.message).css("display", "block");
                     }
+                },
+                error: function (xhr, status, error) {
+                    $(config.button).removeClass('d-none').prop('disabled', false);
+                    console.error("AJAX Error: ", status, error);
                 }
             });
         });
     }
-
-    // Attach the handler to each form present on the page
-    Object.keys(formsConfig).forEach(formSelector => {
-        if ($(formSelector).length) {
-            handleFormSubmit(formSelector);
-        }
-    });
 
         $(document).on("click", ".approval-status", function() {
             var ID = $(this).data("id");
