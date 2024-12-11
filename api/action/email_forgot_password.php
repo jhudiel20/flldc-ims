@@ -175,14 +175,14 @@ if (!$row_email) {
 
                 $mail->send();
 
-                $user_id = '0';
-                $action = "Password reset request in email : " . $email;
+                // $user_id = '0';
+                // $action = "Password reset request in email : " . $email;
 
-                $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
+                // $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
 
-                $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                $logs->bindParam(':action', $action, PDO::PARAM_STR);
-                $logs->execute();
+                // $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                // $logs->bindParam(':action', $action, PDO::PARAM_STR);
+                // $logs->execute();
 
 
                 $response['success'] = true;
