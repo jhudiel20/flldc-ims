@@ -90,9 +90,6 @@ $user_id = $decrypted_array['ID'];
                                 <div class="text-truncate" data-i18n="Rooms">Rooms</div>
                             </a>
                         </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
                         <li class="menu-item <?php echo ($geturl == 'reservation-list')? 'active' : 'collapsed' ?>">
                             <a href="reservation-list" class="menu-link btn-page-block">
                                 <div class="text-truncate" data-i18n="All">All</div>
