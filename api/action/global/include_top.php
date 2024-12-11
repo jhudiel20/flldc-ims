@@ -65,8 +65,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
 
-    <!-- ACTIONS -->
-    <script src="<?php BASE_URL; ?>../assets/vendor/ajax-query.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
