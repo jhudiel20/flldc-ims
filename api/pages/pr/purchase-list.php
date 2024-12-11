@@ -63,7 +63,7 @@ if (!isset($decrypted_array['ACCESS'])) {
                                             </div>
 
                                             <!-- Add Modal -->
-                                            <?php include __DIR__ . "/../../modals/purchase_list_modal.php"; ?>
+                                            <?php //include __DIR__ . "/../../modals/purchase_list_modal.php"; ?>
                                             <!-- End of Add Modal -->
 
                                             <div class="tabulator-table" id="purchase-list-table"
