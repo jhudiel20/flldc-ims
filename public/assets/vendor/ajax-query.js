@@ -44,7 +44,6 @@ $(document).ready(function () {
                 button: '#submit_edit_reserve_details',
                 tableRefresh: false // Use page reload instead
             },
-            
             '#add_request_form': {
                 url: '/add_request',
                 fields: ['#item_name', '#quantity', '#purpose', '#date_needed', '#item_photo'],
@@ -179,9 +178,6 @@ $(document).ready(function () {
                 method: "POST",
                 data: formData,
                 dataType: "json",
-                contentType: false,
-                cache: false,
-                processData: false,
                 beforeSend: function () {
                     showLoading(config.button);
                 },
