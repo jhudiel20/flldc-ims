@@ -1,5 +1,3 @@
-    <!-- ACTIONS -->
-    <script src="<?php BASE_URL; ?>../assets/vendor/ajax-query.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/popper/popper.js"></script>
@@ -42,3 +40,6 @@
     <script type="module"> import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
       inject();
     </script>
+
+    <!-- ACTIONS -->
+    <script src="<?php BASE_URL; ?>../assets/vendor/ajax-query.js?v=<?php echo FILE_VERSION; ?>"></script>

@@ -9,7 +9,6 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 $id = decrypted_string($_GET['ID']);
 
-
 if(empty($id)){
     header("Location:404");
 }
@@ -18,6 +17,10 @@ $sql = $conn->prepare("SELECT * FROM purchase_order WHERE ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+if($row['id'] != $id){
+    header("Location:404");
+}
 
 ?>
 <!doctype html>
