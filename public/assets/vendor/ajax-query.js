@@ -1101,8 +1101,7 @@ $(document).ready(function () {
 
 
         $('#forgot_pass_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault();  
+            e.preventDefault(); // Prevent the default form submission
     
             if ($('#email').val() == "") {
                 $("#email").css({
@@ -1116,8 +1115,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '/email_forgot_password', // Ensure this path is correct
                 type: 'POST',
-                // data: $(this).serialize(),
-                data: formData,
+                data: $(this).serialize(),
                 dataType: 'json',
                 beforeSend: function() {
                         $('#send_link').addClass('d-none');
@@ -1146,8 +1144,7 @@ $(document).ready(function () {
             })
         });
         $('#change_pass_form').on('submit', function(e) {
-            var formData = new FormData(this);
-            e.preventDefault();  
+            e.preventDefault(); // Prevent the default form submission
     
             if ($('#password').val() == "") {
                 $("#password").css({
@@ -1171,8 +1168,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '/change_password', // Ensure this path is correct
                     type: 'POST',
-                    // data: $(this).serialize(),
-                    data: formData,
+                    data: $(this).serialize(),
                     dataType: 'json',
                     beforeSend: function() {
                             $('#set_password').addClass('d-none');
