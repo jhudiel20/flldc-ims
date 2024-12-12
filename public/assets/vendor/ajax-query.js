@@ -1074,7 +1074,7 @@ $(document).ready(function () {
             var roomId = $(this).data("id");
             var Status = $(this).data("status");
             var roomName = $(this).data("roomname");
-            console.log(Status);
+
             $('#ROOMID').val(roomId);
             $('#STATUS').val(Status);
             $('#ROOMNAME').val(roomName);

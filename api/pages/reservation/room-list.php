@@ -129,16 +129,14 @@ var room_status = function(cell, formatterParams, onRendered) {
     var room_ID = cell.getRow().getData().id; // Get the ID of the user
     var room_status = cell.getRow().getData().status;
     var room_name = cell.getRow().getData().room_name;
-    console.log(room_ID);
-    console.log(room_status);
-    console.log(room_name);
+
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (room_status == "Available") {
             return "<button type='button' class='btn btn-outline-primary update-room-status' data-id='" + room_ID + "' data-status ='" + room_status + "' data-roomname =' " + room_name +
                 " ' >Available</button>";
         }
         if (room_status == "Not Available"){
-            return "<button type='button' class='btn btn-outline-primary update-room-status' data-id='" + room_ID + "' data-status='" + room_status + "' data-roomname=' " + room_name +
+            return "<button type='button' class='btn btn-outline-danger update-room-status' data-id='" + room_ID + "' data-status='" + room_status + "' data-roomname=' " + room_name +
                 " ' >Not Available</button>";
         }
     <?php } ?>
