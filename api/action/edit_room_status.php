@@ -12,9 +12,9 @@ require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
-$roomId = isset($_POST['roomId']) ? trim($_POST['roomId']) : '';
-$roomName = isset($_POST['roomName']) ? trim($_POST['roomName']) : '';
-$roomStatus = isset($_POST['roomStatus']) ? trim($_POST['roomStatus']) : '';
+$roomId = isset($_POST['ROOMID']) ? trim($_POST['ROOMID']) : '';
+$roomName = isset($_POST['ROOMNAME']) ? trim($_POST['ROOMNAME']) : '';
+$roomStatus = isset($_POST['STATUS']) ? trim($_POST['STATUS']) : '';
 
 if ($roomStatus == '' ) {
     $response['message'] = 'Please fill up all fields with (*) asterisk!';

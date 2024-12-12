@@ -1071,13 +1071,13 @@ $(document).ready(function () {
     });
 
         $(document).on("click", ".update-room-status", function() {
-            var roomId = $(this).data("roomId");
-            var Status = $(this).data("roomStatus");
-            var roomName = $(this).data("roomName");
+            var roomId = $(this).data("id");
+            var Status = $(this).data("status");
+            var roomName = $(this).data("roomname");
             console.log(Status);
-            $('#roomId').val(roomId);
-            $('#roomStatus').val(Status);
-            $('#roomName').val(roomName);
+            $('#ROOMID').val(roomId);
+            $('#STATUS').val(Status);
+            $('#ROOMNAME').val(roomName);
     
             // Show the edit modal
             $('#room_status_modal').modal('show');

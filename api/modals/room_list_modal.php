@@ -87,10 +87,10 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <input type="hidden" id="roomId" name="roomId">
-                            <input type="hidden" id="roomName" name="roomName">
+                            <input type="hidden" id="ROOMID" name="ROOMID">
+                            <input type="hidden" id="ROOMNAME" name="ROOMNAME">
                             <label for="nameWithTitle" class="form-label">Status</label>
-                            <select name="roomStatus" id="roomStatus" class="form-select">
+                            <select name="STATUS" id="STATUS" class="form-select">
                                 <option value="Available">Available</option>
                                 <option value="Not Available">Not Available</option>
                             </select>
