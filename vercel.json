@@ -329,7 +329,7 @@
       },
       {
         "src": "/forgot-password",
-        "dest": "/api/forgot-password.php"
+        "dest": "/pages/forgot-password.php"
       },
       {
         "src": "/email_forgot_password",
@@ -337,7 +337,7 @@
       },
       {
         "src": "/change-password",
-        "dest": "/api/change-password.php"
+        "dest": "/pages/change-password.php"
       },
       {
         "src": "/change_password",

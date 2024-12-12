@@ -131,17 +131,17 @@ var approval_status = function(cell, formatterParams, onRendered) {
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (data_approval == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
+            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
                 REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (data_approval == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
+            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
                 REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(data_approval == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-request_id='" +
+            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
                 REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
                 " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }

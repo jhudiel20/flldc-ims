@@ -1,15 +1,18 @@
 <?php 
-require_once __DIR__ . '/../api/DBConnection.php';
-require_once __DIR__ . '/../api/config/config.php';
+
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
+
 ?>
+<!doctype html>
 <!doctype html>
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
     data-theme="theme-default" data-assets-path="<?php BASE_URL; ?>assets/" data-template="vertical-menu-template">
 
 <head>
     <?php
-        include __DIR__ . "/assets/index/metadata.php";
-        include __DIR__ . "/assets/index/include_top.php";
+    include __DIR__ . "/../action/global/metadata.php";
+    include __DIR__ . "/../action/global/include_top.php";
     ?>
 </head>
 
@@ -102,6 +105,6 @@ require_once __DIR__ . '/../api/config/config.php';
     </footer>
 </body>
     <?php
-        include __DIR__ . "/assets/index/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
     ?>
 </html>

@@ -1,18 +1,19 @@
 <?php 
-require_once __DIR__ . '/../api/DBConnection.php';
-require_once __DIR__ . '/../api/config/config.php';
+
+require_once __DIR__ . '/../DBConnection.php';
+require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 
 $code = $_GET['code'];
-$code = decrypted_string($code);
+$code = decrypted_string(encrypted_string: $code);
 
 if(empty($code)){
-  header("location:/");
+  header(header: "location:/");
 }
 
-$sql = $conn->prepare("SELECT EMAIL FROM user_account WHERE reset_token = :code ");
-$sql->bindParam(':code', $code, PDO::PARAM_STR);
+$sql = $conn->prepare(query: "SELECT EMAIL FROM user_account WHERE reset_token = :code ");
+$sql->bindParam(param: ':code', var: $code, type: PDO::PARAM_STR);
 $sql->execute();
-$row = $sql->fetch(PDO::FETCH_ASSOC);
+$row = $sql->fetch(mode: PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
@@ -21,8 +22,8 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <?php
-        include __DIR__ . "/assets/index/metadata.php";
-        include __DIR__ . "/assets/index/include_top.php";
+    include __DIR__ . "/../action/global/metadata.php";
+    include __DIR__ . "/../action/global/include_top.php";
     ?>
 </head>
 
@@ -129,6 +130,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     </footer>
 </body>
     <?php
-        include __DIR__ . "/assets/index/include_bottom.php";
+        include __DIR__ . "/../action/global/include_bottom.php";
     ?>
 </html>

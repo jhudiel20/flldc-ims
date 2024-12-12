@@ -1031,7 +1031,7 @@ $(document).ready(function () {
         });
     });
 
-        $(document).on("click", ".approval-status", function() {
+        $(document).on("click", ".approval-room-status", function() {
             var ID = $(this).data("id");
             var APPROVAL = $(this).data("approved");
             var ROOM_ID = $(this).data("roomid");
@@ -1045,7 +1045,7 @@ $(document).ready(function () {
             // Show the edit modal
             $('#approval_modal').modal('show');
         });
-        $(document).on("click", ".approval-status", function() {
+        $(document).on("click", ".approval-request-status", function() {
             var ID = $(this).data("id");
             var APPROVAL = $(this).data("approved");
             var ITEM_NAME = $(this).data("item");
@@ -1097,6 +1097,104 @@ $(document).ready(function () {
                 $('#edit_reserve_details_modal #contact').val(contact);
                 $('#edit_reserve_details_modal #email').val(email);
                 $('#edit_reserve_details_modal #message').val(message);
+        });
+
+
+        $('#forgot_pass_form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+    
+            if ($('#email').val() == "") {
+                $("#email").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#email").css({
+                    "border-color": ''
+                });
+            }
+            $.ajax({
+                url: '/email_forgot_password', // Ensure this path is correct
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                beforeSend: function() {
+                        $('#send_link').addClass('d-none');
+                        $('#request_emailed_icon').removeClass('d-none').prop('disabled', true);
+                    },
+                success: function(response) {
+                        $('#request_emailed_icon').addClass('d-none').prop('disabled', false);
+                        $('#send_link').removeClass('d-none');
+                    console.log(response);
+                    if (response.success) {
+                        Toast.fire({
+                                icon: 'success',
+                                title: response.title,
+                                text: response.message,
+                            }).then(function() {
+                            window.location = 'https://accounts.google.com/v3/signin/identifier?dsh=S353362604%3A1662139475311681&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AQN2RmWP2lxwpbPaE9a9BMhcTpWZktay-FoTk3A3cKXBKV96YhdOdaLCY7W_obLcGmxp8SWN1zdpiQ';
+                            });
+                    } else {
+                        Toast.fire({
+                            icon: response.icon,
+                            title: response.title,
+                            text: response.message,
+                        })
+                    }
+                }
+            })
+        });
+        $('#change_pass_form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+    
+            if ($('#password').val() == "") {
+                $("#password").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#password").css({
+                    "border-color": ''
+                });
+            }
+            if ($('#confirmpassword').val() == "") {
+                $("#confirmpassword").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#confirmpassword").css({
+                    "border-color": ''
+                });
+            }
+            
+            $.ajax({
+                url: '/change_password', // Ensure this path is correct
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    beforeSend: function() {
+                            $('#set_password').addClass('d-none');
+                            $('#set_pass_icon').removeClass('d-none').prop('disabled', true);
+                        },
+                    success: function(response) {
+                            $('#set_pass_icon').addClass('d-none').prop('disabled', false);
+                            $('#set_password').removeClass('d-none');
+                    console.log(response);
+                    if (response.success) {
+                        Toast.fire({
+                                icon: 'success',
+                                title: response.title,
+                                text: response.message,
+                            }).then(function() {
+                            window.location = '/';
+                            });
+                    } else {
+                        Toast.fire({
+                            icon: response.icon,
+                            title: response.title,
+                            text: response.message,
+                        })
+                    }
+                }
+            })
         });
 });
 
