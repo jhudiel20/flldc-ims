@@ -35,27 +35,13 @@
 
     <!-- Helpers -->
     <script src="<?php BASE_URL; ?>../assets/vendor/js/helpers.js"></script>
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="<?php BASE_URL; ?>../assets/js/config.js"></script>
 
     <!-- Console Warning -->
     <script src="<?php BASE_URL; ?>../assets/js/console.js?v=<?php echo FILE_VERSION; ?>"></script>
 
-    <!-- Js -->
-    <!-- <script src="<?php BASE_URL; ?>assets/js/sec.js?v=<?php echo FILE_VERSION; ?>"></script> -->
-
-    <!-- TABULATOR -->
-    <!-- <link id="themeStylesheet" href="<?php BASE_URL; ?>../tabulator/dist/css/tabulator_bootstrap5.min.css?v=<?php echo FILE_VERSION; ?>" rel="stylesheet"/>
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/tabulator.js?v=<?php echo FILE_VERSION; ?>"></script> -->
-
     <link id="themeStylesheet" href="https://unpkg.com/tabulator-tables@5.6.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet"/>
     <script src="https://unpkg.com/tabulator-tables@5.6.0/dist/js/tabulator.min.js"></script>
-
-    <!-- <script src="<?php BASE_URL; ?>../tabulator/dist/js/xlsx.full.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.umd.min.js?v=<?php echo FILE_VERSION; ?>"></script>
-    <script src="<?php BASE_URL; ?>../tabulator/dist/js/jspdf.plugin.autotable.min.js?v=<?php echo FILE_VERSION; ?>"></script> -->
 
     <!-- XLSX Script Include -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -63,17 +49,14 @@
     <!-- PDF Script Includes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
-
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
     <script src="<?php BASE_URL; ?>../assets/js/sweetalert2@11.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
     
     <!-- sweetalert@ colored toast js -->
-
-
     <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
         //define column header menu as column visibility toggle
         var headerMenu = function(){
             var menu = [];
@@ -119,51 +102,7 @@
 
         return menu;
         };
-        // Utility functions for loading buttons
-        // function showLoading(btnId, loadingBtnClass = '.loading-btn') {
-        //     $(btnId).hide(); // Hide the original button
-        //     $(loadingBtnClass).removeClass('d-none').prop('disabled', true); // Show the loading button
-        // }
-
-        // function hideLoading(btnId, loadingBtnClass = '.loading-btn') {
-        //     $(loadingBtnClass).addClass('d-none').prop('disabled', false); // Hide the loading button
-        //     $(btnId).show(); // Show the original button
-        // }
-        // function showLoading(btnId) {
-        //     const originalButton = $(btnId);
-        //     const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
-
-        //     // Hide the original button
-        //     originalButton.hide();
-
-        //     // Check if the loading button already exists
-        //     if (!$(loadingButtonId).length) {
-        //         // Create the loading button dynamically
-        //         const loadingButton = $(`
-        //             <button id="${btnId.substring(1)}-loading" class="${originalButton.attr('class')} loading-btn" disabled>
-        //                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        //                 Loading...
-        //             </button>
-        //         `);
-
-        //         // Insert the loading button after the original button
-        //         originalButton.after(loadingButton);
-        //     }
-
-        //     // Show the loading button
-        //     $(`${loadingButtonId}`).show();
-        // }
-
-        // function hideLoading(btnId) {
-        //     const originalButton = $(btnId);
-        //     const loadingButtonId = `${btnId}-loading`; // Unique ID for the loading button
-
-        //     // Hide the loading button and remove it from the DOM
-        //     $(loadingButtonId).remove();
-
-        //     // Show the original button
-        //     originalButton.show();
-        // }
+  
         const currentYear = new Date().getFullYear();
         const currentDate = new Date().toLocaleDateString();
         const formattedDateWithHyphens = currentDate.replace(/\//g, "-");
@@ -241,8 +180,6 @@
         .bg-modify {
             background: linear-gradient(to right, #0000A7, #E40000);
         }
-    </style>
-    <style>
         .container {
             max-width: 100%;
             /* Remove fixed width */

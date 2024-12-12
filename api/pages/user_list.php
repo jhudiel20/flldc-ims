@@ -129,9 +129,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 </body>
 
 <script>
-if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-}
+
 
 var status_show = function(cell, formatterParams, onRendered) {
     var data = cell.getData().status; // Get the employee ID from the cell
