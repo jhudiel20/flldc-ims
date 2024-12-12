@@ -91,6 +91,10 @@
         "dest": "/api/action/add_room.php"
       },
       {
+        "src": "/edit_room_status",
+        "dest": "/api/action/edit_room_status.php"
+      },
+      {
         "src": "/room-details",
         "dest": "/api/pages/reservation/room-details.php"
       },
