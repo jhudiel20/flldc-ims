@@ -1070,13 +1070,13 @@ $(document).ready(function () {
         });
     });
 
-        $(document).on("click", ".approval-room-status", function() {
+        $(document).on("click", ".update-room-status", function() {
             var roomId = $(this).data("roomId");
-            var roomStatus = $(this).data("roomStatus");
+            var Status = $(this).data("roomStatus");
             var roomName = $(this).data("roomName");
-            console.log(roomStatus);
+            console.log(Status);
             $('#roomId').val(roomId);
-            $('#roomStatus').val(roomStatus);
+            $('#roomStatus').val(Status);
             $('#roomName').val(roomName);
     
             // Show the edit modal

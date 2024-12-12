@@ -133,12 +133,12 @@ var room_status = function(cell, formatterParams, onRendered) {
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (room_status == "Available") {
-            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-roomId='" +
+            return "<button type='button' class='btn btn-outline-primary update-room-status' data-roomId='" +
             room_ID + "' data-roomStatus='" + room_status + "' data-roomName=' " + room_name +
                 " ' >Available</button>";
         }
         if (room_status == "Not Available"){
-            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-roomId='" +
+            return "<button type='button' class='btn btn-outline-primary update-room-status' data-roomId='" +
             room_ID + "' data-roomStatus='" + room_status + "' data-roomName=' " + room_name +
                 " ' >Not Available</button>";
         }
