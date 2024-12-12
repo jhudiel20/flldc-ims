@@ -193,6 +193,7 @@ var table = new Tabulator("#room-list-table", {
         },
         {
             title: "Room Availability",
+            field: "status",
             formatter: room_status,
             hozAlign: "center",
             headerFilter: "list",

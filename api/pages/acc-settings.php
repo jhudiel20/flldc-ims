@@ -84,10 +84,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                         <input type="hidden" name="user_submit_name" id="user_submit_name" value="<?php echo $user['fname'] . ' ' . $user['lname']; ?>">
                                                                         <input type="hidden" name="ID" id="ID" value="<?php echo $user_id ?>">  
                                                                         <button type="submit" id="submit_photo_btn" value="Upload" class="btn btn-label-primary"><i class="fa-solid fa-upload"></i> Upload</button>
-                                                                        <button class="btn btn-label-primary d-none" type="button" id="submit_photo_icon" disabled>
-                                                                            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                            Loading...
-                                                                        </button>
                                                                 </form>
                                                                 <form style="display: inline-block;" class="mt-1">          
                                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#delete-profile-photo" class="btn btn-label-danger"><i class="fas fa-fw fa-trash"></i> Delete</button>
@@ -219,11 +215,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             </ul>
                                                         </div>
                                                         <div class="col-12 mt-1">
-                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_username">Save changes</button>
-                                                            <button class="btn btn-label-primary d-none" type="button" id="change_user_icon" disabled>
-                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                Loading...
-                                                            </button>
+                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_username_btn">Save changes</button>
                                                         </div>
                                                         </div>
                                                     </form>
@@ -285,12 +277,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             </ul>
                                                         </div>
                                                         <div class="col-12 mt-1">
-                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_pass">Save changes</button>
-                                                            <button class="btn btn-label-primary d-none" type="button" id="change_pass_icon" disabled>
-                                                                <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                                                                Loading...
-                                                            </button>
-                                                            <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
+                                                            <button type="submit" class="btn btn-primary me-2" id="user_change_pass_btn">Save changes</button>
                                                         </div>
                                                         </div>
                                                     </form>
@@ -340,227 +327,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         $(document).ready(function() {
 
 
-                $('#user_edit_form').on('submit', function(e) {
-                    e.preventDefault();            
-                    $.ajax({
-                        url: "/user_edit_info",
-                        method: "POST",
-                        data: $(this).serialize(),
-                        dataType: "json",
-                        beforeSend: function() {
-                            $('#user_edit_info').hide();
-                            $('#request_icon').removeClass('d-none').prop('disabled', true);
-                        },
-                        success: function(response) {
-                            $('#request_icon').addClass('d-none').prop('disabled', false);
-                            $('#user_edit_info').show();
-                            console.log(response);
-                            if (response.success) {
-                                $('#staticBackdrop').modal('hide');
-                                $('#user_edit_form')[0].reset();
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            } else {
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                                $(".form-message").html(response.message);
-                                $(".form-message").css("display", "block");
-                            }
-                        }
-                    });
-                });
-                $('#user_password_form').on('submit', function(e) {
-                    var formdata = new FormData(document.getElementById('user_password_form'));
-                    e.preventDefault();  
-                    $.ajax({
-                        url: "/user_change_pass",
-                        method: "POST",
-                        data: formdata,
-                        dataType: "json",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        beforeSend: function() {
-                            $('#user_change_pass').hide();
-                            $('#change_pass_icon').removeClass('d-none').prop('disabled', true);
-                        },
-                        success: function(response) {
-                            $('#change_pass_icon').addClass('d-none').prop('disabled', false);
-                            $('#user_change_pass').show();
-                            console.log(response);
-                            if (response.success) {
-                                $('#user_password_form')[0].reset();
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            } else {
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                                $(".form-message").html(response.message);
-                                $(".form-message").css("display", "block");
-                            }
-                        }
-                    });
-                });
-                $('#change_username_form').on('submit', function(e) {
-                    var formdata = new FormData(document.getElementById('change_username_form'));
-                    e.preventDefault();  
-
-                    $.ajax({
-                        url: "/user_change_username",
-                        method: "POST",
-                        data: formdata,
-                        dataType: "json",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        beforeSend: function() {
-                            $('#user_change_username').hide();
-                            $('#change_user_icon').removeClass('d-none').prop('disabled', true);
-                        },
-                        success: function(response) {
-                            $('#change_user_icon').addClass('d-none').prop('disabled', false);
-                            $('#user_change_username').show();
-                            console.log(response);
-                            if (response.success) {
-                                $('#change_username_form')[0].reset();
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            } else {
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                                $(".form-message").html(response.message);
-                                $(".form-message").css("display", "block");
-                            }
-                        }
-                    });
-                });
-
-                $('#upload_photo_form').on('submit', function(e) {
-                    e.preventDefault();
-
-                    var formData = new FormData(this);
-
-                    $.ajax({
-                        url: "/upload_user_photo",
-                        method: "POST",
-                        data: formData,
-                        dataType: "json",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        beforeSend: function() {
-                                $('#submit_photo_btn').hide();
-                                $('#submit_photo_icon').removeClass('d-none').prop('disabled', true);
-                            },
-                            success: function(response) {
-                                $('#submit_photo_icon').addClass('d-none').prop('disabled', false);
-                                $('#submit_photo_btn').show();
-                            console.log(response);
-                            if (response.success) {
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-
-                            } else {
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                            }
-                        }
-                    });
-                });
-
-                $('#photo_delete_btn').on('click', function() {
-                    var formdata = new FormData(document.getElementById('delete_photo_form'));
-                    $.ajax({
-                        url:"/delete_user_photo",
-                        method: "POST",
-                        data: formdata,
-                        dataType: "json",
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        beforeSend: function() {
-                                $('#photo_delete_btn').hide();
-                                $('#photo_delete_icon').removeClass('d-none').prop('disabled', true);
-                            },
-                            success: function(response) {
-                                $('#photo_delete_icon').addClass('d-none').prop('disabled', false);
-                                $('#photo_delete_btn').show();
-                            console.log(response);
-                            if (response.success) {
-                                $('#delete-profile-photo').modal('hide');
-                                swal({
-                                    icon: 'success',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-
-                            } else {
-                                $('#delete-profile-photo').modal('hide');
-                                swal({
-                                    icon: 'warning',
-                                    title: response.title,
-                                    text: response.message,
-                                    buttons: false,
-                                    timer: 2000,
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            }
-                        }
-                    });
-                })
+                
 
         }); 
 

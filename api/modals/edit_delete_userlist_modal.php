@@ -56,7 +56,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="button" name="submit" class="btn btn-label-primary" id="edit_userlist_info">Submit</button>
+                <button type="button" name="edit_userlist_info_btn" class="btn btn-label-primary" id="edit_userlist_info_btn">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
@@ -77,7 +77,7 @@
                     <input type="hidden" name="clear_id" id="clear_id" value="">
 
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="submit_clear_attempts" class="btn btn-label-primary">Clear</button>
+                    <button name="submit_clear_attempts_btn" type="button" id="submit_clear_attempts_btn" class="btn btn-label-primary">Clear</button>
                 </form>
             </div>
         </div>
@@ -99,14 +99,14 @@
                     <input type="hidden" name="DELETE_LNAME" id="DELETE_LNAME" value="">
 
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button name="" type="button" id="delete_userlist_info" class="btn btn-label-danger">Delete</button>
+                    <button name="delete_userlist_info_btn" type="button" id="delete_userlist_info_btn" class="btn btn-label-danger">Delete</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="approval_modal" tabindex="-1">
+<div class="modal fade" id="approval_account_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -120,7 +120,7 @@
           <input type="hidden" name="Last_Name" id="Last_Name" value="">
 
           <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-          <button name="" type="button" id="approved_acc_info" class="btn btn-label-success">Approved</button>
+          <button name="approved_acc_info_btn" type="button" id="approved_acc_info_btn" class="btn btn-label-success">Approved</button>
         </form>
       </div>
     </div>
@@ -141,7 +141,7 @@
           <input type="hidden" name="UserID" id="UserID" value="">
 
           <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-          <button name="" type="button" id="disapproved_acc_info" class="btn btn-label-danger">Disapproved</button>
+          <button name="disapproved_acc_info_btn" type="button" id="disapproved_acc_info_btn" class="btn btn-label-danger">Disapproved</button>
         </form>
       </div>
     </div>

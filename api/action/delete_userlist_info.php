@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $DELETE_FNAME =  isset($_POST['DELETE_FNAME']) ? trim($_POST['DELETE_FNAME']) : '';
     $DELETE_LNAME =  isset($_POST['DELETE_LNAME']) ? trim($_POST['DELETE_LNAME']) : '';
 
-    $sql = $conn-prepare("DELETE FROM user_account WHERE id = :id");
+    $sql = $conn->prepare("DELETE FROM user_account WHERE id = :id");
     $sql->bindParam(':id',$id,PDO::PARAM_STR);
     $sql->execute();
 

@@ -73,11 +73,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="button" name="submit" class="btn btn-label-primary" id="add_user">Submit</button>
-                <button class="btn btn-label-primary d-none" type="button" id="add_user_icon" disabled>
-                    <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
+                <button type="button" name="add_user_btn" class="btn btn-label-primary" id="add_user_btn">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
@@ -92,7 +88,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Please select the reservation access for the user (<span id="user"></span>) ?</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Please select the reservation access for the user (<span id="fullname"></span>) ?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
