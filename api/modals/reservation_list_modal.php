@@ -25,7 +25,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-label-primary" id="submit_reserve_approval_btn btn-page-block">Save changes</button>
+                    <button type="button" class="btn btn-label-primary btn-page-block" id="submit_reserve_approval_btn">Save changes</button>
                 </div>
             </form>
         </div>
