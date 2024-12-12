@@ -1,10 +1,4 @@
 <?php
-if (!isset($_COOKIE['secure_data'])){
-    header("Location: /");
-}
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Include database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php

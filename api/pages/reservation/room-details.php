@@ -75,7 +75,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="submit" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary btn-page-block"><i
+                                                            <button type="button" id="upload_room_photo_btn" value="Upload" class="btn btn-label-primary btn-page-block"><i
                                                                     class="fa-solid fa-upload"></i></button>
                                                     </form>
                                                     <button type="button" class="btn btn-label-danger"
@@ -141,7 +141,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                         </div>
 
                                                         <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                        <button type="submit" class="btn btn-label-primary btn-page-block"
+                                                        <button type="button" class="btn btn-label-primary btn-page-block"
                                                             id="edit_room_details_btn"
                                                             name="edit_room_details_btn">Save</button>
                                                         <?php }?>

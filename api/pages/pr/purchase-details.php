@@ -78,7 +78,7 @@ if($row['id'] != $id){
 
                                                         </div>
                                                         <div class="text-center">
-                                                            <button type="submit" id="upload_item_photo_btn"
+                                                            <button type="button" id="upload_item_photo_btn"
                                                                 value="Upload" class="btn btn-label-primary btn-page-block"><i
                                                                     class="fa-solid fa-upload"></i></button>
                                                     </form>
@@ -219,7 +219,7 @@ if($row['id'] != $id){
                                                     </div>
 
                                                     <?php if($decrypted_array['ACCESS'] != 'REQUESTOR'){?>
-                                                    <button type="submit" class="btn btn-label-primary btn-page-block"
+                                                    <button type="button" class="btn btn-label-primary btn-page-block"
                                                         id="submit_edit_purchase_details"
                                                         name="submit_edit_purchase_details">Save</button>
                                                     <?php }?>
