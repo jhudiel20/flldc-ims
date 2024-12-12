@@ -74,3 +74,36 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="room_status_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">Select Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="room_status_form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <input type="hidden" id="roomId" name="roomId">
+                            <input type="hidden" id="roomName" name="roomName">
+                            <label for="nameWithTitle" class="form-label">Status</label>
+                            <select name="roomStatus" id="roomStatus" class="form-select">
+                                <option value="Available">Available</option>
+                                <option value="Not Available">Not Available</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-label-primary btn-page-block" id="submit_room_status">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

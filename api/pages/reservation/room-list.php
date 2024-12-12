@@ -125,28 +125,23 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 <script>
-var approval_status = function(cell, formatterParams, onRendered) {
-    var ID = cell.getRow().getData().id; // Get the ID of the user
+var room_status = function(cell, formatterParams, onRendered) {
+    var room_ID = cell.getRow().getData().id; // Get the ID of the user
+    var room_status = cell.getRow().getData().status;
+    var room_name = cell.getRow().getData().room_name;
     // console.log(ID);
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
-        if (data_approval == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >PENDING</button>";
+        if (room_status == "Available") {
+            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-roomId='" +
+            room_ID + "' data-roomStatus='" + room_status + "' data-roomName=' " + item_name +
+                " ' >Available</button>";
         }
-        if (data_approval == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >DECLINED</button>";
+        if (room_status == "Not Available"){
+            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-roomId='" +
+            room_ID + "' data-roomStatus='" + room_status + "' data-roomName=' " + item_name +
+                " ' >Not Available</button>";
         }
-        if(data_approval == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-primary approval-room-status' data-request_id='" +
-                REQUEST_ID + "' data-id='" + ID + "' data-approved='" + data_approval + "' data-item=' " + item_name +
-                " ' data-email=' " + EMAIL + " ' >APPROVED</button>";
-        }
-    <?php }else{ ?>
-    return data_approval;
     <?php } ?>
 };
 
@@ -201,7 +196,7 @@ var table = new Tabulator("#room-list-table", {
         },
         {
             title: "Room Availability",
-            field: "status",
+            formatter: room_status,
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {

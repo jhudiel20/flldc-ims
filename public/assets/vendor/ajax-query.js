@@ -403,6 +403,45 @@ $(document).ready(function () {
             }
         });
     });
+    $('#submit_room_status').on('click', function() {
+        var formdata = new FormData(document.getElementById('room_status_form'));
+        $.ajax({
+            url: "/edit_room_status",
+            method: "POST",
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function () {
+                showLoading('#submit_room_status');
+            },
+            success: function (response) {
+                hideLoading('#submit_room_status');
+                console.log(response);
+                if (response.success) {
+                    $('#room_status_modal').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        icon: 'warning',
+                        title: response.title,
+                        text: response.message,
+                        buttons: false,
+                        timer: '2000',
+                    })
+                }
+            }
+        });
+    });
 
 // ############ - PR & REQUEST - ############
     $('#add_request').on('click', function() {
@@ -1032,18 +1071,16 @@ $(document).ready(function () {
     });
 
         $(document).on("click", ".approval-room-status", function() {
-            var ID = $(this).data("id");
-            var APPROVAL = $(this).data("approved");
-            var ROOM_ID = $(this).data("roomid");
-            var EMAIL = $(this).data("email");
+            var roomId = $(this).data("roomId");
+            var roomStatus = $(this).data("roomStatus");
+            var roomName = $(this).data("roomName");
     
-            $('#ID').val(ID);
-            $('#APPROVAL').val(APPROVAL);
-            $('#ROOMID').val(ROOM_ID);
-            $('#EMAIL').val(EMAIL);
+            $('#roomId').val(roomId);
+            $('#roomStatus').val(roomStatus);
+            $('#roomName').val(roomName);
     
             // Show the edit modal
-            $('#approval_modal').modal('show');
+            $('#room_status_modal').modal('show');
         });
         $(document).on("click", ".approval-request-status", function() {
             var ID = $(this).data("id");
