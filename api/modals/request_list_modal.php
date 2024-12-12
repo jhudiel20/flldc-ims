@@ -60,7 +60,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="reset" class="btn btn-label-secondary">Reset</button>
-                <button type="submit" name="add_request" class="btn btn-label-primary btn-page-block" id="add_request">Submit</button>
+                <button type="button" name="add_request" class="btn btn-label-primary btn-page-block" id="add_request">Submit</button>
                 <!-- <button type="button" class="btn btn-primary">Understood</button> -->
             </div>
             </form><!-- End Multi Columns Form -->
@@ -94,7 +94,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-label-primary btn-page-block" id="submit_approval_btn">Save changes</button>
+                    <button type="button" class="btn btn-label-primary btn-page-block" id="submit_approval_btn">Save changes</button>
                 </div>
             </form>
         </div>

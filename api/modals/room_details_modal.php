@@ -13,7 +13,7 @@
                     <input type="hidden" name="room_name" id="room_name" value="<?php echo $row['room_name'] ?>">
                     <input type="hidden" name="item_to_delete" id="item_to_delete" class="form-control" value="<?php echo $row['room_photo']; ?>">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="delete_room_photo_btn" class="btn btn-danger btn-page-block" >Delete</button>
+                    <button type="button" id="delete_room_photo_btn" class="btn btn-danger btn-page-block" >Delete</button>
                 </form>
             </div>
         </div>

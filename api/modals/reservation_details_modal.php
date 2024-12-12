@@ -32,7 +32,7 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="submit" class="btn btn-label-primary btn-page-block" id="submit_edit_reserve_details">Proceed</button>
+                    <button type="button" class="btn btn-label-primary btn-page-block" id="submit_edit_reserve_details">Proceed</button>
                 </div>
             </form>
         </div>
