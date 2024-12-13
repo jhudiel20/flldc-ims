@@ -330,77 +330,31 @@ function base_url(){
     return $base_url;  
 }
 
-function encrypted_string($unencrypt) { 
+function encrypted_string($unencrypt){ 
+  
   $dirty = array("+", "/", "=");
-  $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
-  $iv_length = openssl_cipher_iv_length(g_cipher);
-  $iv = openssl_random_pseudo_bytes($iv_length);
-
-  if ($iv === false) {
-      // If IV generation fails, redirect to 404
-      header("Location: /404");
-      exit;
-  }
-
-  $encrypted = openssl_encrypt($unencrypt, g_cipher, g_key, 0, $iv);
-  if ($encrypted === false) {
-      // If encryption fails, redirect to 404
-      header("Location: /404");
-      exit;
-  }
-
+	$clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
+  $plaintext="$unencrypt";
+  
+  $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(g_cipher));
+  $encrypted = openssl_encrypt($plaintext, g_cipher, g_key, 0, $iv);
   $ciphertext = base64_encode($encrypted . '::' . $iv);
   $encrypted = str_replace($dirty, $clean, $ciphertext);
-  return $encrypted;
+	return $encrypted;
 }
 
 
+function decrypted_string($encrypted_string){
+  
+	$dirty = array("+", "/", "=");
+	$clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
+  $garble = str_replace($clean, $dirty, $encrypted_string);
+  list($decoded, $iv) = explode('::', base64_decode($garble), 2);
+	$plaintext = openssl_decrypt($decoded, g_cipher, g_key, 0, $iv);
 
-function decrypted_string($encrypted_string) {
-    // Characters for URL-safe decoding
-    $dirty = array("+", "/", "=");
-    $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
+  return $plaintext;
 
-    // Reverse the character replacement
-    $garble = str_replace($clean, $dirty, $encrypted_string);
-
-    // Decode the base64-encoded string
-    $decoded = base64_decode($garble, true);
-    if ($decoded === false) {
-        // If decoding fails, redirect to 404
-        header("Location: /404");
-        exit;
-    }
-
-    // Split the decoded string into encrypted data and IV
-    $parts = explode('::', $decoded, 2);
-    if (count($parts) !== 2) {
-        // If parts are not as expected, redirect to 404
-        header("Location: /404");
-        exit;
-    }
-
-    list($encrypted_data, $iv) = $parts;
-
-    // Validate the IV length
-    $expected_iv_length = openssl_cipher_iv_length(g_cipher);
-    if (strlen($iv) !== $expected_iv_length) {
-        // If IV length is incorrect, redirect to 404
-        header("Location: /404");
-        exit;
-    }
-
-    // Decrypt the data
-    $plaintext = openssl_decrypt($encrypted_data, g_cipher, g_key, 0, $iv);
-    if ($plaintext === false) {
-        // If decryption fails, redirect to 404
-        header("Location: /404");
-        exit;
-    }
-
-    return $plaintext;
 }
-
 
 
 function set_password($text){

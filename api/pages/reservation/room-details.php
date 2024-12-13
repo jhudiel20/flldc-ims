@@ -11,13 +11,19 @@ $id = decrypted_string($_GET['ID']);
 
 
 if(empty($id)){
-    header("Location:404");
+    header("Location: /404");
 }
 
 $sql = $conn->prepare("SELECT * FROM room_details WHERE ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+if (!$row) {
+    // Redirect to 404 if the room does not exist
+    header("Location: /404");
+    exit;
+}
 
 ?>
 <!doctype html>
