@@ -350,6 +350,11 @@ function decrypted_string($encrypted_string){
 	$clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
   $garble = str_replace($clean, $dirty, $encrypted_string);
   list($decoded, $iv) = explode('::', base64_decode($garble), 2);
+
+  if (strlen($iv) < 16) {
+      header("Location: /404");
+      exit(); // Stop further execution if IV is invalid
+  }
 	$plaintext = openssl_decrypt($decoded, g_cipher, g_key, 0, $iv);
 
   return $plaintext;

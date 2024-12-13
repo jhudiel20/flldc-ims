@@ -19,12 +19,6 @@ $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
 
-if (!$row) {
-    // Redirect to 404 if the room does not exist
-    header("Location: /404");
-    exit;
-}
-
 ?>
 <!doctype html>
 
