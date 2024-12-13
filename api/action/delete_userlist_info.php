@@ -3,10 +3,6 @@ if (!isset($_COOKIE['secure_data'])){
     header("Location: /");
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Include database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 
@@ -16,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $DELETE_FNAME =  isset($_POST['DELETE_FNAME']) ? trim($_POST['DELETE_FNAME']) : '';
     $DELETE_LNAME =  isset($_POST['DELETE_LNAME']) ? trim($_POST['DELETE_LNAME']) : '';
 
-    $sql = $conn->prepare("DELETE FROM user_account WHERE id = :id");
+    $sql = $conn->prepare("DELETE FROM user_account WHERE ID = :id ");
     $sql->bindParam(':id',$id,PDO::PARAM_STR);
     $sql->execute();
 
