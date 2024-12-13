@@ -337,10 +337,21 @@ function encrypted_string($unencrypt){
   $plaintext="$unencrypt";
   
   $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(g_cipher));
+  if ($iv === false) {
+      // If IV generation fails, redirect to 404
+      header("Location: /404");
+      exit;
+  }
   $encrypted = openssl_encrypt($plaintext, g_cipher, g_key, 0, $iv);
+  if ($encrypted === false) {
+      // If encryption fails, redirect to 404
+      header("Location: /404");
+      exit;
+  }
   $ciphertext = base64_encode($encrypted . '::' . $iv);
   $encrypted = str_replace($dirty, $clean, $ciphertext);
 	return $encrypted;
+  
 }
 
 

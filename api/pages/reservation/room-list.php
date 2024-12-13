@@ -152,7 +152,7 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 // Initialize the Tabulator table with fetched data
 //function initializeTable(data) {
 var table = new Tabulator("#room-list-table", {
-    layout: "fitDataStretch",
+    layout: "fitData",
     movableColumns: true,
     placeholder: "No Data Found",
     pagination: true, //enable pagination
