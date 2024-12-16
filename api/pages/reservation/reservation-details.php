@@ -88,7 +88,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <input type="text" class="form-control" name="RESERVATIONID" id="RESERVATIONID"
                                                                     value="<?php echo $row['reservation_id']; ?>" disabled>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Reservation Status</label>
                                                                 <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
                                                                     <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
@@ -100,12 +100,20 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <label class="form-label">Date of Reservation</label>
                                                                 <input type="date" class="form-control" 
                                                                     name="RESERVE_DATE" id="RESERVE_DATE"
                                                                     value="<?php echo $row['reserve_date'];?>" >
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Price<span class="require asterisk">*</span></label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text">₱</span>
+                                                                    <input type="text" class="form-control" name="price" id="price" value="<?php echo number_format($row['prices'],2); ?>" disabled>
+                                                                    <span class="input-group-text">.00</span>
+                                                                </div>
                                                             </div>
 
 
