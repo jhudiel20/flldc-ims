@@ -118,7 +118,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <label class="form-label">Price<span class="require asterisk">*</span></label>
                                                             <div class="input-group mb-3">
                                                                 <span class="input-group-text">₱</span>
-                                                                <input type="text" class="form-control" name="price" id="price" value="<?php echo $row['PRICES']; ?>"
+                                                                <input type="text" class="form-control" name="price" id="price" value="<?php echo $row['prices']; ?>"
                                                                     onKeyPress="if(this.value.length==12) return false;return event.keyCode === 8 || (event.charCode >= 48 && event.charCode <= 57)"
                                                                     oninput="if(this.value!=''){this.value = parseFloat(this.value.replace(/,/g, '')).toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 0, minimumFractionDigits: 0})}">
                                                                 <span class="input-group-text">.00</span>
