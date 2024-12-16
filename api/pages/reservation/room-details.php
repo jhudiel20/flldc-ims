@@ -102,17 +102,27 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <form class="row g-3" method="post" id="room_details_form">
                                                         <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                         <input type="hidden" id="roomid" name="roomid" value="<?php echo $row['room_id'];?>">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <label class="form-label">Room Name<span class="require asterisk">*</span></label>
                                                             <input type="text" class="form-control" name="roomname" id="roomname" value="<?php echo $row['room_name']?>">
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <label class="form-label">Room Type<span class="require asterisk">*</span></label>
                                                             <select name="roomtype" id="roomtype" class="form-control">
                                                                 <option value="Meeting-Room" <?php if($row['room_type'] == "Meeting-Room") echo 'selected'; ?>>Meeting Room</option>
                                                                 <option value="Training-Room" <?php if($row['room_type'] == "Training-Room") echo 'selected'; ?>>Training Room</option>
                                                                 <option value="Both" <?php if($row['room_type'] == "Both") echo 'selected'; ?>>Both</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Price<span class="require asterisk">*</span></label>
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text">₱</span>
+                                                                <input type="text" class="form-control" name="price" id="price" value="<?php echo $row['PRICES']; ?>"
+                                                                    onKeyPress="if(this.value.length==12) return false;return event.keyCode === 8 || (event.charCode >= 48 && event.charCode <= 57)"
+                                                                    oninput="if(this.value!=''){this.value = parseFloat(this.value.replace(/,/g, '')).toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 0, minimumFractionDigits: 0})}">
+                                                                <span class="input-group-text">.00</span>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label class="form-label">Capacity<span class="require asterisk">*</span></label>

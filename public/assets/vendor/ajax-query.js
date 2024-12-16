@@ -638,6 +638,15 @@ $(document).ready(function () {
                     "border-color": ''
                 });
             }
+            if ($('#price').val() == "") {
+                $("#price").css({
+                    "border-color": 'red'
+                });
+            } else {
+                $("#price").css({
+                    "border-color": ''
+                });
+            }
             if ($('#roomtype').val() == "") {
                 $("#roomtype").css({
                     "border-color": 'red'

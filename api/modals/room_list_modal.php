@@ -13,17 +13,27 @@
                         <div class="row">
 
                             <div class="form-message alert alert-danger" role="alert"></div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Room Name<span class="require asterisk">*</span></label>
                                 <input type="text" class="form-control" name="roomname" id="roomname" placeholder="">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Room Type<span class="require asterisk">*</span></label>
                                 <select name="roomtype" id="roomtype" class="form-control">
                                     <option value="Meeting-Room">Meeting Room</option>
                                     <option value="Training-Room">Training Room</option>
                                     <option value="Both">Both</option>
                                 </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Price<span class="require asterisk">*</span></label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">₱</span>
+                                    <input type="text" class="form-control" name="price" id="price"
+                                        onKeyPress="if(this.value.length==12) return false;return event.keyCode === 8 || (event.charCode >= 48 && event.charCode <= 57)"
+                                        oninput="if(this.value!=''){this.value = parseFloat(this.value.replace(/,/g, '')).toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 0, minimumFractionDigits: 0})}">
+                                    <span class="input-group-text">.00</span>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Capacity<span class="require asterisk">*</span></label>
