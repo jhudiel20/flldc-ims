@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 $id = isset($_POST['ID']) ? trim($_POST['ID']) : '';
 $roomid = isset($_POST['roomid']) ? trim($_POST['roomid']) : '';
 $roomname = isset($_POST['roomname']) ? trim($_POST['roomname']) : '';
+$price = isset($_POST['price']) ? trim($_POST['price']) : '';
 $roomtype = isset($_POST['roomtype']) ? trim($_POST['roomtype']) : '';
 $capacity = isset($_POST['capacity']) ? trim($_POST['capacity']) : '';
 $floornumber = isset($_POST['floornumber']) ? trim($_POST['floornumber']) : '';
@@ -22,7 +23,7 @@ $status = isset($_POST['status']) ? trim($_POST['status']) : '';
 $features = isset($_POST['features']) ? trim($_POST['features']) : '';
 $usage = isset($_POST['usage']) ? trim($_POST['usage']) : '';
 
-if ($roomname == '' || $roomtype == '' || $capacity == '' || $floornumber == '' || $status == '' || $features == '' || $usage == '' ) {
+if ($roomname == '' || $roomtype == '' || $capacity == '' || $floornumber == '' || $status == '' || $features == '' || $usage == '' || $price == '') {
     $response['message'] = 'Please fill up all fields with (*) asterisk!';
     echo json_encode($response);
     exit();
@@ -33,9 +34,10 @@ if($capacity == 0){
     exit(); 
 }
 
-$sql = $conn->prepare("UPDATE room_details SET room_name = :roomname, floor_number = :floornumber,
+$sql = $conn->prepare("UPDATE room_details SET room_name = :roomname, prices = :price, floor_number = :floornumber,
 room_type = :roomtype, capacity = :capacity, status = :status, usage = :usage, features = :features WHERE ID = :id ");
 $sql->bindParam(':roomname', $roomname, PDO::PARAM_STR);
+$sql->bindParam(':price', $price, PDO::PARAM_STR);
 $sql->bindParam(':floornumber', $floornumber, PDO::PARAM_STR);
 $sql->bindParam(':roomtype', $roomtype, PDO::PARAM_STR);
 $sql->bindParam(':capacity', $capacity, PDO::PARAM_STR);
