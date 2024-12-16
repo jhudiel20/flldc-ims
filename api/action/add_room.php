@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get POST data and sanitize inputs
     $roomname = isset($_POST['roomname']) ? trim($_POST['roomname']) : '';
     $price = isset($_POST['price']) ? trim($_POST['price']) : '';
+    $price = str_replace(',', '', $price); // Remove commas from the price
     $roomtype = isset($_POST['roomtype']) ? trim($_POST['roomtype']) : '';
     $capacity = isset($_POST['capacity']) ? trim($_POST['capacity']) : '';
     $floornumber = isset($_POST['floornumber']) ? trim($_POST['floornumber']) : '';
