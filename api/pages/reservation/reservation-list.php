@@ -140,13 +140,13 @@ var approval_status = function(cell, formatterParams, onRendered) {
 
     <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
         if (reserve_status == "PENDING") {
-            return "<button type='button' class='btn btn-outline-primary approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
+            return "<button type='button' class='btn btn-outline-primary approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
         }
         if (reserve_status == "DECLINED"){
-            return "<button type='button' class='btn btn-outline-danger approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
+            return "<button type='button' class='btn btn-outline-danger approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >DECLINED</button>";
         }
         if(reserve_status == "APPROVED"){
-            return "<button type='button' class='btn btn-outline-success approval-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
+            return "<button type='button' class='btn btn-outline-success approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
     <?php }else{ ?>
     return reserve_status;

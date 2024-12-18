@@ -1706,7 +1706,18 @@ $(document).ready(function () {
             }
         });
     });
+        $(document).on("click", ".approval-reserve-status", function() {
+            var reserve_id = $(this).data("id");
+            var room_id = $(this).data("roomid");
+            var reserve_email = $(this).data("email");
 
+            $('#ID').val(reserve_id);
+            $('#ROOMID').val(room_id);
+            $('#EMAIL').val(reserve_email);
+
+            // Show the edit modal
+            $('#approval_reserve_modal').modal('show');
+        });
         $(document).on("click", ".update-room-status", function() {
             var roomId = $(this).data("id");
             var Status = $(this).data("status");
