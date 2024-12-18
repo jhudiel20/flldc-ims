@@ -132,7 +132,7 @@
       },
       {
         "src": "/reservation-view-details",
-        "dest": "/api/pages/reservation/reservation-view-details.php"
+        "dest": "/api/pages/reservation/reserve-view-details.php"
       },
       {
         "src": "/reserve-view",
