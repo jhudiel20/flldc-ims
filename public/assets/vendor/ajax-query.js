@@ -941,7 +941,7 @@ $(document).ready(function () {
                 hideLoading('#submit_reserve_approval_btn');
                 console.log(response);
                 if (response.success) {
-                    $('#approval_modal').modal('hide');
+                    $('#approval_reserve_modal').modal('hide');
                     swal({
                         icon: 'success',
                         title: response.title,
