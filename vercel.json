@@ -131,8 +131,8 @@
         "dest": "/api/pages/reservation/reservation-details.php"
       },
       {
-        "src": "/reservation-details",
-        "dest": "/api/pages/reservation/reservation-details.php"
+        "src": "/reservation-view-details",
+        "dest": "/api/pages/reservation/reservation-view-details.php"
       },
       {
         "src": "/reserve-view",

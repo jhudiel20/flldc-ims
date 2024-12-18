@@ -152,7 +152,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Seating Arrangement</label>
                                                                     <select name="SETUP" id="SETUP" class="form-control">
-                                                                        <option value="CLASS ROOM" <?php if($row['setup'] == "CLASS ROOM") echo 'selected'; ?>>CLASS ROOM</option>
+                                                                        <option value="CLASSROOM" <?php if($row['setup'] == "CLASSROOM") echo 'selected'; ?>>CLASSROOM</option>
                                                                         <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>
                                                                         <option value="THEATER" <?php if($row['setup'] == "THEATER") echo 'selected'; ?>>THEATER</option>
                                                                         <option value="U-SHAPE" <?php if($row['setup'] == "U-SHAPE") echo 'selected'; ?>>U-SHAPE</option>
