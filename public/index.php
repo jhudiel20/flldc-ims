@@ -64,6 +64,7 @@ if(isset($decrypted_array['status'])){
                                             <input type="text" class="form-control" id="username" name="username"
                                                 placeholder="Enter your email or username" />
                                         </div>
+                                        
                                         <div class="mb-3 form-password-toggle">
                                             <div class="d-flex justify-content-between">
                                                 <label class="form-label label-shadow" for="password">Password</label>
