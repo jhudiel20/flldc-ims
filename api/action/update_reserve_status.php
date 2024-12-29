@@ -253,9 +253,6 @@ if ($counter->rowCount() > 0) {
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
 
-
-            
-
             ob_start();
             $pdf->Output('S'); // Save PDF output to a variable as a string
             $pdfContent = ob_get_clean();
@@ -272,7 +269,7 @@ if ($counter->rowCount() > 0) {
             $base64Content = base64_encode($pdfContent);
 
             // Prepare the API request
-            $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/RESERVATION_INVOICE/$fileName";
+            $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . $fileName;
             $data = json_encode([
                 'message' => 'Upload invoice ' . $fileName,
                 'content' => $base64Content,
@@ -288,7 +285,7 @@ if ($counter->rowCount() > 0) {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            $response = curl_exec($ch);
+            $responses = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if (curl_errno($ch)) {
@@ -312,7 +309,7 @@ if ($counter->rowCount() > 0) {
                 echo json_encode([
                     'success' => false,
                     'title' => 'GitHub API Error',
-                    'message' => 'Failed to upload PDF. HTTP Code: ' . $httpCode . ' Response: ' . $response,
+                    'message' => 'Failed to upload PDF. HTTP Code: ' . $httpCode . ' Response: ' . $responses,
                 ]);
             }
 
