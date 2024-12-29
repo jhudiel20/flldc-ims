@@ -50,7 +50,6 @@ $generate_PR_ID  = generate_PR_ID();
         $mail->addAddress($EMAIL);     //Add a recipient
         $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
         $code = $REQUEST_ID;
-        $ITEM_NAME = $ITEM_NAME;
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
   

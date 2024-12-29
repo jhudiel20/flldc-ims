@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 // Include database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
-require_once __DIR__ . '/../../public/tcpdf/tcpdf.php';
+require_once __DIR__ . '/../tcpdf/tcpdf.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -120,7 +120,7 @@ if ($counter->rowCount() > 0) {
   
         if($approval_status == 'APPROVED'){
             // Create a new instance of the PDF
-            $pdf = new FPDF();
+            $pdf = new TCPDF();
             $pdf->AddPage();
 
             // Set the font for the header
