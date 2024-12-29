@@ -269,7 +269,7 @@ if ($counter->rowCount() > 0) {
             $base64Content = base64_encode($pdfContent);
 
             // Prepare the API request
-            $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . $fileName;
+            $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
             $data = json_encode([
                 'message' => 'Upload invoice ' . $fileName,
                 'content' => $base64Content,
