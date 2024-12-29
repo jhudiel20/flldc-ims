@@ -23,9 +23,6 @@
       },
       "api/ajax_data/*.php": {
         "runtime": "vercel-php@0.7.1"
-      },
-      "public/tcpdf/*.php": {
-        "runtime": "vercel-php@0.7.1"
       }
     },
     "routes": [
