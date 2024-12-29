@@ -91,7 +91,6 @@ if ($counter->rowCount() > 0) {
     exit();  // Stop further execution
 }
 
-    
         // Mailer setup
         require __DIR__ . '/../../public/mail/Exception.php';
         require __DIR__ . '/../../public/mail/PHPMailer.php';
