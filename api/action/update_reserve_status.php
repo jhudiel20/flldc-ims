@@ -122,59 +122,139 @@ if ($counter->rowCount() > 0) {
             $pdf = new TCPDF('P', 'mm', 'LEGAL', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            // Set the font for the header
-            $pdf->SetFont('Arial', 'B', 16);
-            $pdf->Cell(0, 10, 'BILL-' . $generateReserveID, 0, 1, 'C');
-            $pdf->Ln(5);
+            $html = '
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Bill Invoice</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        width: 90%;
+                        margin: auto;
+                    }
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+                    .header img {
+                        height: 50px;
+                    }
+                    .header .invoice-number {
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                    .right-align {
+                        text-align: right;
+                    }
+                    .section {
+                        margin-bottom: 20px;
+                    }
+                    .table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    .table th, .table td {
+                        border: 1px solid #000;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    .table th {
+                        font-weight: bold;
+                    }
+                    .table td.text-center {
+                        text-align: center;
+                    }
+                    .table td.text-right {
+                        text-align: right;
+                    }
+                    .instructions {
+                        margin-top: 20px;
+                        font-size: 12px;
+                    }
+                    .signature {
+                        margin-top: 20px;
+                        text-align: left;
+                    }
+                    .signature img {
+                        height: 50px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <img src="cid:logo_cid" alt="Company Logo">
+                    <div class="header">
+                        INVOICE-'.$generateReserveID.'
+                    </div>
+                    <div class="right-align">
+                        DATE: '. $date_now = date('M d, Y').'
+                    </div>
+                    <div class="section">
+                        <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                        Fast Warehouse Complex, Pulo-Diezmo Road,<br>
+                        Barangay Pulo, Cabuyao City Laguna.
+                    </div>
+                    <div class="section">
+                        <strong>BILL TO:</strong>'.$row['fname'].' '.$row['lname'].'<br>
+                        FAST
+                    </div>
+                    <div class="section">
+                        <strong>RE: Room Reservation</strong><br>
+                        Room: '.$row['room_name'].'<br>
+                        Date: '.$row['reserve_date'].'<br>
+                        Time Slot: '.$row['time'].'
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>DESCRIPTION</th>
+                                <th class="text-center">No. of Pax</th>
+                                <th class="text-right">RATE (Php)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Room Reservation</td>
+                                <td class="text-center">'.$row['guest'].'</td>
+                                <td class="text-right">'.$row['prices'].'</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-right"><strong>Grand Total</strong></td>
+                                <td class="text-right">'.$row['prices'].'</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="instructions">
+                        <strong>PAYMENT INSTRUCTION:</strong><br>
+                        Please make payable to:<br>
+                        Account Name: Fast Logistics Learning and Development Corporation<br>
+                        Account Number: 759-084367-1<br>
+                        Bank: RCBC
+                    </div>
+                   <div class="signature">
+                        <strong>Authorized Signature</strong><br>
+                        <img src="https://yourdomain.com/public/assets/img/LOGO.png" alt="Company Logo"><br>
+                        Jade Minette P. Bondoc<br>
+                        Learning and Development Head
+                    </div>
+                </div>
+            </body>
+            </html>
 
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(0, 10, 'DATE: ' . date('m/d/Y'), 0, 1, 'R');
-            $pdf->Ln(10);
+            ';
+            $pdf->writeHTML($html, true, false, true, false, '');
 
-            // Add company details
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(0, 10, 'FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION', 0, 1);
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->MultiCell(0, 5, "Fast Warehouse Complex, Pulo-Diezmo Road,\nBarangay Pulo, Cabuyao City Laguna.", 0, 'L');
-            $pdf->Ln(5);
 
-            // Add billing details
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(0, 10, 'BILL TO: ' . $row['fname'].' '.$row['lname'], 0, 1);
-            $pdf->Cell(0, 10, 'FAST', 0, 1);
-            $pdf->Ln(5);
-
-            // Add reservation details
-            $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(0, 10, 'RE: Room Reservation', 0, 1);
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->Cell(0, 10, "Room: ".$row['room_name'], 0, 1);
-            $pdf->Cell(0, 10, "Date: ".$row['reserve_date'], 0, 1);
-            $pdf->Cell(0, 10, "Time Slot: ".$row['time'], 0, 1);
-            $pdf->Ln(5);
-
-            // Add description and charges
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->Cell(100, 10, 'DESCRIPTION', 1);
-            $pdf->Cell(30, 10, 'No. of Pax', 1);
-            $pdf->Cell(30, 10, 'RATE (Php)', 1);
-            $pdf->Ln();
-
-            $pdf->Cell(100, 10, 'Room Reservation', 1);
-            $pdf->Cell(30, 10, $row['guest'], 1, 0, 'C');
-            $pdf->Cell(30, 10, $row['prices'], 1, 0, 'R');
-            $pdf->Ln();
-
-            $pdf->SetFont('Arial', 'B', 10);
-            $pdf->Cell(130, 10, 'Grand Total', 1);
-            $pdf->Cell(30, 10, $row['prices'], 1, 0, 'R');
-            $pdf->Ln(10);
-
-            // Add payment instructions
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->Cell(0, 10, 'PAYMENT INSTRUCTION:', 0, 1);
-            $pdf->MultiCell(0, 5, "Please make payable to:\nAccount Name: Fast Logistics Learning and Development Corporation\nAccount Number: 759-084367-1\nBank: RCBC", 0, 'L');
-            $pdf->Ln(5);
+            
 
             ob_start();
             $pdf->Output('S'); // Save PDF output to a variable as a string
@@ -186,7 +266,7 @@ if ($counter->rowCount() > 0) {
             $repo = getenv('GITHUB_REPO');         // GitHub repository name
 
             // File details
-            $fileName = 'INVOICE-' . $row['fname'].'-'.$row['lname'] . '.pdf';
+            $fileName = 'INVOICE-'. $generateReserveID.'-('. $row['fname'].'-'.$row['lname'] .').pdf';
 
             // Encode the PDF content to base64
             $base64Content = base64_encode($pdfContent);
