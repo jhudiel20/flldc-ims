@@ -24,7 +24,7 @@
       "api/ajax_data/*.php": {
         "runtime": "vercel-php@0.7.1"
       },
-      "api/tcpdf/*.php": {
+      "public/tcpdf/*.php": {
         "runtime": "vercel-php@0.7.1"
       }
     },
