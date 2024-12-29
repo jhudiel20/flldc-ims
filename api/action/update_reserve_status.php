@@ -9,6 +9,7 @@ ini_set('display_errors', 1);
 // Include database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
+require_once __DIR__ . '/../tcpdf/tcpdf.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -118,7 +119,132 @@ if ($counter->rowCount() > 0) {
         $mail->isHTML(true);                                  //Set email format to HTML
   
         if($approval_status == 'APPROVED'){
+            // Create a new instance of the PDF
+            $pdf = new FPDF();
+            $pdf->AddPage();
+
+            // Set the font for the header
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->Cell(0, 10, 'BILL-' . $generateReserveID, 0, 1, 'C');
+            $pdf->Ln(5);
+
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(0, 10, 'DATE: ' . date('m/d/Y'), 0, 1, 'R');
+            $pdf->Ln(10);
+
+            // Add company details
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(0, 10, 'FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION', 0, 1);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->MultiCell(0, 5, "Fast Warehouse Complex, Pulo-Diezmo Road,\nBarangay Pulo, Cabuyao City Laguna.", 0, 'L');
+            $pdf->Ln(5);
+
+            // Add billing details
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(0, 10, 'BILL TO: ' . $row['fname'].' '.$row['lname'], 0, 1);
+            $pdf->Cell(0, 10, 'FAST', 0, 1);
+            $pdf->Ln(5);
+
+            // Add reservation details
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(0, 10, 'RE: Room Reservation', 0, 1);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Cell(0, 10, "Room: ".$row['room_name'], 0, 1);
+            $pdf->Cell(0, 10, "Date: ".$row['reserve_date'], 0, 1);
+            $pdf->Cell(0, 10, "Time Slot: ".$row['time'], 0, 1);
+            $pdf->Ln(5);
+
+            // Add description and charges
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Cell(100, 10, 'DESCRIPTION', 1);
+            $pdf->Cell(30, 10, 'No. of Pax', 1);
+            $pdf->Cell(30, 10, 'RATE (Php)', 1);
+            $pdf->Ln();
+
+            $pdf->Cell(100, 10, 'Room Reservation', 1);
+            $pdf->Cell(30, 10, $row['guest'], 1, 0, 'C');
+            $pdf->Cell(30, 10, $row['prices'], 1, 0, 'R');
+            $pdf->Ln();
+
+            $pdf->SetFont('Arial', 'B', 10);
+            $pdf->Cell(130, 10, 'Grand Total', 1);
+            $pdf->Cell(30, 10, $row['prices'], 1, 0, 'R');
+            $pdf->Ln(10);
+
+            // Add payment instructions
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Cell(0, 10, 'PAYMENT INSTRUCTION:', 0, 1);
+            $pdf->MultiCell(0, 5, "Please make payable to:\nAccount Name: Fast Logistics Learning and Development Corporation\nAccount Number: 759-084367-1\nBank: RCBC", 0, 'L');
+            $pdf->Ln(5);
+
+            ob_start();
+            $pdf->Output('S'); // Save PDF output to a variable as a string
+            $pdfContent = ob_get_clean();
+
+            // Define GitHub API details
+            $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
+            $owner = getenv('GITHUB_OWNER');       // GitHub username or organization
+            $repo = getenv('GITHUB_REPO');         // GitHub repository name
+
+            // File details
+            $fileName = 'INVOICE-' . $row['fname'].'-'.$row['lname'] . '.pdf';
+
+            // Encode the PDF content to base64
+            $base64Content = base64_encode($pdfContent);
+
+            // Prepare the API request
+            $apiUrl = "https://api.github.com/repos/$owner/$repo/contents/RESERVATION_INVOICE/$fileName";
+            $data = json_encode([
+                'message' => 'Upload invoice ' . $fileName,
+                'content' => $base64Content,
+            ]);
+
+            $ch = curl_init($apiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: token ' . $githubToken,
+                'User-Agent: PHP Script',
+                'Content-Type: application/json',
+            ]);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            if (curl_errno($ch)) {
+                // Handle curl errors
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'Curl Error',
+                    'message' => curl_error($ch),
+                ]);
+                curl_close($ch);
+                exit();
+            }
+
+            curl_close($ch);
+
+            // Check the response
+            if ($httpCode == 201) {
+                // Successful upload
+            } else {
+                // Handle GitHub API errors
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'GitHub API Error',
+                    'message' => 'Failed to upload PDF. HTTP Code: ' . $httpCode . ' Response: ' . $response,
+                ]);
+            }
+
+
             $mail->Subject = 'Reservation Status Update: '.$approval_status;
+            $fileContent = file_get_contents($fileUrl);  // Fetch the PDF content from GitHub
+            $tempFile = tempnam(sys_get_temp_dir(), 'INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
+            file_put_contents($tempFile, $fileContent);
+
+            // Attach the downloaded file
+            $mail->addAttachment($tempFile, $fileName);
             $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
             $mail->Body    = '
                 <div style="background:#f3f3f3">
