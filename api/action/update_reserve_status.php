@@ -257,6 +257,16 @@ if ($counter->rowCount() > 0) {
             $pdf->Output('S'); // Save PDF output to a variable as a string
             $pdfContent = ob_get_clean();
 
+            // Check if PDF content is empty
+            if (empty($pdfContent)) {
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'PDF Generation Error',
+                    'message' => 'Failed to generate PDF content.',
+                ]);
+                exit();
+            }
+
             // Define GitHub API details
             $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
             $owner = getenv('GITHUB_OWNER');       // GitHub username or organization
@@ -269,13 +279,13 @@ if ($counter->rowCount() > 0) {
             $base64Content = base64_encode($pdfContent);
 
             // Prepare the API request 
-            $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
+            $fileUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
             $data = json_encode([
                 'message' => 'Upload invoice ' . $fileName,
                 'content' => $base64Content,
             ]);
 
-            $ch = curl_init($apiUrl);
+            $ch = curl_init($fileUrl);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'Authorization: token ' . $githubToken,
@@ -301,26 +311,40 @@ if ($counter->rowCount() > 0) {
 
             curl_close($ch);
 
-            // Check the response
-            if ($httpCode == 201) {
-                // Successful upload
-            } else {
-                // Handle GitHub API errors
+            // Check the response from GitHub API
+            if ($httpCode != 201) {
                 echo json_encode([
                     'success' => false,
                     'title' => 'GitHub API Error',
                     'message' => 'Failed to upload PDF. HTTP Code: ' . $httpCode . ' Response: ' . $responses,
                 ]);
+                exit();
             }
 
+            // GitHub file URL (raw file URL for downloading)
+            $rawFileUrl = 'https://raw.githubusercontent.com/' . $owner . '/' . $repo . '/main/RESERVATION_INVOICE/' . urlencode($fileName);
+
+            // Fetch the PDF content from GitHub
+            $fileContent = file_get_contents($rawFileUrl);
+            if (!$fileContent) {
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'Download Error',
+                    'message' => 'Failed to download the file from GitHub.',
+                ]);
+                exit();
+            }
+
+            $tempFile = tempnam(sys_get_temp_dir(), 'INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
+            file_put_contents($tempFile, $fileContent); // Fetch the PDF content from GitHub
 
             $mail->Subject = 'Reservation Status Update: '.$approval_status;
-            $fileContent = file_get_contents($fileUrl);  // Fetch the PDF content from GitHub
-            $tempFile = tempnam(sys_get_temp_dir(), 'INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
-            file_put_contents($tempFile, $fileContent);
 
             // Attach the downloaded file
             $mail->addAttachment($tempFile, $fileName);
+
+            // Clean up the temporary file
+            unlink($tempFile);
             $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
             $mail->Body    = '
                 <div style="background:#f3f3f3">
