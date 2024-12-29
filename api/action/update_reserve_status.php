@@ -260,7 +260,7 @@ if ($counter->rowCount() > 0) {
             // Define GitHub API details
             $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
             $owner = getenv('GITHUB_OWNER');       // GitHub username or organization
-            $repo = getenv('GITHUB_REPO');         // GitHub repository name
+            $repo = getenv('GITHUB_IMAGES');         // GitHub repository name
 
             // File details
             $fileName = 'INVOICE-'. $generateReserveID.'-('. $row['fname'].'-'.$row['lname'] .').pdf';
@@ -268,7 +268,7 @@ if ($counter->rowCount() > 0) {
             // Encode the PDF content to base64
             $base64Content = base64_encode($pdfContent);
 
-            // Prepare the API request
+            // Prepare the API request 
             $apiUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
             $data = json_encode([
                 'message' => 'Upload invoice ' . $fileName,
