@@ -307,14 +307,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fileContent = downloadFileFromGitHub($rawFileUrl);
 
             // Create a temporary file to store the content
-            $tempFilePath = tempnam(sys_get_temp_dir(), 'invoice_');
+            $tempFilePath = tempnam(sys_get_temp_dir(), 'invoice_' . $generateReserveID);
             file_put_contents($tempFilePath, $fileContent);
 
 
             $mail->Subject = 'Reservation Status Update: ' . $approval_status;
 
             // Attach the downloaded file
-            $mail->addAttachment($tempFile, $fileName);
+            $mail->addAttachment($tempFilePath, $fileName);
 
 
             $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf');
