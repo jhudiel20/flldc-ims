@@ -163,8 +163,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             margin-bottom: 20px;
                         }
                         .table {
-                            margin-top: 20px;
-                            margin-bottom: 20px;
                             width: 100%;
                             border-collapse: collapse;
                         }
@@ -197,8 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body>
                     <div class="container">
-                        <img src="../assets/img/LOGO.png" alt="Company Logo">
                         <div class="header">
+                            <img src="'.$_SERVER['DOCUMENT_ROOT'].'/public/assets/img/LOGO.png" alt="Company Logo" width="200">
                             INVOICE-' . $generateReserveID . '
                         </div>
                         <div class="right-align">
@@ -211,9 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="section">
                             <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
-                        </div>
-                        <div class="section">
-                            <strong>RE: Room Reservation</strong>
+                            <strong>RE: Room Reservation</strong><br>
                         </div>
                         <table class="table">
                             <thead>
@@ -231,14 +227,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <td class="text-center"> '.$row['reserve_date'].' </td>
                                     <td class="text-center"> '.$row['time'].' </td>
                                     <td class="text-center">' . $row['guest'] . '</td>
-                                    <td class="text-right">₱ ' . $row['prices'] . '</td>
+                                    <td class="text-right"> ' . $row['prices'] . '</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-right"><strong>Grand Total</strong></td>
-                                    <td class="text-right">₱ ' . $row['prices'] . '</td>
+                                    <td colspan="4" class="text-right"><strong>Grand Total</strong></td>
+                                    <td class="text-right"> ' . $row['prices'] . '</td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table><br>
                         <div class="instructions">
                             <strong>PAYMENT INSTRUCTION:</strong><br>
                             Please make payable to:<br>
@@ -248,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     <div class="signature">
                             <strong>Authorized Signature</strong><br>
-                            <img src="../assets/img/JMPB.png" alt="Company Logo"><br>
+                            <img src="'.$_SERVER['DOCUMENT_ROOT'].'/public/assets/img/JMPB.png" width="100"><br>
                             Jade Minette P. Bondoc<br>
                             Learning and Development Head
                         </div>
