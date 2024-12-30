@@ -1,5 +1,4 @@
 <?php
-echo "Image processing successful!";
 if (!isset($_COOKIE['secure_data'])) {
     header("Location: /");
 }
