@@ -335,8 +335,28 @@ if ($counter->rowCount() > 0) {
                 exit();
             }
 
-            $tempFile = tempnam(sys_get_temp_dir(), 'INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
+            $tempFile = tempnam(sys_get_temp_dir(), '/INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
             file_put_contents($tempFile, $fileContent); // Fetch the PDF content from GitHub
+
+            if (file_put_contents($tempFile, $fileContent) === false) {
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'File Write Error',
+                    'message' => 'Failed to write file to temporary directory.',
+                ]);
+                exit();
+            }
+            
+            // Verify the file exists
+            if (!file_exists($tempFile)) {
+                echo json_encode([
+                    'success' => false,
+                    'title' => 'File Not Found',
+                    'message' => 'Temporary file not found: ' . $tempFile,
+                ]);
+                exit();
+            }
+
 
             $mail->Subject = 'Reservation Status Update: '.$approval_status;
 
