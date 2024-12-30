@@ -144,20 +144,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             margin: auto;
                         }
                         .header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
                             margin-bottom: 20px;
-                        }
-                        .header img {
-                            height: 50px;
                         }
                         .header .invoice-number {
                             font-size: 16px;
                             font-weight: bold;
+                            display: inline-block;
                         }
-                        .right-align {
-                            text-align: right;
+                        .header .date {
+                            font-size: 16px;
+                            font-weight: bold;
+                            float: right;
                         }
                         .section {
                             margin-bottom: 20px;
@@ -195,11 +192,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body>
                     <div class="container">
-                        <div class="header">
-                            <strong> INVOICE-' . $generateReserveID . '</strong>
+                        <div class="text-center">
+                            <strong>SERVICE INVOICE</strong>
                         </div>
-                        <div class="right-align">
-                            DATE: ' . $date_now = date('M d, Y') . '
+                        <div class="header">
+                            <div class="invoice-number">
+                                <strong>INVOICE-' . $generateReserveID . '</strong>
+                            </div>
+                            <div class="date">
+                                DATE: ' . $date_now = date('M d, Y') . '
+                            </div>
                         </div>
                         <div class="section">
                             <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
@@ -235,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tbody>
                         </table><br>
                         <div class="instructions">
-                            <strong>PAYMENT INSTRUCTION:</strong><br>
+                            <strong>PAYMENT INSTRUCTION:</strong><br><br>
                             Please make payable to:<br>
                             Account Name: Fast Logistics Learning and Development Corporation<br>
                             Account Number: 759-084367-1<br>
