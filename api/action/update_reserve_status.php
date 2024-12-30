@@ -126,6 +126,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
+            
+            // <div style="margin-bottom: 20px;">
+            //     <div style="font-weight: bold; display: inline-block;">
+            //         <strong>INVOICE-' . $generateReserveID . '</strong>
+            //     </div>
+            //     <div style="display: inline-block; font-weight: bold; float: right;">
+            //         DATE: ' . $date_now = date('M d, Y') . '
+            //     </div>
+            // </div>
+
             $html = '
                 <!DOCTYPE html>
                 <html lang="en">
@@ -139,11 +149,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div style="font-size: 16px; text-align: center; font-weight: bold;">
                             SERVICE INVOICE
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <div style="font-weight: bold; display: inline-block;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div style="font-weight: bold;">
                                 <strong>INVOICE-' . $generateReserveID . '</strong>
                             </div>
-                            <div style="display: inline-block; font-weight: bold; float: right;">
+                            <div style="font-weight: bold;">
                                 DATE: ' . $date_now = date('M d, Y') . '
                             </div>
                         </div>
