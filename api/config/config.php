@@ -506,3 +506,33 @@ function generateRoomID($length = 10) {
   $generateRoomID = 'ROOM-'.$year.'-'.$randomString;
   return $generateRoomID;
 }
+
+// Function to download file from GitHub and return the file content
+function downloadFileFromGitHub($rawFileUrl) {
+  // Initialize cURL
+  $ch = curl_init($rawFileUrl);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects (useful for GitHub URLs)
+  
+  $fileContent = curl_exec($ch);
+  
+  // Check for cURL errors
+  if(curl_errno($ch)) {
+      throw new Exception("cURL Error: " . curl_error($ch));
+  }
+  
+  // Check for HTTP response code
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  if ($httpCode != 200) {
+      throw new Exception("Failed to download file from GitHub. HTTP Status Code: " . $httpCode);
+  }
+
+  curl_close($ch);
+
+  // Check if the file content is empty
+  if (empty($fileContent)) {
+      throw new Exception("Downloaded file is empty.");
+  }
+
+  return $fileContent;
+}

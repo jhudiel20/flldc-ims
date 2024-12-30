@@ -1,5 +1,5 @@
 <?php
-if (!isset($_COOKIE['secure_data'])){
+if (!isset($_COOKIE['secure_data'])) {
     header("Location: /");
 }
 
@@ -15,53 +15,57 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// Define GitHub API details
+$githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
+$owner = getenv('GITHUB_OWNER');       // GitHub username or organization
+$repo = getenv('GITHUB_IMAGES');   
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-$approval_status = isset($_POST['approval_status']) ? trim($_POST['approval_status']) : '';
-$ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
-$ROOMID = isset($_POST['ROOMID']) ? trim($_POST['ROOMID']) : '';
-$EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';  
-$message = isset($_POST['message']) ? trim($_POST['message']) : '';  
+    $approval_status = isset($_POST['approval_status']) ? trim($_POST['approval_status']) : '';
+    $ID = isset($_POST['ID']) ? trim($_POST['ID']) : '';
+    $ROOMID = isset($_POST['ROOMID']) ? trim($_POST['ROOMID']) : '';
+    $EMAIL = isset($_POST['EMAIL']) ? trim($_POST['EMAIL']) : '';
+    $message = isset($_POST['message']) ? trim($_POST['message']) : '';
 
-if (empty($message) || $message == '') {
-    $response['success'] = false;
-    $response['title'] = 'Error';
-    $response['message'] = 'Please provide a message!';
-    echo json_encode($response);
-    exit();
-}
+    if (empty($message) || $message == '') {
+        $response['success'] = false;
+        $response['title'] = 'Error';
+        $response['message'] = 'Please provide a message!';
+        echo json_encode($response);
+        exit();
+    }
 
 
-$sql = $conn->prepare("SELECT * FROM reservations join room_details on room_id = :roomid WHERE reservations.ID = :id ");
-$sql->bindParam(':roomid', $ROOMID, PDO::PARAM_STR);
-$sql->bindParam(':id', $ID, PDO::PARAM_STR);
-$sql->execute();
-$row = $sql->fetch(PDO::FETCH_ASSOC);
+    $sql = $conn->prepare("SELECT * FROM reservations join room_details on room_id = :roomid WHERE reservations.ID = :id ");
+    $sql->bindParam(':roomid', $ROOMID, PDO::PARAM_STR);
+    $sql->bindParam(':id', $ID, PDO::PARAM_STR);
+    $sql->execute();
+    $row = $sql->fetch(PDO::FETCH_ASSOC);
 
-$selected_time = $row['time'];
-$room = $row['room'];
-$reserve_date = $row['reserve_date'];
+    $selected_time = $row['time'];
+    $room = $row['room'];
+    $reserve_date = $row['reserve_date'];
 
-// Define time slots and their relationships (what overlaps with what)
-$time_slots = [
-    "7:00AM-12:00PM" => ['overlaps' => ["7:00AM-12:00PM", "7:00AM-6:00PM"]],
-    "1:00PM-6:00PM" => ['overlaps' => ["1:00PM-6:00PM", "7:00AM-6:00PM"]],
-    "7:00AM-6:00PM" => ['overlaps' => ["7:00AM-12:00PM", "1:00PM-6:00PM", "7:00AM-6:00PM"]]
-];
+    // Define time slots and their relationships (what overlaps with what)
+    $time_slots = [
+        "7:00AM-12:00PM" => ['overlaps' => ["7:00AM-12:00PM", "7:00AM-6:00PM"]],
+        "1:00PM-6:00PM" => ['overlaps' => ["1:00PM-6:00PM", "7:00AM-6:00PM"]],
+        "7:00AM-6:00PM" => ['overlaps' => ["7:00AM-12:00PM", "1:00PM-6:00PM", "7:00AM-6:00PM"]]
+    ];
 
-// Get the overlapping time slots for the selected time
-$overlapping_times = $time_slots[$selected_time]['overlaps'];
+    // Get the overlapping time slots for the selected time
+    $overlapping_times = $time_slots[$selected_time]['overlaps'];
 
-// Prepare placeholders for the query (using named placeholders instead of positional ones)
-$inPlaceholders = [];
-for ($i = 0; $i < count($overlapping_times); $i++) {
-    $inPlaceholders[] = ':time' . $i;
-}
-$inClause = implode(',', $inPlaceholders);
+    // Prepare placeholders for the query (using named placeholders instead of positional ones)
+    $inPlaceholders = [];
+    for ($i = 0; $i < count($overlapping_times); $i++) {
+        $inPlaceholders[] = ':time' . $i;
+    }
+    $inClause = implode(',', $inPlaceholders);
 
-// Prepare the SQL query to check for overlapping reservations for the selected room and date
-$counter = $conn->prepare("
+    // Prepare the SQL query to check for overlapping reservations for the selected room and date
+    $counter = $conn->prepare("
     SELECT * FROM reservations 
     WHERE room = :room 
     AND reserve_date = :reserve_date
@@ -69,186 +73,186 @@ $counter = $conn->prepare("
     AND time IN ($inClause)
 ");
 
-$counter->bindParam(':room', $room, PDO::PARAM_STR);
-$counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
-$counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+    $counter->bindParam(':room', $room, PDO::PARAM_STR);
+    $counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+    $counter->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
 
-// Bind the overlapping time slots dynamically
-foreach ($overlapping_times as $index => $time) {
-    $counter->bindValue(':time' . $index, $time, PDO::PARAM_STR);
-}
+    // Bind the overlapping time slots dynamically
+    foreach ($overlapping_times as $index => $time) {
+        $counter->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+    }
 
-// Execute the query
-$counter->execute();
+    // Execute the query
+    $counter->execute();
 
-// Check if any conflicting reservation exists
-if ($counter->rowCount() > 0) {
-    // If a record exists, the room is already booked for the selected time slot
-    $response['success'] = false;
-    $response['title'] = 'Error';
-    $response['message'] = 'The room is already booked for the selected date and time. Please choose another time or date.';
-    echo json_encode($response);
-    exit();  // Stop further execution
-}
+    // Check if any conflicting reservation exists
+    if ($counter->rowCount() > 0) {
+        // If a record exists, the room is already booked for the selected time slot
+        $response['success'] = false;
+        $response['title'] = 'Error';
+        $response['message'] = 'The room is already booked for the selected date and time. Please choose another time or date.';
+        echo json_encode($response);
+        exit();  // Stop further execution
+    }
 
-        // Mailer setup
-        require __DIR__ . '/../../public/mail/Exception.php';
-        require __DIR__ . '/../../public/mail/PHPMailer.php';
-        require __DIR__ . '/../../public/mail/SMTP.php';
+    // Mailer setup
+    require __DIR__ . '/../../public/mail/Exception.php';
+    require __DIR__ . '/../../public/mail/PHPMailer.php';
+    require __DIR__ . '/../../public/mail/SMTP.php';
 
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
-    $generateReserveID  = generateReserveID();
+    $generateReserveID = generateReserveID();
     try {
         //Server settings
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'lndreports2024@gmail.com';                     //SMTP username
-        $mail->Password   = $_ENV['EMAIL_PASS'];                               //SMTP password
+        $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+        $mail->Username = 'lndreports2024@gmail.com';                     //SMTP username
+        $mail->Password = $_ENV['EMAIL_PASS'];                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-    
+        $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
         //Recipients
         $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
         $mail->addAddress($EMAIL);     //Add a recipient
         $mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png', 'logo_cid');
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-  
-        if($approval_status == 'APPROVED'){
+
+        if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
             $pdf = new TCPDF('P', 'mm', 'LEGAL', true, 'UTF-8', false);
             $pdf->AddPage();
 
             $html = '
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Bill Invoice</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .container {
-                        width: 90%;
-                        margin: auto;
-                    }
-                    .header {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-bottom: 20px;
-                    }
-                    .header img {
-                        height: 50px;
-                    }
-                    .header .invoice-number {
-                        font-size: 16px;
-                        font-weight: bold;
-                    }
-                    .right-align {
-                        text-align: right;
-                    }
-                    .section {
-                        margin-bottom: 20px;
-                    }
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-                    .table th, .table td {
-                        border: 1px solid #000;
-                        padding: 8px;
-                        text-align: left;
-                    }
-                    .table th {
-                        font-weight: bold;
-                    }
-                    .table td.text-center {
-                        text-align: center;
-                    }
-                    .table td.text-right {
-                        text-align: right;
-                    }
-                    .instructions {
-                        margin-top: 20px;
-                        font-size: 12px;
-                    }
-                    .signature {
-                        margin-top: 20px;
-                        text-align: left;
-                    }
-                    .signature img {
-                        height: 50px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <img src="cid:logo_cid" alt="Company Logo">
-                    <div class="header">
-                        INVOICE-'.$generateReserveID.'
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Bill Invoice</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .container {
+                            width: 90%;
+                            margin: auto;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            height: 50px;
+                        }
+                        .header .invoice-number {
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+                        .right-align {
+                            text-align: right;
+                        }
+                        .section {
+                            margin-bottom: 20px;
+                        }
+                        .table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        .table th, .table td {
+                            border: 1px solid #000;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        .table th {
+                            font-weight: bold;
+                        }
+                        .table td.text-center {
+                            text-align: center;
+                        }
+                        .table td.text-right {
+                            text-align: right;
+                        }
+                        .instructions {
+                            margin-top: 20px;
+                            font-size: 12px;
+                        }
+                        .signature {
+                            margin-top: 20px;
+                            text-align: left;
+                        }
+                        .signature img {
+                            height: 50px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <img src="cid:logo_cid" alt="Company Logo">
+                        <div class="header">
+                            INVOICE-' . $generateReserveID . '
+                        </div>
+                        <div class="right-align">
+                            DATE: ' . $date_now = date('M d, Y') . '
+                        </div>
+                        <div class="section">
+                            <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                            Fast Warehouse Complex, Pulo-Diezmo Road,<br>
+                            Barangay Pulo, Cabuyao City Laguna.
+                        </div>
+                        <div class="section">
+                            <strong>BILL TO:</strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                            FAST
+                        </div>
+                        <div class="section">
+                            <strong>RE: Room Reservation</strong><br>
+                            Room: ' . $row['room_name'] . '<br>
+                            Date: ' . $row['reserve_date'] . '<br>
+                            Time Slot: ' . $row['time'] . '
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPTION</th>
+                                    <th class="text-center">No. of Pax</th>
+                                    <th class="text-right">RATE (Php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Room Reservation</td>
+                                    <td class="text-center">' . $row['guest'] . '</td>
+                                    <td class="text-right">' . $row['prices'] . '</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-right"><strong>Grand Total</strong></td>
+                                    <td class="text-right">' . $row['prices'] . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="instructions">
+                            <strong>PAYMENT INSTRUCTION:</strong><br>
+                            Please make payable to:<br>
+                            Account Name: Fast Logistics Learning and Development Corporation<br>
+                            Account Number: 759-084367-1<br>
+                            Bank: RCBC
+                        </div>
+                    <div class="signature">
+                            <strong>Authorized Signature</strong><br>
+                            <img src="https://yourdomain.com/public/assets/img/LOGO.png" alt="Company Logo"><br>
+                            Jade Minette P. Bondoc<br>
+                            Learning and Development Head
+                        </div>
                     </div>
-                    <div class="right-align">
-                        DATE: '. $date_now = date('M d, Y').'
-                    </div>
-                    <div class="section">
-                        <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
-                        Fast Warehouse Complex, Pulo-Diezmo Road,<br>
-                        Barangay Pulo, Cabuyao City Laguna.
-                    </div>
-                    <div class="section">
-                        <strong>BILL TO:</strong>'.$row['fname'].' '.$row['lname'].'<br>
-                        FAST
-                    </div>
-                    <div class="section">
-                        <strong>RE: Room Reservation</strong><br>
-                        Room: '.$row['room_name'].'<br>
-                        Date: '.$row['reserve_date'].'<br>
-                        Time Slot: '.$row['time'].'
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>DESCRIPTION</th>
-                                <th class="text-center">No. of Pax</th>
-                                <th class="text-right">RATE (Php)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Room Reservation</td>
-                                <td class="text-center">'.$row['guest'].'</td>
-                                <td class="text-right">'.$row['prices'].'</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="text-right"><strong>Grand Total</strong></td>
-                                <td class="text-right">'.$row['prices'].'</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="instructions">
-                        <strong>PAYMENT INSTRUCTION:</strong><br>
-                        Please make payable to:<br>
-                        Account Name: Fast Logistics Learning and Development Corporation<br>
-                        Account Number: 759-084367-1<br>
-                        Bank: RCBC
-                    </div>
-                   <div class="signature">
-                        <strong>Authorized Signature</strong><br>
-                        <img src="https://yourdomain.com/public/assets/img/LOGO.png" alt="Company Logo"><br>
-                        Jade Minette P. Bondoc<br>
-                        Learning and Development Head
-                    </div>
-                </div>
-            </body>
-            </html>
+                </body>
+                </html>
 
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
@@ -257,23 +261,8 @@ if ($counter->rowCount() > 0) {
             $pdf->Output('S'); // Save PDF output to a variable as a string
             $pdfContent = ob_get_clean();
 
-            // Check if PDF content is empty
-            if (empty($pdfContent)) {
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'PDF Generation Error',
-                    'message' => 'Failed to generate PDF content.',
-                ]);
-                exit();
-            }
-
-            // Define GitHub API details
-            $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
-            $owner = getenv('GITHUB_OWNER');       // GitHub username or organization
-            $repo = getenv('GITHUB_IMAGES');         // GitHub repository name
-
             // File details
-            $fileName = 'INVOICE-'. $generateReserveID.'-('. $row['fname'].'-'.$row['lname'] .').pdf';
+            $fileName = 'INVOICE-' . $generateReserveID . '-(' . $row['fname'] . '-' . $row['lname'] . ').pdf';
 
             // Encode the PDF content to base64
             $base64Content = base64_encode($pdfContent);
@@ -311,62 +300,25 @@ if ($counter->rowCount() > 0) {
 
             curl_close($ch);
 
-            // Check the response from GitHub API
-            if ($httpCode != 201) {
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'GitHub API Error',
-                    'message' => 'Failed to upload PDF. HTTP Code: ' . $httpCode . ' Response: ' . $responses,
-                ]);
-                exit();
-            }
-
             // GitHub file URL (raw file URL for downloading)
             $rawFileUrl = 'https://raw.githubusercontent.com/' . $owner . '/' . $repo . '/main/RESERVATION_INVOICE/' . urlencode($fileName);
 
-            // Fetch the PDF content from GitHub
-            $fileContent = file_get_contents($rawFileUrl);
-            if (!$fileContent) {
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'Download Error',
-                    'message' => 'Failed to download the file from GitHub.',
-                ]);
-                exit();
-            }
+            // Download the file content from GitHub
+            $fileContent = downloadFileFromGitHub($rawFileUrl);
 
-            $tempFile = tempnam(sys_get_temp_dir(), '/INVOICE-'.$row['fname'].'-'.$row['lname']) . '.pdf';
-            file_put_contents($tempFile, $fileContent); // Fetch the PDF content from GitHub
-
-            if (file_put_contents($tempFile, $fileContent) === false) {
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'File Write Error',
-                    'message' => 'Failed to write file to temporary directory.',
-                ]);
-                exit();
-            }
-            
-            // Verify the file exists
-            if (!file_exists($tempFile)) {
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'File Not Found',
-                    'message' => 'Temporary file not found: ' . $tempFile,
-                ]);
-                exit();
-            }
+            // Create a temporary file to store the content
+            $tempFilePath = tempnam(sys_get_temp_dir(), 'invoice_');
+            file_put_contents($tempFilePath, $fileContent);
 
 
-            $mail->Subject = 'Reservation Status Update: '.$approval_status;
+            $mail->Subject = 'Reservation Status Update: ' . $approval_status;
 
             // Attach the downloaded file
             $mail->addAttachment($tempFile, $fileName);
 
-            // Clean up the temporary file
-            unlink($tempFile);
-            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf'); 
-            $mail->Body    = '
+
+            $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf');
+            $mail->Body = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
                         <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
@@ -415,16 +367,16 @@ if ($counter->rowCount() > 0) {
                                                                 <p style="text-align:justify">Your reservation has been approved! Below are the details of your reservation. Please present the reservation ID at the security desk when you arrive at the center.</p>
                                                                 
                                                                 <p><strong>Reservation Details:</strong><br>
-                                                                <b>Reservation ID:</b> '.$generateReserveID.'<br>
-                                                                <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                <b>Room:</b> '.$row['room_name'].'<br>
-                                                                <b>Contact:</b> '.$row['contact'].'<br>
-                                                                <b>Email:</b> '.$row['email'].'<br>
-                                                                <b>Date:</b> '.$row['reserve_date'].'<br>
-                                                                <b>Time:</b> '.$row['time'].'<br>
-                                                                <b>Setup:</b> '.$row['setup'].'<br>
-                                                                <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
-                                                                <b>Message :</b> '.$message.'<br>
+                                                                <b>Reservation ID:</b> ' . $generateReserveID . '<br>
+                                                                <b>Business Unit:</b> ' . $row['business_unit'] . '<br>
+                                                                <b>Room:</b> ' . $row['room_name'] . '<br>
+                                                                <b>Contact:</b> ' . $row['contact'] . '<br>
+                                                                <b>Email:</b> ' . $row['email'] . '<br>
+                                                                <b>Date:</b> ' . $row['reserve_date'] . '<br>
+                                                                <b>Time:</b> ' . $row['time'] . '<br>
+                                                                <b>Setup:</b> ' . $row['setup'] . '<br>
+                                                                <b>Reserved By:</b> ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                                                <b>Message :</b> ' . $message . '<br>
                                                                 </p>
 
                                                                 <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at jppsolis@fast.com.ph | Viber Number: +63 969 450 9412.</p>
@@ -456,8 +408,8 @@ if ($counter->rowCount() > 0) {
                 </div>
             ';
         } else {
-            $mail->Subject = 'Reservation Status Update: '.$approval_status;
-            $mail->Body    = '
+            $mail->Subject = 'Reservation Status Update: ' . $approval_status;
+            $mail->Body = '
                 <div style="background:#f3f3f3">
                     <div style="margin:0px auto;max-width:640px;background:transparent">
                     <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
@@ -505,16 +457,16 @@ if ($counter->rowCount() > 0) {
                                                                 <p style="text-align:justify">Your reservation request has been declined. Below are the details of your request.</p>
                                                                 
                                                                 <p><strong>Reservation Details:</strong><br>
-                                                                '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
-                                                                <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                <b>Room:</b> '.$row['room_name'].'<br>
-                                                                <b>Contact:</b> '.$row['contact'].'<br>
-                                                                <b>Email:</b> '.$row['email'].'<br>
-                                                                <b>Date:</b> '.$row['reserve_date'].'<br>
-                                                                <b>Time:</b> '.$row['time'].'<br>
-                                                                <b>Setup:</b> '.$row['setup'].'<br>
-                                                                <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
-                                                                <b>Reason for Declining :</b> '.$message.'<br>
+                                                                ' . ($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> ' . $row['reservation_id'] . '<br>' : '<b>Booking ID:</b> ' . $row['booking_id'] . '<br>') . '
+                                                                <b>Business Unit:</b> ' . $row['business_unit'] . '<br>
+                                                                <b>Room:</b> ' . $row['room_name'] . '<br>
+                                                                <b>Contact:</b> ' . $row['contact'] . '<br>
+                                                                <b>Email:</b> ' . $row['email'] . '<br>
+                                                                <b>Date:</b> ' . $row['reserve_date'] . '<br>
+                                                                <b>Time:</b> ' . $row['time'] . '<br>
+                                                                <b>Setup:</b> ' . $row['setup'] . '<br>
+                                                                <b>Reserved By:</b> ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                                                <b>Reason for Declining :</b> ' . $message . '<br>
                                                                 </p>
         
                                                                 <p style="text-align:justify">We look forward to assisting you at the FAST Learning and Development Center. If you have any questions or need further assistance, feel free to contact us at jppsolis@fast.com.ph | Viber Number: +63 969 450 9412.</p>
@@ -548,6 +500,9 @@ if ($counter->rowCount() > 0) {
         }
         $mail->send();
 
+        // Clean up the temporary file
+         unlink($tempFilePath);
+
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
                 WHERE room = :room 
@@ -556,20 +511,20 @@ if ($counter->rowCount() > 0) {
                 AND ID != :ID
                 AND time IN ($inClause)
             ");
-            $decline_counter->bindParam(':ID', $ID, PDO::PARAM_INT);
-            $decline_counter->bindParam(':room', $room, PDO::PARAM_STR);
-            $decline_counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
+        $decline_counter->bindParam(':ID', $ID, PDO::PARAM_INT);
+        $decline_counter->bindParam(':room', $room, PDO::PARAM_STR);
+        $decline_counter->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
 
-            // Bind the overlapping time slots for the declined email notifications
-            foreach ($overlapping_times as $index => $time) {
-                $decline_counter->bindValue(':time' . $index, $time, PDO::PARAM_STR);
-            }
+        // Bind the overlapping time slots for the declined email notifications
+        foreach ($overlapping_times as $index => $time) {
+            $decline_counter->bindValue(':time' . $index, $time, PDO::PARAM_STR);
+        }
 
-            // Execute the query to get declined reservation emails
-            $decline_counter->execute();
-            $reservation_count = $decline_counter->fetchAll(PDO::FETCH_COLUMN);
+        // Execute the query to get declined reservation emails
+        $decline_counter->execute();
+        $reservation_count = $decline_counter->fetchAll(PDO::FETCH_COLUMN);
 
-            if ($reservation_count > 0) {
+        if ($reservation_count > 0) {
 
             // Now, decline all overlapping pending reservations for the same room, date, and overlapping time slots
             $decline_pending = $conn->prepare("
@@ -592,7 +547,7 @@ if ($counter->rowCount() > 0) {
             }
             // Execute the decline query
             $decline_pending->execute();
-        
+
             // Prepare to send email notifications for declined reservations
             $decline_email = $conn->prepare("
                 SELECT EMAIL FROM reservations 
@@ -617,12 +572,12 @@ if ($counter->rowCount() > 0) {
             try {
                 //Server settings
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'lndreports2024@gmail.com';                     //SMTP username
-                $mail->Password   = $_ENV['EMAIL_PASS'];                               //SMTP password
+                $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+                $mail->Username = 'lndreports2024@gmail.com';                     //SMTP username
+                $mail->Password = $_ENV['EMAIL_PASS'];                               //SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-                $mail->Port       = 465;                                           // TCP port to connect to
+                $mail->Port = 465;                                           // TCP port to connect to
 
                 $mail->setFrom('lndreports2024@gmail.com', 'Learning and Development Inventory Management System');
                 foreach ($declined_emails as $declined_email) {
@@ -630,10 +585,10 @@ if ($counter->rowCount() > 0) {
                 }    //Add a recipient
                 $mail->addEmbeddedImage('/var/task/user/public/assets/img/LOGO.png', 'logo_cid');
                 //Content
-                $mail->isHTML(true); 
-                
+                $mail->isHTML(true);
+
                 $mail->Subject = 'Reservation Status Update: DECLINED';
-                $mail->Body    = '
+                $mail->Body = '
                     <div style="background:#f3f3f3">
                         <div style="margin:0px auto;max-width:640px;background:transparent">
                         <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
@@ -681,15 +636,15 @@ if ($counter->rowCount() > 0) {
                                                                     <p style="text-align:justify">Your reservation request has been declined. Below are the details of your request.</p>
                                                                     
                                                                     <p><strong>Reservation Details:</strong><br>
-                                                                    '.($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> '.$row['reservation_id'].'<br>' : '<b>Booking ID:</b> '.$row['booking_id'].'<br>').'
-                                                                    <b>Business Unit:</b> '.$row['business_unit'].'<br>
-                                                                    <b>Room:</b> '.$row['room_name'].'<br>
-                                                                    <b>Contact:</b> '.$row['contact'].'<br>
-                                                                    <b>Email:</b> '.$row['email'].'<br>
-                                                                    <b>Date:</b> '.$row['reserve_date'].'<br>   
-                                                                    <b>Time:</b> '.$row['time'].'<br>
-                                                                    <b>Setup:</b> '.$row['setup'].'<br>
-                                                                    <b>Reserved By:</b> '.$row['fname'].' '.$row['lname'].'<br>
+                                                                    ' . ($row['reservation_id'] == 'PENDING' ? '<b>Reservation ID:</b> ' . $row['reservation_id'] . '<br>' : '<b>Booking ID:</b> ' . $row['booking_id'] . '<br>') . '
+                                                                    <b>Business Unit:</b> ' . $row['business_unit'] . '<br>
+                                                                    <b>Room:</b> ' . $row['room_name'] . '<br>
+                                                                    <b>Contact:</b> ' . $row['contact'] . '<br>
+                                                                    <b>Email:</b> ' . $row['email'] . '<br>
+                                                                    <b>Date:</b> ' . $row['reserve_date'] . '<br>   
+                                                                    <b>Time:</b> ' . $row['time'] . '<br>
+                                                                    <b>Setup:</b> ' . $row['setup'] . '<br>
+                                                                    <b>Reserved By:</b> ' . $row['fname'] . ' ' . $row['lname'] . '<br>
                                                                     <b>Reason for Declining : The room is already booked for the selected date and time. Please choose another time or date.
                                                                     </p>
                                                                     <p style="text-align:justify">This is an automated reply from the Reservation System. Please do not reply to this email.</p>
@@ -721,8 +676,8 @@ if ($counter->rowCount() > 0) {
                         </div>
                     </div>
                 ';
-                                            
-        
+
+
                 $mail->send();
             } catch (Exception $e) {
                 error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
@@ -739,12 +694,12 @@ if ($counter->rowCount() > 0) {
         $history_title = "Updated Reserve Status";
         $history_remarks = "Status Reserve : " . $approval_status;
 
-        if($approval_status = " APPROVED "){
+        if ($approval_status = " APPROVED ") {
             $action = "Reserve Status : Approved | Reserve ID : " . $generateReserveID;
-        }else{
-            $action = "Reserve Status : Declined | Reserve ID : ". $generateReserveID;
+        } else {
+            $action = "Reserve Status : Declined | Reserve ID : " . $generateReserveID;
         }
-                // Log the action 
+        // Log the action 
         $user_id = $decrypted_array['ID'];
         $logs = $conn->prepare("INSERT INTO logs (USER_ID, ACTION_MADE) VALUES (:user_id, :action)");
         $logs->bindParam(':user_id', $user_id, PDO::PARAM_STR);
@@ -756,15 +711,14 @@ if ($counter->rowCount() > 0) {
         $response['message'] = 'Successfully Updated!';
         echo json_encode($response);
         exit();
-    
-        
-    }catch (Exception $e) {
+
+
+    } catch (Exception $e) {
         // If an error occurs during sending email
         $response['success'] = false;
         $response['title'] = 'Error';
         $response['message'] = 'Email could not be sent. Error: ' . $mail->ErrorInfo;
         echo json_encode($response);
         exit();
-    } 
+    }
 }
-    
