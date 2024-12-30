@@ -133,110 +133,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Bill Invoice</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 0;
-                            padding: 0;
-                        }
-                        .container {
-                            width: 90%;
-                            margin: auto;
-                        }
-                        .header {
-                            margin-bottom: 20px;
-                        }
-                        .header .invoice-number {
-                            font-size: 16px;
-                            font-weight: bold;
-                            display: inline-block;
-                        }
-                        .header .date {
-                            font-size: 16px;
-                            font-weight: bold;
-                            float: right;
-                        }
-                        .section {
-                            margin-bottom: 20px;
-                        }
-                        .table {
-                            width: 100%;
-                            border-collapse: collapse;
-                        }
-                        .table th, .table td {
-                            border: 1px solid #000;
-                            padding: 8px;
-                            text-align: left;
-                        }
-                        .table th {
-                            font-weight: bold;
-                        }
-                        .table td.text-center {
-                            text-align: center;
-                        }
-                        .table td.text-right {
-                            text-align: right;
-                        }
-                        .instructions {
-                            margin-top: 20px;
-                            font-size: 12px;
-                        }
-                        .signature {
-                            margin-top: 20px;
-                            text-align: left;
-                        }
-                        .signature img {
-                            height: 50px;
-                        }
-                    </style>
                 </head>
-                <body>
-                    <div class="container">
-                        <div class="text-center">
-                            <strong>SERVICE INVOICE</strong>
+                <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+                    <div style="width: 90%; margin: auto;">
+                        <div style="text-align: center; font-weight: bold;">
+                            SERVICE INVOICE
                         </div>
-                        <div class="header">
-                            <div class="invoice-number">
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 16px; font-weight: bold; display: inline-block;">
                                 <strong>INVOICE-' . $generateReserveID . '</strong>
                             </div>
-                            <div class="date">
+                            <div style="font-size: 12px; font-weight: bold; float: right;">
                                 DATE: ' . $date_now = date('M d, Y') . '
                             </div>
                         </div>
-                        <div class="section">
+                        <div style="margin-bottom: 20px;">
                             <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
                             Fast Warehouse Complex, Pulo-Diezmo Road,<br>
                             Barangay Pulo, Cabuyao City Laguna.
                         </div>
-                        <div class="section">
+                        <div style="margin-bottom: 20px;">
                             <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
                             <strong>RE: Room Reservation</strong><br>
                         </div>
-                        <table class="table">
+                        <table style="width: 100%; border-collapse: collapse;">
                             <thead>
                                 <tr>
-                                    <th><strong>Room Name</strong></th>
-                                    <th><strong>Date Reserved</strong></th>
-                                    <th><strong>Time Reserved</strong></th>
-                                    <th class="text-center"><strong>No. of Pax</strong></th>
-                                    <th class="text-right"><strong>RATE (Php)</strong></th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Room Name</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Date Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Time Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No. of Pax</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">RATE (Php)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-center"> '.$row['room_name'].' </td>
-                                    <td class="text-center"> '.$row['reserve_date'].' </td>
-                                    <td class="text-center"> '.$row['time'].' </td>
-                                    <td class="text-center">' . $row['guest'] . '</td>
-                                    <td class="text-right"> ' . $row['prices'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['room_name'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['reserve_date'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['time'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['guest'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right"><strong>Grand Total</strong></td>
-                                    <td class="text-right"> ' . $row['prices'] . '</td>
+                                    <td colspan="4" style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
                             </tbody>
-                        </table><br>
-                        <div class="instructions">
+                        </table>
+                        <br>
+                        <div style="margin-top: 20px; font-size: 12px;">
                             <strong>PAYMENT INSTRUCTION:</strong><br><br>
                             Please make payable to:<br>
                             Account Name: Fast Logistics Learning and Development Corporation<br>
@@ -246,7 +191,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </body>
                 </html>
-
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
 
