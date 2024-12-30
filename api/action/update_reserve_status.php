@@ -136,14 +136,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%; margin: auto;">
-                        <div style="text-align: center; font-weight: bold;">
+                        <div style="font-size: 16px; text-align: center; font-weight: bold;">
                             SERVICE INVOICE
                         </div>
                         <div style="margin-bottom: 20px;">
-                            <div style="font-size: 16px; font-weight: bold; display: inline-block;">
+                            <div style="font-weight: bold; display: inline-block;">
                                 <strong>INVOICE-' . $generateReserveID . '</strong>
                             </div>
-                            <div style="font-size: 12px; font-weight: bold; float: right;">
+                            <div style="display: inline-block; font-weight: bold; float: right;">
                                 DATE: ' . $date_now = date('M d, Y') . '
                             </div>
                         </div>
