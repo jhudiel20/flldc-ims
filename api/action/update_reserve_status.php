@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
-            $pdf = new TCPDF('P', 'mm', 'LEGAL', true, 'UTF-8', false);
+            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
             $html = '
@@ -163,6 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             margin-bottom: 20px;
                         }
                         .table {
+                            margin-top: 20px;
+                            margin-bottom: 20px;
                             width: 100%;
                             border-collapse: collapse;
                         }
@@ -195,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body>
                     <div class="container">
-                        <img src="cid:logo_cid" alt="Company Logo">
+                        <img src="../assets/img/LOGO.png" alt="Company Logo">
                         <div class="header">
                             INVOICE-' . $generateReserveID . '
                         </div>
@@ -208,32 +210,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             Barangay Pulo, Cabuyao City Laguna.
                         </div>
                         <div class="section">
-                            <strong>BILL TO:</strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
-                            FAST
+                            <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
                         </div>
                         <div class="section">
-                            <strong>RE: Room Reservation</strong><br>
-                            Room: ' . $row['room_name'] . '<br>
-                            Date: ' . $row['reserve_date'] . '<br>
-                            Time Slot: ' . $row['time'] . '
+                            <strong>RE: Room Reservation</strong>
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>DESCRIPTION</th>
-                                    <th class="text-center">No. of Pax</th>
-                                    <th class="text-right">RATE (Php)</th>
+                                    <th><strong>Room Name</strong></th>
+                                    <th><strong>Date Reserved</strong></th>
+                                    <th><strong>Time Reserved</strong></th>
+                                    <th class="text-center"><strong>No. of Pax</strong></th>
+                                    <th class="text-right"><strong>RATE (Php)</strong></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Room Reservation</td>
+                                    <td class="text-center"> '.$row['room_name'].' </td>
+                                    <td class="text-center"> '.$row['reserve_date'].' </td>
+                                    <td class="text-center"> '.$row['time'].' </td>
                                     <td class="text-center">' . $row['guest'] . '</td>
-                                    <td class="text-right">' . $row['prices'] . '</td>
+                                    <td class="text-right">₱ ' . $row['prices'] . '</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right"><strong>Grand Total</strong></td>
-                                    <td class="text-right">' . $row['prices'] . '</td>
+                                    <td class="text-right">₱ ' . $row['prices'] . '</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -246,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     <div class="signature">
                             <strong>Authorized Signature</strong><br>
-                            <img src="https://yourdomain.com/public/assets/img/LOGO.png" alt="Company Logo"><br>
+                            <img src="../assets/img/JMPB.png" alt="Company Logo"><br>
                             Jade Minette P. Bondoc<br>
                             Learning and Development Head
                         </div>
@@ -262,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdfContent = ob_get_clean();
 
             // File details
-            $fileName = 'INVOICE-' . $generateReserveID . '-(' . $row['fname'] . '-' . $row['lname'] . ').pdf';
+            $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
 
             // Encode the PDF content to base64
             $base64Content = base64_encode($pdfContent);
@@ -684,7 +686,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+        $sql = $conn->prepare("UPDATE reservations SET invoice = :invoice, reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+        $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
         $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
         $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
         $sql->bindParam(':id', $ID, PDO::PARAM_STR);
