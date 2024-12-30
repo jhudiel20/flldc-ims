@@ -1,4 +1,5 @@
 <?php
+echo "Image processing successful!";
 if (!isset($_COOKIE['secure_data'])) {
     header("Location: /");
 }
@@ -196,8 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <img src="'.$_SERVER['DOCUMENT_ROOT'].'/public/assets/img/LOGO.png" alt="Company Logo" width="200">
-                            INVOICE-' . $generateReserveID . '
+                            <strong> INVOICE-' . $generateReserveID . '</strong>
                         </div>
                         <div class="right-align">
                             DATE: ' . $date_now = date('M d, Y') . '
@@ -241,12 +241,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             Account Name: Fast Logistics Learning and Development Corporation<br>
                             Account Number: 759-084367-1<br>
                             Bank: RCBC
-                        </div>
-                    <div class="signature">
-                            <strong>Authorized Signature</strong><br>
-                            <img src="'.$_SERVER['DOCUMENT_ROOT'].'/public/assets/img/JMPB.png" width="100"><br>
-                            Jade Minette P. Bondoc<br>
-                            Learning and Development Head
                         </div>
                     </div>
                 </body>
