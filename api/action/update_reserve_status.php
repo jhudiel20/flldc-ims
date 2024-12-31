@@ -144,6 +144,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Bill Invoice</title>
                                     <style>
+                    row {
+                        display: flex;
+                        flex-wrap: wrap; /* Ensures items wrap if necessary */
+                        margin-bottom: 20px;
+                    }
                     .col-1 { width: 8.33%; float: left; padding: 2px; box-sizing: border-box; }
                     .col-2 { width: 16.66%; float: left; padding: 2px; box-sizing: border-box; }
                     .col-3 { width: 25%; float: left; padding: 2px; box-sizing: border-box; }
@@ -163,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div style="font-size: 16px; text-align: center; font-weight: bold;">
                             SERVICE INVOICE
                         </div>
-                         <div style="overflow: hidden; margin-bottom: 20px;">
+                         <div class="row">
                             <div class="col-6" style="text-align: left;">
                                 <strong>INVOICE-' . $generateReserveID . '</strong>
                             </div>
