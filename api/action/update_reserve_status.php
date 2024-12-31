@@ -143,17 +143,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Bill Invoice</title>
+                                    <style>
+                    .col-1 { width: 8.33%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-2 { width: 16.66%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-3 { width: 25%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-4 { width: 33.33%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-5 { width: 41.66%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-6 { width: 50%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-7 { width: 58.33%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-8 { width: 66.66%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-9 { width: 75%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-10 { width: 83.33%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-11 { width: 91.66%; float: left; padding: 2px; box-sizing: border-box; }
+                    .col-12 { width: 100%; float: left; padding: 2px; box-sizing: border-box; }
+                </style>
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%; margin: auto;">
                         <div style="font-size: 16px; text-align: center; font-weight: bold;">
                             SERVICE INVOICE
                         </div>
-                         <div style="width: 100%; font-weight: bold; overflow: hidden;">
-                            <div style="display: inline-block;">
+                         <div style="overflow: hidden; margin-bottom: 20px;">
+                            <div class="col-6" style="text-align: left;">
                                 <strong>INVOICE-' . $generateReserveID . '</strong>
                             </div>
-                            <div style="display: inline-block; float: right;">
+                            <div class="col-6" style="text-align: right;">
                                 DATE: ' . $date_now = date('M d, Y') . '
                             </div>
                         </div>
