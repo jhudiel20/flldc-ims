@@ -144,9 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Bill Invoice</title>
                                     <style>
-                    row {
+                    .row {
                         display: flex;
-                        flex-wrap: wrap; /* Ensures items wrap if necessary */
+                        flex-wrap: wrap;
                         margin-bottom: 20px;
                     }
                     .col-1 { width: 8.33%; float: left; padding: 2px; box-sizing: border-box; }
