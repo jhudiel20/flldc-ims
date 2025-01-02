@@ -131,13 +131,13 @@ if (!isset($decrypted_array['ACCESS'])) {
 <script>
 
 var invoice_attachment = function(cell, formatterParams, onRendered) {
-    var invoice = cell.getData().invoice;
+    var INVOICE = cell.getData().invoice;
     var ID = cell.getRow().getData().id;
 
-    if(invoice != null){
-        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + encodeURIComponent(invoice) + "' target='_blank' ><i class='fa-solid fa-paperclip'></i></a>";
+    if(INVOICE != null){
+        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + encodeURIComponent(INVOICE) + "' target='_blank' ><i class='fa-solid fa-paperclip'></i></a>";
     }else{
-        return "<i class='fa-solid fa-circle-xmark'></i>"
+        return "<i class='fa-solid fa-circle-xmark'></i>";
     }
 
 }
