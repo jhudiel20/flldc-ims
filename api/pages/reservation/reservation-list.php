@@ -130,6 +130,19 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <script>
 
+var invoice_attachment = function(cell, formatterParams, onRendered) {
+    var invoice = cell.getData().invoice;
+    var ID = cell.getRow().getData().id;
+
+    if(invoice != null){
+        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + invoice + "' target='_blank' class='btn btn-outline-primary' ><i class='fa-solid fa-paperclip'></i></a>";
+    }else{
+        return "<i class='fa-solid fa-circle-xmark'></i>"
+    }
+
+
+}
+
 
 var approval_status = function(cell, formatterParams, onRendered) {
     var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
@@ -248,6 +261,19 @@ var table = new Tabulator("#reserve-list-table", {
             title: "Reservation Status",
             field: "reserve_status",
             formatter: approval_status,
+            hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
+            // width: 300,
+            headerFilterLiveFilter: false
+        },
+        {
+            title: "Invoice",
+            field: "invoice",
+            formatter: invoice_attachment,
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {

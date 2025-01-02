@@ -165,10 +165,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%; margin: auto;">
-                        <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                        <div style="font-size: 16px; text-align: center; font-weight: bold; margin-bottm: 40px;">
                             SERVICE INVOICE
                         </div>
-                        <table style="border: 1px solid white; margin-top: 40px; bottom: 20px;">
+                        <table style="border: 1px solid white;">
                             <tr>
                                 <th style="border: 1px solid white;">
                                     <strong>INVOICE-' . $generateReserveID . '</strong>
@@ -178,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </th>
                             </tr>
                         </table>
-                        <div style="margin-bottom: 20px;">
+                        <div style="margin-top: 20px; margin-bottom: 20px;">
                             <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
                             Fast Warehouse Complex, Pulo-Diezmo Road,<br>
                             Barangay Pulo, Cabuyao City Laguna.
