@@ -77,7 +77,29 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="row">
-                                                            <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
+
+                                            <div class="nav-align-top mb-2">
+                                                <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                    <li class="nav-item">
+                                                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                            data-bs-target="#reservation-info" aria-controls="navs-justified-home"
+                                                            aria-selected="true">
+                                                            <i class="fa-solid fa-circle-info"></i> Reservation Info
+                                                        </button>
+                                                    </li>
+                                                    <?php if(!empty($row['invoice'])){ ?>
+                                                        <li class="nav-item">
+                                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                                data-bs-target="#invoice" aria-controls="navs-justified-profile"
+                                                                aria-selected="false">
+                                                                <i class="fa-solid fa-file-pdf"></i> Invoice
+                                                            </button>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade" id="reservation-info" role="tabpanel">
+                                                        <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Booking ID</label>
                                                                 <input type="text" class="form-control" name="BOOKINGID" id="BOOKINGID"
@@ -115,8 +137,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <span class="input-group-text">.00</span>
                                                                 </div>
                                                             </div>
-
-
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Time</label>
                                                                     <select name="TIME" id="TIME" class="form-control" required>
@@ -208,6 +228,28 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
                                                             <button type="button" class="btn btn-label-primary update-details">Update</button>
+                                                    </div>
+                                                    <?php if(!empty($row['invoice'])){ ?>
+                                                        <div class="tab-pane fade" id="invoice" role="tabpanel">
+                                                        <div class="col-xl-12">
+                                                            <div class="card">
+                                                                <?php if(empty($row['invoice'])){ ?>
+                                                                <h1
+                                                                    style="width: auto;height:500px;text-align:center;padding-top:200px">
+                                                                    Empty!</h1>
+                                                                <?php }else{ ?>
+                                                                    <iframe
+                                                                        src="/fetch?file=<?php echo $row['invoice']; ?>&db=RESERVATION_INVOICE"
+                                                                        width="auto"
+                                                                        height="700px"
+                                                                        style="border: none;">
+                                                                    </iframe>
+                                                                <?php } ?>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -231,9 +273,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
     </div>
     <!-- / Layout page -->
-    
-
-
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
@@ -243,8 +282,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     </div>
     <!-- / Layout wrapper -->
 
-
-
     <?php
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
@@ -252,26 +289,23 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 </body>
 
 <script>
-$(document).ready(function() {
-    if ("<?php echo $decrypted_array['ACCESS']; ?>" === "REQUESTOR") {
-        // Get all input elements with type "text"
-        var form = document.getElementById('purchase_details_form');
+    document.addEventListener("DOMContentLoaded", function() {
+    // Get the active tab for the first set of tabs from localStorage or set a default value
+    let tab1 = localStorage.getItem("tab1") || "#reservation-info";
 
-        // Get all input elements with type "text" within the form
-        var textInputs = form.querySelectorAll('input[type="text"]');
-        var textareas = form.querySelectorAll('textarea');
-        // Loop through each text input and disable it
-        textInputs.forEach(function(input) {
-            input.disabled = true;
-        });
-        textareas.forEach(function(textarea) {
-            textarea.disabled = true;
-        });
+    // Set the active tab for the first set of tabs only if the screen width is greater than 768px
+    if (window.innerWidth > 768) {
+        $('.nav-align-top .nav-link[data-bs-target="' + tab1 + '"]').tab('show');
     }
+
+    // Save the active tab for the first set of tabs to localStorage when a tab is clicked
+    $('.nav-align-top .nav-link').on('shown.bs.tab', function(e) {
+        let newActiveTab1 = $(e.target).attr("data-bs-target");
+        localStorage.setItem("tab1", newActiveTab1);
+    });
+
+    console.log(tab1);
 });
-
-
-
 </script>
 
 </html>

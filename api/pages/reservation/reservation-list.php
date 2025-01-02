@@ -135,11 +135,10 @@ var invoice_attachment = function(cell, formatterParams, onRendered) {
     var ID = cell.getRow().getData().id;
 
     if(invoice != null){
-        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + invoice + "' target='_blank' class='btn btn-outline-primary' ><i class='fa-solid fa-paperclip'></i></a>";
+        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + encodeURIComponent(invoice) + "' target='_blank' ><i class='fa-solid fa-paperclip'></i></a>";
     }else{
         return "<i class='fa-solid fa-circle-xmark'></i>"
     }
-
 
 }
 
