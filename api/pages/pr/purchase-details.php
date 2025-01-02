@@ -59,7 +59,7 @@ if($row['id'] != $id){
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <div class="text-center">
-                                            <img src="/fetch?file=<?php echo urlencode($row['item_photo']); ?>&db=requested-items" style="height:220px;" />
+                                                <img src="/fetch?file=<?php echo urlencode($row['item_photo']); ?>&db=requested-items" style="height:220px;" />
                                                 <?php if ($decrypted_array['ACCESS'] == 'ENCODER' || $decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
                                                     <form class="row g-3" method="post" id="upload_item_photo_form"

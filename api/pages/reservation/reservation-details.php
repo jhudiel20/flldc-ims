@@ -62,197 +62,160 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                     <img src="<?php echo empty($row['setup']) ? '' : "../assets/img/".$row['setup'].''.".png"; ?>"  style="height:220px;" class="mb-3"  />
                                                     <h5>Seating Arrangement</h5>
                                                 <?php } ?>
-                                            </div>
+                                        </div>
                                         </div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                        
 
                         <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
 
+                            <div class="card">
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body">
-
-                                                <div class="nav-align-top mb-2">
-                                                    <ul class="nav nav-tabs nav-fill" role="tablist">
-                                                        <li class="nav-item">
-                                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                                data-bs-target="#reservation-info" aria-controls="navs-justified-home"
-                                                                aria-selected="true">
-                                                                <i class="fa-solid fa-circle-info"></i> Reservation Info
-                                                            </button>
-                                                        </li>
-                                                        <?php if(!empty($row['invoice'])){ ?>
-                                                            <li class="nav-item">
-                                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                                    data-bs-target="#invoice" aria-controls="navs-justified-profile"
-                                                                    aria-selected="false">
-                                                                    <i class="fa-solid fa-file-pdf"></i> Invoice
-                                                                </button>
-                                                            </li>
-                                                        <?php } ?>
-                                                    </ul>
-                                                    <div class="tab-content">
-                                                        <div class="tab-pane fade" id="reservation-info" role="tabpanel">
+                                            <div class="row">
                                                             <input type="hidden" id="ID" name="ID" value="<?php echo $id;?>">
-                                                                <div class="col-md-6">
-                                                                    <label class="form-label">Booking ID</label>
-                                                                    <input type="text" class="form-control" name="BOOKINGID" id="BOOKINGID"
-                                                                        value="<?php echo $row['booking_id']; ?>" disabled>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Booking ID</label>
+                                                                <input type="text" class="form-control" name="BOOKINGID" id="BOOKINGID"
+                                                                    value="<?php echo $row['booking_id']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Reservation ID</label>
+                                                                <input type="text" class="form-control" name="RESERVATIONID" id="RESERVATIONID"
+                                                                    value="<?php echo $row['reservation_id']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Reservation Status</label>
+                                                                <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
+                                                                    <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
+                                                                    <?php foreach (RESERVE_STATUS as $value) { ?>
+                                                                    <option value="<?= $value; ?>"
+                                                                        <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>
+                                                                        <?= $value; ?>
+                                                                    </option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Date of Reservation</label>
+                                                                <input type="date" class="form-control" 
+                                                                    name="RESERVE_DATE" id="RESERVE_DATE"
+                                                                    value="<?php echo $row['reserve_date'];?>" >
+                                                                    <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Price<span class="require asterisk">*</span></label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text">₱</span>
+                                                                    <input type="text" class="form-control" name="price" id="price" value="<?php echo number_format($row['prices'],2); ?>" disabled>
+                                                                    <span class="input-group-text">.00</span>
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <label class="form-label">Reservation ID</label>
-                                                                    <input type="text" class="form-control" name="RESERVATIONID" id="RESERVATIONID"
-                                                                        value="<?php echo $row['reservation_id']; ?>" disabled>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Reservation Status</label>
-                                                                    <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
-                                                                        <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
-                                                                        <?php foreach (RESERVE_STATUS as $value) { ?>
-                                                                        <option value="<?= $value; ?>"
-                                                                            <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>
-                                                                            <?= $value; ?>
+                                                            </div>
+
+
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Time</label>
+                                                                    <select name="TIME" id="TIME" class="form-control" required>
+                                                                        <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
+                                                                        <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
+                                                                        <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label class="form-label">Room</label>
+                                                                    <!-- <select name="ROOM" id="ROOM" class="form-control" required>
+                                                                        <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
+                                                                        <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
+                                                                        <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Room 303</option>
+                                                                        <option value="Room-304" <?php if($row['room'] == "Room-304") echo 'selected'; ?>>Room 304</option>    
+                                                                        <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
+                                                                        <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
+                                                                        <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
+                                                                    </select> -->
+                                                                    <select name="ROOM" id="ROOM" class="form-select" required>
+                                                                        <option value="" disabled hidden selected>Select Room</option>
+                                                                        <?php   $room = $conn->prepare("SELECT * FROM room_details");
+                                                                                $room->execute();
+                                                                                while ($row_room = $room->fetch(PDO::FETCH_ASSOC)) {
+                                                                        ?>
+                                                                        <option
+                                                                            value="<?php echo $row_room['room_name'];?>" <?php if($row['room'] == $row_room['room_name']) echo 'selected'; ?>>
+                                                                            <?php echo $row_room['room_name'];?>
                                                                         </option>
                                                                         <?php } ?>
                                                                     </select>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Date of Reservation</label>
-                                                                    <input type="date" class="form-control" 
-                                                                        name="RESERVE_DATE" id="RESERVE_DATE"
-                                                                        value="<?php echo $row['reserve_date'];?>" >
-                                                                        <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Price<span class="require asterisk">*</span></label>
-                                                                    <div class="input-group mb-3">
-                                                                        <span class="input-group-text">₱</span>
-                                                                        <input type="text" class="form-control" name="price" id="price" value="<?php echo number_format($row['prices'],2); ?>" disabled>
-                                                                        <span class="input-group-text">.00</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Time</label>
-                                                                        <select name="TIME" id="TIME" class="form-control" required>
-                                                                            <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
-                                                                            <option value="1:00PM-6:00PM" <?php if($row['time'] == "1:00PM-6:00PM") echo 'selected'; ?>>HALFDAY (1:00PM-6:00PM)</option>
-                                                                            <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
-                                                                        </select>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <label class="form-label">Room</label>
-                                                                        <!-- <select name="ROOM" id="ROOM" class="form-control" required>
-                                                                            <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
-                                                                            <option value="Room-302" <?php if($row['room'] == "Room-302") echo 'selected'; ?>>Room 302</option>
-                                                                            <option value="Room-303" <?php if($row['room'] == "Room-303") echo 'selected'; ?>>Room 303</option>
-                                                                            <option value="Room-304" <?php if($row['room'] == "Room-304") echo 'selected'; ?>>Room 304</option>    
-                                                                            <option value="Confe-1" <?php if($row['room'] == "Confe-1") echo 'selected'; ?>>Conference 1</option>    
-                                                                            <option value="Confe-2" <?php if($row['room'] == "Confe-2") echo 'selected'; ?>>Conference 2</option>    
-                                                                            <option value="IT-Room" <?php if($row['room'] == "IT-Room") echo 'selected'; ?>>IT Room</option>    
-                                                                        </select> -->
-                                                                        <select name="ROOM" id="ROOM" class="form-select" required>
-                                                                            <option value="" disabled hidden selected>Select Room</option>
-                                                                            <?php   $room = $conn->prepare("SELECT * FROM room_details");
-                                                                                    $room->execute();
-                                                                                    while ($row_room = $room->fetch(PDO::FETCH_ASSOC)) {
-                                                                            ?>
-                                                                            <option
-                                                                                value="<?php echo $row_room['room_name'];?>" <?php if($row['room'] == $row_room['room_name']) echo 'selected'; ?>>
-                                                                                <?php echo $row_room['room_name'];?>
-                                                                            </option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label class="form-label">Seating Arrangement</label>
-                                                                        <select name="SETUP" id="SETUP" class="form-control">
-                                                                            <option value="CLASSROOM" <?php if($row['setup'] == "CLASSROOM") echo 'selected'; ?>>CLASSROOM</option>
-                                                                            <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>
-                                                                            <option value="THEATER" <?php if($row['setup'] == "THEATER") echo 'selected'; ?>>THEATER</option>
-                                                                            <option value="U-SHAPE" <?php if($row['setup'] == "U-SHAPE") echo 'selected'; ?>>U-SHAPE</option>
-                                                                            <option value="CONFERENCE" <?php if($row['setup'] == "CONFERENCE") echo 'selected'; ?>>CONFERENCE</option>
-                                                                            <option value="OTHER" <?php if($row['setup'] == "OTHER") echo 'selected'; ?>>OTHER</option>
-                                                                        </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label class="form-label">Guest</label>
-                                                                    <input type="text" class="form-control" name="GUEST"
-                                                                        id="GUEST"
-                                                                        value="<?php echo $row['guest']; ?>" disabled>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label class="form-label">First Name</label>
-                                                                    <input type="text" class="form-control" name="FNAME" id="FNAME"
-                                                                        value="<?php echo $row['fname']; ?>" disabled>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label class="form-label">Last Name</label>
-                                                                    <input type="text" class="form-control" name="LNAME" id="LNAME"
-                                                                        value="<?php echo $row['lname']; ?>" disabled>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Bussiness Unit</label>
-                                                                    <select name="BUSINESSUNIT" id="BUSINESSUNIT" class="form-control">
-                                                                        <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
-                                                                        <option value="FSC" <?php if($row['business_unit'] == "FSC") echo 'selected'; ?>>FAST SERVICES CORPORATION</option>
-                                                                        <option value="FTMC" <?php if($row['business_unit'] == "FTMC") echo 'selected'; ?>>FAST TOLL MANUFACTURING CORPORATION</option>
-                                                                        <option value="FCSI" <?php if($row['business_unit'] == "FCSI") echo 'selected'; ?>>FAST COLDCHAIN SOLUTION INC.</option>
-                                                                        <option value="FDC" <?php if($row['business_unit'] == "FDC") echo 'selected'; ?>>FAST DISTRIBUTION CORPORATION</option>
-                                                                        <option value="FUI" <?php if($row['business_unit'] == "FUI") echo 'selected'; ?>>FAST UNIMERCHANT INC.</option>
-                                                                        <option value="EXTERNAL" <?php if($row['business_unit'] == "EXTERNAL") echo 'selected'; ?>>External Clients</option>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label">Seating Arrangement</label>
+                                                                    <select name="SETUP" id="SETUP" class="form-control">
+                                                                        <option value="CLASSROOM" <?php if($row['setup'] == "CLASSROOM") echo 'selected'; ?>>CLASSROOM</option>
+                                                                        <option value="FISHBONE" <?php if($row['setup'] == "FISHBONE") echo 'selected'; ?>>FISHBONE</option>
+                                                                        <option value="THEATER" <?php if($row['setup'] == "THEATER") echo 'selected'; ?>>THEATER</option>
+                                                                        <option value="U-SHAPE" <?php if($row['setup'] == "U-SHAPE") echo 'selected'; ?>>U-SHAPE</option>
+                                                                        <option value="CONFERENCE" <?php if($row['setup'] == "CONFERENCE") echo 'selected'; ?>>CONFERENCE</option>
+                                                                        <option value="OTHER" <?php if($row['setup'] == "OTHER") echo 'selected'; ?>>OTHER</option>
                                                                     </select>
-                                                                </div>
-                                                            
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Contact No.<span
-                                                                            class="require asterisk">*</span></label>
-                                                                    <input type="text" class="form-control" name="CONTACT"
-                                                                        id="CONTACT" value="<?php echo $row['contact']; ?>">
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="form-label">Email<span
-                                                                            class="require asterisk">*</span></label>
-                                                                    <input type="text" class="form-control" name="EMAIL"
-                                                                        id="EMAIL" value="<?php echo $row['email']; ?>">
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label class="form-label py-1">Purpose / Message </label>
-                                                                    <textarea class="form-control" name="MESSAGE" id="MESSAGE"
-                                                                        type="text" cols="30"
-                                                                        rows="3"><?php echo $row['message']; ?></textarea>
-                                                                </div>
-                                                                <button type="button" class="btn btn-label-primary update-details">Update</button>
-                                                        </div>
-                                                        <?php if(!empty($row['invoice'])){ ?>
-                                                            <div class="tab-pane fade" id="invoice" role="tabpanel">
-                                                            <div class="col-xl-12">
-                                                                <div class="card">
-                                                                    <?php if(empty($row['invoice'])){ ?>
-                                                                    <h1
-                                                                        style="width: auto;height:500px;text-align:center;padding-top:200px">
-                                                                        Empty!</h1>
-                                                                    <?php }else{ ?>
-                                                                        <iframe
-                                                                            src="/fetch?file=<?php echo $row['invoice']; ?>&db=RESERVATION_INVOICE"
-                                                                            width="auto"
-                                                                            height="700px"
-                                                                            style="border: none;">
-                                                                        </iframe>
-                                                                    <?php } ?>
-                                                                </div>
                                                             </div>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label">Guest</label>
+                                                                <input type="text" class="form-control" name="GUEST"
+                                                                    id="GUEST"
+                                                                    value="<?php echo $row['guest']; ?>" disabled>
                                                             </div>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">First Name</label>
+                                                                <input type="text" class="form-control" name="FNAME" id="FNAME"
+                                                                    value="<?php echo $row['fname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Last Name</label>
+                                                                <input type="text" class="form-control" name="LNAME" id="LNAME"
+                                                                    value="<?php echo $row['lname']; ?>" disabled>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Bussiness Unit</label>
+                                                                <select name="BUSINESSUNIT" id="BUSINESSUNIT" class="form-control">
+                                                                    <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
+                                                                    <option value="FSC" <?php if($row['business_unit'] == "FSC") echo 'selected'; ?>>FAST SERVICES CORPORATION</option>
+                                                                    <option value="FTMC" <?php if($row['business_unit'] == "FTMC") echo 'selected'; ?>>FAST TOLL MANUFACTURING CORPORATION</option>
+                                                                    <option value="FCSI" <?php if($row['business_unit'] == "FCSI") echo 'selected'; ?>>FAST COLDCHAIN SOLUTION INC.</option>
+                                                                    <option value="FDC" <?php if($row['business_unit'] == "FDC") echo 'selected'; ?>>FAST DISTRIBUTION CORPORATION</option>
+                                                                    <option value="FUI" <?php if($row['business_unit'] == "FUI") echo 'selected'; ?>>FAST UNIMERCHANT INC.</option>
+                                                                    <option value="EXTERNAL" <?php if($row['business_unit'] == "EXTERNAL") echo 'selected'; ?>>External Clients</option>
+                                                                </select>
+                                                            </div>
+                                                         
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Contact No.<span
+                                                                        class="require asterisk">*</span></label>
+                                                                <input type="text" class="form-control" name="CONTACT"
+                                                                    id="CONTACT" value="<?php echo $row['contact']; ?>">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Email<span
+                                                                        class="require asterisk">*</span></label>
+                                                                <input type="text" class="form-control" name="EMAIL"
+                                                                    id="EMAIL" value="<?php echo $row['email']; ?>">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="form-label py-1">Purpose / Message </label>
+                                                                <textarea class="form-control" name="MESSAGE" id="MESSAGE"
+                                                                    type="text" cols="30"
+                                                                    rows="3"><?php echo $row['message']; ?></textarea>
+                                                            </div>
+                                                            <button type="button" class="btn btn-label-primary update-details">Update</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
                         </div>
+                    </div>
                 </div>
                 <!-- / Content -->
             </div>
@@ -268,6 +231,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
     </div>
     <!-- / Layout page -->
+    
+
+
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
@@ -277,30 +243,12 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
     </div>
     <!-- / Layout wrapper -->
 
+
+
     <?php
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
     <!-- Page JS -->
 </body>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // Get the active tab for the first set of tabs from localStorage or set a default value
-    let tab1 = localStorage.getItem("tab1") || "#reservation-info";
-
-    // Set the active tab for the first set of tabs only if the screen width is greater than 768px
-    if (window.innerWidth > 768) {
-        $('.nav-align-top .nav-link[data-bs-target="' + tab1 + '"]').tab('show');
-    }
-
-    // Save the active tab for the first set of tabs to localStorage when a tab is clicked
-    $('.nav-align-top .nav-link').on('shown.bs.tab', function(e) {
-        let newActiveTab1 = $(e.target).attr("data-bs-target");
-        localStorage.setItem("tab1", newActiveTab1);
-    });
-
-    console.log(tab1);
-});
-</script>
 
 </html>
