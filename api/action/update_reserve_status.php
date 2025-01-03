@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%; margin: auto;">
-                        <div style="font-size: 16px; text-align: center; font-weight: bold; margin-bottm: 40px;">
+                        <div style="font-size: 16px; text-align: center; font-weight: bold; margin-bottom: 40px;">
                             SERVICE INVOICE
                         </div>
                         <table style="border: 1px solid white;">
