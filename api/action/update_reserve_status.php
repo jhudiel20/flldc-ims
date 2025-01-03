@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div style="font-size: 16px; text-align: center; font-weight: bold; padding-bottom: 40px;">
                             SERVICE INVOICE
                         </div>
-                        <table style="border: 1px solid white;">
+                        <table style="border: 1px solid white; padding: 20px; width: 100%;">
                             <tr>
                                 <th style="border: 1px solid white;">
                                     <strong>INVOICE-' . $generateReserveID . '</strong>
