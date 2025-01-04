@@ -126,6 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
+            // <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+            // <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+
             $html = '
                 <!DOCTYPE html>
                 <html lang="en">
@@ -137,10 +140,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%;">
-                    
+
                         <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
-                        <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
-                        <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+                    
                         <img src="/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
 
                         <div style="font-size: 16px; text-align: center; font-weight: bold;">
