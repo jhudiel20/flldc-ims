@@ -10,23 +10,10 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 require_once __DIR__ . '/../pdf/tcpdf.php';
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-// Use PhpWord classes
-use PhpOffice\PhpWord\TemplateProcessor;
-use PhpOffice\PhpWord\IOFactory;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-
-// Load the Word template
-$templatePath = __DIR__ . '/../template/INVOICE_TEMPLATE.docx';
-if (!file_exists($templatePath)) {
-    die('Template file not found!');
-}
 
 // Define GitHub API details
 $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
@@ -135,47 +122,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isHTML(true);                                  //Set email format to HTML
 
         if ($approval_status == 'APPROVED') {
+            // Create a new instance of the PDF
+            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            $pdf->AddPage();
 
-            $templateProcessor = new TemplateProcessor($templatePath);
+            $html = '
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Bill Invoice</title>
+                </style>
+                </head>
+                <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+                    <div style="width: 90%;">
+                        <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                            SERVICE INVOICE
+                        </div>
+                        <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
+                            <tr>
+                                <th style="border: 1px solid white;">
+                                    <strong>INVOICE-' . $generateReserveID . '</strong>
+                                </th>
+                                <th style="text-align: right;">
+                                    <strong>DATE: ' . $date_now = date('M d, Y') . '</strong>
+                                </th>
+                            </tr>
+                        </table>
+                        <div style="margin-bottom: 20px;">
+                            <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                            Fast Warehouse Complex, Pulo-Diezmo Road,<br>
+                            Barangay Pulo, Cabuyao City Laguna.
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                            <strong>RE: Room Reservation</strong><br>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Room Name</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Date Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Time Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No. of Pax</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">RATE (Php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['room_name'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['reserve_date'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['time'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['guest'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <div style="margin-top: 20px; font-size: 12px;">
+                            <strong>PAYMENT INSTRUCTION:</strong><br><br>
+                            Please make payable to:<br>
+                            Account Name: Fast Logistics Learning and Development Corporation<br>
+                            Account Number: 759-084367-1<br>
+                            Bank: RCBC
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ';
+            $pdf->writeHTML($html, true, false, true, false, '');
 
-            // Step 1: Replace placeholders with database values
-            $templateProcessor->setValue('{{Full Name}}', $row['fname'] . ' ' . $row['lname']);
-            $templateProcessor->setValue('{{Date}}', date('Y-m-d'));
-            $templateProcessor->setValue('{{INVOICEID}}', $generateReserveID);
-            $templateProcessor->setValue('{{ROOMNAME}}', $row['room_name']);
-            $templateProcessor->setValue('{{DATE}}', $row['reserved_date']);
-            $templateProcessor->setValue('{{TIME}}', $row['time']);
-            $templateProcessor->setValue('{{GUEST}}', $row['guest']);
-            $templateProcessor->setValue('{{PRICE}}', $row['prices']);
-            $templateProcessor->setValue('{{GRANDPRICE}}', $row['prices']);
-
-            // Save the Word file temporarily
-            $populatedDocPath = '/tmp/INVOICE-123456.docx';
-            $templateProcessor->saveAs($populatedDocPath);
-
-            // Step 2: Convert the populated Word document to HTML
-            $phpWord = IOFactory::load($populatedDocPath);
-            $htmlContent = '';
-            foreach ($phpWord->getSections() as $section) {
-                foreach ($section->getElements() as $element) {
-                    // Extract text from elements
-                    if (method_exists($element, 'getText')) {
-                        $htmlContent .= '<p>' . htmlspecialchars($element->getText()) . '</p>';
-                    }
-                }
-            }
-
-            // Convert Word document to PDF using Dompdf
-            $options = new Options();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isPhpEnabled', true);
-            $pdf = new Dompdf($options);
-
-            // Render the PDF (first pass to calculate dimensions)
-            $pdf->render();
-
-            // Get the PDF content
-            $pdfContent = $pdf->output();   
+            ob_start();
+            $pdf->Output('S'); // Save PDF output to a variable as a string
+            $pdfContent = ob_get_clean();
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
@@ -416,8 +440,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $mail->send();
 
-        // Clean up the temporary files
-        unlink($populatedDocPath);
+        // Clean up the temporary file
+         unlink($tempFilePath);
 
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
