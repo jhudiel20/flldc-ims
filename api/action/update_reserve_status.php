@@ -137,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%;">
+                    
                         <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
                         <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
                         <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
