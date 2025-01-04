@@ -128,6 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
             // <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+            // <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
 
             $html = '
                 <!DOCTYPE html>
@@ -140,12 +141,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%;">
-
-                        <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
-                    
-                        <img src="/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
-
                         <div style="font-size: 16px; text-align: center; font-weight: bold;">
+                            <img src="../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
                             SERVICE INVOICE
                         </div>
                         <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
