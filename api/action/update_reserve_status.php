@@ -149,19 +149,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $templateProcessor->setValue('{{PRICE}}', $row['prices']);
             $templateProcessor->setValue('{{GRANDPRICE}}', $row['prices']);
 
-            // Save the modified template as a temporary file
-            $tempDocxPath = tempnam(sys_get_temp_dir(), 'invoice_') . '.docx';
-            $templateProcessor->saveAs($tempDocxPath);
+            // Save the Word file temporarily
+            $populatedDocPath = '/tmp/INVOICE-123456.docx';
+            $templateProcessor->saveAs($populatedDocPath);
 
-            // Generate PDF from the modified Word template
-            $phpWord = IOFactory::load($tempDocxPath);
-            $dompdf = new Dompdf();
+            // Step 2: Convert the populated Word document to HTML
+            $phpWord = IOFactory::load($populatedDocPath);
+            $htmlContent = '';
+            foreach ($phpWord->getSections() as $section) {
+                foreach ($section->getElements() as $element) {
+                    // Extract text from elements
+                    if (method_exists($element, 'getText')) {
+                        $htmlContent .= '<p>' . htmlspecialchars($element->getText()) . '</p>';
+                    }
+                }
+            }
 
-            // Convert Word document to HTML and then to PDF
-            $html = $phpWord->getHtml();
-            $dompdf->loadHtml($html);
-            $dompdf->render();
-            $pdfContent = $dompdf->output();
+            // Convert Word document to PDF using Dompdf
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isPhpEnabled', true);
+            $pdf = new Dompdf($options);
+
+            // Render the PDF (first pass to calculate dimensions)
+            $pdf->render();
+
+            // Get the PDF content
+            $pdfContent = $pdf->output();   
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
@@ -403,8 +417,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Clean up the temporary files
-        unlink($tempDocxPath);
-        unlink($tempFilePath);
+        unlink($populatedDocPath);
 
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
