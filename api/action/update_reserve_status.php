@@ -159,7 +159,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $pdf->SetFont('Arial', '', 12);
 
                 // Generate the reservation ID
-                $generateReserveID = '12345'; // Replace with your actual generateReserveID value
                 $date_now = date('M d, Y');
 
                 // Invoice details
