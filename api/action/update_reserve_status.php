@@ -148,9 +148,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </head>
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%;">
-                        <div style="font-size: 16px; text-align: center; font-weight: bold;">
-                            ' . $imgTag . '
-                            SERVICE INVOICE
+                        <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <img src="https://flldc-ims.vercel.app/assets/img/LOGO.png" style="height: 40px;">
+                            <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
                         </div>
                         <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
                             <tr>
