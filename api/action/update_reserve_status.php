@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            $logoPath = dirname(__DIR__, 3) . '/public/assets/img/LOGO.png'; // Adjusted for folder structure
+            $logoPath = dirname(__DIR__, 2) . '/public/assets/img/LOGO.png'; // Adjusted for folder structure
             if (file_exists($logoPath)) {
                 $imgTag = '<img src="' . $logoPath . '" style="height: 40px; margin: 0 auto; display: inline;">';
             } else {
