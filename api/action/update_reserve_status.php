@@ -141,28 +141,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <img src="'.$base64Image.'" width="40px;" alt="Logo"><br>
+                        <img src="'.$base64Image.'" height="40px;" alt="Logo"><br>
                         <h2 style="text-align: center;">SERVICE INVOICE</h2>
-                        <table style="width: 100%; border: none; padding: 5px;">
+                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
                             <tr>
-                                <th style="padding: 8px; vertical-align: middle;">
-                                    <strong>Invoice:</strong> INVOICE-'. $generateReserveID .'
+                                <th style="padding: 8px;border-bottom: 1px solid black;">
+                                    <strong>INVOICE NO:</strong>
                                 </th>
-                                <td style="padding: 8px; vertical-align: middle;">
-                                    <strong>Purchase Date:</strong>'. date('M d, Y').'
-                                </td>
-                            </tr>
-                        </table>
-                        <hr style="border: 2px solid #dee2e6;">
-                        
-                        <!-- Invoice Details -->
-                        <table style="width: 100%; border: none; padding: 5px;">
-                            <tr>
-                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;" ><strong>INVOICE FROM:</strong></th>
-                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;"><strong>INVOICE TO:</strong></th>  
+                                <th style="padding: 8px;border-bottom: 1px solid black; ">
+                                    <strong>Date:</strong>
+                                </th>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;">
+                                    '. $generateReserveID .'
+                                </td>
+                                <td style="padding: 8px;">
+                                    '. date('Y-m-d') .'
+                                </td>
+                            </tr>
+                        </table>                        
+                        <!-- Invoice Details -->
+                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
+                            <tr>
+                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;" ><strong>INVOICE FROM:</strong></th>
+                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;"><strong>INVOICE TO:</strong></th>  
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;font-size: 10px;">
                                     FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
                                     Fast Warehouse Complex,<br>
                                     Pulo-Diezmo Road,<br>
@@ -174,13 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </td>
                             </tr>
                         </table>  
-                        <hr style="border: 2px solid #dee2e6;">       
-
                         <!-- Reservation Details -->
-                        <table style="width: 100%; padding: 5px;">
+                        <table style="width: 100%; padding: 5px;border: 1px solid black;">
                             <thead>
                                 <tr>
-                                    <th colspan="5" style="padding: 8px; border-bottom: 2px solid black; text-align: left; background-color: #f1f1f1;">
+                                    <th colspan="5" style="padding: 8px; border-bottom: 1px solid black; text-align: left; background-color: #f1f1f1;">
                                         <strong>RESERVATION DETAILS</strong>
                                     </th>
                                 </tr>
@@ -206,12 +210,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </tr>
                             </tbody>
                         </table>
-                        <hr style="border: 2px solid #dee2e6;">
-
                         <!-- Additional Information -->
-                        <table style="width: 100%; border: none; padding: 5px;">
+                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
                             <tr>
-                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;"><strong>ADDITIONAL INFORMATION:</strong></th>
+                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;"><strong>ADDITIONAL INFORMATION:</strong></th>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;">
@@ -222,12 +224,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </td>
                             </tr>
                         </table>
-                        <br><br><br><br>
-
                         <!-- Footer -->
                         <div class="footer" style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                         </div>
+                        <br><br><br><br>
+
+                        
                     </div>
                 </body>
                 </html>
