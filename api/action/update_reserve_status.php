@@ -132,6 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $dompdf = new Dompdf($options);
 
+                $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png';
+                $logoData = base64_encode(file_get_contents($logoPath));
+                $logoSrc = 'data:image/png;base64,' . $logoData;
+
                 // Generate the HTML content
                 $html = '
                     <!DOCTYPE html>
@@ -144,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                         <div style="width: 90%;">
                             <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                                <img src="https://flldc-ims.vercel.app/assets/img/LOGO.png" style="height: 40px;">
+                                <img src="' . $logoSrc . '" style="height: 40px;">
                                 <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
                             </div>
                             <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
