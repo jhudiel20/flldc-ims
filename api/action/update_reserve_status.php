@@ -213,13 +213,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
                                     <strong>Account Number:</strong> 759-084367-1<br>
                                     <strong>Bank:</strong> RCBC
+                                    <br>
+                                    <span style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
+                                        Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                                 </td>
                             </tr>
                         </table>
-                        <!-- Footer -->
-                        <div class="footer" style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
-                            Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
-                        </div>
                     </div>
                 </body>
                 </html>
