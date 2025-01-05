@@ -11,13 +11,13 @@ require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 require_once __DIR__ . '/../pdf/tcpdf.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
+// require_once __DIR__ . '/../../bin/wkhtmltopdf';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Knp\Snappy\Pdf;
 
 // Define GitHub API details
 $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
@@ -124,100 +124,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png', 'logo_cid');
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-    
+       // <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+            // <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
+            // <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
+
         if ($approval_status == 'APPROVED') {
+            // Create a new instance of the PDF
+           // Path to the wkhtmltopdf binary (use the correct path for your project)
+            $snappy = new Pdf('/../../bin/wkhtmltopdf');  // Adjust this path accordingly
 
-                $options = new Options();
-                $options->set('isRemoteEnabled', true); // Enable loading of remote assets like images
+            $html = '
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Bill Invoice</title>
+                </style>
+                </head>
+                <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+                    <div style="width: 90%;">
+                        <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <img src="https://flldc-ims.vercel.app/assets/img/LOGO.png" style="height: 40px;">
+                        <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
+                    </div>
 
-                $dompdf = new Dompdf($options);
-
-                $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png';
-                $logoData = base64_encode(file_get_contents($logoPath));
-                $logoSrc = 'data:image/png;base64,' . $logoData;
-
-                // Generate the HTML content
-                $html = '
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Bill Invoice</title>
-                    </head>
-                    <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
-                        <div style="width: 90%;">
-                            <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                                <img src="' . $logoSrc . '" style="height: 40px;">
-                                <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
-                            </div>
-                            <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
-                                <tr>
-                                    <th style="border: 1px solid white;">
-                                        <strong>INVOICE-' . $generateReserveID . '</strong>
-                                    </th>
-                                    <th style="text-align: right;">
-                                        <strong>DATE: ' . date('M d, Y') . '</strong>
-                                    </th>
-                                </tr>
-                            </table>
-                            <div style="margin-bottom: 20px;">
-                                <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
-                                Fast Warehouse Complex, Pulo-Diezmo Road,<br>
-                                Barangay Pulo, Cabuyao City Laguna.
-                            </div>
-                            <div style="margin-bottom: 20px;">
-                                <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
-                                <strong>RE: Room Reservation</strong><br>
-                            </div>
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <thead>
-                                    <tr>
-                                        <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Room Name</th>
-                                        <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Date Reserved</th>
-                                        <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Time Reserved</th>
-                                        <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No. of Pax</th>
-                                        <th style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">RATE (Php)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['room_name'] . '</td>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['reserve_date'] . '</td>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['time'] . '</td>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['guest'] . '</td>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
-                                        <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <div style="margin-top: 20px; font-size: 12px;">
-                                <strong>PAYMENT INSTRUCTION:</strong><br><br>
-                                Please make payable to:<br>
-                                Account Name: Fast Logistics Learning and Development Corporation<br>
-                                Account Number: 759-084367-1<br>
-                                Bank: RCBC
-                            </div>
+                        <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
+                            <tr>
+                                <th style="border: 1px solid white;">
+                                    <strong>INVOICE-' . $generateReserveID . '</strong>
+                                </th>
+                                <th style="text-align: right;">
+                                    <strong>DATE: ' . $date_now = date('M d, Y') . '</strong>
+                                </th>
+                            </tr>
+                        </table>
+                        <div style="margin-bottom: 20px;">
+                            <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                            Fast Warehouse Complex, Pulo-Diezmo Road,<br>
+                            Barangay Pulo, Cabuyao City Laguna.
                         </div>
-                    </body>
-                    </html>
-                ';
-
-                // Load HTML into DOMPDF
-                $dompdf->loadHtml($html);
-
-                // Set paper size and orientation
-                $dompdf->setPaper('LETTER', 'portrait');
-
-                // Render the PDF
-                $dompdf->render();
-
-                // Output the PDF as a string
-                $pdfContent = $dompdf->output();
+                        <div style="margin-bottom: 20px;">
+                            <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                            <strong>RE: Room Reservation</strong><br>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Room Name</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Date Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Time Reserved</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No. of Pax</th>
+                                    <th style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">RATE (Php)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['room_name'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['reserve_date'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['time'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['guest'] . '</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <div style="margin-top: 20px; font-size: 12px;">
+                            <strong>PAYMENT INSTRUCTION:</strong><br><br>
+                            Please make payable to:<br>
+                            Account Name: Fast Logistics Learning and Development Corporation<br>
+                            Account Number: 759-084367-1<br>
+                            Bank: RCBC
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ';
+           // Generate PDF from HTML using KnpSnappy (wkhtmltopdf)
+            $pdfContent = $snappy->getOutputFromHtml($html);
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
