@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/profile.jpg';
+            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.jpg';
             $imageData = base64_encode(file_get_contents($imagePath));
             $base64Image = 'data:image/png;base64,' . $imageData;
 
@@ -136,66 +136,126 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Bill Invoice</title>
-                </style>
+                    <title>Invoice</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 20px;
+                            background-color: #f8f9fa;
+                        }
+                        .invoice-container {
+                            background: #fff;
+                            border: 1px solid #dee2e6;
+                            border-radius: 5px;
+                            padding: 20px;
+                            max-width: 800px;
+                            margin: 0 auto;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            border-bottom: 2px solid #dee2e6;
+                            padding-bottom: 10px;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            height: 40px;
+                        }
+                        .header .title {
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                        .invoice-info, .billing-info {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 20px;
+                        }
+                        .invoice-info div, .billing-info div {
+                            width: 48%;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                        }
+                        table th, table td {
+                            border: 1px solid #dee2e6;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        table th {
+                            background: #f1f1f1;
+                        }
+                        .total {
+                            text-align: right;
+                            font-weight: bold;
+                        }
+                        .footer {
+                            font-size: 12px;
+                            color: #6c757d;
+                            text-align: center;
+                        }
+                    </style>
                 </head>
-                <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
-                    <div style="width: 90%;">
-                        <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                        <img src="' . $base64Image . '" style="height: 40px;">
-                        <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
-                    </div>
-
-                        <table style="border: 1px solid white; padding-top: 40px; padding-bottom: 20px; width: 100%;">
-                            <tr>
-                                <th style="border: 1px solid white;">
-                                    <strong>INVOICE-' . $generateReserveID . '</strong>
-                                </th>
-                                <th style="text-align: right;">
-                                    <strong>DATE: ' . $date_now = date('M d, Y') . '</strong>
-                                </th>
-                            </tr>
-                        </table>
-                        <div style="margin-bottom: 20px;">
-                            <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
-                            Fast Warehouse Complex, Pulo-Diezmo Road,<br>
-                            Barangay Pulo, Cabuyao City Laguna.
+                <body>
+                    <div class="invoice-container">
+                        <div class="header">
+                            <img src="' . $base64Image . '" alt="Logo">
+                            <div class="title">SERVICE INVOICE</div>
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <strong>BILL TO: </strong>' . $row['fname'] . ' ' . $row['lname'] . '<br>
-                            <strong>RE: Room Reservation</strong><br>
+                        <div class="invoice-info">
+                            <div>
+                                <strong>INVOICE:</strong> INVOICE-' . $generateReserveID . '<br>
+                                <strong>Date:</strong> ' . $date_now = date('M d, Y') . '
+                            </div>
+                            <div>
+                                <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                                Fast Warehouse Complex, Pulo-Diezmo Road,<br>
+                                Barangay Pulo, Cabuyao City Laguna.
+                            </div>
                         </div>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <div class="billing-info">
+                            <div>
+                                <strong>BILL TO:</strong><br>
+                                ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                <strong>RE:</strong> Room Reservation
+                            </div>
+                        </div>
+                        <table>
                             <thead>
                                 <tr>
-                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Room Name</th>
-                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Date Reserved</th>
-                                    <th style="border: 1px solid #000; padding: 8px; text-align: left; font-weight: bold;">Time Reserved</th>
-                                    <th style="border: 1px solid #000; padding: 8px; text-align: center; font-weight: bold;">No. of Pax</th>
-                                    <th style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">RATE (Php)</th>
+                                    <th>Room Name</th>
+                                    <th>Date Reserved</th>
+                                    <th>Time Reserved</th>
+                                    <th style="text-align: center;">No. of Pax</th>
+                                    <th style="text-align: right;">Rate (Php)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['room_name'] . '</td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['reserve_date'] . '</td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['time'] . '</td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">' . $row['guest'] . '</td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                    <td>' . $row['room_name'] . '</td>
+                                    <td>' . $row['reserve_date'] . '</td>
+                                    <td>' . $row['time'] . '</td>
+                                    <td style="text-align: center;">' . $row['guest'] . '</td>
+                                    <td style="text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" style="border: 1px solid #000; padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">' . $row['prices'] . '</td>
+                                    <td colspan="4" class="total">Grand Total</td>
+                                    <td style="text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br>
-                        <div style="margin-top: 20px; font-size: 12px;">
-                            <strong>PAYMENT INSTRUCTION:</strong><br><br>
+                        <div>
+                            <strong>PAYMENT INSTRUCTION:</strong><br>
                             Please make payable to:<br>
                             Account Name: Fast Logistics Learning and Development Corporation<br>
                             Account Number: 759-084367-1<br>
                             Bank: RCBC
+                        </div>
+                        <div class="footer">
+                            Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                         </div>
                     </div>
                 </body>
