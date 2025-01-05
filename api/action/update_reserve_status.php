@@ -144,75 +144,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             padding: 20px;
                             background-color: #f8f9fa;
                         }
-                        .invoice-container {
-                            background: #fff;
-                            border: 1px solid #dee2e6;
-                            border-radius: 5px;
-                            padding: 20px;
-                            max-width: 800px;
-                            margin: 0 auto;
-                        }
-                        .header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            border-bottom: 2px solid #dee2e6;
-                            padding-bottom: 10px;
-                            margin-bottom: 20px;
-                        }
-                        .header img {
-                            height: 40px;
-                        }
-                        .invoice-info {
-                            display: flex;
-                            justify-content: space-between;
-                            margin-bottom: 20px;
-                        }
-                        .invoice-info div {
-                            width: 48%;
-                        }
-                        table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-bottom: 20px;
-                        }
-                        table th {
-                            background-color: #f1f1f1;
-                            border: 1px solid #dee2e6;
-                            padding: 10px;
-                            text-align: left;
-                        }
-                        table td {
-                            border: 1px solid #dee2e6;
-                            padding: 8px;
-                            text-align: left;
-                        }
-                        .total-row td {
-                            font-weight: bold;
-                        }
-                        .additional-info {
-                            margin-top: 20px;
-                        }
                         .footer {
                             font-size: 12px;
                             color: #6c757d;
                             text-align: center;
                             margin-top: 20px;
                         }
+                        th {
+                            background-color: #f1f1f1;
+                        }
+                        table {
+                            width: 100%;
+                            border: none;
+                            padding: 5px;
+                        }
+                        td, th {
+                            padding: 8px;
+                        }
+                        .total-row td {
+                            font-weight: bold;
+                        }
                     </style>
                 </head>
                 <body>
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <table style="border: none;">
-                            <tr>
-                                <th style="text-align:left;"><img src="' . $base64Image . '" alt="Logo"></th>
-                                <th style="text-align:right;"><strong>Invoice:</strong> INVOICE-' . $generateReserveID . '<br>
-                                <strong>Purchase Date:</strong> ' . date('M d, Y') . '</th>
+                        <table>
+                            <tr style="vertical-align: middle;">
+                                <th style="text-align:left; height:40px;">
+                                    <img src="'.$base64Image .'" alt="Logo">
+                                </th>
+                                <td style="text-align:right;">
+                                    <strong>Invoice:</strong> INVOICE-'. $generateReserveID .'<br>
+                                    <strong>Purchase Date:</strong>'. date('M d, Y').'
+                                </td>
                             </tr>
                         </table>
                         <hr style="border: 2px solid #dee2e6;">
-                        <table style="border: none;">
+                        
+                        <!-- Invoice Details -->
+                        <table>
                             <tr>
                                 <th><strong>INVOICE FROM:</strong></th>
                                 <th><strong>INVOICE TO:</strong></th>  
@@ -226,50 +197,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Cabuyao City Laguna.
                                 </td>
                                 <td>
-                                    ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                    '. $row['fname'] .' '. $row['lname'].' <br>
                                     Room Reservation
                                 </td>
                             </tr>
-                        </table>         
-                        <table  style="border: none;padding: 5px;">
+                        </table>  
+                        <hr style="border: 2px solid #dee2e6;">       
+
+                        <!-- Reservation Details -->
+                        <table>
                             <thead>
                                 <tr>
-                                    <th colspan="5" style="text-align: center; background-color: #f1f1f1;">Reservation Details</th>
+                                    <th colspan="5" style="text-align: left; background-color: #f1f1f1;">
+                                        <strong>RESERVATION DETAILS</strong>
+                                    </th>
                                 </tr>
                                 <tr>
-                                    <th>Room Name</th>
-                                    <th>Date Reserved</th>
-                                    <th>Time Reserved</th>
-                                    <th style="text-align: center;">No. of Pax</th>
-                                    <th style="text-align: right;">Rate (Php)</th>
+                                    <td>Room Name</td>
+                                    <td>Date Reserved</td>
+                                    <td>Time Reserved</td>
+                                    <td style="text-align: center;">No. of Pax</td>
+                                    <td style="text-align: right;">Rate (Php)</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>' . $row['room_name'] . '</td>
-                                    <td>' . $row['reserve_date'] . '</td>
-                                    <td>' . $row['time'] . '</td>
-                                    <td style="text-align: center;">' . $row['guest'] . '</td>
-                                    <td style="text-align: right;">' . $row['prices'] . '</td>
+                                    <td>'. $row['room_name'] .'</td>
+                                    <td>'. $row['reserve_date'] .'</td>
+                                    <td>'. $row['time'] .'</td>
+                                    <td style="text-align: center;">'. $row['guest'] .'</td>
+                                    <td style="text-align: right;">'. $row['prices'] .'</td>
                                 </tr>
                                 <tr class="total-row">
                                     <td colspan="4" style="text-align: right;">Grand Total</td>
-                                    <td style="text-align: right;">' . $row['prices'] . '</td>
+                                    <td style="text-align: right;">'. $row['prices'] .'</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <table style="border: none;">
+                        <hr style="border: 2px solid #dee2e6;">
+
+                        <!-- Additional Information -->
+                        <table>
                             <tr>
-                                <th>ADDITIONAL INFROMATION:</th>
+                                <th>ADDITIONAL INFORMATION:</th>
                             </tr>
                             <tr>
-                                <td>Please make payable to:<br>
+                                <td>
+                                    Please make payable to:<br>
                                     <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
                                     <strong>Account Number:</strong> 759-084367-1<br>
                                     <strong>Bank:</strong> RCBC
                                 </td>
                             </tr>
                         </table>
+
                         <!-- Footer -->
                         <div class="footer">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
@@ -277,6 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </body>
                 </html>
+
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
 
