@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $base64Image = 'data:image/png;base64,' . $imageData;
 
             $html = '
-                <!DOCTYPE html>
+               <!DOCTYPE html>
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
@@ -163,17 +163,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         .header img {
                             height: 40px;
                         }
-                        .header .title {
-                            text-align: center;
-                            font-size: 20px;
-                            font-weight: bold;
-                        }
-                        .invoice-info, .billing-info {
+                        .invoice-info {
                             display: flex;
                             justify-content: space-between;
                             margin-bottom: 20px;
                         }
-                        .invoice-info div, .billing-info div {
+                        .invoice-info div {
                             width: 48%;
                         }
                         table {
@@ -181,48 +176,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             border-collapse: collapse;
                             margin-bottom: 20px;
                         }
-                        table th, table td {
+                        table th {
+                            background-color: #f1f1f1;
+                            border: 1px solid #dee2e6;
+                            padding: 10px;
+                            text-align: left;
+                        }
+                        table td {
                             border: 1px solid #dee2e6;
                             padding: 8px;
                             text-align: left;
                         }
-                        table th {
-                            background: #f1f1f1;
-                        }
-                        .total {
-                            text-align: right;
+                        .total-row td {
                             font-weight: bold;
+                        }
+                        .additional-info {
+                            margin-top: 20px;
                         }
                         .footer {
                             font-size: 12px;
                             color: #6c757d;
                             text-align: center;
+                            margin-top: 20px;
                         }
                     </style>
                 </head>
                 <body>
                     <div class="invoice-container">
+                        <!-- Header Section -->
                         <div class="header">
                             <img src="' . $base64Image . '" alt="Logo">
-                            <div class="title">SERVICE INVOICE</div>
+                            <div>
+                                <strong>Invoice:</strong> INVOICE-' . $generateReserveID . '<br>
+                                <strong>Purchase Date:</strong> ' . date('M d, Y') . '
+                            </div>
                         </div>
+
+                        <!-- Invoice and Billing Info -->
                         <div class="invoice-info">
                             <div>
-                                <strong>INVOICE:</strong> INVOICE-' . $generateReserveID . '<br>
-                                <strong>Date:</strong> ' . $date_now = date('M d, Y') . '
-                            </div>
-                            <div>
-                                <strong>FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION</strong><br>
+                                <strong>INVOICE FROM:</strong><br>
+                                FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
                                 Fast Warehouse Complex, Pulo-Diezmo Road,<br>
                                 Barangay Pulo, Cabuyao City Laguna.
                             </div>
-                        </div>
-                        <div class="billing-info">
                             <div>
-                                <strong>BILL TO:</strong>' . $row['fname'] . ' ' . $row['lname'] . '<br><br>
-                                <strong>RE:</strong> Room Reservation
+                                <strong>INVOICE TO:</strong><br>
+                                ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                Room Reservation
                             </div>
                         </div>
+
+                        <!-- Invoice Details -->
                         <table>
                             <thead>
                                 <tr>
@@ -241,21 +246,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <td style="text-align: center;">' . $row['guest'] . '</td>
                                     <td style="text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
-                                <tr>
-                                    <td colspan="4" class="total">Grand Total</td>
+                                <tr class="total-row">
+                                    <td colspan="4" style="text-align: right;">Grand Total</td>
                                     <td style="text-align: right;">' . $row['prices'] . '</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br>
-                        <br>
-                        <div>
-                            <strong>PAYMENT INSTRUCTION:</strong><br>
+
+                        <!-- Additional Information -->
+                        <div class="additional-info">
+                            <strong>ADDITIONAL INFORMATION:</strong><br>
                             Please make payable to:<br>
-                            Account Name: Fast Logistics Learning and Development Corporation<br>
-                            Account Number: 759-084367-1<br>
-                            Bank: RCBC
+                            <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
+                            <strong>Account Number:</strong> 759-084367-1<br>
+                            <strong>Bank:</strong> RCBC
                         </div>
+
+                        <!-- Footer -->
                         <div class="footer">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                         </div>
