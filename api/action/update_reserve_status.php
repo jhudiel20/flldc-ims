@@ -164,6 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             height: 40px;
                         }
                         .header .title {
+                            text-align: center;
                             font-size: 20px;
                             font-weight: bold;
                         }
@@ -218,8 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="billing-info">
                             <div>
-                                <strong>BILL TO:</strong><br>
-                                ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                <strong>BILL TO:</strong>' . $row['fname'] . ' ' . $row['lname'] . '<br><br>
                                 <strong>RE:</strong> Room Reservation
                             </div>
                         </div>
@@ -247,6 +247,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </tr>
                             </tbody>
                         </table>
+                        <br>
+                        <br>
                         <div>
                             <strong>PAYMENT INSTRUCTION:</strong><br>
                             Please make payable to:<br>
