@@ -131,92 +131,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $base64Image = 'data:image/png;base64,' . $imageData;
 
             $html = '
-               <!DOCTYPE html>
+              <!DOCTYPE html>
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Invoice</title>
+                    <style>
+                        table {
+                            width: 100%;
+                            border-collapse: collapse; 
+                        }
+                        th, td {
+                            padding: 8px;
+                            border: 1px solid rgb(0, 0, 0);
+                        }
+                        th {
+                            background-color: #f1f1f1;
+                        }
+                        tr {
+                            border: 1px solid rgb(0, 0, 0); 
+                        }
+                        .total-row td {
+                            font-weight: bold;
+                            background-color: #f1f1f1;
+                        }
+                    </style>
                 </head>
-                <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
+                <body style="border: 2px solid black; font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
                     <div class="invoice-container">
                         <!-- Header Section -->
                         <img src="'.$base64Image.'" height="40px;" alt="Logo"><br>
                         <h2 style="text-align: center;">SERVICE INVOICE</h2>
-                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
+                        <table>
                             <tr>
-                                <th style="padding: 8px;border-bottom: 1px solid black;">
-                                    <strong>INVOICE NO:</strong>
-                                </th>
-                                <th style="padding: 8px;border-bottom: 1px solid black; ">
-                                    <strong>Date:</strong>
-                                </th>
+                                <th><strong>INVOICE NO:</strong></th>
+                                <th><strong>Date:</strong></th>
                             </tr>
                             <tr>
-                                <td style="padding: 8px;">
-                                    '. $generateReserveID .'
-                                </td>
-                                <td style="padding: 8px;">
-                                    '. date('Y-m-d') .'
-                                </td>
+                                <td>'. $generateReserveID .'</td>
+                                <td>'. date('Y-m-d') .'</td>
                             </tr>
                         </table>                        
                         <!-- Invoice Details -->
-                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
+                        <table>
                             <tr>
-                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;" ><strong>INVOICE FROM:</strong></th>
-                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;"><strong>INVOICE TO:</strong></th>  
+                                <th><strong>INVOICE FROM:</strong></th>
+                                <th><strong>INVOICE TO:</strong></th>  
                             </tr>
                             <tr>
-                                <td style="padding: 8px;font-size: 10px;">
+                                <td style="font-size: 10px;">
                                     FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
                                     Fast Warehouse Complex,<br>
                                     Pulo-Diezmo Road,<br>
                                     Barangay Pulo,<br>
                                     Cabuyao City Laguna.
                                 </td>
-                                <td style="padding: 8px;">
+                                <td>
                                     '. $row['fname'] .' '. $row['lname'].' <br>
                                 </td>
                             </tr>
                         </table>  
                         <!-- Reservation Details -->
-                        <table style="width: 100%; padding: 5px;border: 1px solid black;">
+                        <table>
                             <thead>
                                 <tr>
-                                    <th colspan="5" style="padding: 8px; border-bottom: 1px solid black; text-align: left; background-color: #f1f1f1;">
+                                    <th colspan="5" style="text-align: left;">
                                         <strong>RESERVATION DETAILS</strong>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px;">Room Name</td>
-                                    <td style="padding: 8px;">Date Reserved</td>
-                                    <td style="padding: 8px;">Time Reserved</td>
-                                    <td style="padding: 8px; text-align: center;">No. of Pax</td>
-                                    <td style="padding: 8px; text-align: right;">Rate (Php)</td>
+                                    <td>Room Name</td>
+                                    <td>Date Reserved</td>
+                                    <td>Time Reserved</td>
+                                    <td style="text-align: center;">No. of Pax</td>
+                                    <td style="text-align: right;">Rate (Php)</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="padding: 8px;">'. $row['room_name'] .'</td>
-                                    <td style="padding: 8px;">'. $row['reserve_date'] .'</td>
-                                    <td style="padding: 8px;">'. $row['time'] .'</td>
-                                    <td style="padding: 8px; text-align: center;">'. $row['guest'] .'</td>
-                                    <td style="padding: 8px; text-align: right;">'. $row['prices'] .'</td>
+                                    <td>'. $row['room_name'] .'</td>
+                                    <td>'. $row['reserve_date'] .'</td>
+                                    <td>'. $row['time'] .'</td>
+                                    <td style="text-align: center;">'. $row['guest'] .'</td>
+                                    <td style="text-align: right;">'. $row['prices'] .'</td>
                                 </tr>
                                 <tr class="total-row">
-                                    <td colspan="4" style="padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold;">'. $row['prices'] .'</td>
+                                    <td colspan="4" style="text-align: right;">Grand Total</td>
+                                    <td style="text-align: right;">'. $row['prices'] .'</td>
                                 </tr>
                             </tbody>
                         </table>
                         <!-- Additional Information -->
-                        <table style="width: 100%; border: 1px solid black; padding: 5px;">
+                        <table>
                             <tr>
-                                <th style="padding: 8px; border-bottom: 1px solid black; background-color: #f1f1f1;"><strong>ADDITIONAL INFORMATION:</strong></th>
+                                <th><strong>ADDITIONAL INFORMATION:</strong></th>
                             </tr>
                             <tr>
-                                <td style="padding: 8px;">
+                                <td>
                                     Please make payable to:<br>
                                     <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
                                     <strong>Account Number:</strong> 759-084367-1<br>
@@ -228,12 +240,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="footer" style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                         </div>
-                        <br><br><br><br>
-
-                        
                     </div>
                 </body>
                 </html>
+
 
 
             ';
