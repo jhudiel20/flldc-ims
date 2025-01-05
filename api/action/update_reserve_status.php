@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png';
+            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/profile.jpg';
             $imageData = base64_encode(file_get_contents($imagePath));
             $base64Image = 'data:image/png;base64,' . $imageData;
 
