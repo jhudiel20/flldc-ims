@@ -120,22 +120,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png', 'logo_cid');
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-       // <img src="/../../public/assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
-            // <img src="/../../assets/img/LOGO.png" style="height: 40px; margin: 0 auto; display: inline;">
-            // <img src="cid:logo_cid" style="height: 40px; margin: 0 auto; display: inline;">
 
         if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            $logoPath = '/../../assets/img/LOGO.png'; // Adjusted for folder structure
-            if (file_exists($logoPath)) {
-                $imgTag = '<img src="' . $logoPath . '" style="height: 40px; margin: 0 auto; display: inline;">';
-            } else {
-                $imgTag = '<strong>[Logo Missing]</strong>'; // Fallback if the logo file is not found
-            }
-
+            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.png';
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $base64Image = 'data:image/png;base64,' . $imageData;
 
             $html = '
                 <!DOCTYPE html>
@@ -149,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
                     <div style="width: 90%;">
                         <div style="font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                        <img src="https://flldc-ims.vercel.app/assets/img/LOGO.png" style="height: 40px;">
+                        <img src="' . $base64Image . '" style="height: 40px;">
                         <div style="flex-grow: 1; text-align: center;">SERVICE INVOICE</div>
                     </div>
 

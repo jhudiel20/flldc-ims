@@ -363,9 +363,6 @@
         "src": "/(.*)",
         "dest": "/api/404.php"
       }
-    ],
-    "includeFiles": [
-      "bin/wkhtmltopdf"
-    ] 
+    ]
   }
   
