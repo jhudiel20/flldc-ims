@@ -137,45 +137,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Invoice</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 0;
-                            padding: 20px;
-                            background-color: #f8f9fa;
-                        }
-                        .footer {
-                            font-size: 12px;
-                            color: #6c757d;
-                            text-align: center;
-                            margin-top: 20px;
-                        }
-                        th {
-                            background-color: #f1f1f1;
-                        }
-                        table {
-                            width: 100%;
-                            border: none;
-                            padding: 5px;
-                        }
-                        td, th {
-                            padding: 8px;
-                        }
-                        .total-row td {
-                            font-weight: bold;
-                        }
-                    </style>
                 </head>
-                <body>
+                <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <table>
-                            <tr style="vertical-align: middle;">
-                                <th style="text-align:left; height:40px;">
-                                    <img src="'.$base64Image .'" alt="Logo">
+                        <img src="'.$base64Image.'" width="40px;" alt="Logo"><br>
+                        <h2 style="text-align: center;">SERVICE INVOICE</h2>
+                        <table style="width: 100%; border: none; padding: 5px;">
+                            <tr>
+                                <th style="padding: 8px; vertical-align: middle;">
+                                    <strong>Invoice:</strong> INVOICE-'. $generateReserveID .'
                                 </th>
-                                <td style="text-align:right;">
-                                    <strong>Invoice:</strong> INVOICE-'. $generateReserveID .'<br>
+                                <td style="padding: 8px; vertical-align: middle;">
                                     <strong>Purchase Date:</strong>'. date('M d, Y').'
                                 </td>
                             </tr>
@@ -183,66 +156,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <hr style="border: 2px solid #dee2e6;">
                         
                         <!-- Invoice Details -->
-                        <table>
+                        <table style="width: 100%; border: none; padding: 5px;">
                             <tr>
-                                <th><strong>INVOICE FROM:</strong></th>
-                                <th><strong>INVOICE TO:</strong></th>  
+                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;" ><strong>INVOICE FROM:</strong></th>
+                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;"><strong>INVOICE TO:</strong></th>  
                             </tr>
                             <tr>
-                                <td>
+                                <td style="padding: 8px;">
                                     FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
                                     Fast Warehouse Complex,<br>
                                     Pulo-Diezmo Road,<br>
                                     Barangay Pulo,<br>
                                     Cabuyao City Laguna.
                                 </td>
-                                <td>
+                                <td style="padding: 8px;">
                                     '. $row['fname'] .' '. $row['lname'].' <br>
-                                    Room Reservation
                                 </td>
                             </tr>
                         </table>  
                         <hr style="border: 2px solid #dee2e6;">       
 
                         <!-- Reservation Details -->
-                        <table>
+                        <table style="width: 100%; padding: 5px;">
                             <thead>
                                 <tr>
-                                    <th colspan="5" style="text-align: left; background-color: #f1f1f1;">
+                                    <th colspan="5" style="padding: 8px; border-bottom: 2px solid black; text-align: left; background-color: #f1f1f1;">
                                         <strong>RESERVATION DETAILS</strong>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td>Room Name</td>
-                                    <td>Date Reserved</td>
-                                    <td>Time Reserved</td>
-                                    <td style="text-align: center;">No. of Pax</td>
-                                    <td style="text-align: right;">Rate (Php)</td>
+                                    <td style="padding: 8px;">Room Name</td>
+                                    <td style="padding: 8px;">Date Reserved</td>
+                                    <td style="padding: 8px;">Time Reserved</td>
+                                    <td style="padding: 8px; text-align: center;">No. of Pax</td>
+                                    <td style="padding: 8px; text-align: right;">Rate (Php)</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>'. $row['room_name'] .'</td>
-                                    <td>'. $row['reserve_date'] .'</td>
-                                    <td>'. $row['time'] .'</td>
-                                    <td style="text-align: center;">'. $row['guest'] .'</td>
-                                    <td style="text-align: right;">'. $row['prices'] .'</td>
+                                    <td style="padding: 8px;">'. $row['room_name'] .'</td>
+                                    <td style="padding: 8px;">'. $row['reserve_date'] .'</td>
+                                    <td style="padding: 8px;">'. $row['time'] .'</td>
+                                    <td style="padding: 8px; text-align: center;">'. $row['guest'] .'</td>
+                                    <td style="padding: 8px; text-align: right;">'. $row['prices'] .'</td>
                                 </tr>
                                 <tr class="total-row">
-                                    <td colspan="4" style="text-align: right;">Grand Total</td>
-                                    <td style="text-align: right;">'. $row['prices'] .'</td>
+                                    <td colspan="4" style="padding: 8px; text-align: right; font-weight: bold;">Grand Total</td>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold;">'. $row['prices'] .'</td>
                                 </tr>
                             </tbody>
                         </table>
                         <hr style="border: 2px solid #dee2e6;">
 
                         <!-- Additional Information -->
-                        <table>
+                        <table style="width: 100%; border: none; padding: 5px;">
                             <tr>
-                                <th>ADDITIONAL INFORMATION:</th>
+                                <th style="padding: 8px; border-bottom: 2px solid black; background-color: #f1f1f1;"><strong>ADDITIONAL INFORMATION:</strong></th>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="padding: 8px;">
                                     Please make payable to:<br>
                                     <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
                                     <strong>Account Number:</strong> 759-084367-1<br>
@@ -250,14 +222,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </td>
                             </tr>
                         </table>
+                        <br><br><br><br>
 
                         <!-- Footer -->
-                        <div class="footer">
+                        <div class="footer" style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
                         </div>
                     </div>
                 </body>
                 </html>
+
 
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
