@@ -204,32 +204,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body>
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <div class="header">
-                            <img src="' . $base64Image . '" alt="Logo">
-                            <div>
-                                <strong>Invoice:</strong> INVOICE-' . $generateReserveID . '<br>
-                                <strong>Purchase Date:</strong> ' . date('M d, Y') . '
-                            </div>
-                        </div>
-
-                        <!-- Invoice and Billing Info -->
-                        <div class="invoice-info">
-                            <div>
-                                <strong>INVOICE FROM:</strong><br>
-                                FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
-                                Fast Warehouse Complex, Pulo-Diezmo Road,<br>
-                                Barangay Pulo, Cabuyao City Laguna.
-                            </div>
-                            <div>
-                                <strong>INVOICE TO:</strong><br>
-                                ' . $row['fname'] . ' ' . $row['lname'] . '<br>
-                                Room Reservation
-                            </div>
-                        </div>
-
-                        <!-- Invoice Details -->
-                        <table>
+                        <table style="border: none;">
+                            <tr>
+                                <th style="text-align:left;"><img src="' . $base64Image . '" alt="Logo"></th>
+                                <th style="text-align:right;"><strong>Invoice:</strong> INVOICE-' . $generateReserveID . '<br>
+                                <strong>Purchase Date:</strong> ' . date('M d, Y') . '</th>
+                            </tr>
+                        </table>
+                        <hr style="border: 2px solid #dee2e6;">
+                        <table style="border: none;">
+                            <tr>
+                                <th><strong>INVOICE FROM:</strong></th>
+                                <th><strong>INVOICE TO:</strong></th>  
+                            </tr>
+                            <tr>
+                                <td>
+                                    FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
+                                    Fast Warehouse Complex,<br>
+                                    Pulo-Diezmo Road,<br>
+                                    Barangay Pulo,<br>
+                                    Cabuyao City Laguna.
+                                </td>
+                                <td>
+                                    ' . $row['fname'] . ' ' . $row['lname'] . '<br>
+                                    Room Reservation
+                                </td>
+                            </tr>
+                        </table>         
+                        <table  style="border: none;padding: 5px;">
                             <thead>
+                                <tr>
+                                    <th colspan="5" style="text-align: center; background-color: #f1f1f1;">Reservation Details</th>
+                                </tr>
                                 <tr>
                                     <th>Room Name</th>
                                     <th>Date Reserved</th>
@@ -252,16 +258,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </tr>
                             </tbody>
                         </table>
-
-                        <!-- Additional Information -->
-                        <div class="additional-info">
-                            <strong>ADDITIONAL INFORMATION:</strong><br>
-                            Please make payable to:<br>
-                            <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
-                            <strong>Account Number:</strong> 759-084367-1<br>
-                            <strong>Bank:</strong> RCBC
-                        </div>
-
+                        <table style="border: none;">
+                            <tr>
+                                <th>ADDITIONAL INFROMATION:</th>
+                            </tr>
+                            <tr>
+                                <td>Please make payable to:<br>
+                                    <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
+                                    <strong>Account Number:</strong> 759-084367-1<br>
+                                    <strong>Bank:</strong> RCBC
+                                </td>
+                            </tr>
+                        </table>
                         <!-- Footer -->
                         <div class="footer">
                             Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
