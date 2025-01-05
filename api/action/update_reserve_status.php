@@ -10,14 +10,10 @@ ini_set('display_errors', 1);
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 require_once __DIR__ . '/../pdf/tcpdf.php';
-require_once __DIR__ . '/../../vendor/autoload.php';
-// require_once __DIR__ . '/../../bin/wkhtmltopdf';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-use Knp\Snappy\Pdf;
 
 // Define GitHub API details
 $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
@@ -130,8 +126,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
-           // Path to the wkhtmltopdf binary (use the correct path for your project)
-            $snappy = new Pdf('/../../bin/wkhtmltopdf');  // Adjust this path accordingly
+            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            $pdf->AddPage();
+
+            $logoPath = '/../../assets/img/LOGO.png'; // Adjusted for folder structure
+            if (file_exists($logoPath)) {
+                $imgTag = '<img src="' . $logoPath . '" style="height: 40px; margin: 0 auto; display: inline;">';
+            } else {
+                $imgTag = '<strong>[Logo Missing]</strong>'; // Fallback if the logo file is not found
+            }
+
 
             $html = '
                 <!DOCTYPE html>
@@ -204,8 +208,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </body>
                 </html>
             ';
-           // Generate PDF from HTML using KnpSnappy (wkhtmltopdf)
-            $pdfContent = $snappy->getOutputFromHtml($html);
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            ob_start();
+            $pdf->Output('S'); // Save PDF output to a variable as a string
+            $pdfContent = ob_get_clean();
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
