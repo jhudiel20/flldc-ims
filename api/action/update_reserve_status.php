@@ -141,12 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <img src="'.$base64Image.'" height="40px;" alt="Logo"><br>
+                        <img src="'.$base64Image.'" height="60px;" style="text-align:center" alt="Logo"><br>
                         <h2 style="text-align: center;">SERVICE INVOICE</h2>
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                        <table style="width: 100%;  border: 1px solid black;">
                             <tr>
                                 <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE NO:</strong></th>
-                                <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>Date:</strong></th>
+                                <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>DATE:</strong></th>
                             </tr>
                             <tr>
                                 <td style="padding: 8px; border: 1px solid black;">'. $generateReserveID .'</td>
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tr>
                         </table>                        
                         <!-- Invoice Details -->
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                        <table style="width: 100%;  border: 1px solid black;">
                             <tr>
                                 <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE FROM:</strong></th>
                                 <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE TO:</strong></th>  
@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tr>
                         </table>  
                         <!-- Reservation Details -->
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                        <table style="width: 100%;  border: 1px solid black;">
                             <thead>
                                 <tr>
                                     <th colspan="5" style="padding: 8px; background-color: #f1f1f1; text-align: left; border: 1px solid black;">
@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tbody>
                         </table>
                         <!-- Additional Information -->
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                        <table style="width: 100%;  border: 1px solid black;">
                             <tr>
                                 <th style="padding: 8px; background-color: #f1f1f1; border: 1px solid black;"><strong>ADDITIONAL INFORMATION:</strong></th>
                             </tr>
