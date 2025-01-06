@@ -222,7 +222,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </body>
                 </html>
-
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
 
