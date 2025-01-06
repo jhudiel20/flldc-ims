@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 // Include database connection and config
 require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
 require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
-require_once __DIR__ . '/../pdf/tcpdf.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -121,14 +121,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
 
+        // Start output buffering
+        ob_start();
+
         if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
-
-            // $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.jpg';
-            // $imageData = base64_encode(file_get_contents($imagePath));
-            // $base64Image = 'data:image/png;base64,' . $imageData;
 
             $html = '
                 <!DOCTYPE html>
@@ -224,8 +223,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </html>
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
-
-            ob_start();
             $pdf->Output('S');
             $pdfContent = ob_get_clean();
 
@@ -468,12 +465,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Clean up the temporary file
-        ob_end_flush();
-
-        // Remove the temporary file
-        if (file_exists($tempFilePath)) {
-            unlink($tempFilePath);
-        }
+        unlink($tempFilePath);
 
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
