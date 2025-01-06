@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Create a new instance of the PDF
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
-
+            ob_clean();
             $html = '
                 <!DOCTYPE html>
                 <html lang="en">
@@ -223,8 +223,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </html>
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
-            $pdf->Output('S');
-            $pdfContent = ob_get_clean();
+            // Get PDF content
+            $pdfContent = $pdf->Output('', 'S');
+
+            // Clear output buffer
+            ob_end_clean();
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
