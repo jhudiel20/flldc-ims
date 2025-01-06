@@ -3,7 +3,7 @@ if (!isset($_COOKIE['secure_data'])) {
     header("Location: /");
 }
 
-ob_end_flush();
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -471,7 +471,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Clean up the temporary file
-        
+        ob_end_flush();
 
         // Remove the temporary file
         if (file_exists($tempFilePath)) {
