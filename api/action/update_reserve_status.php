@@ -126,9 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
 
-            $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.jpg';
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $base64Image = 'data:image/png;base64,' . $imageData;
+            // $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/LOGO.jpg';
+            // $imageData = base64_encode(file_get_contents($imagePath));
+            // $base64Image = 'data:image/png;base64,' . $imageData;
 
             $html = '
                 <!DOCTYPE html>
@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
                     <div class="invoice-container">
                         <!-- Header Section -->
-                        <img src="'.$base64Image.'" height="60px;" style="text-align:center" alt="Logo"><br>
+                        <img src="https://flldc-ims.vercel.app/assets/img/LOGO.jpg" height="60px;" style="text-align:center" alt="Logo"><br>
                         <h2 style="text-align: center;font-size: 18px;">SERVICE INVOICE</h2>
                         <table style="width: 100%;  border: 1px solid black;padding: 10px;">
                             <tr>
@@ -226,7 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
 
-            ob_start();
             $pdf->Output('S'); // Save PDF output to a variable as a string
             $pdfContent = ob_get_clean();
 
