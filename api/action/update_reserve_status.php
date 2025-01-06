@@ -470,7 +470,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Clean up the temporary file
-         unlink($tempFilePath);
+        // Remove the temporary file
+        if (file_exists($tempFilePath)) {
+            unlink($tempFilePath);
+        }
 
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
