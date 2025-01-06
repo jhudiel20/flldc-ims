@@ -228,8 +228,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             ob_start();
             $pdf->Output('S'); // Save PDF output to a variable as a string
-            $pdfContent = ob_get_clean();
-
+            ob_end_clean();
+            
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
 
