@@ -2,6 +2,7 @@
 if (!isset($_COOKIE['secure_data'])) {
     header("Location: /");
 }
+ob_end_clean();
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -225,8 +226,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             ';
             $pdf->writeHTML($html, true, false, true, false, '');
-
+            ob_start();
             $pdf->Output('S'); // Save PDF output to a variable as a string
+            
             $pdfContent = ob_get_clean();
 
             // File details
