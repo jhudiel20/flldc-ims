@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Create a new instance of the PDF
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
             $pdf->AddPage();
-            ob_clean();
+
             $html = '
                 <!DOCTYPE html>
                 <html lang="en">
@@ -201,7 +201,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- Additional Information -->
                         <table style="width: 100%;  border: 1px solid black;padding: 10px;">
                             <tr>
                                 <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>ADDITIONAL INFORMATION:</strong></th>
@@ -225,9 +224,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf->writeHTML($html, true, false, true, false, '');
             // Get PDF content
             $pdfContent = $pdf->Output('', 'S');
-
-            // Clear output buffer
-            ob_end_clean();
 
             // File details
             $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
@@ -466,6 +462,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ';
         }
         $mail->send();
+
+        // Clear output buffer
+        ob_end_clean();
 
         // Clean up the temporary file
         unlink($tempFilePath);
