@@ -344,7 +344,7 @@ $(document).ready(function () {
     });
 
 // ############ - MANAGE USERS & ACCESS - ############  
-    $('#add_user').on('click', function() {
+    $('#add_user_btn').on('click', function() {
         var formdata = new FormData(add_user_form);
 
         if ($('#fname').val() == "") {
