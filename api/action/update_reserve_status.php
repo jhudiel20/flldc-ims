@@ -193,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <td style=" border: 1px solid black;">'. $row['reserve_date'] .'</td>
                                     <td style=" border: 1px solid black;">'. $row['time'] .'</td>
                                     <td style=" text-align: center; border: 1px solid black;">'. $row['guest'] .'</td>
-                                    <td style=" text-align: right; border: 1px solid black;">'. $row['prices'] .'</td>
+                                    <td style=" text-align: right; border: 1px solid black;"><span>₱</span> '. number_format($row['prices']) .'</td>
                                 </tr>
                                 <tr class="total-row">
                                     <td colspan="4" style=" text-align: right; font-weight: bold; border: 1px solid black;">Grand Total</td>
