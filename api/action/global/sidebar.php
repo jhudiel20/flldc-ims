@@ -60,14 +60,19 @@ $user_id = $decrypted_array['ID'];
                             <div class="text-truncate" data-i18n="Training Database">Training Database</div>
                         </a>
                     </li>
+                    <li class="menu-item <?php echo ($geturl == 'dashboard-eval')? 'active' : 'collapsed' ?>">
+                        <a href="dashboard-eval" class="menu-link btn-page-block">
+                            <div class="text-truncate" data-i18n="Training Evaluation">Training Evalution</div>
+                        </a>
+                    </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-lms')? 'active' : 'collapsed' ?>">
                         <a href="dashboard-lms" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="FAST LMS">FAST LMS</div>
                         </a>
                     </li>
-                    <li class="menu-item <?php echo ($geturl == 'dashboard-eval')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-eval" class="menu-link btn-page-block">
-                            <div class="text-truncate" data-i18n="Training Evaluation">Training Evalution</div>
+                    <li class="menu-item <?php echo ($geturl == 'dashboard-technical')? 'active' : 'collapsed' ?>">
+                        <a href="dashboard-mrs" class="menu-link btn-page-block">
+                            <div class="text-truncate" data-i18n="Technical Looker">Technical Looker</div>
                         </a>
                     </li>
                 </ul>

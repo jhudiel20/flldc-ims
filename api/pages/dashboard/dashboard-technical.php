@@ -11,8 +11,8 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <head>
     <?php
-    include __DIR__ . "/../../action/global/metadata.php";
-    include __DIR__ . "/../../action/global/include_top.php";
+    include __DIR__  . "/../../action/global/metadata.php";
+    include __DIR__  . "/../../action/global/include_top.php";
     ?>
 </head>
 
@@ -21,7 +21,7 @@ if (!isset($decrypted_array['ACCESS'])) {
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
 
-            <?php
+        <?php
         include __DIR__ . "/../../action/global/sidebar.php";
         include __DIR__ . "/../../action/global/header.php"; 
         ?>
@@ -31,26 +31,12 @@ if (!isset($decrypted_array['ACCESS'])) {
                 <!-- Content -->
 
                 <div class="container flex-grow-1 container-p-y">
-                    
-                    <div class="row h-100">
-                        <div class="card w-100 h-100">
-                            <div class="d-flex align-items-end row h-100">
-                                <div class="col-12 h-100">
-                                    <div class="card-body h-100">
-                                        <iframe
-                                            src="https://metabase.fast.com.ph/public/dashboard/d274b32b-501c-4e80-8be2-5d372844e750"
-                                            frameborder="0"
-                                            width="100%"
-                                            height="100%"
-                                            allowtransparency="true"
-                                        ></iframe>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                   
+                    <iframe width="100%" height="100%"
+                        src="https://lookerstudio.google.com/embed/reporting/033fe95c-b234-4178-b696-0b01d9ea9952/page/p_3zwl50kljd"
+                        frameborder="0" style="border:0" allowfullscreen>
+                    </iframe>
+
                 </div>
                 <!-- / Content -->
 
