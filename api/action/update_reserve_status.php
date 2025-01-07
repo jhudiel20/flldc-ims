@@ -214,6 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <br>
                                     <span style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
                                         Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
+                                    </span>
                                 </td>
                             </tr>
                         </table>
