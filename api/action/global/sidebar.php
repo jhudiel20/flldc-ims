@@ -71,7 +71,7 @@ $user_id = $decrypted_array['ID'];
                         </a>
                     </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-technical')? 'active' : 'collapsed' ?>">
-                        <a href="dashboard-mrs" class="menu-link btn-page-block">
+                        <a href="dashboard-technical" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Technical Looker">Technical Looker</div>
                         </a>
                     </li>
