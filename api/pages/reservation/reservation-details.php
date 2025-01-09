@@ -14,7 +14,9 @@ if(empty($id)){
     header("Location:404");
 }
 
-$sql = $conn->prepare("SELECT * FROM reservations WHERE ID = :id ");
+$sql = $conn->prepare("SELECT * FROM reservations JOIN room_details
+ON room_details.room_id = reservations.roomid
+WHERE room_details.ID = :id ");
 $sql->bindParam(':id', $id, PDO::PARAM_STR);
 $sql->execute();
 $row = $sql->fetch(PDO::FETCH_ASSOC);
