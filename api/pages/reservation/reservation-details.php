@@ -71,7 +71,6 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                             </div>
                         </div>
                         
-
                         <div class="col-12 col-lg-8 order-4 order-md-4 order-lg-4 mb-2">
 
                             <div class="card">
@@ -218,14 +217,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
 
                         </div>
 
-                        <div class="col-12 col-lg-4 order-3 order-md-3 order-lg-3 mb-2">
+                        <div class="col-12 col-lg-4 order-5 order-md-5 order-lg-5 mb-2">
                             <div class="card">
                                 <div class="row row-bordered g-0">
                                     <div class="col-md-12">
                                         <div class="card-body"> 
                                             <div class="text-center">
                                                 <img src="/fetch?file=<?php echo urlencode($row['room_photo']); ?>&db=room-photo" style="height:220px;" />
-                                                <h5><?php echo $row['roo_name'];?></h5>
+                                                <h5><?php echo $row['room_name'];?></h5>
                                             </div>
                                         </div> 
                                     </div>
