@@ -559,8 +559,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        $sql = $conn->prepare("UPDATE reservations SET invoice = :invoice, reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
-        $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
+        $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+        // $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
+        // invoice = :invoice,
         $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
         $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
         $sql->bindParam(':id', $ID, PDO::PARAM_STR);
