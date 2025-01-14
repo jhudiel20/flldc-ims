@@ -126,160 +126,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($approval_status == 'APPROVED') {
             // Create a new instance of the PDF
-            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
-            $pdf->AddPage();
+            // $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            // $pdf->AddPage();
 
-            $html = '
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Invoice</title>
-                </head>
-                <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
-                    <div class="invoice-container">
-                        <!-- Header Section -->
-                        <img src="https://flldc-ims.vercel.app/assets/img/LOGO.jpg" height="60px;" style="text-align:center" alt="Logo"><br>
-                        <h2 style="text-align: center;font-size: 18px;">SERVICE INVOICE</h2>
-                        <table style="width: 100%;  border: 1px solid black;padding: 10px;">
-                            <tr>
-                                <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE NO:</strong></th>
-                                <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>DATE:</strong></th>
-                            </tr>
-                            <tr>
-                                <td style=" border: 1px solid black;">'. $generateReserveID .'</td>
-                                <td style=" border: 1px solid black;">'. date('Y-m-d') .'</td>
-                            </tr>
-                        </table>                        
-                        <!-- Invoice Details -->
-                        <table style="width: 100%;  border: 1px solid black;padding: 10px;">
-                            <tr>
-                                <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE FROM:</strong></th>
-                                <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>INVOICE TO:</strong></th>  
-                            </tr>
-                            <tr>
-                                <td style=" font-size: 10px; border: 1px solid black;">
-                                    FAST LOGISTICS LEARNING AND DEVELOPMENT CORPORATION<br>
-                                    Fast Warehouse Complex,<br>
-                                    Pulo-Diezmo Road,<br>
-                                    Barangay Pulo,<br>
-                                    Cabuyao City Laguna.
-                                </td>
-                                <td style=" border: 1px solid black;">
-                                    '. $row['fname'] .' '. $row['lname'].' <br>
-                                </td>
-                            </tr>
-                        </table>  
-                        <!-- Reservation Details -->
-                        <table style="width: 100%;  border: 1px solid black;padding: 10px;">
-                            <thead>
-                                <tr>
-                                    <th colspan="5" style=" background-color: #f1f1f1; text-align: left; border: 1px solid black;">
-                                        <strong>RESERVATION DETAILS</strong>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td style=" border: 1px solid black;">Room Name</td>
-                                    <td style=" border: 1px solid black;">Date Reserved</td>
-                                    <td style=" border: 1px solid black;">Time Reserved</td>
-                                    <td style=" text-align: center; border: 1px solid black;">No. of Pax</td>
-                                    <td style=" text-align: right; border: 1px solid black;">Rate (Php)</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style=" border: 1px solid black;">'. $row['room_name'] .'</td>
-                                    <td style=" border: 1px solid black;">'. $row['reserve_date'] .'</td>
-                                    <td style=" border: 1px solid black;">'. $row['time'] .'</td>
-                                    <td style=" text-align: center; border: 1px solid black;">'. $row['guest'] .'</td>
-                                    <td style=" text-align: right; border: 1px solid black;">'. number_format($row['prices'],2) .'</td>
-                                </tr>
-                                <tr class="total-row">
-                                    <td colspan="4" style=" text-align: right; font-weight: bold; border: 1px solid black;">Grand Total</td>
-                                    <td style=" text-align: right; font-weight: bold; border: 1px solid black;">'. number_format($row['prices'],2) .'</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table style="width: 100%;  border: 1px solid black;padding: 10px;">
-                            <tr>
-                                <th style=" background-color: #f1f1f1; border: 1px solid black;"><strong>ADDITIONAL INFORMATION:</strong></th>
-                            </tr>
-                            <tr>
-                                <td style=" border: 1px solid black;">
-                                    Please make payable to:<br>
-                                    <strong>Account Name:</strong> Fast Logistics Learning and Development Corporation<br>
-                                    <strong>Account Number:</strong> 759-084367-1<br>
-                                    <strong>Bank:</strong> RCBC
-                                    <br>
-                                    <span style="font-size: 12px; color: #6c757d; text-align: center; margin-top: 20px;">
-                                        Thanks for your business! All amounts shown are in Philippine Pesos (PHP).
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </body>
-                </html>
-            ';
-            $pdf->writeHTML($html, true, false, true, false, '');
-            // Get PDF content
-            $pdfContent = $pdf->Output('', 'S');
+            // $html = '
+               
+            // ';
+            // $pdf->writeHTML($html, true, false, true, false, '');
+            // // Get PDF content
+            // $pdfContent = $pdf->Output('', 'S');
 
-            // File details
-            $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
+            // // File details
+            // $fileName = 'INVOICE-' . $generateReserveID .'.pdf';
 
-            // Encode the PDF content to base64
-            $base64Content = base64_encode($pdfContent);
+            // // Encode the PDF content to base64
+            // $base64Content = base64_encode($pdfContent);
 
-            // Prepare the API request 
-            $fileUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
-            $data = json_encode([
-                'message' => 'Upload invoice ' . $fileName,
-                'content' => $base64Content,
-            ]);
+            // // Prepare the API request 
+            // $fileUrl = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/RESERVATION_INVOICE/' . urlencode($fileName);
+            // $data = json_encode([
+            //     'message' => 'Upload invoice ' . $fileName,
+            //     'content' => $base64Content,
+            // ]);
 
-            $ch = curl_init($fileUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: token ' . $githubToken,
-                'User-Agent: PHP Script',
-                'Content-Type: application/json',
-            ]);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            // $ch = curl_init($fileUrl);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            //     'Authorization: token ' . $githubToken,
+            //     'User-Agent: PHP Script',
+            //     'Content-Type: application/json',
+            // ]);
+            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            $responses = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            // $responses = curl_exec($ch);
+            // $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-            if (curl_errno($ch)) {
-                // Handle curl errors
-                echo json_encode([
-                    'success' => false,
-                    'title' => 'Curl Error',
-                    'message' => curl_error($ch),
-                ]);
-                curl_close($ch);
-                exit();
-            }
+            // if (curl_errno($ch)) {
+            //     // Handle curl errors
+            //     echo json_encode([
+            //         'success' => false,
+            //         'title' => 'Curl Error',
+            //         'message' => curl_error($ch),
+            //     ]);
+            //     curl_close($ch);
+            //     exit();
+            // }
 
-            curl_close($ch);
+            // curl_close($ch);
 
-            // GitHub file URL (raw file URL for downloading)
-            $rawFileUrl = 'https://raw.githubusercontent.com/' . $owner . '/' . $repo . '/main/RESERVATION_INVOICE/' . urlencode($fileName);
+            // // GitHub file URL (raw file URL for downloading)
+            // $rawFileUrl = 'https://raw.githubusercontent.com/' . $owner . '/' . $repo . '/main/RESERVATION_INVOICE/' . urlencode($fileName);
 
-            // Download the file content from GitHub
-            $fileContent = downloadFileFromGitHub($rawFileUrl);
+            // // Download the file content from GitHub
+            // $fileContent = downloadFileFromGitHub($rawFileUrl);
 
-            // Create a temporary file to store the content
-            $tempFilePath = tempnam(sys_get_temp_dir(), 'invoice_' . $generateReserveID);
-            file_put_contents($tempFilePath, $fileContent);
-
+            // // Create a temporary file to store the content
+            // $tempFilePath = tempnam(sys_get_temp_dir(), 'invoice_' . $generateReserveID);
+            // file_put_contents($tempFilePath, $fileContent);
 
             $mail->Subject = 'Reservation Status Update: ' . $approval_status;
 
             // Attach the downloaded file
-            $mail->addAttachment($tempFilePath, $fileName);
+            // $mail->addAttachment($tempFilePath, $fileName);
 
             $mail->addAttachment($_SERVER['DOCUMENT_ROOT'] . '/public/assets/Reservation-Terms-and-Agreement.pdf', 'Reservation-Terms-and-Agreement.pdf.pdf');
             $mail->Body = '
