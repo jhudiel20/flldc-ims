@@ -32,7 +32,7 @@ if (!isset($decrypted_array['ACCESS'])) {
 
                 <div class="container flex-grow-1 container-p-y">
 
-                
+
 
                 </div>
                 <!-- / Content -->
@@ -66,5 +66,10 @@ if (!isset($decrypted_array['ACCESS'])) {
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
 </body>
+
+<script src="/../assets/vendor/echarts/echarts.min.js"></script>
+<script src="<?php BASE_URL; ?>assets/vendor/chart.js/chart.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+<script src="<?php BASE_URL; ?>assets/vendor/apexcharts/apexcharts.min.js?v=<?php echo FILE_VERSION; ?>"></script>
+<script src="<?php BASE_URL; ?>assets/js/bootstrap-datepicker.min.js?v=<?php echo FILE_VERSION; ?>"></script>
 
 </html>

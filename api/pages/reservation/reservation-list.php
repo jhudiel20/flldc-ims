@@ -130,17 +130,17 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 <script>
 
-var invoice_attachment = function(cell, formatterParams, onRendered) {
-    var INVOICE = cell.getData().invoice;
-    var ID = cell.getRow().getData().id;
+// var invoice_attachment = function(cell, formatterParams, onRendered) {
+//     var INVOICE = cell.getData().invoice;
+//     var ID = cell.getRow().getData().id;
 
-    if(INVOICE != ''){
-        return "<a href='fetch?db=RESERVATION_INVOICE&file=" + encodeURIComponent(INVOICE) + "' target='_blank' ><i class='fa-solid fa-paperclip'></i></a>";
-    }else{
-        return "<i class='fa-solid fa-circle-xmark'></i>";
-    }
+//     if(INVOICE != ''){
+//         return "<a href='fetch?db=RESERVATION_INVOICE&file=" + encodeURIComponent(INVOICE) + "' target='_blank' ><i class='fa-solid fa-paperclip'></i></a>";
+//     }else{
+//         return "<i class='fa-solid fa-circle-xmark'></i>";
+//     }
 
-}
+// }
 
 
 var approval_status = function(cell, formatterParams, onRendered) {
@@ -269,19 +269,19 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
-        {
-            title: "Invoice",
-            field: "invoice",
-            formatter: invoice_attachment,
-            hozAlign: "center",
-            headerFilter: "list",
-            headerFilterParams: {
-                valuesLookup: true,
-                clearable: true
-            },
-            // width: 300,
-            headerFilterLiveFilter: false
-        },
+        // {
+        //     title: "Invoice",
+        //     field: "invoice",
+        //     formatter: invoice_attachment,
+        //     hozAlign: "center",
+        //     headerFilter: "list",
+        //     headerFilterParams: {
+        //         valuesLookup: true,
+        //         clearable: true
+        //     },
+        //     // width: 300,
+        //     headerFilterLiveFilter: false
+        // },
         {
             title: "First Name",
             field: "fname",
