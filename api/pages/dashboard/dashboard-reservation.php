@@ -135,7 +135,7 @@ if ($current_monthly_sales != 0 && $last_month_sales != 0) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span class="fw-medium d-block mb-1">Monthly Sales <?php// echo $row_last_month_sales['PREVIOUS_MONTH_SALES']; ?></span>
+                                            <span class="fw-medium d-block mb-1">Monthly Sales</span>
                                             <h4 class="card-title mb-2"><?php echo "₱".number_format($row_current_monthly_sales['MONTHLY_SALES']); ?></h4>
                                             <?php 
                                                 if ($percentage_monthly > 0) {
