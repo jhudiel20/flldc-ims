@@ -30,7 +30,12 @@ if(isset($_POST['submit_year'])){
     SELECT COUNT(id) AS total_reserve FROM reservations
     WHERE reserve_status = 'APPROVED'");
     $total_reserve->execute();
-    $row_total_reserve = $total_guest->fetch(PDO::FETCH_ASSOC);
+    $row_total_reserve = $total_reserve->fetch(PDO::FETCH_ASSOC);
+
+    $total_book = $conn->prepare("
+    SELECT COUNT(id) AS total_book FROM reservations");
+    $total_book->execute();
+    $row_total_book = $total_book->fetch(PDO::FETCH_ASSOC);
 
     
 ?>
@@ -114,7 +119,7 @@ if(isset($_POST['submit_year'])){
                     <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                        <div class="col-lg-6 col-md-3 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -126,13 +131,13 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                 </div>
                                 <span class="d-block">Sales</span>
-                                <h4 class="card-title mb-1"><?php echo $row_total_sales['total_sales'] ?></h4>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_sales['total_sales']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                        <div class="col-lg-6 col-md-3 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -144,13 +149,13 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                 </div>
                                 <span class="d-block">Head Count</span>
-                                <h4 class="card-title mb-1"><?php echo $row_total_guest['total_guest'] ?></h4>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_guest['total_guest']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
                         <!-- total number of reservations -->
-                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                        <div class="col-lg-6 col-md-3 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -161,38 +166,27 @@ if(isset($_POST['submit_year'])){
                                         class="rounded" />
                                     </div>
                                 </div>
-                                <span class="d-block">Total reservation</span>
-                                <h4 class="card-title mb-1"><?php echo $row_total_reserve['total_reserve'] ?></h4>
+                                <span class="d-block">Total Approved Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_reserve['total_reserve']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
-                        <!-- number of active midwifes -->
-                        <div class="col-md-3 col-lg-3 order-2 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title m-0 me-2">Total Active Midwifes</h5>
-                                </div>
+                        <!-- total bookings -->
+                        <div class="col-lg-6 col-md-3 col-3 mb-4">
+                            <div class="card">
                                 <div class="card-body">
-                                    <ul class="p-0 m-0">
-                                        <li class="d-flex mb-4 pb-1">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <img src="<?php echo BASE_URL; ?>/assets/img/icons/unicons/user.png"
-                                                    alt="User" class="rounded" />
-                                            </div>
-                                            <div
-                                                class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                <div class="me-2">
-                                                    <!-- <small class="text-muted d-block mb-1">Total Active Patients</small> -->
-                                                    <h6 class="mb-0">Midwifes</h6>
-                                                </div>
-                                                <div class="user-progress d-flex align-items-center gap-1">
-                                                    <h6 class="mb-0"><?php echo $row_count_active_midwifes['TOTAL']; ?>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Booking</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_book['total_book']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
