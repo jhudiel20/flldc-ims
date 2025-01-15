@@ -14,33 +14,28 @@ if(isset($_POST['submit_year'])){
     $year = date("Y");
   }
 
-  $current_monthly_sales = $conn->prepare("
-    SELECT SUM(CAST(PRICES AS NUMERIC)) AS MONTHLY_SALES
-    FROM reservations
-    WHERE EXTRACT(YEAR FROM DATE_CREATED) = EXTRACT(YEAR FROM CURRENT_DATE) 
-    AND EXTRACT(MONTH FROM DATE_CREATED) = EXTRACT(MONTH FROM CURRENT_DATE);
+    $total_sales = $conn->prepare("
+    SELECT SUM(CAST(prices AS NUMERIC)) AS total_sales FROM reservations
+    WHERE reserve_status = 'APPROVED') 
     ");
-    $current_monthly_sales->execute();
-    $row_current_monthly_sales = $current_monthly_sales->fetch(PDO::FETCH_ASSOC);
-    $row_current_monthly_sales = $row_current_monthly_sales['MONTHLY_SALES'];
+    $total_sales->execute();
+    $row_total_sales = $total_sales->fetch(PDO::FETCH_ASSOC);
 
-
-    $last_month_sales = $conn->prepare("
-        SELECT SUM(CAST(PRICES AS NUMERIC)) AS PREVIOUS_MONTH_SALES
-        FROM reservations
-        WHERE EXTRACT(YEAR FROM DATE_CREATED) = EXTRACT(YEAR FROM CURRENT_DATE - INTERVAL '1 MONTH') 
-        AND EXTRACT(MONTH FROM DATE_CREATED) = EXTRACT(MONTH FROM CURRENT_DATE - INTERVAL '1 MONTH');
+    $total_guest = $conn->prepare("
+    SELECT SUM(CAST(guest AS NUMERIC)) AS total_guest FROM reservations
+    WHERE reserve_status = 'APPROVED') 
     ");
-    $last_month_sales->execute();
-    $row_last_month_sales = $last_month_sales->fetch(PDO::FETCH_ASSOC);
-    $row_last_month_sales = $row_last_month_sales['PREVIOUS_MONTH_SALES'];
+    $total_guest->execute();
+    $row_total_guest = $total_guest->fetch(PDO::FETCH_ASSOC);
 
+    $total_reserve = $conn->prepare("
+    SELECT COUNT(id) AS total_reserve FROM reservations
+    WHERE reserve_status = 'APPROVED') 
+    ");
+    $total_reserve->execute();
+    $row_total_reserve = $total_guest->fetch(PDO::FETCH_ASSOC);
 
-if ($current_monthly_sales != 0 && $last_month_sales != 0) {
-    $percentage_monthly = (($current_monthly_sales - $last_month_sales) / $last_month_sales) * 100;
-} else {
-    $percentage_monthly = 0; // Avoid division by zero error
-}
+    
 ?>
 <!doctype html>
 
@@ -121,77 +116,90 @@ if ($current_monthly_sales != 0 && $last_month_sales != 0) {
 
                     <div class="row">
 
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-12 mb-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="card-title d-flex align-items-start justify-content-between">
-                                                <div class="avatar flex-shrink-0">
-                                                    <img src="./assets/img/icons/unicons/cc-primary.png"
-                                                        alt="Credit Card" class="rounded">
-                                                </div>
-                                                <div class="dropdown">
-                                                    <button class="btn p-0" type="button" id="cardOpt1"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                                        <a class="dropdown-item" href="javascript:void(0);">View
-                                                            More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="fw-medium d-block mb-1">Monthly Sales</span>
-                                            <h4 class="card-title mb-2"><?php echo "₱".number_format($row_current_monthly_sales['MONTHLY_SALES']); ?></h4>
-                                            <?php 
-                                                if ($percentage_monthly > 0) {
-                                                ?> 
-                                                    <small class="text-success fw-medium">
-                                                    <i class='bx bx-up-arrow-alt'></i>
-                                             
-                                                    <?php 
-                                                } elseif($percentage_monthly < 0) {
-                                                    ?>
-                                                    <small class="text-danger fw-medium">
-                                                    <i class='bx bx-down-arrow-alt'></i>
-                                                
-                                                    <?php 
-                                                } else { ?>
-                                                    <small class="text-secondary fw-medium">
-                                                    
-                                                <?php } ?>
-                                                <?php echo number_format($percentage_monthly, 2); ?>% <!-- Display the percentage change -->
-                                            </small>
-                                        </div>
+                        <!-- Total Revenue in reservation -->
+                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/wallet-info.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
                                     </div>
                                 </div>
-                                <div class="col-12 mb-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="card-title d-flex align-items-start justify-content-between">
-                                                <div class="flex-shrink-0">
-                                                    <i class='menu-icon fa-solid fa-truck-fast'></i> Pending Deliveries
-                                                </div>
-                                                <div class="dropdown">
-                                                    <button class="btn p-0" type="button" id="cardOpt1"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                                        <a class="dropdown-item" href="shipping_list.php">View
-                                                            More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <span class="d-block">Sales</span>
+                                <h4 class="card-title mb-1"><?php echo $row_total_sales['total_sales'] ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
-                           
                             </div>
                         </div>
+                        <!-- total number guest -->
+                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/user.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Head Count</span>
+                                <h4 class="card-title mb-1"><?php echo $row_total_guest['total_guest'] ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total number of reservations -->
+                        <div class="col-lg-6 col-md-3 col-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total reservation</span>
+                                <h4 class="card-title mb-1"><?php echo $row_total_reserve['total_reserve'] ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- number of active midwifes -->
+                        <div class="col-md-3 col-lg-3 order-2 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header d-flex align-items-center justify-content-between">
+                                    <h5 class="card-title m-0 me-2">Total Active Midwifes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="p-0 m-0">
+                                        <li class="d-flex mb-4 pb-1">
+                                            <div class="avatar flex-shrink-0 me-3">
+                                                <img src="<?php echo BASE_URL; ?>/assets/img/icons/unicons/user.png"
+                                                    alt="User" class="rounded" />
+                                            </div>
+                                            <div
+                                                class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                <div class="me-2">
+                                                    <!-- <small class="text-muted d-block mb-1">Total Active Patients</small> -->
+                                                    <h6 class="mb-0">Midwifes</h6>
+                                                </div>
+                                                <div class="user-progress d-flex align-items-center gap-1">
+                                                    <h6 class="mb-0"><?php echo $row_count_active_midwifes['TOTAL']; ?>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
 
