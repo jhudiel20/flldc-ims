@@ -37,6 +37,24 @@ if(isset($_POST['submit_year'])){
     $total_book->execute();
     $row_total_book = $total_book->fetch(PDO::FETCH_ASSOC);
 
+    $total_sales_per_month = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'YYYY-MM') AS month, 
+            SUM(CAST(prices AS NUMERIC)) AS total_sales
+        FROM reservations
+        WHERE reserve_status = 'APPROVED'
+        GROUP BY TO_CHAR(reserve_date, 'YYYY-MM')
+        ORDER BY month ASC
+    ");
+    $total_sales_per_month->execute();
+    $sales_data = $total_sales_per_month->fetchAll(PDO::FETCH_ASSOC);
+
+    // Prepare data for JavaScript
+    $months = [];
+    $sales = [];
+    foreach ($sales_data as $row) {
+        $months[] = $row['month'];
+        $sales[] = $row['total_sales'];
+    }
     
 ?>
 <!doctype html>
@@ -191,6 +209,43 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Revenue</h5>
+
+                                    <!-- Bar Chart -->
+                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            const months = <?php echo json_encode($months); ?>;
+                                            const sales = <?php echo json_encode($sales); ?>;
+
+                                            echarts.init(document.querySelector("#barChart")).setOption({
+                                                xAxis: {
+                                                    type: 'category',
+                                                    data: months
+                                                },
+                                                yAxis: {
+                                                    type: 'value'
+                                                },
+                                                series: [{
+                                                    data: sales,
+                                                    type: 'bar'
+                                                }]
+                                            });
+                                        });
+                                    </script>
+                                    <!-- End Bar Chart -->
+
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 

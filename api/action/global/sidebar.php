@@ -57,7 +57,7 @@ $user_id = $decrypted_array['ID'];
                 <ul class="menu-sub">
                     <li class="menu-item <?php echo ($geturl == 'dashboard-lnd')? 'active' : 'collapsed' ?>">
                         <a href="dashboard-lnd" class="menu-link btn-page-block">
-                            <div class="text-truncate" data-i18n="Training Database">Training Database</div>
+                            <div class="text-truncate" data-i18n="Metabase">Metabase</div>
                         </a>
                     </li>
                     <li class="menu-item <?php echo ($geturl == 'dashboard-eval')? 'active' : 'collapsed' ?>">
@@ -73,6 +73,11 @@ $user_id = $decrypted_array['ID'];
                     <li class="menu-item <?php echo ($geturl == 'dashboard-technical')? 'active' : 'collapsed' ?>">
                         <a href="dashboard-technical" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Technical Looker">Technical Looker</div>
+                        </a>
+                    </li>
+                    <li class="menu-item <?php echo ($geturl == 'dashboard-reservation')? 'active' : 'collapsed' ?>">
+                        <a href="dashboard-reservation" class="menu-link btn-page-block">
+                            <div class="text-truncate" data-i18n="Reservation">Reservation</div>
                         </a>
                     </li>
                 </ul>
