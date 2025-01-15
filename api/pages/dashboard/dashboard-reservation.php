@@ -15,24 +15,26 @@ if(isset($_POST['submit_year'])){
   }
 
   $current_monthly_sales = $conn->prepare("
-  SELECT SUM(CAST(PRICES AS NUMERIC)) AS MONTHLY_SALES
-  FROM reservations
-  WHERE YEAR(DATE_CREATED) = YEAR(CURRENT_DATE) 
-  AND MONTH(DATE_CREATED) = MONTH(CURRENT_DATE);
-");
-$current_monthly_sales->execute();
-$row_current_monthly_sales = $current_monthly_sales->fetch(PDO::FETCH_ASSOC);
-$row_current_monthly_sales = $row_current_monthly_sales['MONTHLY_SALES'];
-
-$last_month_sales = $conn->prepare("
-    SELECT SUM(CAST(PRICES AS NUMERIC)) AS PREVIOUS_MONTH_SALES
+    SELECT SUM(CAST(PRICES AS NUMERIC)) AS MONTHLY_SALES
     FROM reservations
-    WHERE YEAR(DATE_CREATED) = YEAR(CURRENT_DATE - INTERVAL '1 MONTH') 
-    AND MONTH(DATE_CREATED) = MONTH(CURRENT_DATE - INTERVAL '1 MONTH');
-");
-$last_month_sales->execute();
-$row_last_month_sales = $last_month_sales->fetch(PDO::FETCH_ASSOC);
-$row_last_month_sales = $row_last_month_sales['PREVIOUS_MONTH_SALES'];
+    WHERE EXTRACT(YEAR FROM DATE_CREATED) = EXTRACT(YEAR FROM CURRENT_DATE) 
+    AND EXTRACT(MONTH FROM DATE_CREATED) = EXTRACT(MONTH FROM CURRENT_DATE);
+    ");
+    $current_monthly_sales->execute();
+    $row_current_monthly_sales = $current_monthly_sales->fetch(PDO::FETCH_ASSOC);
+    $row_current_monthly_sales = $row_current_monthly_sales['MONTHLY_SALES'];
+
+
+    $last_month_sales = $conn->prepare("
+        SELECT SUM(CAST(PRICES AS NUMERIC)) AS PREVIOUS_MONTH_SALES
+        FROM reservations
+        WHERE EXTRACT(YEAR FROM DATE_CREATED) = EXTRACT(YEAR FROM CURRENT_DATE - INTERVAL '1 MONTH') 
+        AND EXTRACT(MONTH FROM DATE_CREATED) = EXTRACT(MONTH FROM CURRENT_DATE - INTERVAL '1 MONTH');
+    ");
+    $last_month_sales->execute();
+    $row_last_month_sales = $last_month_sales->fetch(PDO::FETCH_ASSOC);
+    $row_last_month_sales = $row_last_month_sales['PREVIOUS_MONTH_SALES'];
+
 
 if ($current_monthly_sales != 0 && $last_month_sales != 0) {
     $percentage_monthly = (($current_monthly_sales - $last_month_sales) / $last_month_sales) * 100;
