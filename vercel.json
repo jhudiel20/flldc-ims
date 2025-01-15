@@ -63,6 +63,10 @@
         "dest": "/api/action/logout.php"
       },
       {
+        "src": "/dashboard-reservation",
+        "dest": "/api/pages/dashboard/dashboard-reservation.php"
+      },
+      {
         "src": "/dashboard-lnd",
         "dest": "/api/pages/dashboard/dashboard-lnd.php"
       },

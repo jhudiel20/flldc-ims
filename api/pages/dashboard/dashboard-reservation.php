@@ -219,5 +219,7 @@ if ($current_monthly_sales != 0 && $last_month_sales != 0) {
         include __DIR__ . "/../../action/global/include_bottom.php";
       ?>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@4.3.0/dist/apexcharts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </html>
