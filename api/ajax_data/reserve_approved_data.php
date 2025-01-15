@@ -68,7 +68,7 @@ $data_stmt->execute();
 $rows = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($rows as &$row) {
-    $row['xid'] = encrypted_string($row['id'], $encryption_key);
+    $row['xid'] = encrypted_string($row['id']);
 }
 
 $response = [
