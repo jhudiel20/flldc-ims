@@ -16,22 +16,19 @@ if(isset($_POST['submit_year'])){
 
     $total_sales = $conn->prepare("
     SELECT SUM(CAST(prices AS NUMERIC)) AS total_sales FROM reservations
-    WHERE reserve_status = 'APPROVED') 
-    ");
+    WHERE reserve_status = 'APPROVED'");
     $total_sales->execute();
     $row_total_sales = $total_sales->fetch(PDO::FETCH_ASSOC);
 
     $total_guest = $conn->prepare("
     SELECT SUM(CAST(guest AS NUMERIC)) AS total_guest FROM reservations
-    WHERE reserve_status = 'APPROVED') 
-    ");
+    WHERE reserve_status = 'APPROVED'");
     $total_guest->execute();
     $row_total_guest = $total_guest->fetch(PDO::FETCH_ASSOC);
 
     $total_reserve = $conn->prepare("
     SELECT COUNT(id) AS total_reserve FROM reservations
-    WHERE reserve_status = 'APPROVED') 
-    ");
+    WHERE reserve_status = 'APPROVED'");
     $total_reserve->execute();
     $row_total_reserve = $total_guest->fetch(PDO::FETCH_ASSOC);
 
