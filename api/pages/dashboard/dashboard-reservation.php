@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../DBConnection.php';
 if (!isset($decrypted_array['ACCESS'])) {
     header("Location: /");
 }
