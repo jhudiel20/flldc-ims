@@ -37,17 +37,22 @@ if(isset($_POST['submit_year'])){
     $total_book->execute();
     $row_total_book = $total_book->fetch(PDO::FETCH_ASSOC);
 
+    $currentYear = date('Y');
+    $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
+    
     $total_sales_per_month = $conn->prepare("
-        SELECT TO_CHAR(reserve_date, 'YYYY-MM') AS month, 
-            SUM(CAST(prices AS NUMERIC)) AS total_sales
+        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+               SUM(CAST(prices AS NUMERIC)) AS total_sales
         FROM reservations
         WHERE reserve_status = 'APPROVED'
-        GROUP BY TO_CHAR(reserve_date, 'YYYY-MM')
-        ORDER BY month ASC
+          AND EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+        ORDER BY TO_CHAR(reserve_date, 'YYYY-MM') ASC
     ");
+    $total_sales_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
     $total_sales_per_month->execute();
     $sales_data = $total_sales_per_month->fetchAll(PDO::FETCH_ASSOC);
-
+    
     // Prepare data for JavaScript
     $months = [];
     $sales = [];
@@ -137,7 +142,7 @@ if(isset($_POST['submit_year'])){
                     <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-lg-6 col-md-3 col-3 mb-4">
+                        <div class="col-md-6 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -155,7 +160,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-lg-6 col-md-3 col-3 mb-4">
+                        <div class="col-md-6 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -173,7 +178,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number of reservations -->
-                        <div class="col-lg-6 col-md-3 col-3 mb-4">
+                        <div class="col-md-6 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -191,7 +196,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total bookings -->
-                        <div class="col-lg-6 col-md-3 col-3 mb-4">
+                        <div class="col-md-6 col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -213,39 +218,55 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Revenue</h5>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Revenue</h5>
 
-                                    <!-- Bar Chart -->
-                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+                                <!-- Year Filter -->
+                                <form method="GET" id="yearFilterForm">
+                                    <label for="yearSelect">Select Year:</label>
+                                    <select name="year" id="yearSelect" onchange="document.getElementById('yearFilterForm').submit();">
+                                        <?php
+                                        $startYear = $currentYear - 5; // Show last 5 years
+                                        for ($year = $startYear; $year <= $currentYear; $year++) {
+                                            $selected = ($year == $selectedYear) ? 'selected' : '';
+                                            echo "<option value=\"$year\" $selected>$year</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </form>
+                                <!-- End Year Filter -->
 
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            const months = <?php echo json_encode($months); ?>;
-                                            const sales = <?php echo json_encode($sales); ?>;
+                                <!-- Bar Chart -->
+                                <div id="barChart" style="min-height: 400px;" class="echart"></div>
 
-                                            echarts.init(document.querySelector("#barChart")).setOption({
-                                                xAxis: {
-                                                    type: 'category',
-                                                    data: months
-                                                },
-                                                yAxis: {
-                                                    type: 'value'
-                                                },
-                                                series: [{
-                                                    data: sales,
-                                                    type: 'bar'
-                                                }]
-                                            });
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const months = <?php echo json_encode($months); ?>;
+                                        const sales = <?php echo json_encode($sales); ?>;
+
+                                        echarts.init(document.querySelector("#barChart")).setOption({
+                                            xAxis: {
+                                                type: 'category',
+                                                data: months
+                                            },
+                                            yAxis: {
+                                                type: 'value'
+                                            },
+                                            series: [{
+                                                data: sales,
+                                                type: 'bar'
+                                            }]
                                         });
-                                    </script>
-                                    <!-- End Bar Chart -->
+                                    });
+                                </script>
+                                <!-- End Bar Chart -->
 
-                                </div>
                             </div>
                         </div>
+                    </div>
+
 
                     </div>
 
