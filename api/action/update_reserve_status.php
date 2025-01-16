@@ -373,11 +373,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $mail->send();
 
-        // Clear output buffer
-        ob_end_clean();
+        // // Clear output buffer
+        // ob_end_clean();
 
-        // Clean up the temporary file
-        unlink($tempFilePath);
+        // // Clean up the temporary file
+        // unlink($tempFilePath);
 
         $decline_counter = $conn->prepare("
                 SELECT EMAIL FROM reservations 
