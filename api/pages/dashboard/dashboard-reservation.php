@@ -60,6 +60,27 @@ if(isset($_POST['submit_year'])){
         $months[] = $row['month'];
         $sales[] = $row['total_sales'];
     }
+
+    $total_head_per_month = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+            COUNT(id) AS total_head
+        FROM reservations
+        WHERE reserve_status = 'APPROVED'
+        AND EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+        ORDER BY MIN(reserve_date) ASC
+    ");
+    $total_head_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    $total_head_per_month->execute();
+    $head_data = $total_head_per_month->fetchAll(PDO::FETCH_ASSOC);
+
+    // Prepare data for JavaScript
+    $head_months = [];
+    $head = [];
+    foreach ($head_data as $row) {
+        $head_months[] = $row['month'];
+        $head[] = $row['total_head'];
+    }
     
 ?>
 <!doctype html>
@@ -73,55 +94,6 @@ if(isset($_POST['submit_year'])){
     include __DIR__  . "/../../action/global/include_top.php";
     ?>
 </head>
-
-<!-- Set Year Modal -->
-<div class="modal fade" id="btn_budget_year" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="budget_year" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="budget_year">Set Year: </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3" method="post">
-                    <input type="text" id="active_year" name="active_year" class="form-control">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" name="submit_year" id="submit_year"
-                    class="btn btn-outline-primary">Submit</button>
-            </div>
-            </form><!-- End Multi Columns Form -->
-        </div>
-    </div>
-</div>
-
-<!-- Set Year Modal -->
-<div class="modal fade" id="btn_sales_weekly" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="btn_sales_weekly" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">Select Start Week: </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3" method="post">
-                    <input type="date" id="active_week" name="active_week" class="form-control"
-                        max="<?php echo date('Y-m-d'); ?>">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" name="submit_week" id="submit_week"
-                    class="btn btn-outline-primary">Submit</button>
-            </div>
-            </form><!-- End Multi Columns Form -->
-        </div>
-    </div>
-</div>
 
 <body>
     <!-- Layout wrapper -->
@@ -142,7 +114,7 @@ if(isset($_POST['submit_year'])){
                     <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-3 col-sm-6 mb-4">
+                        <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -160,7 +132,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-3 col-sm-6 mb-4">
+                        <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -178,7 +150,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number of reservations -->
-                        <div class="col-3 col-sm-6 mb-4">
+                        <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -196,7 +168,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total bookings -->
-                        <div class="col-3 col-sm-6 mb-4">
+                        <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -218,72 +190,139 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Revenue</h5>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Revenue</h5>
 
-                                <!-- Year Filter -->
-                                <form method="GET" id="yearFilterForm">
-                                    <label for="yearSelect">Select Year:</label>
-                                    <select name="year" id="yearSelect" class="form-select"  onchange="document.getElementById('yearFilterForm').submit();">
-                                        <?php
-                                        $startYear = $currentYear - 5; // Show last 5 years
-                                        for ($year = $startYear; $year <= $currentYear; $year++) {
-                                            $selected = ($year == $selectedYear) ? 'selected' : '';
-                                            echo "<option value=\"$year\" $selected>$year</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </form>
-                                <!-- End Year Filter -->
+                                    <!-- Year Filter -->
+                                    <form method="GET" id="yearFilterForm">
+                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select w-50"  onchange="document.getElementById('yearFilterForm').submit();">
+                                        </label>
+                                            <?php
+                                            $startYear = $currentYear - 5; // Show last 5 years
+                                            for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                echo "<option value=\"$year\" $selected>$year</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </form>
+                                    <!-- End Year Filter -->
 
-                                <!-- Bar Chart -->
-                                <div id="barChart" style="min-height: 400px;" class="echart"></div>
+                                    <!-- Bar Chart -->
+                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
 
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        const months = <?php echo json_encode($months); ?>;
-                                        const sales = <?php echo json_encode($sales); ?>;
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            const months = <?php echo json_encode($months); ?>;
+                                            const sales = <?php echo json_encode($sales); ?>;
 
-                                        // Define an array of colors for each bar
-                                        const barColors = [
-                                            '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
-                                            '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
-                                        ];
+                                            // Define an array of colors for each bar
+                                            const barColors = [
+                                                '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
+                                                '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
+                                            ];
 
-                                        echarts.init(document.querySelector("#barChart")).setOption({
-                                            xAxis: {
-                                                type: 'category',
-                                                data: months
-                                            },
-                                            yAxis: {
-                                                type: 'value'
-                                            },
-                                            series: [{
-                                                data: sales,
-                                                type: 'bar',
-                                                label: {
-                                                    show: true, // Enable the label
-                                                    position: 'top', // Position the label at the top of the bars
-                                                    formatter: '{c}', // Format the label to display the value
-                                                    color: '#000' // Set the label color
+                                            echarts.init(document.querySelector("#barChart")).setOption({
+                                                xAxis: {
+                                                    type: 'category',
+                                                    data: months
                                                 },
-                                                itemStyle: {
-                                                    color: (params) => {
-                                                        // Use the barColors array to assign a color to each bar
-                                                        return barColors[params.dataIndex % barColors.length];
+                                                yAxis: {
+                                                    type: 'value'
+                                                },
+                                                series: [{
+                                                    data: sales,
+                                                    type: 'bar',
+                                                    label: {
+                                                        show: true, // Enable the label
+                                                        position: 'top', // Position the label at the top of the bars
+                                                        formatter: '{c}', // Format the label to display the value
+                                                        color: '#000' // Set the label color
+                                                    },
+                                                    itemStyle: {
+                                                        color: (params) => {
+                                                            // Use the barColors array to assign a color to each bar
+                                                            return barColors[params.dataIndex % barColors.length];
+                                                        }
                                                     }
-                                                }
-                                            }]
+                                                }]
+                                            });
                                         });
-                                    });
-                                </script>
-                                <!-- End Bar Chart -->
+                                    </script>
+                                    <!-- End Bar Chart -->
 
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Head Count</h5>
+
+                                    <!-- Year Filter -->
+                                    <form method="GET" id="yearFilterForm">
+                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select w-50"  onchange="document.getElementById('yearFilterForm').submit();">
+                                        </label>
+                                            <?php
+                                            $startYear = $currentYear - 5; // Show last 5 years
+                                            for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                echo "<option value=\"$year\" $selected>$year</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </form>
+                                    <!-- End Year Filter -->
+
+                                    <!-- Bar Chart -->
+                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            const months = <?php echo json_encode($head_months); ?>;
+                                            const head = <?php echo json_encode($head); ?>;
+
+                                            // Define an array of colors for each bar
+                                            const barColors = [
+                                                '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
+                                                '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
+                                            ];
+
+                                            echarts.init(document.querySelector("#barChart")).setOption({
+                                                xAxis: {
+                                                    type: 'category',
+                                                    data: months
+                                                },
+                                                yAxis: {
+                                                    type: 'value'
+                                                },
+                                                series: [{
+                                                    data: head,
+                                                    type: 'bar',
+                                                    label: {
+                                                        show: true, // Enable the label
+                                                        position: 'top', // Position the label at the top of the bars
+                                                        formatter: '{c}', // Format the label to display the value
+                                                        color: '#000' // Set the label color
+                                                    },
+                                                    itemStyle: {
+                                                        color: (params) => {
+                                                            // Use the barColors array to assign a color to each bar
+                                                            return barColors[params.dataIndex % barColors.length];
+                                                        }
+                                                    }
+                                                }]
+                                            });
+                                        });
+                                    </script>
+                                    <!-- End Bar Chart -->
+
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
