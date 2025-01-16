@@ -95,7 +95,7 @@ if(isset($_POST['submit_year'])){
         SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
             COUNT(id) AS total_reserve
         FROM reservations
-        AND EXTRACT(YEAR FROM reserve_date) = :year
+        WHERE EXTRACT(YEAR FROM reserve_date) = :year
         GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
         ORDER BY MIN(reserve_date) ASC
     ");
