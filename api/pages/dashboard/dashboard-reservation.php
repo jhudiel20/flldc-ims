@@ -27,15 +27,24 @@ if(isset($_POST['submit_year'])){
     $row_total_guest = $total_guest->fetch(PDO::FETCH_ASSOC);
 
     $total_reserve = $conn->prepare("
-    SELECT COUNT(id) AS total_reserve FROM reservations
-    WHERE reserve_status = 'APPROVED'");
+    SELECT COUNT(id) AS total_reserve FROM reservations");
     $total_reserve->execute();
     $row_total_reserve = $total_reserve->fetch(PDO::FETCH_ASSOC);
 
-    $total_book = $conn->prepare("
-    SELECT COUNT(id) AS total_book FROM reservations");
-    $total_book->execute();
-    $row_total_book = $total_book->fetch(PDO::FETCH_ASSOC);
+    $total_approved = $conn->prepare("
+    SELECT COUNT(id) AS total_approved FROM reservations WHERE reserve_status = 'APPROVED'");
+    $total_approved->execute();
+    $row_total_approved = $total_approved->fetch(PDO::FETCH_ASSOC);
+
+    $total_declined = $conn->prepare("
+    SELECT COUNT(id) AS total_declined FROM reservations WHERE reserve_status = 'DECLINED'");
+    $total_declined->execute();
+    $row_total_declined = $total_declined->fetch(PDO::FETCH_ASSOC);
+
+    $total_pending = $conn->prepare("
+    SELECT COUNT(id) AS total_pending FROM reservations WHERE reserve_status = 'PENDING'");
+    $total_pending->execute();
+    $row_total_pending = $total_pending->fetch(PDO::FETCH_ASSOC);
 
     $currentYear = date('Y');
     $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
@@ -81,6 +90,28 @@ if(isset($_POST['submit_year'])){
         $head_months[] = $row['month'];
         $head[] = $row['total_head'];
     }
+
+    $total_reserve_per_month = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+            COUNT(id) AS total_reserve
+        FROM reservations
+        AND EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+        ORDER BY MIN(reserve_date) ASC
+    ");
+    $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    $total_reserve_per_month->execute();
+    $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+
+    // Prepare data for JavaScript
+    $reserve_months = [];
+    $reserve = [];
+    foreach ($reserve_data as $row) {
+        $reserve_months[] = $row['month'];
+        $reserve[] = $row['total_reserve'];
+    }
+
+    
     
 ?>
 <!doctype html>
@@ -111,10 +142,10 @@ if(isset($_POST['submit_year'])){
 
                 <div class="container flex-grow-1 container-p-y">
 
-                    <!-- <div class="row"> -->
+                    <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="col-md-4 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -132,7 +163,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="col-md-4 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -149,8 +180,26 @@ if(isset($_POST['submit_year'])){
                                 </div>
                             </div>
                         </div>
-                        <!-- total number of reservations -->
-                        <div class="col-md-3 col-sm-6 mb-4">
+                        <!-- total Reservation -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_reserve['total_reserve']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total approved -->
+                        <div class="col-md-4 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -162,13 +211,13 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                 </div>
                                 <span class="d-block">Total Approved Reservation</span>
-                                <h4 class="card-title mb-1"><?php echo number_format($row_total_reserve['total_reserve']) ?></h4>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_approved['total_approved']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
-                        <!-- total bookings -->
-                        <div class="col-md-3 col-sm-6 mb-4">
+                        <!-- total pending -->
+                        <div class="col-md-4 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -179,14 +228,32 @@ if(isset($_POST['submit_year'])){
                                         class="rounded" />
                                     </div>
                                 </div>
-                                <span class="d-block">Total Booking</span>
-                                <h4 class="card-title mb-1"><?php echo number_format($row_total_book['total_book']) ?></h4>
+                                <span class="d-block">Total Pending Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_pending['total_pending']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total declined -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Declined Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_declined['total_declined']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
 
-                    <!-- </div> -->
+                    </div>
 
                     <div class="row">
 
@@ -260,7 +327,7 @@ if(isset($_POST['submit_year'])){
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Head Count</h5>
+                                    <h5 class="card-title">Count of Reservations</h5>
 
                                     <!-- Year Filter -->
                                     <form method="GET" id="yearFilterForm">
@@ -278,50 +345,45 @@ if(isset($_POST['submit_year'])){
                                     </form>
                                     <!-- End Year Filter -->
 
-                                    <!-- Bar Chart -->
-                                    <canvas id="barChart" style="max-height: 400px;"></canvas>
+                                    <!-- Polar Area Chart -->
+                                    <div id="polarAreaChart"></div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            new Chart(document.querySelector('#barChart'), {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: <?php echo json_encode($head_months); ?>, // Dynamic month data
-                                                    datasets: [{
-                                                        label: 'Head Count',
-                                                        data: <?php echo json_encode($head); ?>, // Dynamic head count data
-                                                        backgroundColor: [
-                                                            'rgba(255, 99, 132, 0.2)',
-                                                            'rgba(255, 159, 64, 0.2)',
-                                                            'rgba(255, 205, 86, 0.2)',
-                                                            'rgba(75, 192, 192, 0.2)',
-                                                            'rgba(54, 162, 235, 0.2)',
-                                                            'rgba(153, 102, 255, 0.2)',
-                                                            'rgba(201, 203, 207, 0.2)'
-                                                        ],
-                                                        borderColor: [
-                                                            'rgb(255, 99, 132)',
-                                                            'rgb(255, 159, 64)',
-                                                            'rgb(255, 205, 86)',
-                                                            'rgb(75, 192, 192)',
-                                                            'rgb(54, 162, 235)',
-                                                            'rgb(153, 102, 255)',
-                                                            'rgb(201, 203, 207)'
-                                                        ],
-                                                        borderWidth: 1
-                                                    }]
-                                                },
-                                                options: {
-                                                    scales: {
-                                                        y: {
-                                                            beginAtZero: true
-                                                        }
+                                            const selectedYear = <?php echo json_encode($selectedYear); ?>;
+                                            const allMonths = [
+                                                `${selectedYear}-JAN`, `${selectedYear}-FEB`, `${selectedYear}-MAR`, `${selectedYear}-APR`, 
+                                                `${selectedYear}-MAY`, `${selectedYear}-JUN`, `${selectedYear}-JUL`, `${selectedYear}-AUG`, 
+                                                `${selectedYear}-SEP`, `${selectedYear}-OCT`, `${selectedYear}-NOV`, `${selectedYear}-DEC`
+                                            ];
+
+                                            const reserveData = <?php echo json_encode($reserve); ?>;
+                                            const reserveMonths = <?php echo json_encode($reserve_months); ?>;
+
+                                            // Fill missing months with zero reservations
+                                            const dataMap = Object.fromEntries(reserveMonths.map((month, index) => [month, reserveData[index]]));
+                                            const filledData = allMonths.map(month => dataMap[month] || 0);
+
+                                            new ApexCharts(document.querySelector("#polarAreaChart"), {
+                                                series: filledData,
+                                                chart: {
+                                                    type: 'polarArea',
+                                                    height: 350,
+                                                    toolbar: {
+                                                        show: true
                                                     }
+                                                },
+                                                labels: allMonths,
+                                                stroke: {
+                                                    colors: ['#fff']
+                                                },
+                                                fill: {
+                                                    opacity: 0.8
                                                 }
-                                            });
+                                            }).render();
                                         });
                                     </script>
-                                    <!-- End Bar Chart -->
+                                    <!-- End Polar Area Chart -->
 
                                 </div>
                             </div>
