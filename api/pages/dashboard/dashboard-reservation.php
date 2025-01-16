@@ -142,7 +142,7 @@ if(isset($_POST['submit_year'])){
                     <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-md-6 col-3 mb-4">
+                        <div class="col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -160,7 +160,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-md-6 col-3 mb-4">
+                        <div class="col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -178,7 +178,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number of reservations -->
-                        <div class="col-md-6 col-3 mb-4">
+                        <div class="col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -196,7 +196,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total bookings -->
-                        <div class="col-md-6 col-3 mb-4">
+                        <div class="col-3 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
