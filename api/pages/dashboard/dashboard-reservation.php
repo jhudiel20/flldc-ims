@@ -142,7 +142,7 @@ if(isset($_POST['submit_year'])){
                     <div class="row">
 
                         <!-- Total Revenue in reservation -->
-                        <div class="col-3 mb-4">
+                        <div class="col-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -153,14 +153,14 @@ if(isset($_POST['submit_year'])){
                                         class="rounded" />
                                     </div>
                                 </div>
-                                <span class="d-block">Sales</span>
+                                <span class="d-block">Revenue</span>
                                 <h4 class="card-title mb-1"><?php echo number_format($row_total_sales['total_sales']) ?></h4>
                                 <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                                 </div>
                             </div>
                         </div>
                         <!-- total number guest -->
-                        <div class="col-3 mb-4">
+                        <div class="col-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -178,7 +178,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total number of reservations -->
-                        <div class="col-3 mb-4">
+                        <div class="col-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -196,7 +196,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
                         <!-- total bookings -->
-                        <div class="col-3 mb-4">
+                        <div class="col-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -226,7 +226,7 @@ if(isset($_POST['submit_year'])){
                                 <!-- Year Filter -->
                                 <form method="GET" id="yearFilterForm">
                                     <label for="yearSelect">Select Year:</label>
-                                    <select name="year" id="yearSelect" onchange="document.getElementById('yearFilterForm').submit();">
+                                    <select name="year" id="yearSelect" class="form-select"  onchange="document.getElementById('yearFilterForm').submit();">
                                         <?php
                                         $startYear = $currentYear - 5; // Show last 5 years
                                         for ($year = $startYear; $year <= $currentYear; $year++) {
@@ -246,6 +246,12 @@ if(isset($_POST['submit_year'])){
                                         const months = <?php echo json_encode($months); ?>;
                                         const sales = <?php echo json_encode($sales); ?>;
 
+                                        // Define an array of colors for each bar
+                                        const barColors = [
+                                            '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
+                                            '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
+                                        ];
+
                                         echarts.init(document.querySelector("#barChart")).setOption({
                                             xAxis: {
                                                 type: 'category',
@@ -256,7 +262,19 @@ if(isset($_POST['submit_year'])){
                                             },
                                             series: [{
                                                 data: sales,
-                                                type: 'bar'
+                                                type: 'bar',
+                                                label: {
+                                                    show: true, // Enable the label
+                                                    position: 'top', // Position the label at the top of the bars
+                                                    formatter: '{c}', // Format the label to display the value
+                                                    color: '#000' // Set the label color
+                                                },
+                                                itemStyle: {
+                                                    color: (params) => {
+                                                        // Use the barColors array to assign a color to each bar
+                                                        return barColors[params.dataIndex % barColors.length];
+                                                    }
+                                                }
                                             }]
                                         });
                                     });
