@@ -111,7 +111,7 @@ if(isset($_POST['submit_year'])){
 
                 <div class="container flex-grow-1 container-p-y">
 
-                    <div class="row">
+                    <!-- <div class="row"> -->
 
                         <!-- Total Revenue in reservation -->
                         <div class="col-md-3 col-sm-6 mb-4">
@@ -186,7 +186,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-                    </div>
+                    <!-- </div> -->
 
                     <div class="row">
 
@@ -211,7 +211,7 @@ if(isset($_POST['submit_year'])){
                                     <!-- End Year Filter -->
 
                                     <!-- Bar Chart -->
-                                    <div id="barChartSales" style="min-height: 400px;" class="echart"></div>
+                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
@@ -264,57 +264,60 @@ if(isset($_POST['submit_year'])){
 
                                     <!-- Year Filter -->
                                     <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select w-50"  onchange="document.getElementById('yearFilterForm').submit();">
+                                        <label for="yearSelect">Select Year: 
+                                            <select name="year" id="yearSelect" class="form-select w-50" onchange="document.getElementById('yearFilterForm').submit();">
+                                                <?php
+                                                $startYear = $currentYear - 5; // Show last 5 years
+                                                for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                    echo "<option value=\"$year\" $selected>$year</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </label>
-                                            <?php
-                                            $startYear = $currentYear - 5; // Show last 5 years
-                                            for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                echo "<option value=\"$year\" $selected>$year</option>";
-                                            }
-                                            ?>
-                                        </select>
                                     </form>
                                     <!-- End Year Filter -->
 
                                     <!-- Bar Chart -->
-                                    <div id="barChartHead" style="min-height: 400px;" class="echart"></div>
+                                    <canvas id="barChart" style="max-height: 400px;"></canvas>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            const months = <?php echo json_encode($head_months); ?>;
-                                            const head = <?php echo json_encode($head); ?>;
-
-                                            // Define an array of colors for each bar
-                                            const barColors = [
-                                                '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
-                                                '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
-                                            ];
-
-                                            echarts.init(document.querySelector("#barChart")).setOption({
-                                                xAxis: {
-                                                    type: 'category',
-                                                    data: months
+                                            new Chart(document.querySelector('#barChart'), {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: <?php echo json_encode($head_months); ?>, // Dynamic month data
+                                                    datasets: [{
+                                                        label: 'Head Count',
+                                                        data: <?php echo json_encode($head); ?>, // Dynamic head count data
+                                                        backgroundColor: [
+                                                            'rgba(255, 99, 132, 0.2)',
+                                                            'rgba(255, 159, 64, 0.2)',
+                                                            'rgba(255, 205, 86, 0.2)',
+                                                            'rgba(75, 192, 192, 0.2)',
+                                                            'rgba(54, 162, 235, 0.2)',
+                                                            'rgba(153, 102, 255, 0.2)',
+                                                            'rgba(201, 203, 207, 0.2)'
+                                                        ],
+                                                        borderColor: [
+                                                            'rgb(255, 99, 132)',
+                                                            'rgb(255, 159, 64)',
+                                                            'rgb(255, 205, 86)',
+                                                            'rgb(75, 192, 192)',
+                                                            'rgb(54, 162, 235)',
+                                                            'rgb(153, 102, 255)',
+                                                            'rgb(201, 203, 207)'
+                                                        ],
+                                                        borderWidth: 1
+                                                    }]
                                                 },
-                                                yAxis: {
-                                                    type: 'value'
-                                                },
-                                                series: [{
-                                                    data: head,
-                                                    type: 'bar',
-                                                    label: {
-                                                        show: true, // Enable the label
-                                                        position: 'top', // Position the label at the top of the bars
-                                                        formatter: '{c}', // Format the label to display the value
-                                                        color: '#000' // Set the label color
-                                                    },
-                                                    itemStyle: {
-                                                        color: (params) => {
-                                                            // Use the barColors array to assign a color to each bar
-                                                            return barColors[params.dataIndex % barColors.length];
+                                                options: {
+                                                    scales: {
+                                                        y: {
+                                                            beginAtZero: true
                                                         }
                                                     }
-                                                }]
+                                                }
                                             });
                                         });
                                     </script>
