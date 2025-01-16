@@ -278,7 +278,7 @@ if(isset($_POST['submit_year'])){
                                     <!-- End Year Filter -->
 
                                     <!-- Bar Chart -->
-                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+                                    <div id="barChart1" style="min-height: 400px;" class="echart"></div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
@@ -291,7 +291,7 @@ if(isset($_POST['submit_year'])){
                                                 '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
                                             ];
 
-                                            echarts.init(document.querySelector("#barChart")).setOption({
+                                            echarts.init(document.querySelector("#barChart1")).setOption({
                                                 xAxis: {
                                                     type: 'category',
                                                     data: months
