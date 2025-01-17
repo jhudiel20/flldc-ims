@@ -305,7 +305,7 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Revenue</h5>
@@ -369,19 +369,19 @@ if(isset($_POST['submit_year'])){
                                         <!-- <small class="text-muted">Commercial networks</small> -->
                                     </div>
                                     <div class="dropdown">
-                                    <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: 
-                                            <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
-                                                <?php
-                                                $startYear = $currentYear - 5; // Show last 5 years
-                                                for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                    echo "<option value=\"$year\" $selected>$year</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </label>
-                                    </form>
+                                        <form method="GET" id="yearFilterForm">
+                                            <label for="yearSelect">Select Year: 
+                                                <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                                    <?php
+                                                    $startYear = $currentYear - 5; // Show last 5 years
+                                                    for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                        $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                        echo "<option value=\"$year\" $selected>$year</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </label>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -413,19 +413,18 @@ if(isset($_POST['submit_year'])){
                                                 position: 'top',
                                                 horizontalAlign: 'start',
                                                 labels: {
-                                                colors: legendColor,
                                                 useSeriesColors: false
                                                 }
                                             },
                                             grid: {
-                                                borderColor: borderColor,
+                                                borderColor: '#f1f3fa',
                                                 xaxis: {
                                                 lines: {
                                                     show: true
                                                 }
                                                 }
                                             },
-                                            colors: [chartColors.area.series3, chartColors.area.series2, chartColors.area.series1],
+                                            colors: ['#727cf5'],
                                             series: [
                                                 // {
                                                 //   name: 'Visits',
@@ -450,7 +449,7 @@ if(isset($_POST['submit_year'])){
                                                 },
                                                 labels: {
                                                 style: {
-                                                    colors: labelColor,
+                                                    colors: '#727cf5',
                                                     fontSize: '13px'
                                                 }
                                                 }
@@ -458,7 +457,7 @@ if(isset($_POST['submit_year'])){
                                             yaxis: {
                                                 labels: {
                                                 style: {
-                                                    colors: labelColor,
+                                                    colors: '#727cf5',
                                                     fontSize: '13px'
                                                 }
                                                 }
