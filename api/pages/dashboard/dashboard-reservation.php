@@ -305,7 +305,7 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Revenue</h5>
@@ -361,13 +361,14 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-
-                        <div class="col-lg-6">
+                        <div class="col-12 mb-4">
                             <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Count of Reservations</h5>
-
-                                    <!-- Year Filter -->
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-0">Count of Reservations</h5>
+                                        <!-- <small class="text-muted">Commercial networks</small> -->
+                                    </div>
+                                    <div class="dropdown">
                                     <form method="GET" id="yearFilterForm">
                                         <label for="yearSelect">Select Year: 
                                             <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
@@ -381,64 +382,103 @@ if(isset($_POST['submit_year'])){
                                             </select>
                                         </label>
                                     </form>
-                                    <!-- End Year Filter -->
-
-                                    <!-- Area Chart -->
-                                    <div id="areaChart"></div>
-
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="lineAreaChart"></div>
                                     <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            const months = <?php echo json_encode($months); ?>;
-                                            const reserve = <?php echo json_encode($reserve); ?>;
-                                            
-                                            // Prepare the chart
-                                            new ApexCharts(document.querySelector("#areaChart"), {
-                                                series: [{
-                                                    name: "Count of Reservations",
-                                                    data: reserve
-                                                }],
-                                                chart: {
-                                                    type: 'area',
-                                                    height: 350,
-                                                    zoom: {
-                                                        enabled: false
-                                                    }
-                                                },
-                                                dataLabels: {
-                                                    enabled: false
-                                                },
-                                                stroke: {
-                                                    curve: 'straight'
-                                                },
-                                                xaxis: {
-                                                    categories: months,
-                                                    type: 'datetime',
-                                                    labels: {
-                                                        format: 'MMM'
-                                                    }
-                                                },
-                                                yaxis: {
-                                                    title: {
-                                                        text: 'Reservations'
-                                                    }
-                                                },
-                                                tooltip: {
-                                                    x: {
-                                                        format: 'MMM yyyy'
-                                                    }
-                                                },
-                                                legend: {
-                                                    horizontalAlign: 'left'
+                                        const months = <?php echo json_encode($months); ?>;
+                                        const reserve = <?php echo json_encode($reserve); ?>;
+                                          // Line Area Chart
+                                        // --------------------------------------------------------------------
+                                        const areaChartEl = document.querySelector('#lineAreaChart'),
+                                            areaChartConfig = {
+                                            chart: {
+                                                height: 400,
+                                                type: 'area',
+                                                parentHeightOffset: 0,
+                                                toolbar: {
+                                                show: false
                                                 }
-                                            }).render();
-                                        });
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                show: false,
+                                                curve: 'straight'
+                                            },
+                                            legend: {
+                                                show: true,
+                                                position: 'top',
+                                                horizontalAlign: 'start',
+                                                labels: {
+                                                colors: legendColor,
+                                                useSeriesColors: false
+                                                }
+                                            },
+                                            grid: {
+                                                borderColor: borderColor,
+                                                xaxis: {
+                                                lines: {
+                                                    show: true
+                                                }
+                                                }
+                                            },
+                                            colors: [chartColors.area.series3, chartColors.area.series2, chartColors.area.series1],
+                                            series: [
+                                                // {
+                                                //   name: 'Visits',
+                                                //   data: [100, 120, 90, 170, 130, 160, 140, 240, 220, 180, 270, 280, 375]
+                                                // },
+                                                // {
+                                                //   name: 'Clicks',
+                                                //   data: [60, 80, 70, 110, 80, 100, 90, 180, 160, 140, 200, 220, 275]
+                                                // },
+                                                {
+                                                name: 'Count',
+                                                data: reserve
+                                                }
+                                            ],
+                                            xaxis: {
+                                                categories: months,
+                                                axisBorder: {
+                                                show: false
+                                                },
+                                                axisTicks: {
+                                                show: false
+                                                },
+                                                labels: {
+                                                style: {
+                                                    colors: labelColor,
+                                                    fontSize: '13px'
+                                                }
+                                                }
+                                            },
+                                            yaxis: {
+                                                labels: {
+                                                style: {
+                                                    colors: labelColor,
+                                                    fontSize: '13px'
+                                                }
+                                                }
+                                            },
+                                            fill: {
+                                                opacity: 1,
+                                                type: 'solid'
+                                            },
+                                            tooltip: {
+                                                shared: false
+                                            }
+                                            };
+                                        if (typeof areaChartEl !== undefined && areaChartEl !== null) {
+                                            const areaChart = new ApexCharts(areaChartEl, areaChartConfig);
+                                            areaChart.render();
+                                        }
                                     </script>
-                                    <!-- End Area Chart -->
-
                                 </div>
                             </div>
                         </div>
-
 
                     </div>
 
