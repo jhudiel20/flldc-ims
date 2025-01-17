@@ -274,23 +274,24 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-12">
+                        <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Revenue</h5>
 
                                     <!-- Year Filter -->
                                     <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select"  onchange="document.getElementById('yearFilterForm').submit();">
+                                        <label for="yearSelect">Select Year: 
+                                            <select name="year" id="yearSelect" class="form-select w-50"  onchange="document.getElementById('yearFilterForm').submit();">
+                                                <?php
+                                                $startYear = $currentYear - 5; // Show last 5 years
+                                                for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                    echo "<option value=\"$year\" $selected>$year</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </label>
-                                            <?php
-                                            $startYear = $currentYear - 5; // Show last 5 years
-                                            for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                echo "<option value=\"$year\" $selected>$year</option>";
-                                            }
-                                            ?>
-                                        </select>
                                     </form>
                                     <!-- End Year Filter -->
 
