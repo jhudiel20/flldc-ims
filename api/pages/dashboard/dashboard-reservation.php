@@ -48,9 +48,18 @@ if(isset($_POST['submit_year'])){
 
     $currentYear = date('Y');
     $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
+
+    // Create an array with all months (January to December)
+    $all_months = [];
+    for ($i = 1; $i <= 12; $i++) {
+        $all_months[] = date('M Y', strtotime("$selectedYear-$i-01")); // Dynamically use the selected year
+    }
+
+    // Initialize sales array with zero sales for all months
+    $sales = array_fill(0, 12, 0); // 12 months with 0 sales
     
     $total_sales_per_month = $conn->prepare("
-        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+        SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
                SUM(CAST(prices AS NUMERIC)) AS total_sales
         FROM reservations
         WHERE reserve_status = 'APPROVED'
@@ -65,51 +74,59 @@ if(isset($_POST['submit_year'])){
     // Prepare data for JavaScript
     $months = [];
     $sales = [];
+    // Initialize all months with zero sales
+    foreach ($all_months as $month) {
+        $months[] = $month;
+        $sales[] = 0; // Default to 0 sales
+    }
+    // Update sales data for months that have sales
     foreach ($sales_data as $row) {
-        $months[] = $row['month'];
-        $sales[] = $row['total_sales'];
+        $monthIndex = array_search($row['month'], $months);
+        if ($monthIndex !== false) {
+            $sales[$monthIndex] = $row['total_sales']; // Replace zero with actual sales
+        }
     }
 
-    $total_head_per_month = $conn->prepare("
-        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
-            COUNT(id) AS total_head
-        FROM reservations
-        WHERE reserve_status = 'APPROVED'
-        AND EXTRACT(YEAR FROM reserve_date) = :year
-        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
-        ORDER BY MIN(reserve_date) ASC
-    ");
-    $total_head_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-    $total_head_per_month->execute();
-    $head_data = $total_head_per_month->fetchAll(PDO::FETCH_ASSOC);
+    // $total_head_per_month = $conn->prepare("
+    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+    //         COUNT(id) AS total_head
+    //     FROM reservations
+    //     WHERE reserve_status = 'APPROVED'
+    //     AND EXTRACT(YEAR FROM reserve_date) = :year
+    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+    //     ORDER BY MIN(reserve_date) ASC
+    // ");
+    // $total_head_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    // $total_head_per_month->execute();
+    // $head_data = $total_head_per_month->fetchAll(PDO::FETCH_ASSOC);
 
-    // Prepare data for JavaScript
-    $head_months = [];
-    $head = [];
-    foreach ($head_data as $row) {
-        $head_months[] = $row['month'];
-        $head[] = $row['total_head'];
-    }
+    // // Prepare data for JavaScript
+    // $head_months = [];
+    // $head = [];
+    // foreach ($head_data as $row) {
+    //     $head_months[] = $row['month'];
+    //     $head[] = $row['total_head'];
+    // }
 
-    $total_reserve_per_month = $conn->prepare("
-        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
-            COUNT(id) AS total_reserve
-        FROM reservations
-        WHERE EXTRACT(YEAR FROM reserve_date) = :year
-        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
-        ORDER BY MIN(reserve_date) ASC
-    ");
-    $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-    $total_reserve_per_month->execute();
-    $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+    // $total_reserve_per_month = $conn->prepare("
+    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+    //         COUNT(id) AS total_reserve
+    //     FROM reservations
+    //     WHERE EXTRACT(YEAR FROM reserve_date) = :year
+    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+    //     ORDER BY MIN(reserve_date) ASC
+    // ");
+    // $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    // $total_reserve_per_month->execute();
+    // $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
 
-    // Prepare data for JavaScript
-    $reserve_months = [];
-    $reserve = [];
-    foreach ($reserve_data as $row) {
-        $reserve_months[] = $row['month'];
-        $reserve[] = $row['total_reserve'];
-    }
+    // // Prepare data for JavaScript
+    // $reserve_months = [];
+    // $reserve = [];
+    // foreach ($reserve_data as $row) {
+    //     $reserve_months[] = $row['month'];
+    //     $reserve[] = $row['total_reserve'];
+    // }
 
     
     
@@ -285,12 +302,6 @@ if(isset($_POST['submit_year'])){
                                             const months = <?php echo json_encode($months); ?>;
                                             const sales = <?php echo json_encode($sales); ?>;
 
-                                            // Define an array of colors for each bar
-                                            const barColors = [
-                                                '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF7', 
-                                                '#F733FF', '#33FFDC', '#F7FF33', '#FF9133', '#9133FF', '#FF5733'
-                                            ];
-
                                             echarts.init(document.querySelector("#barChart")).setOption({
                                                 xAxis: {
                                                     type: 'category',
@@ -307,12 +318,6 @@ if(isset($_POST['submit_year'])){
                                                         position: 'top', // Position the label at the top of the bars
                                                         formatter: '{c}', // Format the label to display the value
                                                         color: '#000' // Set the label color
-                                                    },
-                                                    itemStyle: {
-                                                        color: (params) => {
-                                                            // Use the barColors array to assign a color to each bar
-                                                            return barColors[params.dataIndex % barColors.length];
-                                                        }
                                                     }
                                                 }]
                                             });
