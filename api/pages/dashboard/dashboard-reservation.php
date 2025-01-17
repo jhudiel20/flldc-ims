@@ -64,7 +64,7 @@ if(isset($_POST['submit_year'])){
         FROM reservations
         WHERE reserve_status = 'APPROVED'
           AND EXTRACT(YEAR FROM reserve_date) = :year
-        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
         ORDER BY MIN(reserve_date) ASC
     ");
     $total_sales_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
