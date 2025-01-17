@@ -274,7 +274,7 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-lg-6">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Revenue</h5>
@@ -295,7 +295,7 @@ if(isset($_POST['submit_year'])){
                                     <!-- End Year Filter -->
 
                                     <!-- Bar Chart -->
-                                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+                                    <div id="barChart" style="height: 400px;" class="echart"></div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {

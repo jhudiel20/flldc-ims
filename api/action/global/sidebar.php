@@ -78,6 +78,10 @@ $user_id = $decrypted_array['ID'];
                     <li class="menu-item <?php echo ($geturl == 'dashboard-reservation')? 'active' : 'collapsed' ?>">
                         <a href="dashboard-reservation" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Reservation">Reservation</div>
+                            <?php if($r_reserve['total'] == 0){}else{?>
+                                <span
+                                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_reserve['total']?></span>
+                                <?php }?>
                         </a>
                     </li>
                 </ul>
