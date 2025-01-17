@@ -395,6 +395,95 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Count of Reservations</h5>
+
+                                    <!-- Year Filter -->
+                                    <form method="GET" id="yearFilterForm">
+                                        <label for="yearSelect">Select Year: 
+                                            <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                                <?php
+                                                $startYear = $currentYear - 5; // Show last 5 years
+                                                for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                    echo "<option value=\"$year\" $selected>$year</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </label>
+                                    </form>
+                                    <!-- End Year Filter -->
+
+                                    <!-- Area Chart -->
+                                    <div id="areaChart"></div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            const selectedYear = <?php echo json_encode($selectedYear); ?>;
+                                            const allMonths = [
+                                                `${selectedYear}-01`, `${selectedYear}-02`, `${selectedYear}-03`, `${selectedYear}-04`, 
+                                                `${selectedYear}-05`, `${selectedYear}-06`, `${selectedYear}-07`, `${selectedYear}-08`, 
+                                                `${selectedYear}-09`, `${selectedYear}-10`, `${selectedYear}-11`, `${selectedYear}-12`
+                                            ];
+
+                                            const reserveData = <?php echo json_encode($reserve); ?>;
+                                            const reserveMonths = <?php echo json_encode($reserve_months); ?>;
+
+                                            // Fill missing months with zero reservations
+                                            const dataMap = Object.fromEntries(reserveMonths.map((month, index) => [month, reserveData[index]]));
+                                            const filledData = allMonths.map(month => dataMap[month] || 0);
+
+                                            // Prepare the chart
+                                            new ApexCharts(document.querySelector("#areaChart"), {
+                                                series: [{
+                                                    name: "Count of Reservations",
+                                                    data: filledData
+                                                }],
+                                                chart: {
+                                                    type: 'area',
+                                                    height: 350,
+                                                    zoom: {
+                                                        enabled: false
+                                                    }
+                                                },
+                                                dataLabels: {
+                                                    enabled: false
+                                                },
+                                                stroke: {
+                                                    curve: 'straight'
+                                                },
+                                                xaxis: {
+                                                    categories: allMonths,
+                                                    type: 'datetime',
+                                                    labels: {
+                                                        format: 'MMM'
+                                                    }
+                                                },
+                                                yaxis: {
+                                                    title: {
+                                                        text: 'Reservations'
+                                                    }
+                                                },
+                                                tooltip: {
+                                                    x: {
+                                                        format: 'MMM yyyy'
+                                                    }
+                                                },
+                                                legend: {
+                                                    horizontalAlign: 'left'
+                                                }
+                                            }).render();
+                                        });
+                                    </script>
+                                    <!-- End Area Chart -->
+
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
