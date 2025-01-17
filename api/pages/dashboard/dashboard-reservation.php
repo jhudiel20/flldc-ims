@@ -308,23 +308,21 @@ if(isset($_POST['submit_year'])){
                         <div class="col-lg-12 mb-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Revenue</h5>
-
-                                    <!-- Year Filter -->
-                                    <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: 
-                                            <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
-                                                <?php
-                                                $startYear = $currentYear - 5; // Show last 5 years
-                                                for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                    echo "<option value=\"$year\" $selected>$year</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                    <!-- End Year Filter -->
+                                    <h5 class="card-title">Revenue &nbsp; 
+                                        <!-- Year Filter -->
+                                        <form method="GET" id="yearFilterForm">
+                                                <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                                    <?php
+                                                    $startYear = $currentYear - 5; // Show last 5 years
+                                                    for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                        $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                        echo "<option value=\"$year\" $selected>$year</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                        </form>
+                                        <!-- End Year Filter -->
+                                    </h5>
 
                                     <!-- Bar Chart -->
                                     <div id="barChart" style="height: 400px;" class="echart"></div>
@@ -370,7 +368,6 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                     <div class="dropdown">
                                         <form method="GET" id="yearFilterForm">
-                                            <label for="yearSelect">Select Year: 
                                                 <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
                                                     <?php
                                                     $startYear = $currentYear - 5; // Show last 5 years
@@ -380,7 +377,6 @@ if(isset($_POST['submit_year'])){
                                                     }
                                                     ?>
                                                 </select>
-                                            </label>
                                         </form>
                                     </div>
                                 </div>
@@ -470,10 +466,7 @@ if(isset($_POST['submit_year'])){
                                                 shared: false
                                             }
                                             };
-                                        if (typeof areaChartEl !== undefined && areaChartEl !== null) {
-                                            const areaChart = new ApexCharts(areaChartEl, areaChartConfig);
                                             areaChart.render();
-                                        }
                                     </script>
                                 </div>
                             </div>
