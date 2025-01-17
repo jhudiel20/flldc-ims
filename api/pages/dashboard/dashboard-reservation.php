@@ -87,6 +87,37 @@ if(isset($_POST['submit_year'])){
         }
     }
 
+     // Initialize sales array with zero sales for all months
+     $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
+    
+     $total_reserve_per_month = $conn->prepare("
+         SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
+                 COUNT(id) AS total_reserve
+         FROM reservations
+         WHERE EXTRACT(YEAR FROM reserve_date) = :year
+         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
+         ORDER BY MIN(reserve_date) ASC
+     ");
+     $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+     $total_reserve_per_month->execute();
+     $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+     
+     // Prepare data for JavaScript
+     $months = [];
+     $reserve = [];
+     // Initialize all months with zero sales
+     foreach ($all_months as $month) {
+         $months[] = $month;
+         $reserve[] = 0; // Default to 0 sales
+     }
+     // Update sales data for months that have sales
+     foreach ($reserve_data as $row) {
+         $monthIndex = array_search($row['month'], $months);
+         if ($monthIndex !== false) {
+             $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
+         }
+     }
+
     // $total_head_per_month = $conn->prepare("
     //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
     //         COUNT(id) AS total_head
@@ -108,25 +139,25 @@ if(isset($_POST['submit_year'])){
     //     $head[] = $row['total_head'];
     // }
 
-    $total_reserve_per_month = $conn->prepare("
-        SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
-            COUNT(id) AS total_reserve
-        FROM reservations
-        WHERE EXTRACT(YEAR FROM reserve_date) = :year
-        GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
-        ORDER BY MIN(reserve_date) ASC
-    ");
-    $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-    $total_reserve_per_month->execute();
-    $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+    // $total_reserve_per_month = $conn->prepare("
+    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+    //         COUNT(id) AS total_reserve
+    //     FROM reservations
+    //     WHERE EXTRACT(YEAR FROM reserve_date) = :year
+    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+    //     ORDER BY MIN(reserve_date) ASC
+    // ");
+    // $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    // $total_reserve_per_month->execute();
+    // $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
 
-    // Prepare data for JavaScript
-    $reserve_months = [];
-    $reserve = [];
-    foreach ($reserve_data as $row) {
-        $reserve_months[] = $row['month'];
-        $reserve[] = $row['total_reserve'];
-    }
+    // // Prepare data for JavaScript
+    // $reserve_months = [];
+    // $reserve = [];
+    // foreach ($reserve_data as $row) {
+    //     $reserve_months[] = $row['month'];
+    //     $reserve[] = $row['total_reserve'];
+    // }
 
     
     
@@ -330,70 +361,6 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Count of Reservations</h5>
-
-                                    <!-- Year Filter -->
-                                    <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: 
-                                            <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
-                                                <?php
-                                                $startYear = $currentYear - 5; // Show last 5 years
-                                                for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                    $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                    echo "<option value=\"$year\" $selected>$year</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                    <!-- End Year Filter -->
-
-                                    <!-- Polar Area Chart -->
-                                    <div id="polarAreaChart"></div>
-
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            const selectedYear = <?php echo json_encode($selectedYear); ?>;
-                                            const allMonths = [
-                                                `${selectedYear}-JAN`, `${selectedYear}-FEB`, `${selectedYear}-MAR`, `${selectedYear}-APR`, 
-                                                `${selectedYear}-MAY`, `${selectedYear}-JUN`, `${selectedYear}-JUL`, `${selectedYear}-AUG`, 
-                                                `${selectedYear}-SEP`, `${selectedYear}-OCT`, `${selectedYear}-NOV`, `${selectedYear}-DEC`
-                                            ];
-
-                                            const reserveData = <?php echo json_encode($reserve); ?>;
-                                            const reserveMonths = <?php echo json_encode($reserve_months); ?>;
-
-                                            // Fill missing months with zero reservations
-                                            const dataMap = Object.fromEntries(reserveMonths.map((month, index) => [month, reserveData[index]]));
-                                            const filledData = allMonths.map(month => dataMap[month] || 0);
-
-                                            new ApexCharts(document.querySelector("#polarAreaChart"), {
-                                                series: filledData,
-                                                chart: {
-                                                    type: 'polarArea',
-                                                    height: 350,
-                                                    toolbar: {
-                                                        show: true
-                                                    }
-                                                },
-                                                labels: allMonths,
-                                                stroke: {
-                                                    colors: ['#fff']
-                                                },
-                                                fill: {
-                                                    opacity: 0.8
-                                                }
-                                            }).render();
-                                        });
-                                    </script>
-                                    <!-- End Polar Area Chart -->
-
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="col-lg-6">
                             <div class="card">
@@ -421,25 +388,14 @@ if(isset($_POST['submit_year'])){
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            const selectedYear = <?php echo json_encode($selectedYear); ?>;
-                                            const allMonths = [
-                                                `${selectedYear}-01`, `${selectedYear}-02`, `${selectedYear}-03`, `${selectedYear}-04`, 
-                                                `${selectedYear}-05`, `${selectedYear}-06`, `${selectedYear}-07`, `${selectedYear}-08`, 
-                                                `${selectedYear}-09`, `${selectedYear}-10`, `${selectedYear}-11`, `${selectedYear}-12`
-                                            ];
-
-                                            const reserveData = <?php echo json_encode($reserve); ?>;
-                                            const reserveMonths = <?php echo json_encode($reserve_months); ?>;
-
-                                            // Fill missing months with zero reservations
-                                            const dataMap = Object.fromEntries(reserveMonths.map((month, index) => [month, reserveData[index]]));
-                                            const filledData = allMonths.map(month => dataMap[month] || 0);
-
+                                            const months = <?php echo json_encode($months); ?>;
+                                            const reserve = <?php echo json_encode($reserve); ?>;
+                                            
                                             // Prepare the chart
                                             new ApexCharts(document.querySelector("#areaChart"), {
                                                 series: [{
                                                     name: "Count of Reservations",
-                                                    data: filledData
+                                                    data: reserve
                                                 }],
                                                 chart: {
                                                     type: 'area',
@@ -455,7 +411,7 @@ if(isset($_POST['submit_year'])){
                                                     curve: 'straight'
                                                 },
                                                 xaxis: {
-                                                    categories: allMonths,
+                                                    categories: months,
                                                     type: 'datetime',
                                                     labels: {
                                                         format: 'MMM'
