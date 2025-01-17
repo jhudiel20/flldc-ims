@@ -281,7 +281,7 @@ if(isset($_POST['submit_year'])){
 
                                     <!-- Year Filter -->
                                     <form method="GET" id="yearFilterForm">
-                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select w-50"  onchange="document.getElementById('yearFilterForm').submit();">
+                                        <label for="yearSelect">Select Year: <select name="year" id="yearSelect" class="form-select"  onchange="document.getElementById('yearFilterForm').submit();">
                                         </label>
                                             <?php
                                             $startYear = $currentYear - 5; // Show last 5 years
