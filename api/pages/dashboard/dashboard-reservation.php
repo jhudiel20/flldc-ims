@@ -49,6 +49,7 @@ if(isset($_POST['submit_year'])){
     $currentYear = date('Y');
     $selectedYearReserve = isset($_GET['yearSelectReserve']) ? $_GET['yearSelectReserve'] : $currentYear;
     $selectedYearRevenue = isset($_GET['yearSelectRevenue']) ? $_GET['yearSelectRevenue'] : $currentYear;
+    $selectedYearRevenueBU = isset($_GET['yearSelectRevenueBU']) ? $_GET['yearSelectRevenueBU'] : $currentYear;
 
     function generateMonths($year) {
         $months = [];
@@ -59,7 +60,7 @@ if(isset($_POST['submit_year'])){
     }
     $all_months_reserve = generateMonths($selectedYearReserve);
     $all_months_revenue = generateMonths($selectedYearRevenue);
-
+    $all_months_revenueBU = generateMonths($selectedYearRevenueBU);
 
     ################################################################################
 
@@ -94,6 +95,49 @@ if(isset($_POST['submit_year'])){
             $sales[$monthIndex] = $row['total_sales']; // Replace zero with actual sales
         }
     }
+    ################################################################################
+
+    // Initialize reserve array with zero sales for all months
+    $revenuePerBU = array_fill(0, 12, 0); // 12 months with 0 sales
+
+    $totalRevenuePerBU = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
+            SUM(CAST(prices AS NUMERIC)) AS total_sales,
+            business_unit
+        FROM reservations
+        WHERE reserve_status = 'APPROVED'
+        AND EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
+        AND GROUP BY business_unit
+        ORDER BY MIN(reserve_date) ASC
+    ");
+    $totalRevenuePerBU->bindParam(':year', $selectedYearReserveBU, PDO::PARAM_INT);
+    $totalRevenuePerBU->execute();
+    $revenuePerBUDataResults = $totalRevenuePerBU->fetchAll(PDO::FETCH_ASSOC);
+
+    // Prepare data for JavaScript
+    $monthsListBU = [];
+    $revenuePerBU = [];
+    $selectBU = [];
+    // Initialize all months with zero sales
+    foreach ($all_months_revenueBU as $month) {
+        $monthsListBU[] = $month;
+        $revenuePerBU[] = 0; // Default to 0 sales
+    }
+
+    // Update reserve data for months that have sales
+    foreach ($revenuePerBUDataResults as $row) {
+        $selectBU[] = $row['business_unit'];
+        $monthIndex = array_search($row['month'], $monthsListBU);
+        if ($monthIndex !== false) {
+            $revenuePerBU[$monthIndex] = $row['total_reserve']; // Replace zero with actual reserve count
+        }
+    }
+
+    // Prepare the data for JavaScript
+    $selectBUJSON = json_encode($selectBU);
+    $revenuePerBUJSON = json_encode($revenuePerBU); // Encode actual sales data
+    $monthsBUJSON = json_encode($monthsListBU);
 
     ################################################################################
 
@@ -132,6 +176,10 @@ if(isset($_POST['submit_year'])){
     // Prepare the data for JavaScript
     $reservesJSON = json_encode($reserveData); // Encode actual sales data
     $monthsJSON = json_encode($monthsList);
+
+    ################################################################################
+
+
     
 ?>
 <!doctype html>
@@ -298,36 +346,144 @@ if(isset($_POST['submit_year'])){
                                         <!-- End Year Filter -->
                                 </div>
                                 <div class="card-body">
-                                    <!-- Bar Chart -->
-                                    <div id="barChart" style="height: 400px;" class="echart"></div>
 
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            const sales_months = <?php echo json_encode($sales_months); ?>;
-                                            let sales = <?php echo json_encode($sales); ?>;
+                                <!-- Column Chart -->
+                                <div id="columnChart"></div>
 
-                                            echarts.init(document.querySelector("#barChart")).setOption({
-                                                xAxis: {
-                                                    type: 'category',
-                                                    data: sales_months
-                                                },
-                                                yAxis: {
-                                                    type: 'value'
-                                                },
-                                                series: [{
-                                                    data: sales,
-                                                    type: 'bar',
-                                                    label: {
-                                                        show: true, // Enable the label
-                                                        position: 'top', // Position the label at the top of the bars
-                                                        formatter: '{c}', // Format the label to display the value
-                                                        color: '#000' // Set the label color
-                                                    }
-                                                }]
-                                            });
-                                        });
-                                    </script>
-                                    <!-- End Bar Chart -->
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const sales_months = <?php echo json_encode($sales_months); ?>;
+                                        let sales = <?php echo json_encode($sales); ?>;
+                                    new ApexCharts(document.querySelector("#columnChart"), {
+                                        series: [{
+                                        name: 'Revenue',
+                                        data: sales
+                                        }],
+                                        chart: {
+                                        type: 'bar',
+                                        height: 350
+                                        },
+                                        plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            columnWidth: '55%',
+                                            endingShape: 'rounded'
+                                        },
+                                        },
+                                        dataLabels: {
+                                        enabled: false
+                                        },
+                                        stroke: {
+                                        show: true,
+                                        width: 2,
+                                        colors: ['transparent']
+                                        },
+                                        xaxis: {
+                                        categories: sales_months,
+                                        },
+                                        yaxis: {
+                                        title: {
+                                            text: '₱ (pesos)'
+                                        }
+                                        },
+                                        fill: {
+                                        opacity: 1
+                                        },
+                                        tooltip: {
+                                        y: {
+                                            formatter: function(val) {
+                                            return "₱ " + val + " pesos"
+                                            }
+                                        }
+                                        }
+                                    }).render();
+                                    });
+                                </script>
+                                <!-- End Column Chart -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="card-title mb-0">Revenue Per BU</h5>
+                                                <!-- <small class="text-muted">Commercial networks</small> -->
+                                        </div>
+                                            <!-- Year Filter -->
+                                        <div class="dropdown">
+                                                <form method="GET" id="yearFilterRevenueBU">
+                                                        <select name="yearSelectRevenueBU" id="yearSelectRevenueBU" class="form-select" onchange="document.getElementById('yearFilterRevenueBU').submit();">
+                                                            <?php
+                                                            $startYear = $currentYear - 5; // Show last 5 years
+                                                            for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                                $selected = ($year == $selectedYearRevenueBU) ? 'selected' : '';
+                                                                echo "<option value=\"$year\" $selected>$year</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                </form>
+                                        </div>
+                                            <!-- End Year Filter -->
+                                </div>
+                                <div class="card-body">
+
+                                <!-- Column Chart -->
+                                <div id="columnChart1"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        let selectBU = <?php echo $selectBU; ?>;
+                                        const monthsBUJSON = <?php echo $monthsBUJSON; ?>;
+                                        let revenuePerBU = <?php echo $revenuePerBU; ?>;
+                                    new ApexCharts(document.querySelector("#columnChart1"), {
+                                        series: [{
+                                        name: selectBU,
+                                        data: revenuePerBU
+                                        }]
+                                        chart: {
+                                        type: 'bar',
+                                        height: 350
+                                        },
+                                        plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            columnWidth: '55%',
+                                            endingShape: 'rounded'
+                                        },
+                                        },
+                                        dataLabels: {
+                                        enabled: false
+                                        },
+                                        stroke: {
+                                        show: true,
+                                        width: 2,
+                                        colors: ['transparent']
+                                        },
+                                        xaxis: {
+                                        categories: monthsBUJSON,
+                                        },
+                                        yaxis: {
+                                        title: {
+                                            text: '₱ (pesos)'
+                                        }
+                                        },
+                                        fill: {
+                                        opacity: 1
+                                        },
+                                        tooltip: {
+                                        y: {
+                                            formatter: function(val) {
+                                            return "₱ " + val + " pesos"
+                                            }
+                                        }
+                                        }
+                                    }).render();
+                                    });
+                                </script>
+                                <!-- End Column Chart -->
 
                                 </div>
                             </div>
@@ -337,7 +493,7 @@ if(isset($_POST['submit_year'])){
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
-                                        <h5 class="card-title mb-0">Count of Reservations</h5>
+                                        <h5 class="card-title mb-0">Reservations</h5>
                                             <!-- <small class="text-muted">Commercial networks</small> -->
                                     </div>
                                         <!-- Year Filter -->
@@ -393,6 +549,89 @@ if(isset($_POST['submit_year'])){
                                         },
                                         stroke: {
                                         curve: 'straight'
+                                        },
+                                        grid: {
+                                        row: {
+                                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                            opacity: 0.5
+                                        },
+                                        },
+                                        xaxis: {
+                                        categories: months,
+                                        }
+                                    }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-0">Reservations</h5>
+                                            <!-- <small class="text-muted">Commercial networks</small> -->
+                                    </div>
+                                        <!-- Year Filter -->
+                                    <div class="dropdown">
+                                            <form method="GET" id="yearFilterReserve">
+                                                    <select name="yearSelectReserve" id="yearSelectReserve" class="form-select" onchange="document.getElementById('yearFilterReserve').submit();">
+                                                        <?php
+                                                        $startYear = $currentYear - 5; // Show last 5 years
+                                                        for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                            $selected = ($year == $selectedYearReserve) ? 'selected' : '';
+                                                            echo "<option value=\"$year\" $selected>$year</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                            </form>
+                                    </div>
+                                        <!-- End Year Filter -->
+                                </div>
+
+                                <div class="card-body">
+                                <!-- Line Chart -->
+                                <div id="areaChart"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const months = <?php echo $monthsJSON; ?>;
+                                        let reserves = <?php echo $reservesJSON; ?>;
+
+                                        // Check if reserves is an array, if not, initialize it
+                                        if (!Array.isArray(reserves)) {
+                                            reserves = [];
+                                        }
+
+                                        if (reserves.length === 0) {
+                                            months.push("No Data");
+                                            reserves.push(0);
+                                        }
+
+                                    new ApexCharts(document.querySelector("#areaChart"), {
+                                        series: [{
+                                        name: "Total",
+                                        data: reserves
+                                        }],
+                                        chart: {
+                                        height: 350,
+                                        type: 'area',
+                                        zoom: {
+                                            enabled: false
+                                        }
+                                        },
+                                        dataLabels: {
+                                        enabled: false
+                                        },
+                                        stroke: {
+                                        curve: 'straight'
+                                        },
+                                        subtitle: {
+                                            text: 'Price Movements',
+                                            align: 'left'
                                         },
                                         grid: {
                                         row: {
