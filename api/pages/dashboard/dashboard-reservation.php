@@ -92,7 +92,7 @@ if(isset($_POST['submit_year'])){
     
      $total_reserve_per_month = $conn->prepare("
          SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
-                 COUNT(id) AS total_reserve
+                 COUNT(id) AS chart_total_reserve
          FROM reservations
          WHERE EXTRACT(YEAR FROM reserve_date) = :year
          GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
@@ -114,7 +114,7 @@ if(isset($_POST['submit_year'])){
      foreach ($reserve_data as $row) {
          $monthIndex = array_search($row['month'], $months);
          if ($monthIndex !== false) {
-             $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
+             $reserve[$monthIndex] = $row['chart_total_reserve']; // Replace zero with actual sales
          }
      }
 
@@ -364,7 +364,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-                        <div class="col-12 mb-4">
+                        <div class="col-lg-12 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
@@ -389,7 +389,7 @@ if(isset($_POST['submit_year'])){
                                     <div id="lineAreaChart"></div>
                                         <div class="card-body">
                                         <!-- Bar Chart -->
-                                        <div id="barChartReserve" style="height: 400px;" class="echart"></div>
+                                        <div id="barChartReserve" style="min-height: 400px;" class="echart"></div>
 
                                         <script>
                                             document.addEventListener("DOMContentLoaded", () => {
