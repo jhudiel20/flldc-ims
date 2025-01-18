@@ -349,8 +349,7 @@ if(isset($_POST['submit_year'])){
 
                                         <script>
                                             document.addEventListener("DOMContentLoaded", () => {
-                                                const months = <?php echo json_encode($months); ?>;
-                                                const reserves = <?php echo json_encode($reserve); ?>;
+                                                
 
                                                 echarts.init(document.querySelector("#barChartReserve")).setOption({
                                                     xAxis: {
@@ -407,11 +406,13 @@ if(isset($_POST['submit_year'])){
                                 <div id="lineChart"></div>
 
                                 <script>
+                                    const months = <?php echo json_encode($months); ?>;
+                                    const reserves = <?php echo json_encode($reserve); ?>;
                                     document.addEventListener("DOMContentLoaded", () => {
                                     new ApexCharts(document.querySelector("#lineChart"), {
                                         series: [{
                                         name: "Desktops",
-                                        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                        data: reserves
                                         }],
                                         chart: {
                                         height: 350,
@@ -433,7 +434,7 @@ if(isset($_POST['submit_year'])){
                                         },
                                         },
                                         xaxis: {
-                                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                                        categories: months,
                                         }
                                     }).render();
                                     });
