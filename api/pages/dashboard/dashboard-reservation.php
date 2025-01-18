@@ -25,6 +25,8 @@ if(isset($_POST['submit_year'])){
         $all_months[] = date('M Y', strtotime("$selectedYear-$i-01")); // Dynamically use the selected year
     }
 
+    ################################################################################
+
     // Initialize sales array with zero sales for all months
     $sales = array_fill(0, 12, 0); // 12 months with 0 sales
     
@@ -57,47 +59,39 @@ if(isset($_POST['submit_year'])){
         }
     }
 
-    
-     $total_reserve_per_month = $conn->prepare("
-         SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
-                 COUNT(id) AS total_reserve
-         FROM reservations
-         WHERE reserve_status != ''
-         AND EXTRACT(YEAR FROM reserve_date) = :year
-         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
-         ORDER BY MIN(reserve_date) ASC
-     ");
-     $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-     $total_reserve_per_month->execute();
-     $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+    ################################################################################
 
     // Initialize sales array with zero sales for all months
     $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
-
+    
+    $total_reserve_per_month = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
+               COUNT(id) AS total_reserve
+        FROM reservations
+        WHERE EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
+        ORDER BY MIN(reserve_date) ASC
+    ");
+    $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    $total_reserve_per_month->execute();
+    $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Prepare data for JavaScript
+    $months = [];
+    $reserve = [];
+    // Initialize all months with zero sales
+    foreach ($all_months as $month) {
+        $months[] = $month;
+        $reserve[] = 0; // Default to 0 sales
+    }
+    // Update sales data for months that have sales
     foreach ($reserve_data as $row) {
-        $monthIndex = array_search($row['month'], $months); // $months is your array of months
+        $monthIndex = array_search($row['month'], $months);
         if ($monthIndex !== false) {
-            $reserve[$monthIndex] = $row['total_reserve']; // Replace with actual data
+            $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
         }
     }
-     
-    //  // Prepare data for JavaScript
-    //  $months = [];
-    //  $reserve = [];
-    //  // Initialize all months with zero sales
-    //  foreach ($all_months as $month) {
-    //      $months[] = $month;
-    //      $reserve[] = 0; // Default to 0 sales
-    //  }
-    //  // Update sales data for months that have sales
-    //  foreach ($reserve_data as $row) {
-    //      $monthIndex = array_search($row['month'], $months);
-    //      if ($monthIndex !== false) {
-    //          $reserve[$monthIndex] = $row['chart_total_reserve']; // Replace zero with actual sales
-    //      }
-    //  }
-
-
+    
 ?>
 <!doctype html>
 
@@ -215,7 +209,7 @@ if(isset($_POST['submit_year'])){
                                         <script>
                                             document.addEventListener("DOMContentLoaded", () => {
                                                 const months = <?php echo json_encode($months); ?>;
-                                                const reserve = <?php echo json_encode($reserve); ?>;
+                                                const reserves = <?php echo json_encode($reserve); ?>;
 
                                                 echarts.init(document.querySelector("#barChartReserve")).setOption({
                                                     xAxis: {
@@ -226,7 +220,7 @@ if(isset($_POST['submit_year'])){
                                                         type: 'value'
                                                     },
                                                     series: [{
-                                                        data: reserve,
+                                                        data: reserves,
                                                         type: 'bar',
                                                         label: {
                                                             show: true, // Enable the label
