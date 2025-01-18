@@ -361,7 +361,7 @@ if(isset($_POST['submit_year'])){
                                                         type: 'value'
                                                     },
                                                     series: [{
-                                                        data: reserve,
+                                                        data: reserves,
                                                         type: 'bar',
                                                         label: {
                                                             show: true, // Enable the label

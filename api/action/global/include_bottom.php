@@ -19,7 +19,7 @@
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/select2/select2.js"></script>
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/moment/moment.js"></script>
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="<?php BASE_URL; ?>../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <!-- <script src="<?php BASE_URL; ?>../assets/vendor/libs/apex-charts/apexcharts.js"></script> -->
     <script src="<?php BASE_URL; ?>../assets/vendor/libs/dropzone/dropzone.js"></script>
     <!-- <script src="<?php BASE_URL; ?>../assets/js/form-basic-inputs.js"></script> -->
     <!-- <script src="<?php BASE_URL; ?>../assets/js/ui-modals.js"></script> -->
