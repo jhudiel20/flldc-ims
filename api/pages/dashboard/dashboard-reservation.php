@@ -114,11 +114,9 @@ if(isset($_POST['submit_year'])){
     
     // Prepare data for JavaScript
     $months = [];
-    $reserve = [];
     // Initialize all months with zero sales
     foreach ($all_months_reserve as $month) {
         $months[] = $month;
-        $reserve[] = 0; // Default to 0 sales
     }
     // Update sales data for months that have sales
     foreach ($reserve_data as $row) {
