@@ -118,7 +118,7 @@ if(isset($_POST['submit_year'])){
     foreach ($reserve_data as $row) {
         $monthIndex = array_search($row['month'], $months);
         if ($monthIndex !== false) {
-            $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
+            $reservation[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
         }
     }
     
@@ -327,61 +327,6 @@ if(isset($_POST['submit_year'])){
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
                                         <h5 class="card-title mb-0">Count of Reservations</h5>
-                                        <!-- <small class="text-muted">Commercial networks</small> -->
-                                    </div>
-                                    <div class="dropdown">
-                                        <form method="GET" id="yearFilterForm">
-                                                <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
-                                                    <?php
-                                                    $startYear = $currentYear - 5; // Show last 5 years
-                                                    for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                        $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                        echo "<option value=\"$year\" $selected>$year</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                        <!-- Bar Chart -->
-                                        <div id="barChartReserve" style="min-height: 400px;" class="echart"></div>
-
-                                        <script>
-                                            document.addEventListener("DOMContentLoaded", () => {
-                                                
-
-                                                echarts.init(document.querySelector("#barChartReserve")).setOption({
-                                                    xAxis: {
-                                                        type: 'category',
-                                                        data: months
-                                                    },
-                                                    yAxis: {
-                                                        type: 'value'
-                                                    },
-                                                    series: [{
-                                                        data: reserves,
-                                                        type: 'bar',
-                                                        label: {
-                                                            show: true, // Enable the label
-                                                            position: 'top', // Position the label at the top of the bars
-                                                            formatter: '{c}', // Format the label to display the value
-                                                            color: '#000' // Set the label color
-                                                        }
-                                                    }]
-                                                });
-                                            });
-                                        </script>
-                                        <!-- End Bar Chart -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 mb-4">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="card-title mb-0">Count of Reservations</h5>
                                             <!-- <small class="text-muted">Commercial networks</small> -->
                                     </div>
                                         <!-- Year Filter -->
@@ -406,9 +351,9 @@ if(isset($_POST['submit_year'])){
                                 <div id="lineChart"></div>
 
                                 <script>
-                                    const months = <?php echo json_encode($months); ?>;
-                                    const reserves = <?php echo json_encode($reserve); ?>;
                                     document.addEventListener("DOMContentLoaded", () => {
+                                    const months = <?php echo json_encode($months); ?>;
+                                    const reserves = <?php echo json_encode($reservation); ?>;
                                     new ApexCharts(document.querySelector("#lineChart"), {
                                         series: [{
                                         name: "Desktops",
