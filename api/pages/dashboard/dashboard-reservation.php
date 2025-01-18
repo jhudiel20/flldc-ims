@@ -107,8 +107,7 @@ if(isset($_POST['submit_year'])){
         FROM reservations
         WHERE reserve_status = 'APPROVED'
         AND EXTRACT(YEAR FROM reserve_date) = :year
-        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
-        AND GROUP BY business_unit
+        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY'), business_unit
         ORDER BY MIN(reserve_date) ASC
     ");
     $totalRevenuePerBU->bindParam(':year', $selectedYearReserveBU, PDO::PARAM_INT);
@@ -439,10 +438,10 @@ if(isset($_POST['submit_year'])){
                                         const monthsBUJSON = <?php echo $monthsBUJSON; ?>;
                                         let revenuePerBU = <?php echo $revenuePerBU; ?>;
                                     new ApexCharts(document.querySelector("#columnChart1"), {
-                                        series: [{
-                                        name: selectBU,
-                                        data: revenuePerBU
-                                        }]
+                                        series: selectBU.map(bu => ({
+                                            name: bu,
+                                            data: revenuePerBU.filter((_, index) => selectBU[index] === bu),
+                                        })),
                                         chart: {
                                         type: 'bar',
                                         height: 350
