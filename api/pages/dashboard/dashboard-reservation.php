@@ -352,8 +352,6 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="lineAreaChart"></div>
-                                        <div class="card-body">
                                         <!-- Bar Chart -->
                                         <div id="barChartReserve" style="min-height: 400px;" class="echart"></div>
 
@@ -384,8 +382,6 @@ if(isset($_POST['submit_year'])){
                                             });
                                         </script>
                                         <!-- End Bar Chart -->
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
