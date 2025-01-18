@@ -129,14 +129,9 @@ if(isset($_POST['submit_year'])){
         $selectBU[] = $row['business_unit'];
         $monthIndex = array_search($row['month'], $monthsListBU);
         if ($monthIndex !== false) {
-            $revenuePerBU[$monthIndex] = $row['total_reserve']; // Replace zero with actual reserve count
+            $revenuePerBU[$monthIndex] = $row['total_sales']; // Replace zero with actual reserve count
         }
     }
-
-    // Prepare the data for JavaScript
-    $selectBUJSON = json_encode($selectBU);
-    $revenuePerBUJSON = json_encode($revenuePerBU); // Encode actual sales data
-    $monthsBUJSON = json_encode($monthsListBU);
 
     ################################################################################
 
@@ -321,7 +316,7 @@ if(isset($_POST['submit_year'])){
 
                     <div class="row">
 
-                        <div class="col-lg-12 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
@@ -404,7 +399,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-                        <div class="col-lg-12 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between">
                                         <div>
@@ -434,9 +429,9 @@ if(isset($_POST['submit_year'])){
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                        let selectBU = <?php echo $selectBU; ?>;
-                                        const monthsBUJSON = <?php echo $monthsBUJSON; ?>;
-                                        let revenuePerBU = <?php echo $revenuePerBU; ?>;
+                                        let selectBU = JSON.stringify(<?php echo json_encode($selectBU); ?>); // Encoding happens in JS
+                                        let revenuePerBU = JSON.stringify(<?php echo json_encode($revenuePerBU); ?>);
+                                        const monthsBUJSON = JSON.stringify(<?php echo json_encode($monthsListBU); ?>);
                                     new ApexCharts(document.querySelector("#columnChart1"), {
                                         series: selectBU.map(bu => ({
                                             name: bu,
@@ -488,86 +483,7 @@ if(isset($_POST['submit_year'])){
                             </div>
                         </div>
 
-                        <div class="col-lg-12 mb-4">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="card-title mb-0">Reservations</h5>
-                                            <!-- <small class="text-muted">Commercial networks</small> -->
-                                    </div>
-                                        <!-- Year Filter -->
-                                    <div class="dropdown">
-                                            <form method="GET" id="yearFilterReserve">
-                                                    <select name="yearSelectReserve" id="yearSelectReserve" class="form-select" onchange="document.getElementById('yearFilterReserve').submit();">
-                                                        <?php
-                                                        $startYear = $currentYear - 5; // Show last 5 years
-                                                        for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                            $selected = ($year == $selectedYearReserve) ? 'selected' : '';
-                                                            echo "<option value=\"$year\" $selected>$year</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                            </form>
-                                    </div>
-                                        <!-- End Year Filter -->
-                                </div>
-
-                                <div class="card-body">
-                                <!-- Line Chart -->
-                                <div id="lineChart"></div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        const months = <?php echo $monthsJSON; ?>;
-                                        let reserves = <?php echo $reservesJSON; ?>;
-
-                                        // Check if reserves is an array, if not, initialize it
-                                        if (!Array.isArray(reserves)) {
-                                            reserves = [];
-                                        }
-
-                                        if (reserves.length === 0) {
-                                            months.push("No Data");
-                                            reserves.push(0);
-                                        }
-
-                                    new ApexCharts(document.querySelector("#lineChart"), {
-                                        series: [{
-                                        name: "Total",
-                                        data: reserves
-                                        }],
-                                        chart: {
-                                        height: 350,
-                                        type: 'line',
-                                        zoom: {
-                                            enabled: false
-                                        }
-                                        },
-                                        dataLabels: {
-                                        enabled: false
-                                        },
-                                        stroke: {
-                                        curve: 'straight'
-                                        },
-                                        grid: {
-                                        row: {
-                                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                                            opacity: 0.5
-                                        },
-                                        },
-                                        xaxis: {
-                                        categories: months,
-                                        }
-                                    }).render();
-                                    });
-                                </script>
-                                <!-- End Line Chart -->
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
@@ -629,7 +545,7 @@ if(isset($_POST['submit_year'])){
                                         curve: 'straight'
                                         },
                                         subtitle: {
-                                            text: 'Price Movements',
+                                            text: 'Submitted Reservations',
                                             align: 'left'
                                         },
                                         grid: {
