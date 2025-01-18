@@ -47,13 +47,19 @@ if(isset($_POST['submit_year'])){
     $row_total_pending = $total_pending->fetch(PDO::FETCH_ASSOC);
 
     $currentYear = date('Y');
-    $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
+    $selectedYearReserve = isset($_GET['yearSelectReserve']) ? $_GET['yearSelectReserve'] : $currentYear;
+    $selectedYearRevenue = isset($_GET['yearSelectRevenue']) ? $_GET['yearSelectRevenue'] : $currentYear;
 
-    // Create an array with all months (January to December)
-    $all_months = [];
-    for ($i = 1; $i <= 12; $i++) {
-        $all_months[] = date('M Y', strtotime("$selectedYear-$i-01")); // Dynamically use the selected year
+    function generateMonths($year) {
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $months[] = date('M Y', strtotime("$year-$i-01"));
+        }
+        return $months;
     }
+    $all_months_reserve = generateMonths($selectedYearReserve);
+    $all_months_revenue = generateMonths($selectedYearRevenue);
+
 
     ################################################################################
 
@@ -69,21 +75,21 @@ if(isset($_POST['submit_year'])){
         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
         ORDER BY MIN(reserve_date) ASC
     ");
-    $total_sales_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    $total_sales_per_month->bindParam(':year', $selectedYearRevenue, PDO::PARAM_INT);
     $total_sales_per_month->execute();
     $sales_data = $total_sales_per_month->fetchAll(PDO::FETCH_ASSOC);
     
     // Prepare data for JavaScript
-    $months = [];
+    $sales_months = [];
     $sales = [];
     // Initialize all months with zero sales
-    foreach ($all_months as $month) {
-        $months[] = $month;
+    foreach ($all_months_revenue as $month) {
+        $sales_months[] = $month;
         $sales[] = 0; // Default to 0 sales
     }
     // Update sales data for months that have sales
     foreach ($sales_data as $row) {
-        $monthIndex = array_search($row['month'], $months);
+        $monthIndex = array_search($row['month'], $sales_months);
         if ($monthIndex !== false) {
             $sales[$monthIndex] = $row['total_sales']; // Replace zero with actual sales
         }
@@ -91,7 +97,7 @@ if(isset($_POST['submit_year'])){
 
     ################################################################################
 
-    // Initialize sales array with zero sales for all months
+    // Initialize reserve array with zero sales for all months
     $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
     
     $total_reserve_per_month = $conn->prepare("
@@ -102,7 +108,7 @@ if(isset($_POST['submit_year'])){
         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
         ORDER BY MIN(reserve_date) ASC
     ");
-    $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    $total_reserve_per_month->bindParam(':year', $selectedYearReserve, PDO::PARAM_INT);
     $total_reserve_per_month->execute();
     $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
     
@@ -110,7 +116,7 @@ if(isset($_POST['submit_year'])){
     $months = [];
     $reserve = [];
     // Initialize all months with zero sales
-    foreach ($all_months as $month) {
+    foreach ($all_months_reserve as $month) {
         $months[] = $month;
         $reserve[] = 0; // Default to 0 sales
     }
@@ -118,7 +124,7 @@ if(isset($_POST['submit_year'])){
     foreach ($reserve_data as $row) {
         $monthIndex = array_search($row['month'], $months);
         if ($monthIndex !== false) {
-            $reservation[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
+            $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
         }
     }
     
@@ -272,12 +278,12 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                         <!-- Year Filter -->
                                     <div class="dropdown">
-                                            <form method="GET" id="yearFilterForm">
-                                                    <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                            <form method="GET" id="yearFilterRevenue">
+                                                    <select name="yearSelectRevenue" id="yearSelectRevenue" class="form-select" onchange="document.getElementById('yearFilterRevenue').submit();">
                                                         <?php
                                                         $startYear = $currentYear - 5; // Show last 5 years
                                                         for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                            $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                            $selected = ($year == $selectedYearRevenue) ? 'selected' : '';
                                                             echo "<option value=\"$year\" $selected>$year</option>";
                                                         }
                                                         ?>
@@ -292,13 +298,13 @@ if(isset($_POST['submit_year'])){
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            const months = <?php echo json_encode($months); ?>;
+                                            const sales_months = <?php echo json_encode($sales_months); ?>;
                                             const sales = <?php echo json_encode($sales); ?>;
 
                                             echarts.init(document.querySelector("#barChart")).setOption({
                                                 xAxis: {
                                                     type: 'category',
-                                                    data: months
+                                                    data: sales_months
                                                 },
                                                 yAxis: {
                                                     type: 'value'
@@ -331,12 +337,12 @@ if(isset($_POST['submit_year'])){
                                     </div>
                                         <!-- Year Filter -->
                                     <div class="dropdown">
-                                            <form method="GET" id="yearFilterForm">
-                                                    <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                            <form method="GET" id="yearFilterReserve">
+                                                    <select name="yearSelectReserve" id="yearSelectReserve" class="form-select" onchange="document.getElementById('yearFilterReserve').submit();">
                                                         <?php
                                                         $startYear = $currentYear - 5; // Show last 5 years
                                                         for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                            $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                            $selected = ($year == $selectedYearReserve) ? 'selected' : '';
                                                             echo "<option value=\"$year\" $selected>$year</option>";
                                                         }
                                                         ?>
@@ -353,10 +359,10 @@ if(isset($_POST['submit_year'])){
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
                                     const months = <?php echo json_encode($months); ?>;
-                                    const reserves = <?php echo json_encode($reservation); ?>;
+                                    const reserves = <?php echo json_encode($reserve); ?>;
                                     new ApexCharts(document.querySelector("#lineChart"), {
                                         series: [{
-                                        name: "Desktops",
+                                        name: "Total",
                                         data: reserves
                                         }],
                                         chart: {
