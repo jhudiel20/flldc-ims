@@ -307,23 +307,28 @@ if(isset($_POST['submit_year'])){
 
                         <div class="col-lg-12 mb-4">
                             <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Revenue &nbsp; 
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-0">Revenue</h5>
+                                            <!-- <small class="text-muted">Commercial networks</small> -->
+                                    </div>
                                         <!-- Year Filter -->
-                                        <form method="GET" id="yearFilterForm">
-                                                <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
-                                                    <?php
-                                                    $startYear = $currentYear - 5; // Show last 5 years
-                                                    for ($year = $startYear; $year <= $currentYear; $year++) {
-                                                        $selected = ($year == $selectedYear) ? 'selected' : '';
-                                                        echo "<option value=\"$year\" $selected>$year</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                        </form>
+                                    <div class="dropdown">
+                                            <form method="GET" id="yearFilterForm">
+                                                    <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                                        <?php
+                                                        $startYear = $currentYear - 5; // Show last 5 years
+                                                        for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                            $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                            echo "<option value=\"$year\" $selected>$year</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                            </form>
+                                    </div>
                                         <!-- End Year Filter -->
-                                    </h5>
-
+                                </div>
+                                <div class="card-body">
                                     <!-- Bar Chart -->
                                     <div id="barChart" style="height: 400px;" class="echart"></div>
 
@@ -382,92 +387,39 @@ if(isset($_POST['submit_year'])){
                                 </div>
                                 <div class="card-body">
                                     <div id="lineAreaChart"></div>
-                                    <script>
-                                        const months = <?php echo json_encode($months); ?>;
-                                        const reserve = <?php echo json_encode($reserve); ?>;
-                                          // Line Area Chart
-                                        // --------------------------------------------------------------------
-                                        const areaChartEl = document.querySelector('#lineAreaChart'),
-                                            areaChartConfig = {
-                                            chart: {
-                                                height: 400,
-                                                type: 'area',
-                                                parentHeightOffset: 0,
-                                                toolbar: {
-                                                show: false
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                show: false,
-                                                curve: 'straight'
-                                            },
-                                            legend: {
-                                                show: true,
-                                                position: 'top',
-                                                horizontalAlign: 'start',
-                                                labels: {
-                                                useSeriesColors: false
-                                                }
-                                            },
-                                            grid: {
-                                                borderColor: '#f1f3fa',
-                                                xaxis: {
-                                                lines: {
-                                                    show: true
-                                                }
-                                                }
-                                            },
-                                            colors: ['#727cf5'],
-                                            series: [
-                                                // {
-                                                //   name: 'Visits',
-                                                //   data: [100, 120, 90, 170, 130, 160, 140, 240, 220, 180, 270, 280, 375]
-                                                // },
-                                                // {
-                                                //   name: 'Clicks',
-                                                //   data: [60, 80, 70, 110, 80, 100, 90, 180, 160, 140, 200, 220, 275]
-                                                // },
-                                                {
-                                                name: 'Count',
-                                                data: reserve
-                                                }
-                                            ],
-                                            xaxis: {
-                                                categories: months,
-                                                axisBorder: {
-                                                show: false
-                                                },
-                                                axisTicks: {
-                                                show: false
-                                                },
-                                                labels: {
-                                                style: {
-                                                    colors: '#727cf5',
-                                                    fontSize: '13px'
-                                                }
-                                                }
-                                            },
-                                            yaxis: {
-                                                labels: {
-                                                style: {
-                                                    colors: '#727cf5',
-                                                    fontSize: '13px'
-                                                }
-                                                }
-                                            },
-                                            fill: {
-                                                opacity: 1,
-                                                type: 'solid'
-                                            },
-                                            tooltip: {
-                                                shared: false
-                                            }
-                                            };
-                                            areaChart.render();
-                                    </script>
+                                        <div class="card-body">
+                                        <!-- Bar Chart -->
+                                        <div id="barChartReserve" style="height: 400px;" class="echart"></div>
+
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", () => {
+                                                const months = <?php echo json_encode($months); ?>;
+                                                const reserve = <?php echo json_encode($reserve); ?>;
+
+                                                echarts.init(document.querySelector("#barChartReserve")).setOption({
+                                                    xAxis: {
+                                                        type: 'category',
+                                                        data: months
+                                                    },
+                                                    yAxis: {
+                                                        type: 'value'
+                                                    },
+                                                    series: [{
+                                                        data: reserve,
+                                                        type: 'bar',
+                                                        label: {
+                                                            show: true, // Enable the label
+                                                            position: 'top', // Position the label at the top of the bars
+                                                            formatter: '{c}', // Format the label to display the value
+                                                            color: '#000' // Set the label color
+                                                        }
+                                                    }]
+                                                });
+                                            });
+                                        </script>
+                                        <!-- End Bar Chart -->
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
