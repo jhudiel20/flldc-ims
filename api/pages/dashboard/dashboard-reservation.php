@@ -14,7 +14,37 @@ if(isset($_POST['submit_year'])){
     $year = date("Y");
   }
 
+    $total_sales = $conn->prepare("
+    SELECT SUM(CAST(prices AS NUMERIC)) AS total_sales FROM reservations
+    WHERE reserve_status = 'APPROVED'");
+    $total_sales->execute();
+    $row_total_sales = $total_sales->fetch(PDO::FETCH_ASSOC);
 
+    $total_guest = $conn->prepare("
+    SELECT SUM(CAST(guest AS NUMERIC)) AS total_guest FROM reservations
+    WHERE reserve_status = 'APPROVED'");
+    $total_guest->execute();
+    $row_total_guest = $total_guest->fetch(PDO::FETCH_ASSOC);
+
+    $total_reserve = $conn->prepare("
+    SELECT COUNT(id) AS total_reserve FROM reservations");
+    $total_reserve->execute();
+    $row_total_reserve = $total_reserve->fetch(PDO::FETCH_ASSOC);
+
+    $total_approved = $conn->prepare("
+    SELECT COUNT(id) AS total_approved FROM reservations WHERE reserve_status = 'APPROVED'");
+    $total_approved->execute();
+    $row_total_approved = $total_approved->fetch(PDO::FETCH_ASSOC);
+
+    $total_declined = $conn->prepare("
+    SELECT COUNT(id) AS total_declined FROM reservations WHERE reserve_status = 'DECLINED'");
+    $total_declined->execute();
+    $row_total_declined = $total_declined->fetch(PDO::FETCH_ASSOC);
+
+    $total_pending = $conn->prepare("
+    SELECT COUNT(id) AS total_pending FROM reservations WHERE reserve_status = 'PENDING'");
+    $total_pending->execute();
+    $row_total_pending = $total_pending->fetch(PDO::FETCH_ASSOC);
 
     $currentYear = date('Y');
     $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
@@ -121,6 +151,117 @@ if(isset($_POST['submit_year'])){
 
                 <div class="container flex-grow-1 container-p-y">
                     <div class="row">
+                        <!-- Total Revenue in reservation -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar flex-shrink-0">
+                                        <img
+                                            src="../assets/img/wallet-info.png"
+                                            alt="Credit Card"
+                                            class="rounded" />
+                                        </div>
+                                    </div>
+                                    <span class="d-block">Revenue</span>
+                                    <h4 class="card-title mb-1"><?php echo number_format($row_total_sales['total_sales']) ?></h4>
+                                    <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total number guest -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/user.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Head Count</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_guest['total_guest']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total Reservation -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_reserve['total_reserve']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total approved -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Approved Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_approved['total_approved']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total pending -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Pending Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_pending['total_pending']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- total declined -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                    <img
+                                        src="../assets/img/bookmark.png"
+                                        alt="Credit Card"
+                                        class="rounded" />
+                                    </div>
+                                </div>
+                                <span class="d-block">Total Declined Reservation</span>
+                                <h4 class="card-title mb-1"><?php echo number_format($row_total_declined['total_declined']) ?></h4>
+                                <!-- <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
 
                         <div class="col-lg-12 mb-4">
                             <div class="card">
@@ -220,7 +361,7 @@ if(isset($_POST['submit_year'])){
                                                         type: 'value'
                                                     },
                                                     series: [{
-                                                        data: reserves,
+                                                        data: reserve,
                                                         type: 'bar',
                                                         label: {
                                                             show: true, // Enable the label
@@ -233,6 +374,72 @@ if(isset($_POST['submit_year'])){
                                             });
                                         </script>
                                         <!-- End Bar Chart -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-0">Count of Reservations</h5>
+                                            <!-- <small class="text-muted">Commercial networks</small> -->
+                                    </div>
+                                        <!-- Year Filter -->
+                                    <div class="dropdown">
+                                            <form method="GET" id="yearFilterForm">
+                                                    <select name="year" id="yearSelect" class="form-select" onchange="document.getElementById('yearFilterForm').submit();">
+                                                        <?php
+                                                        $startYear = $currentYear - 5; // Show last 5 years
+                                                        for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                            $selected = ($year == $selectedYear) ? 'selected' : '';
+                                                            echo "<option value=\"$year\" $selected>$year</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                            </form>
+                                    </div>
+                                        <!-- End Year Filter -->
+                                </div>
+
+                                <div class="card-body">
+                                <!-- Line Chart -->
+                                <div id="lineChart"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                    new ApexCharts(document.querySelector("#lineChart"), {
+                                        series: [{
+                                        name: "Desktops",
+                                        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                        }],
+                                        chart: {
+                                        height: 350,
+                                        type: 'line',
+                                        zoom: {
+                                            enabled: false
+                                        }
+                                        },
+                                        dataLabels: {
+                                        enabled: false
+                                        },
+                                        stroke: {
+                                        curve: 'straight'
+                                        },
+                                        grid: {
+                                        row: {
+                                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                            opacity: 0.5
+                                        },
+                                        },
+                                        xaxis: {
+                                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                                        }
+                                    }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
                                 </div>
                             </div>
                         </div>

@@ -23,7 +23,7 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <!-- <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/apex-charts/apex-charts.css" /> -->
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/flatpickr/flatpickr.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/select2/select2.css" />
     <link rel="stylesheet" href="<?php BASE_URL; ?>../assets/vendor/libs/quill/editor.css" />
