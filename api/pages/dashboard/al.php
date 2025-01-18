@@ -61,4 +61,23 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>    // $total_head_per_month = $conn->prepare("
+    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
+    //         COUNT(id) AS total_head
+    //     FROM reservations
+    //     WHERE reserve_status = 'APPROVED'
+    //     AND EXTRACT(YEAR FROM reserve_date) = :year
+    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
+    //     ORDER BY MIN(reserve_date) ASC
+    // ");
+    // $total_head_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
+    // $total_head_per_month->execute();
+    // $head_data = $total_head_per_month->fetchAll(PDO::FETCH_ASSOC);
+
+    // // Prepare data for JavaScript
+    // $head_months = [];
+    // $head = [];
+    // foreach ($head_data as $row) {
+    //     $head_months[] = $row['month'];
+    //     $head[] = $row['total_head'];
+    // }

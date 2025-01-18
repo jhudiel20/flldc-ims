@@ -87,12 +87,10 @@ if(isset($_POST['submit_year'])){
         }
     }
 
-     // Initialize sales array with zero sales for all months
-     $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
     
      $total_reserve_per_month = $conn->prepare("
          SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
-                 COUNT(id) AS chart_total_reserve
+                 COUNT(id) AS total_reserve
          FROM reservations
          WHERE EXTRACT(YEAR FROM reserve_date) = :year
          GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
@@ -101,66 +99,34 @@ if(isset($_POST['submit_year'])){
      $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
      $total_reserve_per_month->execute();
      $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
+
+    // Initialize sales array with zero sales for all months
+    $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
+
+    foreach ($reserve_data as $row) {
+        $monthIndex = array_search($row['month'], $months); // $months is your array of months
+        if ($monthIndex !== false) {
+            $reserve[$monthIndex] = $row['total_reserve']; // Replace with actual data
+        }
+    }
      
-     // Prepare data for JavaScript
-     $months = [];
-     $reserve = [];
-     // Initialize all months with zero sales
-     foreach ($all_months as $month) {
-         $months[] = $month;
-         $reserve[] = 0; // Default to 0 sales
-     }
-     // Update sales data for months that have sales
-     foreach ($reserve_data as $row) {
-         $monthIndex = array_search($row['month'], $months);
-         if ($monthIndex !== false) {
-             $reserve[$monthIndex] = $row['chart_total_reserve']; // Replace zero with actual sales
-         }
-     }
+    //  // Prepare data for JavaScript
+    //  $months = [];
+    //  $reserve = [];
+    //  // Initialize all months with zero sales
+    //  foreach ($all_months as $month) {
+    //      $months[] = $month;
+    //      $reserve[] = 0; // Default to 0 sales
+    //  }
+    //  // Update sales data for months that have sales
+    //  foreach ($reserve_data as $row) {
+    //      $monthIndex = array_search($row['month'], $months);
+    //      if ($monthIndex !== false) {
+    //          $reserve[$monthIndex] = $row['chart_total_reserve']; // Replace zero with actual sales
+    //      }
+    //  }
 
-    // $total_head_per_month = $conn->prepare("
-    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
-    //         COUNT(id) AS total_head
-    //     FROM reservations
-    //     WHERE reserve_status = 'APPROVED'
-    //     AND EXTRACT(YEAR FROM reserve_date) = :year
-    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
-    //     ORDER BY MIN(reserve_date) ASC
-    // ");
-    // $total_head_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-    // $total_head_per_month->execute();
-    // $head_data = $total_head_per_month->fetchAll(PDO::FETCH_ASSOC);
 
-    // // Prepare data for JavaScript
-    // $head_months = [];
-    // $head = [];
-    // foreach ($head_data as $row) {
-    //     $head_months[] = $row['month'];
-    //     $head[] = $row['total_head'];
-    // }
-
-    // $total_reserve_per_month = $conn->prepare("
-    //     SELECT TO_CHAR(reserve_date, 'YYYY-MON') AS month, 
-    //         COUNT(id) AS total_reserve
-    //     FROM reservations
-    //     WHERE EXTRACT(YEAR FROM reserve_date) = :year
-    //     GROUP BY TO_CHAR(reserve_date, 'YYYY-MON')
-    //     ORDER BY MIN(reserve_date) ASC
-    // ");
-    // $total_reserve_per_month->bindParam(':year', $selectedYear, PDO::PARAM_INT);
-    // $total_reserve_per_month->execute();
-    // $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
-
-    // // Prepare data for JavaScript
-    // $reserve_months = [];
-    // $reserve = [];
-    // foreach ($reserve_data as $row) {
-    //     $reserve_months[] = $row['month'];
-    //     $reserve[] = $row['total_reserve'];
-    // }
-
-    
-    
 ?>
 <!doctype html>
 
