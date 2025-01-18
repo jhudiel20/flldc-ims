@@ -98,33 +98,40 @@ if(isset($_POST['submit_year'])){
     ################################################################################
 
     // Initialize reserve array with zero sales for all months
-    $reserve = array_fill(0, 12, 0); // 12 months with 0 sales
-    
-    $total_reserve_per_month = $conn->prepare("
+    $reserveData = array_fill(0, 12, 0); // 12 months with 0 sales
+
+    $totalReservePerMonth = $conn->prepare("
         SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
-               COUNT(id) AS total_reserve
+            COUNT(id) AS total_reserve
         FROM reservations
         WHERE EXTRACT(YEAR FROM reserve_date) = :year
         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
         ORDER BY MIN(reserve_date) ASC
     ");
-    $total_reserve_per_month->bindParam(':year', $selectedYearReserve, PDO::PARAM_INT);
-    $total_reserve_per_month->execute();
-    $reserve_data = $total_reserve_per_month->fetchAll(PDO::FETCH_ASSOC);
-    
+    $totalReservePerMonth->bindParam(':year', $selectedYearReserve, PDO::PARAM_INT);
+    $totalReservePerMonth->execute();
+    $reserveDataResults = $totalReservePerMonth->fetchAll(PDO::FETCH_ASSOC);
+
     // Prepare data for JavaScript
-    $months = [];
+    $monthsList = [];
+    $reserveData = [];
     // Initialize all months with zero sales
     foreach ($all_months_reserve as $month) {
-        $months[] = $month;
+        $monthsList[] = $month;
+        $reserveData[] = 0; // Default to 0 sales
     }
-    // Update sales data for months that have sales
-    foreach ($reserve_data as $row) {
-        $monthIndex = array_search($row['month'], $months);
+
+    // Update reserve data for months that have sales
+    foreach ($reserveDataResults as $row) {
+        $monthIndex = array_search($row['month'], $monthsList);
         if ($monthIndex !== false) {
-            $reserve[$monthIndex] = $row['total_reserve']; // Replace zero with actual sales
+            $reserveData[$monthIndex] = $row['total_reserve']; // Replace zero with actual reserve count
         }
     }
+
+    // Prepare the data for JavaScript
+    $reservesJSON = json_encode($reserveData); // Encode actual sales data
+    $monthsJSON = json_encode($monthsList);
     
 ?>
 <!doctype html>
@@ -297,7 +304,7 @@ if(isset($_POST['submit_year'])){
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
                                             const sales_months = <?php echo json_encode($sales_months); ?>;
-                                            const sales = <?php echo json_encode($sales); ?>;
+                                            let sales = <?php echo json_encode($sales); ?>;
 
                                             echarts.init(document.querySelector("#barChart")).setOption({
                                                 xAxis: {
@@ -356,8 +363,19 @@ if(isset($_POST['submit_year'])){
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                    const months = <?php echo json_encode($months); ?>;
-                                    const reserves = <?php echo json_encode($reserve); ?>;
+                                        const months = <?php echo $monthsJSON; ?>;
+                                        let reserves = <?php echo $reservesJSON; ?>;
+
+                                        // Check if reserves is an array, if not, initialize it
+                                        if (!Array.isArray(reserves)) {
+                                            reserves = [];
+                                        }
+
+                                        if (reserves.length === 0) {
+                                            months.push("No Data");
+                                            reserves.push(0);
+                                        }
+
                                     new ApexCharts(document.querySelector("#lineChart"), {
                                         series: [{
                                         name: "Total",
