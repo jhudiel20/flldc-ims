@@ -429,7 +429,8 @@ if(isset($_POST['submit_year'])){
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                        let selectBU = JSON.stringify(<?php echo json_encode($selectBU); ?>); // Encoding happens in JS
+                                        let selectBU = <?php echo $selectBUJSON ?: '[]'; ?>; // Use an empty array if $selectBUJSON is null or empty
+                                        console.log(selectBU);
                                         let revenuePerBU = JSON.stringify(<?php echo json_encode($revenuePerBU); ?>);
                                         const monthsBUJSON = JSON.stringify(<?php echo json_encode($monthsListBU); ?>);
                                     new ApexCharts(document.querySelector("#columnChart1"), {

@@ -78,10 +78,6 @@ $user_id = $decrypted_array['ID'];
                     <li class="menu-item <?php echo ($geturl == 'dashboard-reservation')? 'active' : 'collapsed' ?>">
                         <a href="dashboard-reservation" class="menu-link btn-page-block">
                             <div class="text-truncate" data-i18n="Reservation">Reservation</div>
-                            <?php if($r_reserve['total'] == 0){}else{?>
-                                <span
-                                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_reserve['total']?></span>
-                                <?php }?>
                         </a>
                     </li>
                 </ul>
@@ -91,6 +87,10 @@ $user_id = $decrypted_array['ID'];
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon fa-solid fa-book-bookmark btn-page-block"></i>
                         <div class="text-truncate" data-i18n="Reservation">Reservation</div>
+                        <?php if($r_reserve['total'] == 0){}else{?>
+                                <span
+                                    class="badge badge-center rounded-pill bg-danger ms-auto"><?php echo $r_reserve['total']?></span>
+                                <?php }?>
                         <!-- <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span> -->
                     </a>
                     <ul class="menu-sub">

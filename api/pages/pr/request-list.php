@@ -179,7 +179,7 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 
 //function initializeTable(data) {
 var table = new Tabulator("#request-list-table", {
-    layout: "fitDataStretch",
+    layout: "fitData",
     movableColumns: true,
     placeholder: "No Data Found",
     pagination: true, //enable pagination
