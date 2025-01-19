@@ -184,7 +184,7 @@ if(isset($_POST['submit_year'])){
 
     $totalHeadPerMonth = $conn->prepare("
         SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
-            SUM(CAST(guest AS NUMERIC)) AS total_head,
+            SUM(CAST(guest AS NUMERIC)) AS total_head
         FROM reservations 
         WHERE reserve_status = 'APPROVED'
         AND EXTRACT(YEAR FROM reserve_date) = :year
