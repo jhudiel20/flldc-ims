@@ -50,6 +50,7 @@ if(isset($_POST['submit_year'])){
     $selectedYearReserve = isset($_GET['yearSelectReserve']) ? $_GET['yearSelectReserve'] : $currentYear;
     $selectedYearRevenue = isset($_GET['yearSelectRevenue']) ? $_GET['yearSelectRevenue'] : $currentYear;
     $selectedYearRevenueBU = isset($_GET['yearSelectRevenueBU']) ? $_GET['yearSelectRevenueBU'] : $currentYear;
+    $selectedYearHead = isset($_GET['yearSelectHead']) ? $_GET['yearSelectHead'] : $currentYear;
 
     function generateMonths($year) {
         $months = [];
@@ -61,7 +62,7 @@ if(isset($_POST['submit_year'])){
     $all_months_reserve = generateMonths($selectedYearReserve);
     $all_months_revenue = generateMonths($selectedYearRevenue);
     $all_months_revenueBU = generateMonths($selectedYearRevenueBU);
-
+    $all_months_head = generateMonths($selectedYearHead);
     ################################################################################
 
     // Initialize sales array with zero sales for all months
@@ -178,7 +179,42 @@ if(isset($_POST['submit_year'])){
 
     ################################################################################
 
+    // Initialize reserve array with zero sales for all months
+    $headData = array_fill(0, 12, 0); // 12 months with 0 sales
 
+    $totalHeadPerMonth = $conn->prepare("
+        SELECT TO_CHAR(reserve_date, 'Mon YYYY') AS month, 
+            SUM(CAST(guest AS NUMERIC)) AS total_head,
+        FROM reservations 
+        WHERE reserve_status = 'APPROVED'
+        AND EXTRACT(YEAR FROM reserve_date) = :year
+        GROUP BY TO_CHAR(reserve_date, 'Mon YYYY')
+        ORDER BY MIN(reserve_date) ASC
+    ");
+    $totalHeadPerMonth->bindParam(':year', $selectedYearHead, PDO::PARAM_INT);
+    $totalHeadPerMonth->execute();
+    $HeadDataResults = $totalHeadPerMonth->fetchAll(PDO::FETCH_ASSOC);
+
+    // Prepare data for JavaScript
+    $HeadmonthsList = [];
+    $HeadData = [];
+    // Initialize all months with zero sales
+    foreach ($all_months_head as $month) {
+        $HeadmonthsList[] = $month;
+        $HeadData[] = 0; // Default to 0 sales
+    }
+
+    // Update reserve data for months that have sales
+    foreach ($HeadDataResults as $row) {
+        $monthIndex = array_search($row['month'], $HeadmonthsList);
+        if ($monthIndex !== false) {
+            $HeadData[$monthIndex] = $row['total_head']; // Replace zero with actual reserve count
+        }
+    }
+
+    // Prepare the data for JavaScript
+    $headJSON = json_encode($HeadData); // Encode actual sales data
+    $HeadmonthsJSON = json_encode($HeadmonthsList);
     
 ?>
 <!doctype html>
@@ -561,6 +597,79 @@ if(isset($_POST['submit_year'])){
                                         },
                                         xaxis: {
                                         categories: months,
+                                        }
+                                    }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-0">Head Count</h5>
+                                            <!-- <small class="text-muted">Commercial networks</small> -->
+                                    </div>
+                                        <!-- Year Filter -->
+                                    <div class="dropdown">
+                                            <form method="GET" id="yearFilterHead">
+                                                    <select name="yearSelectHead" id="yearSelectHead" class="form-select" onchange="document.getElementById('yearFilterHead').submit();">
+                                                        <?php
+                                                        $startYear = $currentYear - 5; // Show last 5 years
+                                                        for ($year = $startYear; $year <= $currentYear; $year++) {
+                                                            $selected = ($year == $selectedYearHead) ? 'selected' : '';
+                                                            echo "<option value=\"$year\" $selected>$year</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                            </form>
+                                    </div>
+                                        <!-- End Year Filter -->
+                                </div>
+
+                                <div class="card-body">
+                                <!-- Line Chart -->
+                                <div id="areaChart1"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const head = <?php echo $headJSON; ?>;
+                                        let headmonths = <?php echo $HeadmonthsJSON; ?>;
+
+                                    new ApexCharts(document.querySelector("#areaChart1"), {
+                                        series: [{
+                                        name: "Total",
+                                        data: head
+                                        }],
+                                        chart: {
+                                        height: 350,
+                                        type: 'area',
+                                        zoom: {
+                                            enabled: false
+                                        }
+                                        },
+                                        dataLabels: {
+                                        enabled: false
+                                        },
+                                        stroke: {
+                                        curve: 'straight'
+                                        },
+                                        subtitle: {
+                                            text: 'Head Count',
+                                            align: 'left'
+                                        },
+                                        grid: {
+                                        row: {
+                                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                            opacity: 0.5
+                                        },
+                                        },
+                                        xaxis: {
+                                        categories: headmonths,
                                         }
                                     }).render();
                                     });
