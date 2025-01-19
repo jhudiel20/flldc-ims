@@ -132,6 +132,7 @@ if(isset($_POST['submit_year'])){
             $revenuePerBU[$monthIndex] = $row['total_sales']; // Replace zero with actual reserve count
         }
     }
+    $selectBUJSON = json_encode($selectBU);
 
     ################################################################################
 
