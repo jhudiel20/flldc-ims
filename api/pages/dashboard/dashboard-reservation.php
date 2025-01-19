@@ -133,6 +133,7 @@ if(isset($_POST['submit_year'])){
         }
     }
     $selectBUJSON = json_encode($selectBU ?: []);
+    echo $selectBUJSON;
 
     ################################################################################
 
