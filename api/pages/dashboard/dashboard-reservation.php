@@ -110,28 +110,32 @@ if(isset($_POST['submit_year'])){
         GROUP BY TO_CHAR(reserve_date, 'Mon YYYY'), business_unit
         ORDER BY MIN(reserve_date) ASC
     ");
-    $totalRevenuePerBU->bindParam(':year', $selectedYearReserveBU, PDO::PARAM_INT);
+    $totalRevenuePerBU->bindParam(':year', $selectedYearRevenueBU, PDO::PARAM_INT);
     $totalRevenuePerBU->execute();
     $revenuePerBUDataResults = $totalRevenuePerBU->fetchAll(PDO::FETCH_ASSOC);
 
     // Prepare data for JavaScript
     $monthsListBU = [];
     $revenuePerBU = [];
-    $selectBU = [];
     // Initialize all months with zero sales
     foreach ($all_months_revenueBU as $month) {
         $monthsListBU[] = $month;
         $revenuePerBU[] = 0; // Default to 0 sales
     }
 
-    // Update reserve data for months that have sales
+    $selectBU = [];
     foreach ($revenuePerBUDataResults as $row) {
         $selectBU[] = $row['business_unit'];
+    }
+
+    // Update reserve data for months that have sales
+    foreach ($revenuePerBUDataResults as $row) {
         $monthIndex = array_search($row['month'], $monthsListBU);
         if ($monthIndex !== false) {
             $revenuePerBU[$monthIndex] = $row['total_sales']; // Replace zero with actual reserve count
         }
     }
+    $selectBU = array_unique($selectBU);
     $selectBUJSON = json_encode($selectBU ?: []);
     echo $selectBUJSON;
 
