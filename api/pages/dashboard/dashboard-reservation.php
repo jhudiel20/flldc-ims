@@ -137,7 +137,6 @@ if(isset($_POST['submit_year'])){
     }
     $selectBU = array_unique($selectBU);
     $selectBUJSON = json_encode($selectBU ?: []);
-    echo $selectBUJSON;
 
     ################################################################################
 
@@ -436,12 +435,8 @@ if(isset($_POST['submit_year'])){
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
                                         let selectBU = <?php echo $selectBUJSON; ?>;
-                                        console.log(selectBU);
-                                        if (selectBU.length === 0) {
-                                            console.log("No data available for the selected year.");
-                                        }
-                                        let revenuePerBU = JSON.stringify(<?php echo json_encode($revenuePerBU); ?>);
-                                        const monthsBUJSON = JSON.stringify(<?php echo json_encode($monthsListBU); ?>);
+                                        let revenuePerBU = <?php echo json_encode($revenuePerBU); ?>;
+                                        const monthsBUJSON = <?php echo json_encode($monthsListBU); ?>;
                                     new ApexCharts(document.querySelector("#columnChart1"), {
                                         series: selectBU.map(bu => ({
                                             name: bu,
