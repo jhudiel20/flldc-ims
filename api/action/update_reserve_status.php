@@ -19,7 +19,7 @@ use PHPMailer\PHPMailer\Exception;
 $githubToken = getenv('GITHUB_TOKEN'); // Your GitHub token from environment variables
 $owner = getenv('GITHUB_OWNER');       // GitHub username or organization
 $repo = getenv('GITHUB_IMAGES');   
-
+$email_password = getenv('EMAIL_PASS');   
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $approval_status = isset($_POST['approval_status']) ? trim($_POST['approval_status']) : '';
@@ -110,7 +110,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth = true;                                   //Enable SMTP authentication
         $mail->Username = 'lndreports2024@gmail.com';                     //SMTP username
-        $mail->Password = $_ENV['EMAIL_PASS'];                               //SMTP password
+        // $mail->Password = $_ENV['EMAIL_PASS']; 
+        // $mail->Password = 'jgbhtelcpvpvoawz';
+        $mail->Password = 'dzyb jazl aqgi qryg';
+        //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
