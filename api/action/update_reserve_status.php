@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Username = 'lndreports2024@gmail.com';                     //SMTP username
         // $mail->Password = $_ENV['EMAIL_PASS']; 
         // $mail->Password = 'jgbhtelcpvpvoawz';
-        $mail->Password = 'dzyb jazl aqgi qryg';
+        $mail->Password = $_ENV['EMAIL_PASS']; 
         //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
