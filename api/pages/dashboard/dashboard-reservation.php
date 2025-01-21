@@ -406,7 +406,10 @@ if(isset($_POST['submit_year'])){
                                         },
                                         },
                                         dataLabels: {
-                                        enabled: false
+                                            enabled: true,
+                                            formatter: function (val) {
+                                                return "₱ " + val.toLocaleString(); // Format with commas
+                                            }
                                         },
                                         stroke: {
                                         show: true,
@@ -425,11 +428,11 @@ if(isset($_POST['submit_year'])){
                                         opacity: 1
                                         },
                                         tooltip: {
-                                        y: {
-                                            formatter: function(val) {
-                                            return "₱ " + val + " pesos"
+                                            y: {
+                                                formatter: function (val) {
+                                                    return "₱ " + val.toLocaleString() + " pesos"; // Format with commas
+                                                }
                                             }
-                                        }
                                         }
                                     }).render();
                                     });
@@ -490,7 +493,10 @@ if(isset($_POST['submit_year'])){
                                         },
                                         },
                                         dataLabels: {
-                                        enabled: false
+                                            enabled: true,
+                                            formatter: function (val) {
+                                                return "₱ " + val.toLocaleString(); // Format with commas
+                                            }
                                         },
                                         stroke: {
                                         show: true,
@@ -509,11 +515,11 @@ if(isset($_POST['submit_year'])){
                                         opacity: 1
                                         },
                                         tooltip: {
-                                        y: {
-                                            formatter: function(val) {
-                                            return "₱ " + val + " pesos"
+                                            y: {
+                                                formatter: function (val) {
+                                                    return "₱ " + val.toLocaleString() + " pesos"; // Format with commas
+                                                }
                                             }
-                                        }
                                         }
                                     }).render();
                                     });
@@ -580,7 +586,10 @@ if(isset($_POST['submit_year'])){
                                         }
                                         },
                                         dataLabels: {
-                                        enabled: false
+                                            enabled: true,
+                                            formatter: function (val) {
+                                                return val.toLocaleString(); // Format with commas
+                                            }
                                         },
                                         stroke: {
                                         curve: 'straight'
@@ -597,6 +606,13 @@ if(isset($_POST['submit_year'])){
                                         },
                                         xaxis: {
                                         categories: months,
+                                        },
+                                        tooltip: {
+                                            y: {
+                                                formatter: function (val) {
+                                                    return val.toLocaleString(); // Format with commas
+                                                }
+                                            }
                                         }
                                     }).render();
                                     });
@@ -653,7 +669,10 @@ if(isset($_POST['submit_year'])){
                                         }
                                         },
                                         dataLabels: {
-                                        enabled: false
+                                            enabled: true,
+                                            formatter: function (val) {
+                                                return val.toLocaleString(); // Format with commas
+                                            }
                                         },
                                         stroke: {
                                         curve: 'straight'
@@ -670,6 +689,13 @@ if(isset($_POST['submit_year'])){
                                         },
                                         xaxis: {
                                         categories: headmonths,
+                                        },
+                                        tooltip: {
+                                            y: {
+                                                formatter: function (val) {
+                                                    return val.toLocaleString(); // Format with commas
+                                                }
+                                            }
                                         }
                                     }).render();
                                     });

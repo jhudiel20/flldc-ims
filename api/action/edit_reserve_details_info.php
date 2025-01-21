@@ -46,8 +46,6 @@ if (empty($reason_message) || $reason_message == '') {
 }
 $updated_time = $time;
 $selected_time = $time;
-$room = $room;
-$reserve_date = $reserve_date;
 
 $time_slots = [
     "7:00AM-12:00PM" => ['overlaps' => ["7:00AM-12:00PM", "7:00AM-6:00PM"]],
