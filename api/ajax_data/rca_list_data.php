@@ -10,7 +10,7 @@ $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
 $page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
 $start = $page * $query_limit;
 
-$sort_field = 'date_created';
+$sort_field = 'id';
 $sort_dir = 'DESC';
 
 $query_fields = ['id', 'rca_id', 'name','employee_no','paygroup','sbu','branch','payee_name','account_no','amount','purpose_rca','date_needed','date_event','purpose_travel','date_depart','date_return','status','attachments','department','pcv_date','sdccc','remarks'];

@@ -440,7 +440,11 @@ function initializeCalendar() {
         eventClick: function(info) {
             var event = info.event;
             document.getElementById('modalRoomName').value = event.title;
-            document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
+            // document.getElementById('modalDate').value = event.start.toISOString().split('T')[0];
+            // Convert event start time to local date
+            var localDate = new Date(event.start);
+            var formattedDate = localDate.toLocaleDateString('en-CA'); // 'en-CA' gives YYYY-MM-DD format
+            document.getElementById('modalDate').value = formattedDate;
             document.getElementById('modalTime').value = event.start.toLocaleTimeString() + ' - ' + event.end.toLocaleTimeString();
             document.getElementById('modalName').value = event.extendedProps.name;
             document.getElementById('modalReservedID').value = event.extendedProps.reserve_id;

@@ -10,7 +10,7 @@ $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
 $page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
 $start = $page * $query_limit;
 
-$sort_field = 'date_created';
+$sort_field = 'logs.id';
 $sort_dir = 'DESC';
 
 $query_fields = ['logs.id', 'logs.user_id', 'logs.action_made']; //used for query

@@ -10,7 +10,7 @@ $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
 $page = isset($_GET['page']) ? (int)$_GET['page'] - 1 : 0;
 $start = $page * $query_limit;
 
-$sort_field = 'date_created';
+$sort_field = 'id';
 $sort_dir = 'DESC';
 
 $query_fields = ['id', 'room_name', 'room_id', 'room_type','capacity','floor_number','status'];
