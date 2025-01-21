@@ -157,7 +157,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                                 while ($row_room = $room->fetch(PDO::FETCH_ASSOC)) {
                                                                         ?>
                                                                         <option
-                                                                            value="<?php echo $row_room['room_name'];?>" <?php if($row['room'] == $row_room['room_name']) echo 'selected'; ?>>
+                                                                            value="<?php echo $row_room['room_name'] . '|' . $row_room['room_id']; ?>" <?php if($row['room'] == $row_room['room_name']) echo 'selected'; ?>>
                                                                             <?php echo $row_room['room_name'];?>
                                                                         </option>
                                                                         <?php } ?>

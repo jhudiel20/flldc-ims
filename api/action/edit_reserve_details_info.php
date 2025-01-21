@@ -23,7 +23,6 @@ $reserve_date =  isset($_POST['reserve_date']) ? trim($_POST['reserve_date']) : 
 $fname =  isset($_POST['fname']) ? trim($_POST['fname']) : '';
 $lname =  isset($_POST['lname']) ? trim($_POST['lname']) : '';
 $time =  isset($_POST['time']) ? trim($_POST['time']) : '';
-$room =  isset($_POST['room']) ? trim($_POST['room']) : '';
 $setup =  isset($_POST['setup']) ? trim($_POST['setup']) : '';
 $businessunit =  isset($_POST['businessunit']) ? trim($_POST['businessunit']) : '';
 $guest =  isset($_POST['guest']) ? trim($_POST['guest']) : '';
@@ -33,6 +32,10 @@ $message =  isset($_POST['message']) ? trim($_POST['message']) : '';
 $bookingID =  isset($_POST['bookingID']) ? trim($_POST['bookingID']) : '';
 $reservationID =  isset($_POST['reservationID']) ? trim($_POST['reservationID']) : '';
 $reason_message =  isset($_POST['reason_message']) ? trim($_POST['reason_message']) : '';
+
+$room_value =  isset($_POST['room']) ? trim($_POST['room']) : '';
+
+list($room, $room_id) = explode('|', $room_value);
 
 if (empty($reason_message) || $reason_message == '') {
     $response['success'] = false;
@@ -301,7 +304,7 @@ try {
 
     if($reserve_status == 'APPROVED'){
         $sql = $conn->prepare("UPDATE reservations SET reservation_id = :reservation_id, RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
-    LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+    LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message, roomid = :roomid WHERE ID = :id ");
     $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
     $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
 
@@ -316,6 +319,7 @@ try {
     $sql->bindParam(':contact', $contact, PDO::PARAM_STR);
     $sql->bindParam(':email', $email, PDO::PARAM_STR);
     $sql->bindParam(':message', $message, PDO::PARAM_STR);
+    $sql->bindParam(':roomid', $room_id, PDO::PARAM_STR);
     $sql->bindParam(':id', $id, PDO::PARAM_STR);
     $sql->execute();
 
@@ -336,7 +340,8 @@ try {
 
     }else{
         $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
-        LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, CONTACT = :contact, EMAIL = :email, MESSAGE = :message WHERE ID = :id ");
+        LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, 
+        CONTACT = :contact, EMAIL = :email, MESSAGE = :message, roomid = :roomid WHERE ID = :id ");
         $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
         $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
         $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
@@ -349,6 +354,7 @@ try {
         $sql->bindParam(':contact', $contact, PDO::PARAM_STR);
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
         $sql->bindParam(':message', $message, PDO::PARAM_STR);
+        $sql->bindParam(':roomid', $room_id, PDO::PARAM_STR);
         $sql->bindParam(':id', $id, PDO::PARAM_STR);
         $sql->execute();
     
