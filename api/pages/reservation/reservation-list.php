@@ -256,6 +256,7 @@ var table = new Tabulator("#reserve-list-table", {
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
+        <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
         {
             title: "Reservation Status",
             field: "reserve_status",
@@ -269,6 +270,7 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
+        <?php } ?>
         // {
         //     title: "Invoice",
         //     field: "invoice",

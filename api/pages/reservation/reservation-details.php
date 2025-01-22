@@ -221,7 +221,9 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     type="text" cols="30"
                                                                     rows="3"><?php echo $row['message']; ?></textarea>
                                                             </div>
+                                                            <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                             <button type="button" class="btn btn-label-primary update-details">Update</button>
+                                                            <?php } ?>
                                             </div>
                                         </div>
                                     </div>

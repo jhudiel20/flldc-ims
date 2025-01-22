@@ -82,7 +82,7 @@ $user_id = $decrypted_array['ID'];
                     </li>
                 </ul>
             </li>
-            <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
+            <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN' || $decrypted_array['RESERVATION_ACCESS'] == 'ENCODER'){?>
                 <li class="menu-item <?php echo ($geturl == 'room-list' || $geturl == 'reservation-list' || $geturl == 'reserve-pending' || $geturl == 'reserve-approved' || $geturl == 'reserve-declined' )? 'active open' : 'collapsed'  ?>">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon fa-solid fa-book-bookmark btn-page-block"></i>

@@ -42,10 +42,12 @@ if (!isset($decrypted_array['ACCESS'])) {
                                         <div class="card-body">
                                             <div class="py-1 mb-2 ">
                                                 <div class="additional-buttons">
+                                                <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
                                                     <button type="button" id="add" class="btn btn-label-primary"
                                                         data-bs-toggle="modal" data-bs-target="#add_room_modal">
                                                         <i class="fa-solid fa-plus me-1"></i><span> ADD NEW ROOM
                                                     </button>
+                                                    <?php } ?>
                                                     <button class="btn btn-label-primary" id="download-xlsx"><i
                                                             class="fa-solid fa-download me-1"></i> XLSX</button>
                                                     <button class="btn btn-label-primary" id="download-pdf"><i
@@ -59,13 +61,15 @@ if (!isset($decrypted_array['ACCESS'])) {
                                                     data-bs-toggle="dropdown" aria-expanded="false">More
                                                     Actions</button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"
-                                                            id="add-dropdown" data-bs-toggle="modal"
-                                                            data-bs-target="#add_room_modal "><i
-                                                                class="fa-solid fa-plus"></i> ADD NEW ROOM</a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider">
-                                                    </li>
+                                                    <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);"
+                                                                id="add-dropdown" data-bs-toggle="modal"
+                                                                data-bs-target="#add_room_modal "><i
+                                                                    class="fa-solid fa-plus"></i> ADD NEW ROOM</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                    <?php } ?>
                                                     <li><button class="dropdown-item" id="download-xlsx-1"><i
                                                                 class="fa-solid fa-download"></i> XLSX</button></li>
                                                     <li><button class="dropdown-item" id="download-pdf-1"><i
