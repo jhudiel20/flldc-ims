@@ -1051,9 +1051,11 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
-
-
-            success: function(response) {
+            beforeSend: function () {
+                showLoading('#change_access_info');
+            },
+            success: function (response) {
+                hideLoading('#change_access_info');
                 console.log(response);
                 if (response.success) {
                     $('#change_room_access_modal').modal('hide');
