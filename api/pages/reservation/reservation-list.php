@@ -315,8 +315,14 @@ var table = new Tabulator("#reserve-list-table", {
             download: true
         },
         {
-            title: "Bussiness Unit",
+            title: "Business Unit",
             field: "business_unit",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Branch",
+            field: "branch",
             visible: false,
             download: true
         },
