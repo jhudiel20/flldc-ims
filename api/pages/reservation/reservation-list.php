@@ -270,6 +270,21 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
+        {
+            title: "Reservation Status",
+            field: "reserve_status",
+            formatter: approval_status,
+            hozAlign: "center",
+            headerFilter: "list",
+            headerFilterParams: {
+                valuesLookup: true,
+                clearable: true
+            },
+            // width: 300,
+            headerFilterLiveFilter: false,
+            visible: false,
+            download: true
+        },
         <?php } ?>
         // {
         //     title: "Invoice",
