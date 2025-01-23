@@ -180,7 +180,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     id="GUEST"
                                                                     value="<?php echo $row['guest']; ?>" disabled>
                                                             </div>
-                                                            <hr>
+                                                            <hr class="mt-3">
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
                                                                 <input type="text" class="form-control" name="FNAME" id="FNAME"
@@ -205,15 +205,18 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
                                                             <div class="col-sm-6">     
                                                                 <label for="branch">Branch/Site</label>
-                                                                <?php 
-                                                                foreach ( BRANCH as $branch) {
-                                                                    echo '<option value="' . $branch . '"';
-                                                                    if ($row['branch'] == $branch) {
-                                                                        echo ' selected';
+                                                                <select name="branch" id="branch" class="form-select">
+                                                                    <option value="" disabled hidden selected>Branch/Site</option>
+                                                                    <?php 
+                                                                    foreach (BRANCH as $branch) {
+                                                                        echo '<option value="' . $branch . '"';
+                                                                        if ($row['branch'] == $branch) {
+                                                                            echo ' selected';
+                                                                        }
+                                                                        echo '>' . $branch . '</option>';
                                                                     }
-                                                                    echo '>' . $branch . '</option>';
-                                                                }
-                                                                ?>
+                                                                    ?>
+                                                                </select>
                                                             </div>
                                                          
                                                             <div class="col-md-6">
