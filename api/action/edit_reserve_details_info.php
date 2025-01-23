@@ -179,7 +179,10 @@ try {
 
                                                             <p style="text-align:justify">If you are not willing to accept these changes, please email us at jppsolis@fast.com.ph or contact us at +63 969 450 9412 as soon as possible, and we will assist you further. We apologize again for the inconvenience and look forward to accommodating you at the FAST Learning and Development Center.</p>
                                                             <p style="text-align:justify">Thank you for your understanding and continued trust in FAST Learning and Development Center.</p>
-
+                                                            
+                                                            <p style="text-align:center; margin-top: 20px;">
+                                                                <a href="https://flldc-booking-app.vercel.app/check" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
+                                                            </p>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -270,7 +273,10 @@ try {
 
                                                             <p style="text-align:justify">We understand that this may disrupt your plans, and we are happy to assist you with rescheduling your reservation or exploring other options. Please feel free to reach out to us at jppsolis@fast.com.ph or call us at +63 969 450 9412 if you would like to discuss alternative arrangements.</p>
                                                             <p style="text-align:justify">We apologize once again for the inconvenience and appreciate your understanding. We look forward to assisting you with future reservations at FAST Learning and Development Center.</p>
-
+                                                            
+                                                            <p style="text-align:center; margin-top: 20px;">
+                                                                <a href="https://flldc-booking-app.vercel.app/check" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
+                                                            </p>
                                                         </div>
                                                     </td>
                                                 </tr>
