@@ -16,6 +16,7 @@
                             <select name="approval_status" id="approval_status" class="form-select mb-2">
                                 <option value="APPROVED">APPROVED</option>
                                 <option value="DECLINED">DECLINED</option>
+                                <option value="CANCELLED">CANCELLED</option>
                             </select>
                             <textarea class="form-control" id="message" name="message" rows="5" placeholder="Please provide message"></textarea>
                         </div>

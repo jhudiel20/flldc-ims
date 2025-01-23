@@ -160,6 +160,9 @@ var approval_status = function(cell, formatterParams, onRendered) {
         if(reserve_status == "APPROVED"){
             return "<button type='button' class='btn btn-outline-success approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >APPROVED</button>";
         }
+        if(reserve_status == "CANCELLED"){
+            return "<button type='button' class='btn btn-outline-info approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >CANCELLED</button>";
+        }
     <?php }else{ ?>
     return reserve_status;
     <?php } ?>
