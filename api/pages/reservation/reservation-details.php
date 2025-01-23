@@ -102,7 +102,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <input type="text" class="form-control" name="RESERVATIONID" id="RESERVATIONID"
                                                                     value="<?php echo $row['reservation_id']; ?>" disabled>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Reservation Status</label>
                                                                 <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
                                                                     <?php echo ($decrypted_array['ACCESS'] == 'REQUESTOR' || $decrypted_array['ACCESS'] == 'GUARD') ? 'disabled' : ''; ?>>
@@ -114,14 +114,14 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Date of Reservation</label>
                                                                 <input type="date" class="form-control" 
                                                                     name="RESERVE_DATE" id="RESERVE_DATE"
                                                                     value="<?php echo $row['reserve_date'];?>" >
                                                                     <!-- value="<?php //echo ($row['reserve_date'] ? (new DateTime($row['reserve_date']))->format('M d, Y') : ''); ?>"> -->
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Price<span class="require asterisk">*</span></label>
                                                                 <div class="input-group mb-3">
                                                                     <span class="input-group-text">₱</span>
@@ -131,7 +131,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             </div>
 
 
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Time</label>
                                                                     <select name="TIME" id="TIME" class="form-control" required>
                                                                         <option value="7:00AM-12:00PM" <?php if($row['time'] == "7:00AM-12:00PM") echo 'selected'; ?>>HALFDAY (7:00AM-12:00PM)</option>
@@ -139,7 +139,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="7:00AM-6:00PM" <?php if($row['time'] == "7:00AM-6:00PM") echo 'selected'; ?>>WHOLE DAY (7:00AM-6:00PM)</option>    
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Room</label>
                                                                     <!-- <select name="ROOM" id="ROOM" class="form-control" required>
                                                                         <option value="Room-301" <?php if($row['room'] == "Room-301") echo 'selected'; ?>>Room 301</option>
@@ -163,7 +163,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <?php } ?>
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Seating Arrangement</label>
                                                                     <select name="SETUP" id="SETUP" class="form-control">
                                                                         <option value="CLASSROOM" <?php if($row['setup'] == "CLASSROOM") echo 'selected'; ?>>CLASSROOM</option>
@@ -174,12 +174,13 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                         <option value="OTHER" <?php if($row['setup'] == "OTHER") echo 'selected'; ?>>OTHER</option>
                                                                     </select>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Guest</label>
                                                                 <input type="text" class="form-control" name="GUEST"
                                                                     id="GUEST"
                                                                     value="<?php echo $row['guest']; ?>" disabled>
                                                             </div>
+                                                            <hr>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">First Name</label>
                                                                 <input type="text" class="form-control" name="FNAME" id="FNAME"
@@ -190,7 +191,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 <input type="text" class="form-control" name="LNAME" id="LNAME"
                                                                     value="<?php echo $row['lname']; ?>" disabled>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Bussiness Unit</label>
                                                                 <select name="BUSINESSUNIT" id="BUSINESSUNIT" class="form-control">
                                                                     <option value="FLC" <?php if($row['business_unit'] == "FLC") echo 'selected'; ?>>FAST LOGISTICS CORPORATION</option>
@@ -202,14 +203,26 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                     <option value="EXTERNAL" <?php if($row['business_unit'] == "EXTERNAL") echo 'selected'; ?>>External Clients</option>
                                                                 </select>
                                                             </div>
+                                                            <div class="col-sm-6">     
+                                                                <label for="branch">Branch/Site</label>
+                                                                <?php 
+                                                                foreach ( BRANCH as $branch) {
+                                                                    echo '<option value="' . $branch . '"';
+                                                                    if ($row['branch'] == $branch) {
+                                                                        echo ' selected';
+                                                                    }
+                                                                    echo '>' . $branch . '</option>';
+                                                                }
+                                                                ?>
+                                                            </div>
                                                          
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Contact No.<span
                                                                         class="require asterisk">*</span></label>
                                                                 <input type="text" class="form-control" name="CONTACT"
                                                                     id="CONTACT" value="<?php echo $row['contact']; ?>">
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-6">
                                                                 <label class="form-label">Email<span
                                                                         class="require asterisk">*</span></label>
                                                                 <input type="text" class="form-control" name="EMAIL"
