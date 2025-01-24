@@ -374,6 +374,12 @@ var table = new Tabulator("#reserve-list-table", {
             visible: false,
             download: true
         },
+        {
+            title: "Price",
+            field: "prices",
+            visible: false,
+            download: true
+        },
     ],
     ajaxResponse: function(url, params, response) {
         return {
