@@ -190,6 +190,12 @@ var table = new Tabulator("#reserve-list-table", {
     ajaxURL: "/reserve_list_data",
     columns: [
         {
+            title: "DATE",
+            field: "date_created",
+            visible: false,
+            download: true
+        },
+        {
             title: "Details",
             field: "",
             formatter: detail_btn,
