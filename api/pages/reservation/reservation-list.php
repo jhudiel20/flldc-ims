@@ -368,6 +368,12 @@ var table = new Tabulator("#reserve-list-table", {
             visible: false,
             download: true
         },
+        {
+            title: "Purpose",
+            field: "message",
+            visible: false,
+            download: true
+        },
     ],
     ajaxResponse: function(url, params, response) {
         return {
