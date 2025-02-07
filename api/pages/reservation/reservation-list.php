@@ -279,7 +279,7 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
-        <?php } else { ?>
+        <?php } if ($decrypted_array['RESERVATION_ACCESS'] == 'USER') { ?>
         {
             title: "Reservation Status",
             field: "reserve_status",
