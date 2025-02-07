@@ -235,8 +235,6 @@ var table = new Tabulator("#reserve-list-view-table", {
             },
             // width: 300,
             headerFilterLiveFilter: false,
-            visible: false,
-            download: true
         },
         {
             title: "First Name",
