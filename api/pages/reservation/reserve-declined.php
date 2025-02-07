@@ -134,6 +134,12 @@ var table = new Tabulator("#reserve-list-view-table", {
     ajaxURL: "/reserve_declined_data",
     columns: [
         {
+            title: "DATE",
+            field: "date_created",
+            visible: false,
+            download: true
+        },
+        {
             title: "Details",
             field: "",
             formatter: detail_btn,
@@ -143,9 +149,9 @@ var table = new Tabulator("#reserve-list-view-table", {
             download: false
         },
         {
-            title: "Reservation Date",
-            field: "reserve_date",
-            headerFilter: "date",
+            title: "Booking ID",
+            field: "booking_id",
+            headerFilter: "input",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
@@ -157,9 +163,9 @@ var table = new Tabulator("#reserve-list-view-table", {
             headerFilterLiveFilter: false
         },
         {
-            title: "Booking ID",
-            field: "booking_id",
-            headerFilter: "input",
+            title: "Reservation Date",
+            field: "reserve_date",
+            headerFilter: "date",
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
@@ -197,6 +203,13 @@ var table = new Tabulator("#reserve-list-view-table", {
             headerFilterLiveFilter: false
         },
         {
+            title: "Guest",
+            field: "guest",
+            headerFilter: "input",
+            hozAlign: "center",
+            headerFilterLiveFilter: false
+        },
+        {
             title: "Reservation Status",
             field: "reserve_status",
             hozAlign: "center",
@@ -206,7 +219,81 @@ var table = new Tabulator("#reserve-list-view-table", {
                 clearable: true
             },
             // width: 300,
-            headerFilterLiveFilter: false
+            headerFilterLiveFilter: false,
+            visible: false,
+            download: true
+        },
+        {
+            title: "First Name",
+            field: "fname",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Last Name",
+            field: "lname",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Business Unit",
+            field: "business_unit",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Branch",
+            field: "branch",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Email",
+            field: "email",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Contact",
+            field: "contact",
+            visible: false,
+            download: true
+        },
+        {
+            title: "HDMI Cable",
+            field: "hdmi",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Externsion Cord",
+            field: "extension",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Additional Chairs",
+            field: "chair",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Additional Table",
+            field: "table",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Purpose",
+            field: "message",
+            visible: false,
+            download: true
+        },
+        {
+            title: "Price",
+            field: "prices",
+            visible: false,
+            download: true
         },
     ],
     ajaxResponse: function(url, params, response) {

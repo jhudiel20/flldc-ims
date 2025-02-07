@@ -265,7 +265,7 @@ var table = new Tabulator("#reserve-list-table", {
             hozAlign: "center",
             headerFilterLiveFilter: false
         },
-        <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
+        <?php if ($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN') { ?>
         {
             title: "Reservation Status",
             field: "reserve_status",
@@ -279,10 +279,10 @@ var table = new Tabulator("#reserve-list-table", {
             // width: 300,
             headerFilterLiveFilter: false
         },
+        <?php } else { ?>
         {
             title: "Reservation Status",
             field: "reserve_status",
-            formatter: approval_status,
             hozAlign: "center",
             headerFilter: "list",
             headerFilterParams: {
@@ -295,19 +295,6 @@ var table = new Tabulator("#reserve-list-table", {
             download: true
         },
         <?php } ?>
-        // {
-        //     title: "Invoice",
-        //     field: "invoice",
-        //     formatter: invoice_attachment,
-        //     hozAlign: "center",
-        //     headerFilter: "list",
-        //     headerFilterParams: {
-        //         valuesLookup: true,
-        //         clearable: true
-        //     },
-        //     // width: 300,
-        //     headerFilterLiveFilter: false
-        // },
         {
             title: "First Name",
             field: "fname",
@@ -380,6 +367,19 @@ var table = new Tabulator("#reserve-list-table", {
             visible: false,
             download: true
         },
+                // {
+        //     title: "Invoice",
+        //     field: "invoice",
+        //     formatter: invoice_attachment,
+        //     hozAlign: "center",
+        //     headerFilter: "list",
+        //     headerFilterParams: {
+        //         valuesLookup: true,
+        //         clearable: true
+        //     },
+        //     // width: 300,
+        //     headerFilterLiveFilter: false
+        // },
     ],
     ajaxResponse: function(url, params, response) {
         return {

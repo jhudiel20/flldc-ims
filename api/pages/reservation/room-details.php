@@ -57,7 +57,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                         <div class="card-body">
                                             <div class="text-center">
                                             <img src="/fetch?file=<?php echo urlencode($row['room_photo']); ?>&db=room-photo" style="height:220px;" />
-                                                <?php if ($decrypted_array['ACCESS'] == 'ADMIN') { ?>
+                                                <?php if ($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN') { ?>
                                                 <div class="my-3">
                                                     <form class="row g-3" method="post" id="upload_room_photo_form"
                                                         enctype="multipart/form-data" style="display: inline-block;">
