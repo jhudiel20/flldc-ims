@@ -99,7 +99,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                     <div class="card-body">
                                                         <form id="formAccountSettings" method="POST" onsubmit="return false">
                                                         <div class="row">
-                                                            <div class="mb-3 col-md-6">
+                                                            <div class="mb-3 col-md-3">
                                                                 <label for="firstName" class="form-label">Full Name</label>
                                                                 <input
                                                                     class="form-control"
@@ -110,11 +110,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                     autofocus
                                                                     disabled />
                                                             </div>
-                                                            <div class="mb-3 col-md-6">
-                                                                <label for="lastName" class="form-label">Access Level</label>
-                                                                <input class="form-control" type="text" value="<?php echo $user['access']; ?>" disabled/>
-                                                            </div>
-                                                            <div class="mb-3 col-md-6">
+                                                            <div class="mb-3 col-md-3">
                                                                 <label for="email" class="form-label">E-mail</label>
                                                                 <input
                                                                     class="form-control"
@@ -133,7 +129,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                 name="organization"
                                                                 value="ThemeSelection" />
                                                             </div> -->
-                                                            <div class="mb-3 col-md-6">
+                                                            <div class="mb-3 col-md-3">
                                                                 <label class="form-label" for="phoneNumber">Phone Number</label>
                                                                 <div class="input-group input-group-merge">
                                                                     <!-- <span class="input-group-text">US (+1)</span> -->
@@ -145,6 +141,14 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                     value="<?php echo $user['contact']; ?>"
                                                                     disabled />
                                                                 </div>
+                                                            </div>
+                                                            <div class="mb-3 col-md-6">
+                                                                <label for="lastName" class="form-label">Purchase Access Level</label>
+                                                                <input class="form-control" type="text" value="<?php echo $user['access']; ?>" disabled/>
+                                                            </div>
+                                                            <div class="mb-3 col-md-6">
+                                                                <label for="lastName" class="form-label">Reservation Access Level</label>
+                                                                <input class="form-control" type="text" value="<?php echo $user['reservation_access']; ?>" disabled/>
                                                             </div>
                                                         </div>
                                                         <div class="mt-2">

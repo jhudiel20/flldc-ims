@@ -51,7 +51,7 @@
                                     <div class="flex-grow-1">
                                         <span
                                             class="fw-semibold d-block"><?php echo $decrypted_array['FNAME'].' '.$decrypted_array['MNAME'].' '.$decrypted_array['LNAME']; ?></span>
-                                        <small class="text-muted"><?php echo $decrypted_array['ACCESS']; ?></small>
+                                        <!-- <small class="text-muted"><?php //echo $decrypted_array['ACCESS']; ?></small> -->
                                     </div>
                                 </div>
                             </a>

@@ -291,8 +291,6 @@ var table = new Tabulator("#reserve-list-table", {
             },
             // width: 300,
             headerFilterLiveFilter: false,
-            visible: false,
-            download: true
         },
         <?php } ?>
         {
