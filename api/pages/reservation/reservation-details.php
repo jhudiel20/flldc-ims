@@ -105,7 +105,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                             <div class="col-md-6">
                                                                 <label class="form-label">Reservation Status</label>
                                                                 <select name="RESERVE_STATUS" id="RESERVE_STATUS" class="form-select"
-                                                                    <?php echo ($decrypted_array['RESERVATION_ACCESS'] == 'VIEWER') ? 'disabled' : ''; ?>>
+                                                                    <?php echo ($decrypted_array['RESERVATION_ACCESS'] == 'USER') ? 'disabled' : ''; ?>>
                                                                     <?php foreach (RESERVE_STATUS as $value) { ?>
                                                                     <option value="<?= $value; ?>"
                                                                         <?php echo ($value == $row['reserve_status']) ? 'selected' : ''; ?>>

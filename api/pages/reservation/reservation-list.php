@@ -150,7 +150,7 @@ var approval_status = function(cell, formatterParams, onRendered) {
     var room_id = cell.getRow().getData().roomid;
     // console.log(ID);
 
-    <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
+    <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
         if (reserve_status == "PENDING") {
             return "<button type='button' class='btn btn-outline-primary approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
         }

@@ -104,7 +104,6 @@
                                 <input type="hidden" id="old_access" name="old_access">
                                 <select name="new_access" id="new_access" class="form-select">
                                     <option value="ADMIN">ADMIN</option>
-                                    <option value="ENCODER">ENCODER</option>
                                     <option value="USER">USER</option>
                                 </select>
                             </div>

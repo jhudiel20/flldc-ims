@@ -150,7 +150,7 @@ $row = $sql->fetch(PDO::FETCH_ASSOC);
                                                                 rows="3"><?php echo $row['usage']?></textarea>
                                                         </div>
 
-                                                        <?php if($decrypted_array['ACCESS'] == 'ADMIN'){?>
+                                                        <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
                                                         <button type="button" class="btn btn-label-primary btn-page-block"
                                                             id="edit_room_details_btn"
                                                             name="edit_room_details_btn">Save</button>
