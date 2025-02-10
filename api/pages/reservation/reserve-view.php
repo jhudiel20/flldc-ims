@@ -143,14 +143,13 @@ var table = new Tabulator("#reserve-list-view-table", {
     paginationSizeSelector: [40, 50, 100, 500, 1000, true],
     paginationSize: 40,
     filterMode: "remote",
-    rowClickPopup: rowPopupFormatter,  // Keep this as is
-    rowFormatter: function(row) {
-        row.getElement().addEventListener("click", function(e) {
-            // Prevent row popup from triggering on button or link clicks
-            if (e.target.closest("button") || e.target.closest("a")) {
-                return; // Exit function, but let the button work
-            }
-        });
+    rowClickPopup: function (e, row) {
+        // Prevent popup if clicking inside a button or link
+        if (e.target.closest("button") || e.target.closest("a")) {
+            return; // Allow the button or link to work
+        }
+
+        return rowPopupFormatter(e, row);
     },
     sortMode: "remote",
     ajaxURL: "/reserve_approved_data",
