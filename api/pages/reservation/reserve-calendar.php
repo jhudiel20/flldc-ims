@@ -79,7 +79,13 @@ require_once __DIR__ . '/../../config/config.php';
                 
                 var eventModal = new bootstrap.Modal(document.getElementById('event_details'), {});
                 eventModal.show();
+            },
+            dayCellDidMount: function(info) {
+            var today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+            if (info.date.toISOString().split('T')[0] === today) {
+                info.el.style.backgroundColor = "#a9a9a9"; // Darker gray
             }
+        }
         });
         calendar.render(); 
     });
