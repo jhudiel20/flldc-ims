@@ -171,7 +171,7 @@ var approval_status = function(cell, formatterParams, onRendered) {
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='reservation-details?ID=" + reserve_id +
+    return "<a class='btn btn-outline-primary view-reservation' href='reservation-details?ID=" + reserve_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
