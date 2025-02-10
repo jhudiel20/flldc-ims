@@ -212,8 +212,8 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     rowClickPopup: function (e, row) {
         // Prevent popup if clicking inside a button or link
-        if (e.target.closest("button") || e.target.closest("a")) {
-            return; // Allow the button or link to work
+        if (e.target.closest(".approval-reserve-status") || e.target.closest(".view-reservation")) {
+            return; // Stop popup from showing
         }
 
         return rowPopupFormatter(e, row);
