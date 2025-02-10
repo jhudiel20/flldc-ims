@@ -213,9 +213,9 @@ var table = new Tabulator("#reserve-list-table", {
     rowClickPopup: rowPopupFormatter,  // Keep this as is
     rowFormatter: function(row) {
         row.getElement().addEventListener("click", function(e) {
-            // Prevent popup if clicking inside a button or link
+            // Prevent row popup from triggering on button or link clicks
             if (e.target.closest("button") || e.target.closest("a")) {
-                e.stopPropagation(); // Stops the event from bubbling up to rowClickPopup
+                return; // Exit function, but let the button work
             }
         });
     },
