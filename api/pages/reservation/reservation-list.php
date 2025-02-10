@@ -212,7 +212,7 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     rowClickPopup: function (e, row) {
         if (e.target.closest("button") || e.target.closest("a")) {
-            return false;
+            return;
         }
         return rowPopupFormatter(e, row);
     },
