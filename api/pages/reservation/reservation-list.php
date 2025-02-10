@@ -168,7 +168,6 @@ var approval_status = function(cell, formatterParams, onRendered) {
     <?php } ?>
 };
 
-
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
 
@@ -177,6 +176,13 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 };
 
 var rowPopupFormatter = function(e, row) {
+    const allowedFields = ["booking_id", "reservation_id", "reserve_date", "room", "setup", "guest"]; // Columns that should trigger the popup
+    const clickedField = row.getColumn().getField();
+
+    if (!allowedFields.includes(clickedField)) {
+        return; // Do nothing if the clicked column is not in the allowed list
+    }
+
     const rowData = row.getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
@@ -187,7 +193,7 @@ var rowPopupFormatter = function(e, row) {
         <ul style="padding:0; margin-top:10px; margin-bottom:0; list-style:none;">
             <li><strong>Date Created:</strong> ${rowData.room || "N/A"}</li>
             <li><strong>Full Name:</strong> ${rowData.fname ? rowData.fname + " " + (rowData.lname || "") : "N/A"}</li>
-            <li><strong>Bussiness Unit:</strong> ${rowData.business_unit || "N/A"}</li>
+            <li><strong>Business Unit:</strong> ${rowData.business_unit || "N/A"}</li>
             <li><strong>No of Table:</strong> ${rowData.table || "0"}</li>
             <li><strong>No of Chairs:</strong> ${rowData.chair || "0"}</li>
             <li><strong>Extension Cord:</strong> ${rowData.extension === true ? "Yes" : "No"}</li>
@@ -200,8 +206,6 @@ var rowPopupFormatter = function(e, row) {
     return container; // Return the container element
 };
 
-// Initialize the Tabulator table with fetched data
-//function initializeTable(data) {
 var table = new Tabulator("#reserve-list-table", {
     layout: "fitDataFill",
     movableColumns: true,
@@ -213,6 +217,7 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
+    rowFormatter: rowPopupFormatter,
     columns: [
         {
             title: "DATE",
