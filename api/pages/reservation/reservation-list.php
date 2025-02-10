@@ -217,7 +217,6 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
-    rowClickPopup: rowPopupFormatter,
     columns: [
         {
             title: "DATE",
