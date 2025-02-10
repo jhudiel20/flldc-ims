@@ -145,7 +145,7 @@ var table = new Tabulator("#reserve-list-view-table", {
     filterMode: "remote",
     rowClickPopup: function (e, row) {
         if (e.target.closest("button") || e.target.closest("a")) {
-            return;
+            e.stopPropagation();
         }
         return rowPopupFormatter(e, row);
     },
