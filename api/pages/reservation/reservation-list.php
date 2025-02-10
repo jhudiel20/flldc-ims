@@ -183,6 +183,8 @@ var rowPopupFormatter = function(e, cell) {
         return null; // Only show popup for allowed columns
     }
 
+    console.log(cell.getCells());
+
     const rowData = row.getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
@@ -217,6 +219,7 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
+    rowClickPopup: rowPopupFormatter,
     columns: [
         {
             title: "DATE",
