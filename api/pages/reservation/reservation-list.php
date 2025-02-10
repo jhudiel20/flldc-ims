@@ -175,35 +175,44 @@ var detail_btn = function(cell, formatterParams, onRendered) {
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
-var rowPopupFormatter = function(e, row) {
-    const allowedFields = ["booking_id", "reservation_id", "reserve_date", "room", "setup", "guest"]; // Columns that should trigger the popup
-    const clickedField = row.getColumn().getField();
+var rowPopupFormatter = function(row) {
+    const allowedFields = ["booking_id", "reservation_id", "reserve_date", "room", "setup", "guest"]; // Only these columns will trigger popup
 
-    if (!allowedFields.includes(clickedField)) {
-        return; // Do nothing if the clicked column is not in the allowed list
+    // Get the first non-empty column from the allowed fields
+    const rowData = row.getData();
+    let hasAllowedField = false;
+
+    for (let field of allowedFields) {
+        if (rowData[field] !== undefined && rowData[field] !== null) {
+            hasAllowedField = true;
+            break;
+        }
     }
 
-    const rowData = row.getData(); // Fetch row data
-    const container = document.createElement("div"); // Create a container element
+    // If the row has an allowed field, show the popup
+    if (hasAllowedField) {
+        const container = document.createElement("div");
 
-    // Build popup contents
-    const contents = `
-        <strong style="font-size:1.2em;">Reservation Details</strong>
-        <br/>
-        <ul style="padding:0; margin-top:10px; margin-bottom:0; list-style:none;">
-            <li><strong>Date Created:</strong> ${rowData.room || "N/A"}</li>
-            <li><strong>Full Name:</strong> ${rowData.fname ? rowData.fname + " " + (rowData.lname || "") : "N/A"}</li>
-            <li><strong>Business Unit:</strong> ${rowData.business_unit || "N/A"}</li>
-            <li><strong>No of Table:</strong> ${rowData.table || "0"}</li>
-            <li><strong>No of Chairs:</strong> ${rowData.chair || "0"}</li>
-            <li><strong>Extension Cord:</strong> ${rowData.extension === true ? "Yes" : "No"}</li>
-            <li><strong>HDMI Cable:</strong> ${rowData.hdmi === true ? "Yes" : "No"}</li>
-            <li><strong>Purpose / Message:</strong> ${rowData.message || "N/A"}</li>
-        </ul>
-    `;
+        const contents = `
+            <strong style="font-size:1.2em;">Reservation Details</strong>
+            <br/>
+            <ul style="padding:0; margin-top:10px; margin-bottom:0; list-style:none;">
+                <li><strong>Date Created:</strong> ${rowData.room || "N/A"}</li>
+                <li><strong>Full Name:</strong> ${rowData.fname ? rowData.fname + " " + (rowData.lname || "") : "N/A"}</li>
+                <li><strong>Business Unit:</strong> ${rowData.business_unit || "N/A"}</li>
+                <li><strong>No of Table:</strong> ${rowData.table || "0"}</li>
+                <li><strong>No of Chairs:</strong> ${rowData.chair || "0"}</li>
+                <li><strong>Extension Cord:</strong> ${rowData.extension === true ? "Yes" : "No"}</li>
+                <li><strong>HDMI Cable:</strong> ${rowData.hdmi === true ? "Yes" : "No"}</li>
+                <li><strong>Purpose / Message:</strong> ${rowData.message || "N/A"}</li>
+            </ul>
+        `;
 
-    container.innerHTML = contents; // Set the container's content
-    return container; // Return the container element
+        container.innerHTML = contents;
+        return container;
+    }
+
+    return null; // No popup for rows that don't match allowed fields
 };
 
 var table = new Tabulator("#reserve-list-table", {
