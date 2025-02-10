@@ -179,7 +179,7 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 var rowPopupFormatter = function(e, cell) {
     const allowedColumns = ["booking_id", "reservation_id"]; 
 
-    if (!allowedColumns.includes(cell.getColumn().getField())) {
+    if (!allowedColumns.includes(cell.getCells())) {
         return null; // Only show popup for allowed columns
     }
 
