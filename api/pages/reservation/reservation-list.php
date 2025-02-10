@@ -148,20 +148,26 @@ var approval_status = function(cell, formatterParams, onRendered) {
     var ID = cell.getRow().getData().id; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
     var room_id = cell.getRow().getData().roomid;
-    // console.log(ID);
 
-    <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
-        if (reserve_status == "CANCELLED") {
-            return "<button type='button' disabled class='btn btn-outline-primary approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
-        }else{
-            return "<button type='button' class='btn btn-outline-" + (reserve_status === "PENDING" ? "primary" :
-                                              reserve_status === "DECLINED" ? "danger" :
-                                              reserve_status === "APPROVED" ? "success" : "info");" approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >"+ reserve_status +"</button>";
+    <?php if ($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN') { ?>
+        if (reserve_status === "CANCELLED") {
+            return "<button type='button' disabled class='btn btn-outline-primary approval-reserve-status' " +
+                   "data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' " +
+                   "data-email='" + EMAIL + "'>CANCELLED</button>";
+        } else {
+            var btnClass = (reserve_status === "PENDING") ? "primary" :
+                           (reserve_status === "DECLINED") ? "danger" :
+                           (reserve_status === "APPROVED") ? "success" : "info";
+
+            return "<button type='button' class='btn btn-outline-" + btnClass + " approval-reserve-status' " +
+                   "data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' " +
+                   "data-email='" + EMAIL + "'>" + reserve_status + "</button>";
         }
-    <?php }else{ ?>
-    return reserve_status;
+    <?php } else { ?>
+        return reserve_status;
     <?php } ?>
 };
+
 
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
