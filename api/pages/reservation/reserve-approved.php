@@ -134,6 +134,30 @@ var detail_btn = function(cell, formatterParams, onRendered) {
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
+var rowPopupFormatter = function(e, row) {
+    const rowData = row.getData(); // Fetch row data
+    const container = document.createElement("div"); // Create a container element
+
+    // Build popup contents
+    const contents = `
+        <strong style="font-size:1.2em;">Reservation Details</strong>
+        <br/>
+        <ul style="padding:0; margin-top:10px; margin-bottom:0; list-style:none;">
+            <li><strong>Date Created:</strong> ${rowData.room || "N/A"}</li>
+            <li><strong>Full Name:</strong> ${rowData.fname ? rowData.fname + " " + (rowData.lname || "") : "N/A"}</li>
+            <li><strong>Bussiness Unit:</strong> ${rowData.business_unit || "N/A"}</li>
+            <li><strong>No of Table:</strong> ${rowData.table || "0"}</li>
+            <li><strong>No of Chairs:</strong> ${rowData.chair || "0"}</li>
+            <li><strong>Extension Cord:</strong> ${rowData.extension === true ? "Yes" : "No"}</li>
+            <li><strong>HDMI Cable:</strong> ${rowData.hdmi === true ? "Yes" : "No"}</li>
+            <li><strong>Purpose / Message:</strong> ${rowData.message || "N/A"}</li>
+        </ul>
+    `;
+
+    container.innerHTML = contents; // Set the container's content
+    return container; // Return the container element
+};
+
 // Initialize the Tabulator table with fetched data
 //function initializeTable(data) {
 var table = new Tabulator("#reserve-list-view-table", {
@@ -145,6 +169,12 @@ var table = new Tabulator("#reserve-list-view-table", {
     paginationSizeSelector: [40, 50, 100, 500, 1000, true],
     paginationSize: 40,
     filterMode: "remote",
+    rowClickPopup: function (e, row) {
+        if (e.target.closest("button") || e.target.closest("a")) {
+            return false;
+        }
+        return rowPopupFormatter(e, row);
+    },
     sortMode: "remote",
     ajaxURL: "/reserve_approved_data",
     columns: [

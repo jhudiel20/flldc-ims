@@ -210,7 +210,12 @@ var table = new Tabulator("#reserve-list-table", {
     paginationSizeSelector: [40, 50, 100, 500, 1000, true],
     paginationSize: 40,
     filterMode: "remote",
-    rowClickPopup: rowPopupFormatter,
+    rowClickPopup: function (e, row) {
+        if (e.target.closest("button") || e.target.closest("a")) {
+            return false;
+        }
+        return rowPopupFormatter(e, row);
+    },
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
     columns: [
