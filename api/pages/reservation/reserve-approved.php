@@ -169,11 +169,14 @@ var table = new Tabulator("#reserve-list-view-table", {
     paginationSizeSelector: [40, 50, 100, 500, 1000, true],
     paginationSize: 40,
     filterMode: "remote",
-    rowClickPopup: function (e, row) {
-        if (e.target.closest("button") || e.target.closest("a")) {
-            e.stopPropagation();
-        }
-        return rowPopupFormatter(e, row);
+    rowClickPopup: rowPopupFormatter,  // Keep this as is
+    rowFormatter: function(row) {
+        row.getElement().addEventListener("click", function(e) {
+            // Prevent popup if clicking inside a button or link
+            if (e.target.closest("button") || e.target.closest("a")) {
+                e.stopPropagation(); // Stops the event from bubbling up to rowClickPopup
+            }
+        });
     },
     sortMode: "remote",
     ajaxURL: "/reserve_approved_data",
