@@ -83,7 +83,7 @@ require_once __DIR__ . '/../../config/config.php';
             dayCellDidMount: function(info) {
             var today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
             if (info.date.toISOString().split('T')[0] === today) {
-                info.el.style.backgroundColor = "#a9a9a9"; // Darker gray
+                info.el.style.backgroundColor = "#dbdbdb"; // Darker gray
             }
         }
         });
