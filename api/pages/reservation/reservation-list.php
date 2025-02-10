@@ -144,52 +144,30 @@ if (!isset($decrypted_array['ACCESS'])) {
 
 
 var approval_status = function(cell, formatterParams, onRendered) {
-    var reserve_status = cell.getData().reserve_status;
-    var ID = cell.getRow().getData().id;
-    var room_id = cell.getRow().getData().roomid;
+    var reserve_status = cell.getData().reserve_status; // Get the approved status from the cell
+    var ID = cell.getRow().getData().id; // Get the ID of the user
     var EMAIL = cell.getRow().getData().email;
+    var room_id = cell.getRow().getData().roomid;
+    // console.log(ID);
 
-    <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){ ?>
-        let btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "btn btn-outline-" + 
-                        (reserve_status === "PENDING" ? "primary" :
-                        reserve_status === "DECLINED" ? "danger" :
-                        reserve_status === "APPROVED" ? "success" :
-                        "info");
-        btn.textContent = reserve_status;
-        btn.disabled = (reserve_status === "CANCELLED");
-
-        // Keep your modal class
-        btn.classList.add("approval-reserve-status");
-
-        // Add necessary data attributes for modal
-        btn.dataset.id = ID;
-        btn.dataset.roomid = room_id;
-        btn.dataset.email = EMAIL;
-        btn.dataset.approved = reserve_status;
-
-        // Prevent row click event (stops rowPopupFormatter from showing)
-        btn.addEventListener("click", function(e) {
-            e.stopPropagation(); // Stops row popup from triggering
-        });
-
-        return btn;
-    <?php } else { ?>
-        return reserve_status;
+    <?php if($decrypted_array['RESERVATION_ACCESS'] == 'ADMIN'){?>
+        if (reserve_status == "CANCELLED") {
+            return "<button type='button' disabled class='btn btn-outline-primary approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >PENDING</button>";
+        }else{
+            return "<button type='button' class='btn btn-outline-" + (reserve_status === "PENDING" ? "primary" :
+                                              reserve_status === "DECLINED" ? "danger" :
+                                              reserve_status === "APPROVED" ? "success" : "info");" approval-reserve-status' data-id='" + ID + "' data-roomid='" + room_id + "' data-approved='" + reserve_status + "' data-email=' " + EMAIL + " ' >"+ reserve_status +"</button>";
+        }
+    <?php }else{ ?>
+    return reserve_status;
     <?php } ?>
 };
 
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
-    let btn = document.createElement("button");
-    return "<a class='btn btn-outline-primary view-reservation' href='reservation-details?ID=" + reserve_id +
+
+    return "<a class='btn btn-outline-primary' href='reservation-details?ID=" + reserve_id +
         "' ><i class='fa-solid fa-eye'></i> </a>";
-    // Prevent row click from triggering
-    btn.addEventListener("click", function(e) {
-        e.stopPropagation();
-    });
-    return btn;
 };
 
 var rowPopupFormatter = function(e, row) {
@@ -227,14 +205,6 @@ var table = new Tabulator("#reserve-list-table", {
     paginationSizeSelector: [40, 50, 100, 500, 1000, true],
     paginationSize: 40,
     filterMode: "remote",
-    rowClickPopup: function (e, row) {
-        // Prevent popup if clicking inside a button or link
-        if (e.target.closest(".approval-reserve-status") || e.target.closest(".view-reservation")) {
-            return; // Stop popup from showing
-        }
-
-        return rowPopupFormatter(e, row);
-    },
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
     columns: [
