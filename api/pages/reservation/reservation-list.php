@@ -207,7 +207,7 @@ var rowPopupFormatter = function(e, cell) {
     container.innerHTML = contents; // Set the container's content
     return container; // Return the container element
 };
-
+// rowClickPopup: rowPopupFormatter,
 var table = new Tabulator("#reserve-list-table", {
     layout: "fitDataFill",
     movableColumns: true,
@@ -219,7 +219,6 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
-    rowClickPopup: rowPopupFormatter,
     columns: [
         {
             title: "DATE",
