@@ -176,16 +176,13 @@ var detail_btn = function(cell, formatterParams, onRendered) {
         "' ><i class='fa-solid fa-eye'></i> </a>";
 };
 
-var rowPopupFormatter = function(e, cell) {
-    const allowedColumns = ["booking_id", "reservation_id"]; 
-
-    if (!allowedColumns.includes(cell.getCells())) {
-        return null; // Only show popup for allowed columns
+var rowPopupFormatter = function (e, cell) {
+    // Prevent popup when clicking a button or link
+    if (e.target.closest("button, a, input")) {
+        return; // Allow the button to work without triggering the popup
     }
 
-    console.log(cell.getCells());
-
-    const rowData = row.getData(); // Fetch row data
+    const rowData = cell.getRow().getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
     // Build popup contents
@@ -195,7 +192,7 @@ var rowPopupFormatter = function(e, cell) {
         <ul style="padding:0; margin-top:10px; margin-bottom:0; list-style:none;">
             <li><strong>Date Created:</strong> ${rowData.room || "N/A"}</li>
             <li><strong>Full Name:</strong> ${rowData.fname ? rowData.fname + " " + (rowData.lname || "") : "N/A"}</li>
-            <li><strong>Bussiness Unit:</strong> ${rowData.business_unit || "N/A"}</li>
+            <li><strong>Business Unit:</strong> ${rowData.business_unit || "N/A"}</li>
             <li><strong>No of Table:</strong> ${rowData.table || "0"}</li>
             <li><strong>No of Chairs:</strong> ${rowData.chair || "0"}</li>
             <li><strong>Extension Cord:</strong> ${rowData.extension === true ? "Yes" : "No"}</li>
@@ -207,7 +204,8 @@ var rowPopupFormatter = function(e, cell) {
     container.innerHTML = contents; // Set the container's content
     return container; // Return the container element
 };
-// rowClickPopup: rowPopupFormatter,
+
+
 var table = new Tabulator("#reserve-list-table", {
     layout: "fitDataFill",
     movableColumns: true,
@@ -219,6 +217,7 @@ var table = new Tabulator("#reserve-list-table", {
     filterMode: "remote",
     sortMode: "remote",
     ajaxURL: "/reserve_list_data",
+    rowClickPopup: rowPopupFormatter,
     columns: [
         {
             title: "DATE",
