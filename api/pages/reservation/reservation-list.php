@@ -178,10 +178,13 @@ var detail_btn = function(cell, formatterParams, onRendered) {
 
 var rowPopupFormatter = function (e, cell) {
     // Prevent popup when clicking a button or link
-    if (e.target.closest("button, a, input")) {
-        return; // Allow the button to work without triggering the popup
+    let detailButton = e.target.closest(".detail-btn");
+    if (detailButton) {
+        let reserve_id = detailButton.getAttribute("data-id");
+        window.location.href = `reservation-details?ID=${reserve_id}`;
+        return; // Stop execution to prevent popup
     }
-
+    
     const rowData = cell.getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
