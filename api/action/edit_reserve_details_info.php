@@ -345,9 +345,11 @@ try {
         exit();
 
     }else{
-        $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, RESERVE_DATE = :reserve_date, FNAME = :fname, 
+        $declined_status = 'DECLINED';
+        $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, reservation_id = :reservation_id, RESERVE_DATE = :reserve_date, FNAME = :fname, 
         LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, 
         CONTACT = :contact, EMAIL = :email, MESSAGE = :message, roomid = :roomid WHERE ID = :id ");
+        $sql->bindParam(':reservation_id', $declined_status, PDO::PARAM_STR);
         $sql->bindParam(':reserve_status', $reserve_status, PDO::PARAM_STR);
         $sql->bindParam(':reserve_date', $reserve_date, PDO::PARAM_STR);
         $sql->bindParam(':fname', $fname, PDO::PARAM_STR);
