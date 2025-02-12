@@ -168,13 +168,14 @@ var approval_status = function(cell, formatterParams, onRendered) {
     <?php } ?>
 };
 
-
 var detail_btn = function(cell, formatterParams, onRendered) {
     var reserve_id = cell.getData().xid;
 
-    return "<a class='btn btn-outline-primary' href='reservation-details?ID=" + reserve_id +
-        "' ><i class='fa-solid fa-eye'></i> </a>";
+    return `<button class='btn btn-outline-primary' onclick="window.location.href='reservation-details?ID=${reserve_id}'">
+                <i class='fa-solid fa-eye'></i>
+            </button>`;
 };
+
 
 var rowPopupFormatter = function (e, cell) {
     // Prevent popup when clicking a button or link
@@ -184,7 +185,7 @@ var rowPopupFormatter = function (e, cell) {
         window.location.href = `reservation-details?ID=${reserve_id}`;
         return; // Stop execution to prevent popup
     }
-    
+
     const rowData = cell.getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
