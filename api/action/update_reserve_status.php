@@ -259,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                 <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center.</p>
                                                                 
                                                                 <p style="text-align:center; margin-top: 20px;">
-                                                                    <a href="https://flldc-booking-app.vercel.app/check" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
+                                                                    <a href="https://flldc-booking-app.vercel.app/submits" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
                                                                 </p>
 
                                                             </div>
@@ -353,7 +353,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                 <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center.</p>
 
                                                                 <p style="text-align:center; margin-top: 20px;">
-                                                                    <a href="https://flldc-booking-app.vercel.app/check" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
+                                                                    <a href="https://flldc-booking-app.vercel.app/submits" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Cancel Booking</a>
                                                                 </p>
         
                                                             </div>
@@ -570,14 +570,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
-        // $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
-        // invoice = :invoice,
-        $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
-        $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
-        $sql->bindParam(':id', $ID, PDO::PARAM_STR);
-        // Execute the prepared statement
-        $sql->execute();
+        if($approval_status == 'APPROVED'){
+            $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+            // $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
+            // invoice = :invoice,
+            $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+            $sql->bindParam(':reservation_id', $generateReserveID, PDO::PARAM_STR);
+            $sql->bindParam(':id', $ID, PDO::PARAM_STR);
+            // Execute the prepared statement
+            $sql->execute();
+        }else{
+            $declined_status = 'DECLINED';
+            $sql = $conn->prepare("UPDATE reservations SET reserve_status = :reserve_status, reservation_id = :reservation_id, status_date_created = NOW() AT TIME ZONE 'Asia/Manila' WHERE id = :id ");
+            // $sql->bindParam(':invoice', $fileName, PDO::PARAM_STR);
+            // invoice = :invoice,
+            $sql->bindParam(':reserve_status', $approval_status, PDO::PARAM_STR);
+            $sql->bindParam(':reservation_id', $declined_status, PDO::PARAM_STR);
+            $sql->bindParam(':id', $ID, PDO::PARAM_STR);
+            // Execute the prepared statement
+            $sql->execute();
+
+        }
+
+ 
 
         $history_title = "Updated Reserve Status";
         $history_remarks = "Status Reserve : " . $approval_status;
