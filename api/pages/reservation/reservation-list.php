@@ -182,7 +182,7 @@ var rowPopupFormatter = function (e, cell) {
         return; // Allow the button to work without triggering the popup
     }
 
-    const rowData = cell.getRow().getData(); // Fetch row data
+    const rowData = cell.getData(); // Fetch row data
     const container = document.createElement("div"); // Create a container element
 
     // Build popup contents
