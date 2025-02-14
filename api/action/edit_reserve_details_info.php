@@ -304,6 +304,100 @@ try {
                 </div>
             </div>
         ';
+    }else{
+        $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
+        $mail->Body    = '
+            <div style="background:#f3f3f3">
+                <div style="margin:0px auto;max-width:640px;background:transparent">
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:transparent" align="center" border="0">
+                    <tbody>
+                        <tr>
+                        <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:40px 0px">
+                            <div aria-labelledby="mj-column-per-100" class="m_29934315870093561mj-column-per-100" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                <tbody>
+                                <tr>
+                                    <td style="word-break:break-word;font-size:0px;padding:0px" align="center">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px" align="center" border="0">
+                                            <tbody>
+                                                <tr>
+                                                <td style="width:138px">
+                                                    <img alt="" title="" height="100px" width="200px" src="cid:logo_cid" style="">
+                                                </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+
+                <div style="max-width:640px;margin:0 auto;border-radius:4px;overflow:hidden">
+                <div style="margin:0px auto;max-width:640px;background:#fdfdfd">
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:#fdfdfd" align="center" border="0">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:40px 50px">
+                                    <div aria-labelledby="mj-column-per-100" class="m_29934315870093561mj-column-per-100" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="word-break:break-word;font-size:0px;padding:0px" align="left">
+                                                        <div style="color:#737f8d;font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-size:16px;line-height:24px;text-align:left">
+                                            
+                                                            <h2 style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:500;font-size:20px;color:#4f545c;letter-spacing:0.27px">Hi good day,</h2>
+                                                            <p style="text-align:justify">Your reservation is currently pending. Please wait for further updates regarding your booking status. Below are the details of your pending reservation:</p>
+                                                             
+                                                            <p><strong>Reservation Details:</strong><br>
+                                                           '.($reservationID == 'PENDING' ? '<b>Reservation ID:</b> '.$reservationID.'<br>' : '<b>Booking ID:</b> '.$bookingID.'<br>').'
+                                                            <b>Business Unit:</b> '.$businessunit.'<br>
+                                                            <b>Room:</b> '.$room.'<br>
+                                                            <b>Contact:</b> '.$contact.'<br>
+                                                            <b>Email:</b> '.$email.'<br>
+                                                            <b>Date:</b> '.$reserve_date.'<br>   
+                                                            <b>Time:</b> '.$time.'<br>
+                                                            <b>Setup:</b> '.$setup.'<br>
+                                                            <b>Reserved By:</b> '.$fname.' '.$lname.'<br>
+                                                            <b>Message :</b> '.$message.'<br>
+                                                            </p>
+
+                                                            <p style="text-align:justify">We will notify you as soon as your reservation is confirmed or declined. If you have any questions, please feel free to reach out to us at jppsolis@fast.com.ph or call us at +63 969 450 9412.</p>
+                                                            <p style="text-align:justify">Thank you for choosing FAST Learning and Development Center for your booking needs.</p>
+                                                            
+                                                            <p style="text-align:center; margin-top: 20px;">
+                                                                <a href="https://flldc-booking-app.vercel.app/check" style="background-color:#4CAF50;color:white;padding:12px 24px;text-align:center;text-decoration:none;border-radius:4px;font-size:16px;display:inline-block">Check Booking Status</a>
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="word-break:break-word;font-size:0px;padding:30px 0px">
+                                                        <p style="font-size:1px;margin:0px auto;border-top:1px solid #dcddde;width:100%"></p>
+                                                    </td>
+                                                </tr>               
+                                            </tbody>    
+                                        </table>
+                                    </div>  
+                                </td>
+                            </tr>
+                        </tbody>    
+                    </table>
+                </div>
+                <div>
+                    <table align="center">
+                        <tr>
+                        <td style="height:150px; border:none;border-radius:3px;color:black;padding:15px 19px" align="center" valign="middle">&copy; 2024-2025 <strong><span>FAST Learning and Development Center</span></strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        ';
     }
 
     $mail->send();
