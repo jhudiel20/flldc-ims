@@ -210,7 +210,7 @@ try {
                 </div>
             </div>
         ';
-    }else{
+    }else if($reserve_status == 'DECLINED'){
         $mail->Subject = 'Updates in your Booking ID : '.$bookingID;
         $mail->Body    = '
             <div style="background:#f3f3f3">
@@ -344,7 +344,7 @@ try {
         echo json_encode($response);
         exit();
 
-    }else{
+    }else if($reserve_status == 'DECLINED'){
         $declined_status = 'DECLINED';
         $sql = $conn->prepare("UPDATE reservations SET RESERVE_STATUS = :reserve_status, reservation_id = :reservation_id, RESERVE_DATE = :reserve_date, FNAME = :fname, 
         LNAME = :lname, ROOM = :room, time = :selected_time, SETUP = :setup, BUSINESS_UNIT = :businessunit, GUEST = :guest, 
