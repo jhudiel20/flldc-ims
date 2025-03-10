@@ -1,4 +1,5 @@
 <?php
+ob_start();
 header("Access-Control-Allow-Origin: https://flldc-booking-app.vercel.app");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -72,3 +73,4 @@ try {
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
 }
+ob_end_flush(); 
