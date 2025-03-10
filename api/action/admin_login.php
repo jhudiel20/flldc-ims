@@ -50,7 +50,7 @@ try {
         setcookie('secure_data', $encrypted_value, [
             'expires' => time() + 1800,  // Cookie expires in 30 minutes (1800 seconds)
             'path' => '/',                       // Available within the entire domain
-            'domain' => '',                     // Use the default domain
+            'domain' => 'flldc-ims.vercel.app', // Use the default domain
             'secure' => true,                   // Only sent over HTTPS
             'httponly' => true,                 // Accessible only through HTTP, not JavaScript
             'samesite' => 'Strict'              // Restrict cookie to same-site requests
