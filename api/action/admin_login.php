@@ -1,7 +1,7 @@
 <?php
 ob_start();
 header("Access-Control-Allow-Origin: https://flldc-booking-app.vercel.app");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
@@ -54,7 +54,7 @@ try {
             'domain' => 'flldc-ims.vercel.app', // Use the default domain
             'secure' => true,                   // Only sent over HTTPS
             'httponly' => true,                 // Accessible only through HTTP, not JavaScript
-            'samesite' => 'Strict'              // Restrict cookie to same-site requests
+            'samesite' => 'Lax'              // Restrict cookie to same-site requests
         ]);
 
         setcookie("Toast-title", "Welcome!", time() + 10, "/"); // Set status as success
