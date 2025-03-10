@@ -4,8 +4,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
-require_once '../config/DBConnection.php';
-require_once '../global/functions.php';
+// Include database connection and config
+require_once __DIR__ . '/../DBConnection.php'; // Adjusted path for DBConnection.php
+require_once __DIR__ . '/../config/config.php'; // Adjusted path for config.php
 
 $data = json_decode(file_get_contents("php://input"), true);
 $username = isset($data['email']) ? trim($data['email']) : '';
