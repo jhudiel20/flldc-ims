@@ -62,7 +62,7 @@ try {
 
         echo json_encode([
             'success' => true,
-            'redirectUrl' => '/dashboard-lnd' // Change to actual dashboard route
+            'redirectUrl' => 'https://flldc-ims.vercel.app/dashboard-lnd' // Change to actual dashboard route
         ]);
     
         } else {
