@@ -40,6 +40,13 @@ if ($logSuccess) {
         }
     }
 
+    // Remove all cookies
+    if (!empty($_COOKIE)) {
+        foreach ($_COOKIE as $name => $value) {
+            setcookie($name, '', time() - 3600, '/', '', true, true);
+        }
+    }
+
     // Redirect to the index page after successful logout and cookie unset
     header("Location: /");
     exit();
