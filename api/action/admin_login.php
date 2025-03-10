@@ -54,7 +54,7 @@ try {
             'domain' => 'flldc-ims.vercel.app', // Use the default domain
             'secure' => true,                   // Only sent over HTTPS
             'httponly' => true,                 // Accessible only through HTTP, not JavaScript
-            'samesite' => 'Lax'              // Restrict cookie to same-site requests
+            'samesite' => ''              // Restrict cookie to same-site requests
         ]);
 
         setcookie("Toast-title", "Welcome!", time() + 10, "/"); // Set status as success
