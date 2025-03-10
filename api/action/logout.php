@@ -27,6 +27,8 @@ if ($logSuccess) {
     if (isset($_COOKIE['secure_data'])) {
         // Decrypt the cookie data
         $decrypted_array = decrypt_cookie($_COOKIE['secure_data'], $encryption_key, $cipher_method);
+        setcookie('secure_data', '', time() - 3600, '/', '', isset($_SERVER["HTTPS"]), true);
+        unset($_COOKIE['secure_data']);
 
         // Check if decryption was successful
         if ($decrypted_array !== null) {
