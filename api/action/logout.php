@@ -42,6 +42,9 @@ if ($logSuccess) {
         }
     }
 
+    // Optionally, unset them from the $_COOKIE superglobal
+    unset($_COOKIE['secure_data']);
+
     // Remove all cookies
     if (!empty($_COOKIE)) {
         foreach ($_COOKIE as $name => $value) {
