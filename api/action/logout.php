@@ -43,6 +43,7 @@ if ($logSuccess) {
     }
 
     // Optionally, unset them from the $_COOKIE superglobal
+    setcookie("secure_data", "", time() - 3600, "/", "flldc-ims.vercel.app", true, true);
     unset($_COOKIE['secure_data']);
 
     // Remove all cookies
